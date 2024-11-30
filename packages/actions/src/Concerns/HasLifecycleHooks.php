@@ -13,6 +13,9 @@ trait HasLifecycleHooks
 
     protected ?Closure $after = null;
 
+    protected ?Closure $beforeClose = null;
+
+    protected ?Closure $afterClose = null;
     protected ?Closure $beforeFormFilled = null;
 
     protected ?Closure $afterFormFilled = null;
@@ -31,6 +34,20 @@ trait HasLifecycleHooks
     public function after(?Closure $callback): static
     {
         $this->after = $callback;
+
+        return $this;
+    }
+
+    public function beforeClose(?Closure $callback): static
+    {
+        $this->beforeClose = $callback;
+
+        return $this;
+    }
+
+    public function afterClose(?Closure $callback): static
+    {
+        $this->afterClose = $callback;
 
         return $this;
     }
@@ -79,6 +96,21 @@ trait HasLifecycleHooks
         }
     }
 
+    public function callBeforeClose(): mixed
+    {
+        Event::dispatch(ActionCalling::class, $this);
+
+        return $this->evaluate($this->beforeClose);
+    }
+
+    public function callAfterClose(): mixed
+    {
+        try {
+            return $this->evaluate($this->afterClose);
+        } finally {
+            Event::dispatch(ActionCalled::class, $this);
+        }
+    }
     public function callBeforeFormFilled(): mixed
     {
         return $this->evaluate($this->beforeFormFilled);

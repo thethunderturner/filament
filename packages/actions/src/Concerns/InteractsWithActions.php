@@ -426,6 +426,12 @@ trait InteractsWithActions
                 $this->closeActionModal();
             }
 
+            $action->callBeforeClose();
+
+            $this->closeActionModal();
+
+            $action->callAfterClose();
+
             $action?->clearRecordAfter();
 
             // Setting these to `null` creates a bug where the properties are
