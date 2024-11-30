@@ -16,6 +16,7 @@ trait HasLifecycleHooks
     protected ?Closure $beforeClose = null;
 
     protected ?Closure $afterClose = null;
+
     protected ?Closure $beforeFormFilled = null;
 
     protected ?Closure $afterFormFilled = null;
@@ -111,6 +112,7 @@ trait HasLifecycleHooks
             Event::dispatch(ActionCalled::class, $this);
         }
     }
+
     public function callBeforeFormFilled(): mixed
     {
         return $this->evaluate($this->beforeFormFilled);
