@@ -63,6 +63,12 @@ trait CanBeHidden
      */
     protected function parseAuthorizationArguments(array $arguments): array
     {
+        if ($record = $this->getRecord()) {
+            array_unshift($arguments, $record);
+        } elseif ($model = $this->getModel()) {
+            array_unshift($arguments, $model);
+        }
+
         return $arguments;
     }
 
