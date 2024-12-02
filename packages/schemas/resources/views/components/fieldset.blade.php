@@ -1,7 +1,7 @@
 <x-filament::fieldset
     :label="$getLabel()"
     :label-hidden="$isLabelHidden()"
-    :is-contained="$getContained()"
+    :contained="$getContained()"
     :attributes="
         \Filament\Support\prepare_inherited_attributes($attributes)
             ->merge([

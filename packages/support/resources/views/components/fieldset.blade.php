@@ -1,7 +1,7 @@
 @props([
     'label' => null,
     'labelHidden' => false,
-    'isContained' => true,
+    'contained' => true,
 ])
 
 <fieldset
@@ -9,7 +9,7 @@
         $attributes->class([
             'fi-fieldset',
             'fi-fieldset-label-hidden' => $labelHidden,
-            'fi-fieldset-contained' => $isContained,
+            'fi-fieldset-not-contained' => ! $contained,
         ])
     }}
 >
