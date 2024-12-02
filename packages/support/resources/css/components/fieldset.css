@@ -12,4 +12,8 @@
     &:not(.fi-fieldset-not-contained) {
         @apply rounded-xl border border-gray-200 p-6 dark:border-white/10;
     }
+
+    &.fi-fieldset-not-contained {
+        @apply pt-6;
+    }
 }
