@@ -10,8 +10,8 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class Fieldset extends Component implements CanEntangleWithSingularRelationships
 {
-    use EntanglesStateWithSingularRelationship;
     use CanBeContained;
+    use EntanglesStateWithSingularRelationship;
 
     /**
      * @var view-string
