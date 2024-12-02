@@ -16,6 +16,8 @@ class Fieldset extends Component implements CanEntangleWithSingularRelationships
      */
     protected string $view = 'filament-schema::components.fieldset';
 
+    protected bool $contained = true;
+
     final public function __construct(string | Htmlable | Closure | null $label = null)
     {
         $this->label($label);
@@ -27,6 +29,18 @@ class Fieldset extends Component implements CanEntangleWithSingularRelationships
         $static->configure();
 
         return $static;
+    }
+
+    public function contained(bool $contained = true): static
+    {
+        $this->contained = $contained;
+
+        return $this;
+    }
+
+    public function getContained(): bool
+    {
+        return $this->evaluate($this->contained);
     }
 
     protected function setUp(): void
