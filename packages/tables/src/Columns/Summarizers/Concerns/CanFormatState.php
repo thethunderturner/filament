@@ -151,7 +151,7 @@ trait CanFormatState
         ]);
 
         if ($isHtml && $this->isMarkdown()) {
-            $state = Str::markdown($state);
+            $state = Str::markdown($state, $this->getCommonMarkOptions(), $this->getCommonMarkExtensions());
         }
 
         if ($isHtml) {
