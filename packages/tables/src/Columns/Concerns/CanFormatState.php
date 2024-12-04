@@ -3,6 +3,7 @@
 namespace Filament\Tables\Columns\Concerns;
 
 use Closure;
+use Filament\Support\Concerns\CanConfigureCommonMark;
 use Filament\Support\Contracts\HasLabel as LabelInterface;
 use Filament\Support\Enums\ArgumentValue;
 use Filament\Tables\Columns\TextColumn;
@@ -15,6 +16,8 @@ use Illuminate\Support\Str;
 
 trait CanFormatState
 {
+    use CanConfigureCommonMark;
+
     protected ?Closure $formatStateUsing = null;
 
     protected int | Closure | null $characterLimit = null;
@@ -286,6 +289,10 @@ trait CanFormatState
             $state = json_encode($state);
         }
 
+        if ($isHtml && $this->isMarkdown()) {
+            $state = Str::markdown($state);
+        }
+
         if ($isHtml) {
             $state = Str::sanitizeHtml($state);
         }
@@ -305,10 +312,6 @@ trait CanFormatState
 
         if ($wordLimit = $this->getWordLimit()) {
             $state = Str::words($state, $wordLimit, $this->getWordLimitEnd());
-        }
-
-        if ($isHtml && $this->isMarkdown()) {
-            $state = Str::markdown($state);
         }
 
         $prefix = $this->getPrefix();

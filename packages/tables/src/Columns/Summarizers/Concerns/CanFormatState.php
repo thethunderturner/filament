@@ -3,6 +3,7 @@
 namespace Filament\Tables\Columns\Summarizers\Concerns;
 
 use Closure;
+use Filament\Support\Concerns\CanConfigureCommonMark;
 use Filament\Support\Enums\ArgumentValue;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Table;
@@ -13,6 +14,8 @@ use Illuminate\Support\Str;
 
 trait CanFormatState
 {
+    use CanConfigureCommonMark;
+
     protected ?Closure $formatStateUsing = null;
 
     protected string | Closure | null $placeholder = null;
@@ -147,6 +150,10 @@ trait CanFormatState
             'state' => $state,
         ]);
 
+        if ($isHtml && $this->isMarkdown()) {
+            $state = Str::markdown($state);
+        }
+
         if ($isHtml) {
             $state = Str::sanitizeHtml($state);
         }
@@ -154,10 +161,6 @@ trait CanFormatState
         if ($state instanceof Htmlable) {
             $isHtml = true;
             $state = $state->toHtml();
-        }
-
-        if ($isHtml && $this->isMarkdown()) {
-            $state = Str::markdown($state);
         }
 
         $prefix = $this->getPrefix();

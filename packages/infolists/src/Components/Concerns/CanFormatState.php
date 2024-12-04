@@ -5,6 +5,7 @@ namespace Filament\Infolists\Components\Concerns;
 use Closure;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
+use Filament\Support\Concerns\CanConfigureCommonMark;
 use Filament\Support\Contracts\HasLabel as LabelInterface;
 use Filament\Support\Enums\ArgumentValue;
 use Illuminate\Contracts\Support\Htmlable;
@@ -15,6 +16,8 @@ use Illuminate\Support\Str;
 
 trait CanFormatState
 {
+    use CanConfigureCommonMark;
+
     protected ?Closure $formatStateUsing = null;
 
     protected int | Closure | null $characterLimit = null;
@@ -282,6 +285,10 @@ trait CanFormatState
             'state' => $state,
         ]);
 
+        if ($isHtml && $this->isMarkdown()) {
+            $state = Str::markdown($state, $this->getCommonMarkOptions(), $this->getCommonMarkExtensions());
+        }
+
         if ($isHtml) {
             $state = Str::sanitizeHtml($state);
         }
@@ -301,10 +308,6 @@ trait CanFormatState
 
         if ($wordLimit = $this->getWordLimit()) {
             $state = Str::words($state, $wordLimit, $this->getWordLimitEnd());
-        }
-
-        if ($isHtml && $this->isMarkdown()) {
-            $state = Str::markdown($state);
         }
 
         $prefix = $this->getPrefix();
