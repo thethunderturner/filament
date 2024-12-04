@@ -39,31 +39,31 @@ class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained, 
         'undo',
     ];
 
-    protected array | Closure | null $options = null;
+    protected array | Closure | null $commonMarkOptions = null;
 
-    protected array | Closure | null $extensions = null;
+    protected array | Closure | null $commonMarkExtensions = null;
 
-    public function options(array | Closure | null $options): static
+    public function commonMarkOptions(array | Closure | null $commonMarkOptions): static
     {
-        $this->options = $options;
+        $this->commonMarkOptions = $commonMarkOptions;
 
         return $this;
     }
 
-    public function getOptions(): ?array
+    public function getCommonMarkOptions(): ?array
     {
-        return $this->evaluate($this->options);
+        return $this->evaluate($this->commonMarkOptions);
     }
 
-    public function extensions(array | Closure | null $extensions): static
+    public function commonMarkExtensions(array | Closure | null $commonMarkExtensions): static
     {
-        $this->extensions = $extensions;
+        $this->commonMarkExtensions = $commonMarkExtensions;
 
         return $this;
     }
 
-    public function getExtensions(): ?array
+    public function getCommonMarkExtensions(): ?array
     {
-        return $this->evaluate($this->extensions);
+        return $this->evaluate($this->commonMarkExtensions);
     }
 }
