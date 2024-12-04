@@ -3,6 +3,7 @@
 namespace Filament\Forms\Components;
 
 use Closure;
+use Filament\Support\Concerns\CanConfigureCommonMark;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 
 class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained, Contracts\HasFileAttachments
@@ -13,6 +14,7 @@ class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained, 
     use Concerns\HasMinHeight;
     use Concerns\HasPlaceholder;
     use Concerns\InteractsWithToolbarButtons;
+    use CanConfigureCommonMark;
     use HasExtraAlpineAttributes;
 
     /**
@@ -38,32 +40,4 @@ class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained, 
         'table',
         'undo',
     ];
-
-    protected array | Closure | null $commonMarkOptions = null;
-
-    protected array | Closure | null $commonMarkExtensions = null;
-
-    public function commonMarkOptions(array | Closure | null $commonMarkOptions): static
-    {
-        $this->commonMarkOptions = $commonMarkOptions;
-
-        return $this;
-    }
-
-    public function getCommonMarkOptions(): ?array
-    {
-        return $this->evaluate($this->commonMarkOptions);
-    }
-
-    public function commonMarkExtensions(array | Closure | null $commonMarkExtensions): static
-    {
-        $this->commonMarkExtensions = $commonMarkExtensions;
-
-        return $this;
-    }
-
-    public function getCommonMarkExtensions(): ?array
-    {
-        return $this->evaluate($this->commonMarkExtensions);
-    }
 }
