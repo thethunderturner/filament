@@ -5,12 +5,13 @@ namespace Filament\Forms\Components;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Builder\Block;
-use Filament\Schema\Components\Concerns\CanBeCollapsed;
-use Filament\Schema\Components\Contracts\CanConcealComponents;
-use Filament\Schema\Components\Contracts\HasExtraItemActions;
-use Filament\Schema\Schema;
+use Filament\Schemas\Components\Concerns\CanBeCollapsed;
+use Filament\Schemas\Components\Contracts\CanConcealComponents;
+use Filament\Schemas\Components\Contracts\HasExtraItemActions;
+use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasReorderAnimationDuration;
 use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Support\Arr;
@@ -57,6 +58,8 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
 
     protected bool | Closure $hasInteractiveBlockPreviews = false;
 
+    protected Alignment | string | Closure | null $addActionAlignment = null;
+
     protected ?Closure $modifyAddActionUsing = null;
 
     protected ?Closure $modifyAddBetweenActionUsing = null;
@@ -86,7 +89,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
     protected bool | Closure $isBlockLabelTruncated = true;
 
     /**
-     * @var array<string, int | string | null> | null
+     * @var array<string, ?int> | null
      */
     protected ?array $blockPickerColumns = [];
 
@@ -195,6 +198,24 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
         }
 
         return $action;
+    }
+
+    public function addActionAlignment(Alignment | string | Closure | null $addActionAlignment): static
+    {
+        $this->addActionAlignment = $addActionAlignment;
+
+        return $this;
+    }
+
+    public function getAddActionAlignment(): Alignment | string | null
+    {
+        $alignment = $this->evaluate($this->addActionAlignment);
+
+        if (is_string($alignment)) {
+            $alignment = Alignment::tryFrom($alignment) ?? $alignment;
+        }
+
+        return $alignment;
     }
 
     public function addAction(?Closure $callback): static
@@ -660,7 +681,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->icon('heroicon-s-cog-6-tooth')
+            ->icon('heroicon-m-cog-6-tooth')
             ->size(ActionSize::Small)
             ->visible(fn (Builder $component): bool => (! $component->isDisabled()) && $component->hasBlockPreviews());
 
@@ -1021,9 +1042,9 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
     }
 
     /**
-     * @param  array<string, int | string | null> | int | string | null  $columns
+     * @param  array<string, ?int> | int | null  $columns
      */
-    public function blockPickerColumns(array | int | string | null $columns = 2): static
+    public function blockPickerColumns(array | int | null $columns = 2): static
     {
         if (! is_array($columns)) {
             $columns = [
@@ -1040,9 +1061,9 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
     }
 
     /**
-     * @return array<string, int | string | null> | int | string | null
+     * @return array<string, ?int> | int | null
      */
-    public function getBlockPickerColumns(?string $breakpoint = null): array | int | string | null
+    public function getBlockPickerColumns(?string $breakpoint = null): array | int | null
     {
         $columns = $this->blockPickerColumns ?? [
             'default' => 1,

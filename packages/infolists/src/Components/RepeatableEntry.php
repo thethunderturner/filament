@@ -2,14 +2,15 @@
 
 namespace Filament\Infolists\Components;
 
-use Filament\Schema\Schema;
+use Filament\Schemas\Components\Concerns\HasContainerGridLayout;
+use Filament\Schemas\Schema;
 use Filament\Support\Concerns\CanBeContained;
 use Illuminate\Database\Eloquent\Model;
 
 class RepeatableEntry extends Entry
 {
     use CanBeContained;
-    use Concerns\HasContainerGridLayout;
+    use HasContainerGridLayout;
 
     /**
      * @var view-string
