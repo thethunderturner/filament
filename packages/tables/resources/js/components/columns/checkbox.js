@@ -7,38 +7,19 @@ export default function checkboxTableColumn({ name, recordKey, state }) {
         state,
 
         init: function () {
-            Livewire.hook(
-                'commit',
-                ({ component, commit, succeed, fail, respond }) => {
-                    succeed(({ snapshot, effect }) => {
-                        this.$nextTick(() => {
-                            if (this.isLoading) {
-                                return
-                            }
+            this.state = this.getServerState();
 
-                            if (
-                                component.id !==
-                                this.$root.closest('[wire\\:id]').attributes[
-                                    'wire:id'
-                                ].value
-                            ) {
-                                return
-                            }
+            Livewire.hook('message.processed', (message, component) => {
+                if (component.id !== this.$wire.id) return;
 
-                            const serverState = this.getServerState()
+                this.$nextTick(() => {
+                    const serverState = this.getServerState();
+                    if (serverState !== undefined && this.getNormalizedState() !== serverState) {
+                        this.state = serverState;
+                    }
+                });
+            });
 
-                            if (
-                                serverState === undefined ||
-                                Alpine.raw(this.state) === serverState
-                            ) {
-                                return
-                            }
-
-                            this.state = serverState
-                        })
-                    })
-                },
-            )
 
             this.$watch('state', async () => {
                 const serverState = this.getServerState()

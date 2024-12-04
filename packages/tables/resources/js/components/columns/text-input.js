@@ -8,7 +8,7 @@ export default function textInputTableColumn({ name, recordKey, state }) {
 
         init: function () {
             Livewire.hook(
-                'commit',
+                'message.processed',
                 ({ component, commit, succeed, fail, respond }) => {
                     succeed(({ snapshot, effect }) => {
                         this.$nextTick(() => {
@@ -52,19 +52,21 @@ export default function textInputTableColumn({ name, recordKey, state }) {
 
                 this.isLoading = true
 
-                const response = await this.$wire.updateTableColumnState(
-                    name,
-                    recordKey,
-                    this.state,
-                )
+                try {
+                    const response = await this.$wire.updateTableColumnState(
+                        name,
+                        recordKey,
+                        this.state,
+                    )
 
-                this.error = response?.error ?? undefined
+                    this.error = response?.error ?? undefined
 
-                if (!this.error && this.$refs.serverState) {
-                    this.$refs.serverState.value = this.getNormalizedState()
+                    if (!this.error && this.$refs.serverState) {
+                        this.$refs.serverState.value = this.getNormalizedState()
+                    }
+                } finally {
+                    this.isLoading = false
                 }
-
-                this.isLoading = false
             })
         },
 

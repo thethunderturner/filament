@@ -98,11 +98,7 @@
     @if (! $isLoaded)
         wire:init="loadTable"
     @endif
-    @if (FilamentView::hasSpaMode())
-        x-load="visible"
-    @else
-        x-load
-    @endif
+    x-load="visible"
     x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('table', 'filament/tables') }}"
     x-data="table"
     @class([
@@ -1825,6 +1821,12 @@
 
         @if ((($records instanceof \Illuminate\Contracts\Pagination\Paginator) || ($records instanceof \Illuminate\Contracts\Pagination\CursorPaginator)) &&
              ((! ($records instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator)) || $records->total()))
+            @php
+            $int = random_int(1, 10);
+            if ($int >= 5) {
+                dd($records);
+            }
+            @endphp
             <x-filament::pagination
                 :extreme-links="$hasExtremePaginationLinks()"
                 :page-options="$getPaginationPageOptions()"

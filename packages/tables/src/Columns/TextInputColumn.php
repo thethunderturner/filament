@@ -74,9 +74,7 @@ class TextInputColumn extends Column implements Editable, HasEmbeddedView
 
         $attributes = $this->getExtraAttributeBag()
             ->merge([
-                'x-load' => FilamentView::hasSpaMode()
-                    ? 'visible || event (x-modal-opened)'
-                    : true,
+                'x-load' => 'visible',
                 'x-load-src' => FilamentAsset::getAlpineComponentSrc('columns/text-input', 'filament/tables'),
                 'x-data' => 'textInputTableColumn({
                     name: ' . Js::from($this->getName()) . ',
