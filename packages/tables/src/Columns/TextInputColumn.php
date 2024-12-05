@@ -9,7 +9,6 @@ use Filament\Forms\Components\Concerns\HasStep;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentView;
 use Filament\Support\RawJs;
 use Filament\Tables\Columns\Contracts\Editable;
 use Filament\Tables\Table;

@@ -7,19 +7,21 @@ export default function checkboxTableColumn({ name, recordKey, state }) {
         state,
 
         init: function () {
-            this.state = this.getServerState();
+            this.state = this.getServerState()
 
             Livewire.hook('message.processed', (message, component) => {
-                if (component.id !== this.$wire.id) return;
+                if (component.id !== this.$wire.id) return
 
                 this.$nextTick(() => {
-                    const serverState = this.getServerState();
-                    if (serverState !== undefined && this.getNormalizedState() !== serverState) {
-                        this.state = serverState;
+                    const serverState = this.getServerState()
+                    if (
+                        serverState !== undefined &&
+                        this.getNormalizedState() !== serverState
+                    ) {
+                        this.state = serverState
                     }
-                });
-            });
-
+                })
+            })
 
             this.$watch('state', async () => {
                 const serverState = this.getServerState()

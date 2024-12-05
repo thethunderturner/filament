@@ -102,7 +102,7 @@ export default function table() {
             ) ?? []) {
                 keys.push(checkbox.value)
             }
-            console.log(keys);
+            console.log(keys)
 
             return keys
         },

@@ -1822,11 +1822,12 @@
         @if ((($records instanceof \Illuminate\Contracts\Pagination\Paginator) || ($records instanceof \Illuminate\Contracts\Pagination\CursorPaginator)) &&
              ((! ($records instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator)) || $records->total()))
             @php
-            $int = random_int(1, 10);
-            if ($int >= 5) {
-                dd($records);
-            }
+                $int = random_int(1, 10);
+                if ($int >= 5) {
+                    dd($records);
+                }
             @endphp
+
             <x-filament::pagination
                 :extreme-links="$hasExtremePaginationLinks()"
                 :page-options="$getPaginationPageOptions()"
