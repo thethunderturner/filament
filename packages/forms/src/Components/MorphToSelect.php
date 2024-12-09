@@ -145,7 +145,15 @@ class MorphToSelect extends Component
 
     public function getRelationship(): MorphTo
     {
-        return $this->getModelInstance()->{$this->getName()}();
+        $record = $this->getModelInstance();
+
+        $relationshipName = $this->getName();
+
+        if (! $record->isRelation($relationshipName)) {
+            throw new Exception("The relationship [{$relationshipName}] does not exist on the model [{$this->getModel()}].");
+        }
+
+        return $record->{$relationshipName}();
     }
 
     /**
