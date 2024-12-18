@@ -3,7 +3,7 @@
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tests\Forms\Fixtures\Livewire;
+use Filament\Tests\Fixtures\Livewire\Livewire;
 use Filament\Tests\Models\Post;
 use Filament\Tests\Models\User;
 use Filament\Tests\TestCase;
