@@ -95,8 +95,52 @@ trait InteractsWithTableQuery
                         "%{$nonTranslatableSearch}%",
                     ),
                     function (EloquentBuilder $query) use ($databaseConnection, $isSearchForcedCaseInsensitive, $nonTranslatableSearch, $searchColumn, $whereClause): EloquentBuilder {
-                        // Treat the missing "relationship" as a JSON column if dot notation is used in the column name.
                         if (filled($relationshipName = $this->getRelationshipName())) {
+                            // Check if it is a JSON column on a relationship
+                            if (str($relationshipName)->contains('.')) {
+                                $record = $query->getModel();
+                                $parts = explode('.', $relationshipName);
+
+                                $relationshipNameParts = [];
+                                while (count($parts) > 0) {
+                                    // Grab the first name element to check
+                                    $nestedRelationshipName = array_shift($parts);
+
+                                    if (! $record->isRelation($nestedRelationshipName)) {
+                                        // Not a relation, assume that all next dots represent json accessors
+                                        array_unshift($parts, $nestedRelationshipName);
+
+                                        break;
+                                    }
+
+                                    // Append the name element as relation
+                                    $relationshipNameParts[] = $nestedRelationshipName;
+
+                                    /** @var Relation */
+                                    $relationship = $record->{$nestedRelationshipName}();
+                                    $record = $relationship->getRelated();
+                                }
+
+                                if (filled($relationshipNameParts)) {
+                                    // There is a relationship before JSON column using dot notation
+                                    if (filled($parts)) {
+                                        // When there are remaining part(s), assume it is a JSON column
+                                        $searchColumn = implode('->', [
+                                            ...$parts,
+                                            $searchColumn,
+                                        ]);
+                                    }
+
+                                    return $query->{"{$whereClause}Relation"}(
+                                        implode('.', $relationshipNameParts),
+                                        generate_search_column_expression($searchColumn, $isSearchForcedCaseInsensitive, $databaseConnection),
+                                        'like',
+                                        "%{$nonTranslatableSearch}%",
+                                    );
+                                }
+                            }
+
+                            // Treat the missing "relationship" as a JSON column if dot notation is used in the column name.
                             $searchColumn = (string) str($relationshipName)
                                 ->append('.')
                                 ->append($searchColumn)
