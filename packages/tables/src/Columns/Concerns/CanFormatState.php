@@ -286,6 +286,17 @@ trait CanFormatState
         return $this;
     }
 
+    public function isoTime(?string $format = null): static
+    {
+        $this->isTime = true;
+
+        $format ??= Table::$defaultIsoTimeDisplayFormat;
+
+        $this->isoDate($format);
+
+        return $this;
+    }
+
     public function timezone(string | Closure | null $timezone): static
     {
         $this->timezone = $timezone;
