@@ -67,6 +67,42 @@ it('will not instantiate empty Models from container', function () {
     });
 });
 
+it('will instantiate empty Models from container if bound', function () {
+    $isEvaluatingClosures = new IsEvaluatingClosures;
+
+    $boundRecordModel = new RecordModel;
+
+    app()->bind(RecordModel::class, fn () => $boundRecordModel);
+
+    $isEvaluatingClosures->evaluate(function (RecordModel $recordModel) use ($boundRecordModel) {
+        expect($recordModel)->toBe($boundRecordModel);
+    });
+});
+
+it('will instantiate empty Models from container if bound as singleton', function () {
+    $isEvaluatingClosures = new IsEvaluatingClosures;
+
+    $boundRecordModel = new RecordModel;
+
+    app()->singleton(RecordModel::class, fn () => $boundRecordModel);
+
+    $isEvaluatingClosures->evaluate(function (RecordModel $recordModel) use ($boundRecordModel) {
+        expect($recordModel)->toBe($boundRecordModel);
+    });
+});
+
+it('will instantiate empty Models from container if bound as scoped', function () {
+    $isEvaluatingClosures = new IsEvaluatingClosures;
+
+    $boundRecordModel = new RecordModel;
+
+    app()->scoped(RecordModel::class, fn () => $boundRecordModel);
+
+    $isEvaluatingClosures->evaluate(function (RecordModel $recordModel) use ($boundRecordModel) {
+        expect($recordModel)->toBe($boundRecordModel);
+    });
+});
+
 class RecordModel extends Model
 {
     //

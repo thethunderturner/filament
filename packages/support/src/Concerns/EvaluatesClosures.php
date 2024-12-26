@@ -84,7 +84,7 @@ trait EvaluatesClosures
 
         if (
             filled($typedParameterClassName)
-            && ! is_subclass_of($typedParameterClassName, Model::class)
+            && (! is_subclass_of($typedParameterClassName, Model::class) || app()->bound($typedParameterClassName))
         ) {
             return app()->make($typedParameterClassName);
         }
