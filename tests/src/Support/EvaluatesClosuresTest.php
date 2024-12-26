@@ -22,8 +22,8 @@ it('will instantiate Eloquent Models provided by name', function () {
         shouldResolveDefaultClosureDependencyForEvaluationByType: false,
     );
 
-    $isEvaluatingClosures->evaluate(function (RecordModel $record) {
-        $this->expectNotToPerformAssertions();
+    $isEvaluatingClosures->evaluate(function (RecordModel $record) use ($recordModel) {
+        expect($record)->toBe($recordModel);
     });
 });
 
