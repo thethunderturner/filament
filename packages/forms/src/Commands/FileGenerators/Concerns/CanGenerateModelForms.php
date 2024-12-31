@@ -95,6 +95,12 @@ trait CanGenerateModelForms
                 default => TextInput::class,
             };
 
+            if (isset($type['name']) && $type['name'] === 'enum') {
+                dd($componentData);
+                $componentData['type'] = Select::class;
+                $componentData['options'] = $type['values'];
+            }
+
             if (str($componentName)->endsWith('_id')) {
                 $guessedRelationshipName = $this->guessBelongsToRelationshipName($componentName, $model);
 
