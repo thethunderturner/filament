@@ -152,6 +152,7 @@ trait CanReadModelSchemas
 
         $values = is_null($values) ? [] : match ($type) {
             'string', 'char', 'binary', 'bit' => ['length' => (int) $values[0]],
+            'enum' => ['values' => array_map(fn ($value) => trim($value, "'"), $values)],
             default => [],
         };
 

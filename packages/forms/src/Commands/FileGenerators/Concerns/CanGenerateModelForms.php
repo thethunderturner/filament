@@ -96,9 +96,18 @@ trait CanGenerateModelForms
             };
 
             if (isset($type['name']) && $type['name'] === 'enum') {
-                dd($componentData);
                 $componentData['type'] = Select::class;
-                $componentData['options'] = $type['values'];
+                $options = array_combine(
+                    $type['values'],
+                    array_map(
+                        fn ($value) => (string) str($value)
+                            ->kebab()
+                            ->replace(['-', '_'], ' ')
+                            ->ucfirst(),
+                        $type['values']
+                        )
+                    );
+                $componentData['options'] = [$options];
             }
 
             if (str($componentName)->endsWith('_id')) {
