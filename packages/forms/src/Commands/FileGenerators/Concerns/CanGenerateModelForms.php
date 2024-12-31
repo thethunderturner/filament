@@ -108,7 +108,9 @@ trait CanGenerateModelForms
                         )
                     );
                 $componentData['options'] = [$options];
-                $componentData['default'] = [$this->parseDefaultExpression($column, $model)];
+                if ($column['default']) {
+                    $componentData['default'] = [$this->parseDefaultExpression($column, $model)];
+                }
             }
 
             if (str($componentName)->endsWith('_id')) {
