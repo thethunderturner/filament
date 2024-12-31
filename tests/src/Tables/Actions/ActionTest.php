@@ -1,10 +1,11 @@
 <?php
 
+use Filament\Actions\Action;
 use Filament\Actions\AttachAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\Testing\Fixtures\TestAction;
-use Filament\Tests\Models\Post;
-use Filament\Tests\Tables\Fixtures\PostsTable;
+use Filament\Tests\Fixtures\Livewire\PostsTable;
+use Filament\Tests\Fixtures\Models\Post;
 use Filament\Tests\Tables\TestCase;
 use Illuminate\Support\Str;
 
@@ -93,7 +94,10 @@ it('can set default action data when mounted', function () {
         ->mountTableAction('data')
         ->assertTableActionDataSet([
             'foo' => 'bar',
-        ]);
+        ])
+        ->assertTableActionDataSet(function (array $data): bool {
+            return $data['foo'] === 'bar';
+        });
 });
 
 it('can call a nested action registered in the modal footer', function () {
@@ -283,13 +287,25 @@ it('can hide an action', function () {
 
     livewire(PostsTable::class)
         ->assertActionVisible(TestAction::make('visible')->table())
-        ->assertActionHidden(TestAction::make('hidden')->table());
+        ->assertActionHidden(TestAction::make('hidden')->table())
+        ->assertActionExists(TestAction::make('visible')->table(), fn (Action $action): bool => $action->isVisible())
+        ->assertActionExists(TestAction::make('hidden')->table(), fn (Action $action): bool => $action->isHidden())
+        ->assertActionDoesNotExist(TestAction::make('visible')->table(), fn (Action $action): bool => $action->isHidden())
+        ->assertActionDoesNotExist(TestAction::make('hidden')->table(), fn (Action $action): bool => $action->isVisible());
 
     livewire(PostsTable::class)
         ->assertTableActionVisible('visible')
         ->assertTableActionHidden('hidden')
         ->assertTableActionVisible('groupedWithVisibleGroupCondition', $post)
-        ->assertTableActionHidden('groupedWithHiddenGroupCondition', $post);
+        ->assertTableActionHidden('groupedWithHiddenGroupCondition', $post)
+        ->assertTableActionExists('visible', fn (Action $action): bool => $action->isVisible())
+        ->assertTableActionExists('hidden', fn (Action $action): bool => $action->isHidden())
+        ->assertTableActionDoesNotExist('visible', fn (Action $action): bool => $action->isHidden())
+        ->assertTableActionDoesNotExist('hidden', fn (Action $action): bool => $action->isVisible())
+        ->assertTableActionExists('groupedWithVisibleGroupCondition', fn (Action $action): bool => $action->isVisible(), $post)
+        ->assertTableActionExists('groupedWithHiddenGroupCondition', fn (Action $action): bool => $action->isHidden(), $post)
+        ->assertTableActionDoesNotExist('groupedWithVisibleGroupCondition', fn (Action $action): bool => $action->isHidden(), $post)
+        ->assertTableActionDoesNotExist('groupedWithHiddenGroupCondition', fn (Action $action): bool => $action->isVisible(), $post);
 });
 
 it('can disable an action', function () {

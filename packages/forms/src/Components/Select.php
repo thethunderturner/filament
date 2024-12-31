@@ -5,13 +5,13 @@ namespace Filament\Forms\Components;
 use Closure;
 use Exception;
 use Filament\Actions\Action;
-use Filament\Schemas\Components\Attributes\Exposed;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Contracts\HasAffixActions;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Schemas\Components\StateCasts\EnumArrayStateCast;
 use Filament\Schemas\Components\StateCasts\EnumStateCast;
 use Filament\Schemas\Schema;
+use Filament\Support\Components\Attributes\ExposedLivewireMethod;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Services\RelationshipJoiner;
@@ -279,6 +279,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
         }
 
         $action = Action::make($this->getCreateOptionActionName())
+            ->label(__('filament-forms::components.select.actions.create_option.label'))
             ->form(function (Select $component, Schema $form): array | Schema | null {
                 return $component->getCreateOptionActionForm($form->model(
                     $component->getRelationship() ? $component->getRelationship()->getModel()::class : null,
@@ -433,6 +434,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
         }
 
         $action = Action::make($this->getEditOptionActionName())
+            ->label(__('filament-forms::components.select.actions.edit_option.label'))
             ->form(function (Select $component, Schema $form): array | Schema | null {
                 return $component->getEditOptionActionForm(
                     $form->model($component->getSelectedRecord()),
@@ -581,7 +583,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
         return $this->evaluate($this->position);
     }
 
-    #[Exposed]
+    #[ExposedLivewireMethod]
     #[Renderless]
     public function getOptionLabel(bool $withDefault = true): ?string
     {
@@ -669,7 +671,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
     /**
      * @return array<array{'label': string, 'value': string}>
      */
-    #[Exposed]
+    #[ExposedLivewireMethod]
     #[Renderless]
     public function getSearchResultsForJs(string $search): array
     {
@@ -679,7 +681,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
     /**
      * @return array<array{'label': string, 'value': string}>
      */
-    #[Exposed]
+    #[ExposedLivewireMethod]
     #[Renderless]
     public function getOptionsForJs(): array
     {
@@ -689,7 +691,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
     /**
      * @return array<array{'label': string, 'value': string}>
      */
-    #[Exposed]
+    #[ExposedLivewireMethod]
     #[Renderless]
     public function getOptionLabelsForJs(): array
     {

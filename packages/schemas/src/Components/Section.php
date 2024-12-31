@@ -55,7 +55,7 @@ class Section extends Component implements CanConcealComponents, CanEntangleWith
     final public function __construct(string | array | Htmlable | Closure | null $heading = null)
     {
         is_array($heading)
-            ? $this->childComponents($heading)
+            ? $this->components($heading)
             : $this->heading($heading);
     }
 
@@ -87,7 +87,7 @@ class Section extends Component implements CanConcealComponents, CanEntangleWith
                 return null;
             }
 
-            return Str::slug($heading);
+            return Str::slug(Str::transliterate($heading, strict: true));
         });
 
         $this->afterHeader(fn (Section $component): array => $component->getHeaderActions());

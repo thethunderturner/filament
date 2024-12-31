@@ -19,9 +19,19 @@ trait HasSchema
     /**
      * @param  array<Component> | Closure | null  $schema
      */
-    public function schema(array | Closure | null $schema): static
+    public function components(array | Closure | null $schema): static
     {
         $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * @param  array<Component> | Closure | null  $schema
+     */
+    public function schema(array | Closure | null $schema): static
+    {
+        $this->components($schema);
 
         return $this;
     }
@@ -40,7 +50,7 @@ trait HasSchema
 
     public function getSchema(Schema $schema): ?Schema
     {
-        $modifiedSchema = $this->evaluate($this->schema, [
+        $modifiedSchema = $this->evaluate($this->schema ?? $this->getHasActionsLivewire()?->getDefaultActionSchemaResolver($this), [
             'form' => $schema,
             'schema' => $schema,
             'infolist' => $schema,

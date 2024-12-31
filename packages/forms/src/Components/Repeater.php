@@ -6,6 +6,7 @@ use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Components\Concerns\CanBeCollapsed;
+use Filament\Schemas\Components\Concerns\HasContainerGridLayout;
 use Filament\Schemas\Components\Contracts\CanConcealComponents;
 use Filament\Schemas\Components\Contracts\HasExtraItemActions;
 use Filament\Schemas\Schema;
@@ -29,8 +30,8 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
     use Concerns\CanBeCloned;
     use Concerns\CanGenerateUuids;
     use Concerns\CanLimitItemsLength;
-    use Concerns\HasContainerGridLayout;
     use Concerns\HasExtraItemActions;
+    use HasContainerGridLayout;
     use HasReorderAnimationDuration;
 
     protected string | Closure | null $addActionLabel = null;

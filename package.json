@@ -25,11 +25,11 @@
         "@tailwindcss/typography": "^0.5.9",
         "alpine-lazy-load-assets": "^1.3.0",
         "alpinejs": "^3.10.4",
-        "async-alpine": "v1.2.1",
+        "async-alpine": "^2.0.0",
         "autoprefixer": "^10.4.0",
-        "chart.js": "^3.6.0",
+        "chart.js": "^4.4.7",
         "chartjs-adapter-luxon": "^1.3.1",
-        "choices.js": "^10.1.0",
+        "choices.js": "^11.0.0",
         "codemirror": "^6.0.1",
         "cropperjs": "^1.5.13",
         "dayjs": "^1.10.6",
@@ -64,21 +64,5 @@
         "trix": "^2.1",
         "uuid-browser": "^3.1.0",
         "vanilla-colorful": "^0.6.2"
-    },
-    "dependencies": {
-        "@codemirror/autocomplete": "^6.18.3",
-        "@codemirror/basic-setup": "^0.20.0",
-        "@codemirror/commands": "^6.7.1",
-        "@codemirror/lang-css": "^6.3.1",
-        "@codemirror/lang-html": "^6.4.9",
-        "@codemirror/lang-javascript": "^6.2.2",
-        "@codemirror/lang-markdown": "^6.3.1",
-        "@codemirror/language": "^6.10.6",
-        "@codemirror/language-data": "^6.5.1",
-        "@codemirror/lint": "^6.8.4",
-        "@codemirror/search": "^6.5.8",
-        "@codemirror/state": "^6.4.1",
-        "@codemirror/theme-one-dark": "^6.1.2",
-        "@codemirror/view": "^6.35.0"
     }
 }

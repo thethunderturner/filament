@@ -4,13 +4,13 @@ namespace Filament\Facades;
 
 use Closure;
 use Filament\Actions\Action;
+use Filament\Auth\MultiFactor\Contracts\MultiFactorAuthenticationProvider;
 use Filament\Billing\Providers\Contracts\BillingProvider;
 use Filament\Contracts\Plugin;
 use Filament\Enums\ThemeMode;
 use Filament\FilamentManager;
 use Filament\GlobalSearch\Providers\Contracts\GlobalSearchProvider;
 use Filament\Models\Contracts\HasTenants;
-use Filament\MultiFactorAuthentication\Contracts\MultiFactorAuthenticationProvider;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Enums\SubNavigationPosition;
@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getCollapsedSidebarWidth()
  * @method static string getCurrentDomain(?string $testingDomain = null)
  * @method static Panel | null getCurrentPanel()
+ * @method static Panel | null getCurrentOrDefaultPanel()
  * @method static string | Htmlable | null getDarkModeBrandLogo()
  * @method static string | null getDatabaseNotificationsPollingInterval()
  * @method static string getDefaultAvatarProvider()
@@ -107,6 +108,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static array<Model> getUserTenants(HasTenants | Model | Authenticatable $user)
  * @method static string | null getUrl(Model | null $tenant = null)
  * @method static string getVerifyEmailUrl(MustVerifyEmail | Model | Authenticatable $user, array $parameters = [])
+ * @method static string getVerifyEmailChangeUrl(MustVerifyEmail | Model | Authenticatable $user, string $newEmail, array $parameters = [])
+ * @method static string getBlockEmailChangeVerificationUrl(MustVerifyEmail | Model | Authenticatable $user, string $newEmail, string $verificationSignature, array $parameters = [])
  * @method static array getWidgets()
  * @method static bool hasBreadcrumbs()
  * @method static bool hasCollapsibleNavigationGroups()
@@ -114,6 +117,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool hasDarkModeForced()
  * @method static bool hasDatabaseNotifications()
  * @method static bool hasLazyLoadedDatabaseNotifications()
+ * @method static bool hasEmailChangeVerification()
  * @method static bool hasEmailVerification()
  * @method static bool hasLogin()
  * @method static bool hasNavigation()
@@ -128,6 +132,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool hasTenantRegistration()
  * @method static bool hasTopNavigation()
  * @method static bool hasUnsavedChangesAlerts()
+ * @method static bool isAuthorizationStrict()
  * @method static bool isProfilePageSimple()
  * @method static bool isServing()
  * @method static bool isSidebarCollapsibleOnDesktop()

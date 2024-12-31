@@ -291,6 +291,22 @@
                 @apply px-6;
             }
         }
+
+        &.fi-modal-window-has-close-button {
+            &.fi-align-center:not(.fi-modal-window-has-icon) {
+                & .fi-modal-heading {
+                    @apply ms-6;
+                }
+            }
+
+            &:not(.fi-modal-window-has-icon),
+            &.fi-align-start,
+            &.fi-align-left {
+                & .fi-modal-heading {
+                    @apply me-6;
+                }
+            }
+        }
     }
 
     & .fi-modal-close-btn {
