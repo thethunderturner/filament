@@ -34,7 +34,7 @@ Fieldset::make('Label')
 
 ## Uncontained Fieldset
 
-If may remove the border around the fieldset using:
+You may remove the border around the fieldset using:
 ```php
 use Filament\Schemas\Components\Fieldset;
 
