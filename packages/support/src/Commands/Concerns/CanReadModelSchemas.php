@@ -230,7 +230,7 @@ trait CanReadModelSchemas
         return null;
     }
 
-    protected function getEnumCasts($model)
+    protected function getEnumCasts($model): array
     {
         $casts = app($model)->getCasts();
         return array_filter($casts, fn ($cast) => enum_exists($cast));
