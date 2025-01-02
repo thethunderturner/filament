@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
+use function Illuminate\Support\enum_value;
 
 trait CanReadModelSchemas
 {
@@ -228,5 +229,11 @@ trait CanReadModelSchemas
     public function getRecordTitleAttribute(): ?string
     {
         return null;
+    }
+
+    protected function getEnumCasts($model)
+    {
+        $casts = app($model)->getCasts();
+        return array_filter($casts, fn ($cast) => enum_exists($cast));
     }
 }

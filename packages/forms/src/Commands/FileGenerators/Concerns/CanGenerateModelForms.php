@@ -95,19 +95,28 @@ trait CanGenerateModelForms
                 default => TextInput::class,
             };
 
-            if (isset($type['name']) && $type['name'] === 'enum') {
+            $enumCasts = $this->getEnumCasts($model);
+
+            if (isset($type['name']) && ($type['name'] === 'enum' || array_key_exists($componentName, $enumCasts))) {
                 $componentData['type'] = Select::class;
-                $options = array_combine(
-                    $type['values'],
-                    array_map(
-                        fn ($value) => (string) str($value)
-                            ->kebab()
-                            ->replace(['-', '_'], ' ')
-                            ->ucfirst(),
-                        $type['values']
+
+                if (array_key_exists($componentName, $enumCasts)) {
+                    $options = $enumCasts[$componentName];
+                    $componentData['options'] = [new Literal("\\{$options}::class")];
+                } else {
+                    $options = array_combine(
+                        $type['values'],
+                        array_map(
+                            fn($value) => (string)str($value)
+                                ->kebab()
+                                ->replace(['-', '_'], ' ')
+                                ->ucfirst(),
+                            $type['values']
                         )
                     );
-                $componentData['options'] = [$options];
+                    $componentData['options'] = [$options];
+                }
+
                 if ($column['default']) {
                     $componentData['default'] = [$this->parseDefaultExpression($column, $model)];
                 }
