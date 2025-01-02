@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
-use function Illuminate\Support\enum_value;
 
 trait CanReadModelSchemas
 {
