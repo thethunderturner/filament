@@ -101,8 +101,8 @@ trait CanGenerateModelForms
                 $componentData['type'] = Select::class;
 
                 if (array_key_exists($componentName, $enumCasts)) {
-                    $options = $enumCasts[$componentName];
-                    $componentData['options'] = [new Literal("\\{$options}::class")];
+                    $enumClass = $enumCasts[$componentName];
+                    $componentData['options'] = [new Literal("\\{$enumClass}::class")];
                 } else {
                     $options = array_combine(
                         $type['values'],
