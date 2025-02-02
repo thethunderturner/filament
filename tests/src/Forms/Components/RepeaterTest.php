@@ -178,7 +178,7 @@ it('throws an exception for a missing relationship', function () {
 
     $componentContainer
         ->saveRelationships();
-})->throws(Exception::class, 'The relationship [missing] does not exist on the model [Filament\Tests\Models\Post].');
+})->throws(Exception::class, 'The relationship [missing] does not exist on the model [Filament\Tests\Fixtures\Models\Post].');
 
 class TestComponentWithRepeater extends Livewire
 {
