@@ -1161,7 +1161,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
     public function getRelationship(): BelongsTo | BelongsToMany | HasOneOrMany | HasOneOrManyThrough | BelongsToThrough | null
     {
-        if (blank($this->getRelationshipName())) {
+        if (! $this->hasRelationship()) {
             return null;
         }
 
@@ -1169,7 +1169,9 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
         $relationship = null;
 
-        foreach (explode('.', $this->getRelationshipName()) as $nestedRelationshipName) {
+        $relationshipName = $this->getRelationshipName();
+
+        foreach (explode('.', $relationshipName) as $nestedRelationshipName) {
             if (! $record->isRelation($nestedRelationshipName)) {
                 $relationship = null;
 
@@ -1178,6 +1180,10 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
             $relationship = $record->{$nestedRelationshipName}();
             $record = $relationship->getRelated();
+        }
+
+        if (! $relationship) {
+            throw new Exception("The relationship [{$relationshipName}] does not exist on the model [{$this->getModel()}].");
         }
 
         return $relationship;

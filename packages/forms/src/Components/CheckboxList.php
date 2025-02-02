@@ -3,6 +3,7 @@
 namespace Filament\Forms\Components;
 
 use Closure;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Schemas\Components\StateCasts\EnumArrayStateCast;
@@ -296,7 +297,13 @@ class CheckboxList extends Field implements Contracts\CanDisableOptions, Contrac
             return null;
         }
 
-        return $this->getModelInstance()->{$name}();
+        $record = $this->getModelInstance();
+
+        if (! $record->isRelation($name)) {
+            throw new Exception("The relationship [{$name}] does not exist on the model [{$this->getModel()}].");
+        }
+
+        return $record->{$name}();
     }
 
     public function getRelationshipName(): ?string

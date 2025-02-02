@@ -3,6 +3,7 @@
 namespace Filament\Forms\Components;
 
 use Closure;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Forms\Contracts\HasForms;
@@ -1093,7 +1094,15 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             return null;
         }
 
-        return $this->getModelInstance()->{$this->getRelationshipName()}();
+        $record = $this->getModelInstance();
+
+        $relationshipName = $this->getRelationshipName();
+
+        if (! $record->isRelation($relationshipName)) {
+            throw new Exception("The relationship [{$relationshipName}] does not exist on the model [{$this->getModel()}].");
+        }
+
+        return $this->getModelInstance()->{$relationshipName}();
     }
 
     public function getRelationshipName(): ?string
