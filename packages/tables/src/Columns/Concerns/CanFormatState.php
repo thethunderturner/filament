@@ -52,7 +52,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function date(?string $format = null, ?string $timezone = null): static
+    public function date(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $this->isDate = true;
 
@@ -65,13 +65,13 @@ trait CanFormatState
 
             return Carbon::parse($state)
                 ->setTimezone($timezone ?? $column->getTimezone())
-                ->translatedFormat($format);
+                ->translatedFormat($column->evaluate($format));
         });
 
         return $this;
     }
 
-    public function dateTime(?string $format = null, ?string $timezone = null): static
+    public function dateTime(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $this->isDateTime = true;
 
@@ -128,7 +128,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function dateTooltip(?string $format = null, ?string $timezone = null): static
+    public function dateTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $format ??= Table::$defaultDateDisplayFormat;
 
@@ -139,13 +139,13 @@ trait CanFormatState
 
             return Carbon::parse($state)
                 ->setTimezone($timezone ?? $column->getTimezone())
-                ->translatedFormat($format);
+                ->translatedFormat($column->evaluate($format));
         });
 
         return $this;
     }
 
-    public function dateTimeTooltip(?string $format = null, ?string $timezone = null): static
+    public function dateTimeTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $format ??= Table::$defaultDateTimeDisplayFormat;
 
@@ -154,7 +154,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function timeTooltip(?string $format = null, ?string $timezone = null): static
+    public function timeTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $format ??= Table::$defaultTimeDisplayFormat;
 
@@ -275,7 +275,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function time(?string $format = null, ?string $timezone = null): static
+    public function time(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $this->isTime = true;
 
@@ -355,6 +355,10 @@ trait CanFormatState
         $state = $this->evaluate($this->formatStateUsing ?? $state, [
             'state' => $state,
         ]);
+
+        if (is_array($state)) {
+            $state = json_encode($state);
+        }
 
         if ($isHtml) {
             $state = Str::sanitizeHtml($state);

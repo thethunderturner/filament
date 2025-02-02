@@ -125,7 +125,7 @@ Resource classes contain a `form()` method that is used to build the forms on th
 
 ```php
 use Filament\Forms;
-use Filament\Schema\Schema;
+use Filament\Schemas\Schema;
 
 public static function form(Schema $form): Schema
 {
@@ -138,7 +138,7 @@ public static function form(Schema $form): Schema
 }
 ```
 
-The `schema()` method is used to define the structure of your form. It is an array of [fields](../../forms/fields#available-fields) and [layout components](../../schema/layout#available-layout-components), in the order they should appear in your form.
+The `schema()` method is used to define the structure of your form. It is an array of [fields](../../forms/fields#available-fields) and [layout components](../../schemas/layout#available-layout-components), in the order they should appear in your form.
 
 Check out the Forms docs for a [guide](../../forms/getting-started) on how to build forms with Filament.
 
@@ -303,15 +303,18 @@ public static function getNavigationLabel(): string
 The `$navigationIcon` property supports the name of any Blade component. By default, [Heroicons](https://heroicons.com) are installed. However, you may create your own custom icon components or install an alternative library if you wish.
 
 ```php
-protected static ?string $navigationIcon = 'heroicon-o-user-group';
+use BackedEnum;
+
+protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 ```
 
 Alternatively, you may set a dynamic navigation icon in the `getNavigationIcon()` method:
 
 ```php
+use BackedEnum;
 use Illuminate\Contracts\Support\Htmlable;
 
-public static function getNavigationIcon(): string | Htmlable | null
+public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
 {
     return 'heroicon-o-user-group';
 }
@@ -544,4 +547,4 @@ public static function getPages(): array
 }
 ```
 
-Deleting a page will not delete any actions that link to that page. Any actions will open a modal instead of sending the user to the non-existant page. For instance, the `CreateAction` on the List page, the `EditAction` on the table or View page, or the `ViewAction` on the table or Edit page. If you want to remove those buttons, you must delete the actions as well.
+Deleting a page will not delete any actions that link to that page. Any actions will open a modal instead of sending the user to the non-existent page. For instance, the `CreateAction` on the List page, the `EditAction` on the table or View page, or the `ViewAction` on the table or Edit page. If you want to remove those buttons, you must delete the actions as well.

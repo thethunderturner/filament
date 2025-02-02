@@ -4,7 +4,7 @@ namespace Filament\Infolists\Components\Concerns;
 
 use Closure;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schema\Schema;
+use Filament\Schemas\Schema;
 use Filament\Support\Contracts\HasLabel as LabelInterface;
 use Filament\Support\Enums\ArgumentValue;
 use Illuminate\Contracts\Support\Htmlable;
@@ -52,7 +52,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function date(?string $format = null, ?string $timezone = null): static
+    public function date(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $this->isDate = true;
 
@@ -65,13 +65,13 @@ trait CanFormatState
 
             return Carbon::parse($state)
                 ->setTimezone($timezone ?? $component->getTimezone())
-                ->translatedFormat($format);
+                ->translatedFormat($component->evaluate($format));
         });
 
         return $this;
     }
 
-    public function dateTime(?string $format = null, ?string $timezone = null): static
+    public function dateTime(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $this->isDateTime = true;
 
@@ -128,7 +128,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function dateTooltip(?string $format = null, ?string $timezone = null): static
+    public function dateTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $format ??= Schema::$defaultDateDisplayFormat;
 
@@ -139,13 +139,13 @@ trait CanFormatState
 
             return Carbon::parse($state)
                 ->setTimezone($timezone ?? $component->getTimezone())
-                ->translatedFormat($format);
+                ->translatedFormat($component->evaluate($format));
         });
 
         return $this;
     }
 
-    public function dateTimeTooltip(?string $format = null, ?string $timezone = null): static
+    public function dateTimeTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $format ??= Schema::$defaultDateTimeDisplayFormat;
 
@@ -154,7 +154,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function timeTooltip(?string $format = null, ?string $timezone = null): static
+    public function timeTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $format ??= Schema::$defaultTimeDisplayFormat;
 
@@ -275,7 +275,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function time(?string $format = null, ?string $timezone = null): static
+    public function time(string | Closure | null $format = null, ?string $timezone = null): static
     {
         $this->isTime = true;
 
