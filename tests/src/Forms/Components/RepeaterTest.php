@@ -4,8 +4,8 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Tests\Fixtures\Livewire\Livewire;
-use Filament\Tests\Models\Post;
-use Filament\Tests\Models\User;
+use Filament\Tests\Fixtures\Models\Post;
+use Filament\Tests\Fixtures\Models\User;
 use Filament\Tests\TestCase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -146,7 +146,7 @@ it('can remove items from a repeater', function () {
     $undoRepeaterFake();
 });
 
-it('loads relationship', function () {
+it('loads a relationship', function () {
     $user = User::factory()
         ->has(Post::factory()->count(3))
         ->create();
@@ -167,7 +167,7 @@ it('loads relationship', function () {
         ->toBe(3);
 });
 
-it('throw exception for missing relationship', function () {
+it('throws an exception for a missing relationship', function () {
     $componentContainer = Schema::make(Livewire::make())
         ->statePath('data')
         ->components([
