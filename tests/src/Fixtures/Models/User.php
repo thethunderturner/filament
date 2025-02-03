@@ -37,6 +37,7 @@ class User extends Authenticatable implements FilamentUser, HasEmailCodeAuthenti
      * @var array<string, string>
      */
     protected $casts = [
+        'json' => 'array',
         'email_verified_at' => 'datetime',
         'google_two_factor_authentication_secret' => 'encrypted',
         'google_two_factor_authentication_recovery_codes' => 'encrypted:array',
