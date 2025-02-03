@@ -34,7 +34,7 @@ class Slider extends Field
 
     protected int | Closure | null $limit = null;
 
-    protected bool | Closure | null $connect = null;
+    protected bool | array | Closure | null $connect = null;
 
     protected string | Closure | null $direction = null;
 
@@ -101,7 +101,10 @@ class Slider extends Field
         return $this;
     }
 
-    public function connect(bool | Closure | null $connect = null): static
+    /**
+     * @param  array<int, bool>|bool|Closure|null  $connect
+     */
+    public function connect(array | bool | Closure | null $connect = null): static
     {
         $this->connect = $connect;
 
@@ -203,7 +206,7 @@ class Slider extends Field
         return $this->evaluate($this->limit);
     }
 
-    public function getConnect(): ?bool
+    public function getConnect(): array | bool | null
     {
         return $this->evaluate($this->connect);
     }
