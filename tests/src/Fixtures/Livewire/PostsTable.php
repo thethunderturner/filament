@@ -90,7 +90,19 @@ class PostsTable extends Component implements HasActions, HasForms, Tables\Contr
                     ->state('correct state'),
                 Tables\Columns\TextColumn::make('formatted_state')
                     ->formatStateUsing(fn () => 'formatted state'),
+                Tables\Columns\TextColumn::make('json.foo')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('json.bar.baz')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('json_array_of_objects.*.value'),
+                Tables\Columns\TextColumn::make('author.json.foo')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('author.json.bar.baz')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('extra_attributes')
                     ->extraAttributes([
                         'class' => 'text-danger-500',
