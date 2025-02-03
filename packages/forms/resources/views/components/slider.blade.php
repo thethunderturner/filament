@@ -24,7 +24,7 @@
         {{-- Set dimensions! Vertical sliders don't assume a default height, so a height needs to be set. --}}
         {{-- Set margin bottom when orientation is horizontal due to nouislider bug --}}
         @class([
-            'fi-slider-vh' => $orientation === Filament\Forms\Components\Enums\SliderOrientation::Vertical->value,
+            'h-40' => $orientation === Filament\Forms\Components\Enums\SliderOrientation::Vertical->value,
             'mb-8' => $orientation === Filament\Forms\Components\Enums\SliderOrientation::Horizontal->value,
         ])
         x-load
