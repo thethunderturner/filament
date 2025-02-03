@@ -99,24 +99,26 @@ trait CanGenerateModelForms
 
             $enumCasts = $this->getEnumCasts($model);
 
-            if (isset($type['name']) && ($type['name'] === 'enum' || array_key_exists($componentName, $enumCasts))) {
+            if (isset($type['name']) && (($type['name'] === 'enum') || array_key_exists($componentName, $enumCasts))) {
                 $componentData['type'] = Select::class;
 
                 if (array_key_exists($componentName, $enumCasts)) {
                     $enumClass = $enumCasts[$componentName];
-                    $componentData['options'] = [new Literal("\\{$enumClass}::class")];
+
+                    $this->namespace->addUse($enumClass);
+
+                    $componentData['options'] = [new Literal(class_basename($enumClass) . '::class')];
                 } else {
-                    $options = array_combine(
+                    $componentData['options'] = [array_combine(
                         $type['values'],
                         array_map(
-                            fn($value) => (string)str($value)
+                            fn (string $value): string => (string) str($value)
                                 ->kebab()
                                 ->replace(['-', '_'], ' ')
                                 ->ucfirst(),
-                            $type['values']
-                        )
-                    );
-                    $componentData['options'] = [$options];
+                            $type['values'],
+                        ),
+                    )];
                 }
 
                 if ($column['default']) {

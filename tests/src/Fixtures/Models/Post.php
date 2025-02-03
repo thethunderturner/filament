@@ -3,6 +3,7 @@
 namespace Filament\Tests\Fixtures\Models;
 
 use Filament\Tests\Database\Factories\PostFactory;
+use Filament\Tests\Fixtures\Enums\StringBackedEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class Post extends Model
     use SoftDeletes;
 
     protected $casts = [
+        'string_backed_enum' => StringBackedEnum::class,
         'is_published' => 'boolean',
         'tags' => 'array',
         'json' => 'array',

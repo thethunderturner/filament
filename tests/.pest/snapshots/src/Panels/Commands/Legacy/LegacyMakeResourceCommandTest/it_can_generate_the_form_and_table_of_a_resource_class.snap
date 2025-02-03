@@ -11,6 +11,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tests\Fixtures\Enums\StringBackedEnum;
 use Filament\Tests\Fixtures\Models\Post;
 
 class PostResource extends Resource
@@ -42,6 +43,8 @@ class PostResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('json_array_of_objects')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('string_backed_enum')
+                    ->options(StringBackedEnum::class),
             ]);
     }
 
@@ -58,6 +61,8 @@ class PostResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('string_backed_enum')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
