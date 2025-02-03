@@ -24,11 +24,10 @@
             'fi-slider-vh' => $orientation === Filament\Forms\Components\Enums\SliderOrientation::Vertical->value,
             'mb-8' => $orientation === Filament\Forms\Components\Enums\SliderOrientation::Horizontal->value,
         ])
-        ax-load
-        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('slider', 'filament/forms') }}"
+        x-load
+        x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('slider', 'filament/forms') }}"
         x-data="sliderFormComponent({
                 state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
-                statePath: @js($statePath),
                 range: @js($range),
                 step: @js($step),
                 start: @js($start),
@@ -52,7 +51,6 @@
                 ->merge($getExtraAttributes(), escape: false)
                 ->merge($getExtraAlpineAttributes(), escape: false)
         }}
-        wire:ignore
-        x-ignore>
+    >
     </div>
 </x-dynamic-component>
