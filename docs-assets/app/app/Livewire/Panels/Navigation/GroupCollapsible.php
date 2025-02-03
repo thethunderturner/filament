@@ -15,12 +15,12 @@ class GroupCollapsible extends Page
         filament()
             ->getCurrentPanel()
             ->navigationGroups([
-                NavigationGroup::make('Settings')->collapsed()
+                NavigationGroup::make('Settings')->collapsed(),
             ])
             ->navigationItems([
                 NavigationItem::make()
                     ->label('Bank Accounts')
-                    ->url(fn(): string => '#')
+                    ->url(fn (): string => '#')
                     ->group('Settings')
                     ->icon('heroicon-o-currency-dollar'),
             ]);

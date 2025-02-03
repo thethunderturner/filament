@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Panels\Navigation;
 
-use Filament\Pages\Page;
 use Filament\Navigation\NavigationItem;
+use Filament\Pages\Page;
 
 class ActiveIcon extends Page
 {
@@ -22,7 +22,7 @@ class ActiveIcon extends Page
                 NavigationItem::make('')
                     ->label('Settings Active')
                     ->url(fn (): string => '#')
-                    ->isActiveWhen(fn() => request()->path() === 'panels/navigation/active-icon')
+                    ->isActiveWhen(fn () => request()->path() === 'panels/navigation/active-icon')
                     ->activeIcon('heroicon-s-cog')
                     ->icon('heroicon-s-cog'),
             ]);

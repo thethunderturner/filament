@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Panels\Navigation;
 
-use Filament\Pages\Page;
 use Filament\Navigation\NavigationItem;
+use Filament\Pages\Page;
 
 class SortItems extends Page
 {
@@ -16,13 +16,13 @@ class SortItems extends Page
             ->navigationItems([
                 NavigationItem::make()
                     ->label('Products')
-                    ->badge("2")
+                    ->badge('2')
                     ->sort(2)
                     ->icon('heroicon-o-document-text')
                     ->url(fn (): string => '#'),
                 NavigationItem::make('')
                     ->label('Orders')
-                    ->badge("1")
+                    ->badge('1')
                     ->sort(1)
                     ->icon('heroicon-o-document-text')
                     ->url(fn (): string => '#'),

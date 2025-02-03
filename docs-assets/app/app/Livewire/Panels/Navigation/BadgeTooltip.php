@@ -16,7 +16,7 @@ class BadgeTooltip extends Page
             ->navigationItems([
                 NavigationItem::make()
                     ->label('Users')
-                    ->url(fn(): string => '#')
+                    ->url(fn (): string => '#')
                     ->icon('heroicon-o-user-group')
                     ->badge(12)
                     ->badgeTooltip('The number of users'),

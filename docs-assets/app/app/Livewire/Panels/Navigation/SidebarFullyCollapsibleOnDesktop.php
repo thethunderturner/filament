@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Panels\Navigation;
 
-use Filament\Pages\Page;
 use Filament\Navigation\NavigationItem;
+use Filament\Pages\Page;
 
 class SidebarFullyCollapsibleOnDesktop extends Page
 {

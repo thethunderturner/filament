@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Panels\Navigation;
 
-use Filament\Pages\Page;
-use Filament\Pages\Dashboard;
 use Filament\Navigation\NavigationItem;
+use Filament\Pages\Dashboard;
+use Filament\Pages\Page;
 
 class CustomItems extends Page
 {
