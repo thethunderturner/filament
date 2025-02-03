@@ -3,18 +3,15 @@
 namespace Filament\Forms\Components;
 
 use Closure;
-use Filament\Forms\Enums\SliderBehaviour;
-use Filament\Forms\Enums\SliderDirection;
-use Filament\Forms\Enums\SliderOrientation;
-use Filament\Support\Concerns\HasColor;
+use Filament\Forms\Components\Enums\SliderBehaviour;
+use Filament\Forms\Components\Enums\SliderDirection;
+use Filament\Forms\Components\Enums\SliderOrientation;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 use Filament\Support\RawJs;
 use InvalidArgumentException;
 
 class Slider extends Field
 {
-    use Concerns\CanBeDisabled;
-    use Concerns\CanBeHidden;
     use Concerns\CanBeValidated;
     use Concerns\HasAffixes;
     use Concerns\HasExtraInputAttributes;
@@ -43,7 +40,6 @@ class Slider extends Field
 
     protected string | Closure | null $orientation = null;
 
-    /** @var string|Closure|null */
     protected string | Closure | null $behaviour = null;
 
     /** @var array<int, bool>|bool|Closure|null */
@@ -63,7 +59,7 @@ class Slider extends Field
     /** @param array<string, int>|Closure $range */
     public function range(array | Closure $range): static
     {
-        if (is_array($range) && (!array_key_exists('min', $range) || !array_key_exists('max', $range) || count($range) !== 2)) {
+        if (is_array($range) && (! array_key_exists('min', $range) || ! array_key_exists('max', $range) || count($range) !== 2)) {
             throw new InvalidArgumentException("The range array must have 'min' and 'max' keys.");
         }
 
@@ -140,7 +136,7 @@ class Slider extends Field
     public function behaviour(array | SliderBehaviour | Closure | null $behaviour = null): static
     {
         if (is_array($behaviour)) {
-            $behaviourStrings = array_map(fn($item) => $item->value, $behaviour);
+            $behaviourStrings = array_map(fn ($item) => $item->value, $behaviour);
             $behaviour = implode('-', $behaviourStrings);
         } elseif ($behaviour instanceof SliderBehaviour) {
             $behaviour = $behaviour->value;
