@@ -8,6 +8,7 @@
     $start = $getStart();
     $margin = $getMargin();
     $limit = $getLimit();
+    $padding = $getPadding();
     $connect = $getConnect();
     $direction = $getDirection();
     $orientation = $getOrientation();
@@ -35,6 +36,7 @@
                     start: @js($start),
                     margin: @js($margin),
                     limit: @js($limit),
+                    padding: @js($padding),
                     connect: @js($connect),
                     direction: @js($direction),
                     orientation: @js($orientation),

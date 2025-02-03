@@ -34,6 +34,8 @@ class Slider extends Field
 
     protected int | Closure | null $limit = null;
 
+    protected array | Closure | null $padding = null;
+
     protected bool | array | Closure | null $connect = null;
 
     protected string | Closure | null $direction = null;
@@ -97,6 +99,13 @@ class Slider extends Field
     public function limit(int | Closure | null $limit = null): static
     {
         $this->limit = $limit;
+
+        return $this;
+    }
+
+    public function padding(int | Closure | null $padding = null): static
+    {
+        $this->padding = $padding;
 
         return $this;
     }
@@ -165,7 +174,7 @@ class Slider extends Field
         return $this;
     }
 
-    public function pips(RawJs | Closure | null $pips = null): static
+    public function     pips(RawJs | Closure | null $pips = null): static
     {
         $this->pips = $pips;
 
@@ -204,6 +213,11 @@ class Slider extends Field
     public function getLimit(): ?int
     {
         return $this->evaluate($this->limit);
+    }
+
+    public function getPadding(): ?int
+    {
+        return $this->evaluate($this->padding);
     }
 
     public function getConnect(): array | bool | null
