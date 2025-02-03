@@ -2,6 +2,7 @@
 
 namespace Filament\Actions\Testing;
 
+use BackedEnum;
 use Closure;
 use Exception;
 use Filament\Actions\Action;
@@ -45,14 +46,9 @@ class TestsActions
                 return $this;
             }
 
-            $this->assertDispatched('sync-action-modals', id: $this->instance()->getId(), newActionNestingIndex: array_key_last($this->instance()->mountedActions));
-
             if (count($this->instance()->mountedActions) !== ($initialMountedActionsCount + count($actions))) {
                 return $this;
             }
-
-            /** @phpstan-ignore-next-line */
-            $this->assertActionMounted($actions);
 
             return $this;
         };
@@ -144,10 +140,6 @@ class TestsActions
 
             if (store($this->instance())->has('redirect')) {
                 return $this;
-            }
-
-            if (blank($this->instance()->mountedActions)) {
-                $this->assertDispatched('sync-action-modals', id: $this->instance()->getId(), newActionNestingIndex: null);
             }
 
             return $this;
@@ -289,11 +281,14 @@ class TestsActions
 
     public function assertActionHasIcon(): Closure
     {
-        return function (string | TestAction | array $actions, string $icon): static {
+        return function (string | TestAction | array $actions, string | BackedEnum $icon): static {
+
+            $iconValue = $icon instanceof BackedEnum ? $icon->value : $icon;
+
             $this->assertActionExists(
                 $actions,
                 checkActionUsing: fn (Action $action): bool => $action->getIcon() === $icon,
-                generateMessageUsing: fn (string $prettyName, string $livewireClass): string => "Failed asserting that an action with name [{$prettyName}] has icon [{$icon}] on the [{$livewireClass}] component.",
+                generateMessageUsing: fn (string $prettyName, string $livewireClass): string => "Failed asserting that an action with name [{$prettyName}] has icon [{$iconValue}] on the [{$livewireClass}] component.",
             );
 
             return $this;
@@ -302,11 +297,14 @@ class TestsActions
 
     public function assertActionDoesNotHaveIcon(): Closure
     {
-        return function (string | TestAction | array $actions, string $icon): static {
+        return function (string | TestAction | array $actions, string | BackedEnum $icon): static {
+
+            $iconValue = $icon instanceof BackedEnum ? $icon->value : $icon;
+
             $this->assertActionExists(
                 $actions,
                 checkActionUsing: fn (Action $action): bool => $action->getIcon() !== $icon,
-                generateMessageUsing: fn (string $prettyName, string $livewireClass): string => "Failed asserting that an action with name [{$prettyName}] does not have icon [{$icon}] on the [{$livewireClass}] component.",
+                generateMessageUsing: fn (string $prettyName, string $livewireClass): string => "Failed asserting that an action with name [{$prettyName}] does not have icon [{$iconValue}] on the [{$livewireClass}] component.",
             );
 
             return $this;

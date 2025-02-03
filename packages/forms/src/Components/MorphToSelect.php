@@ -4,6 +4,8 @@ namespace Filament\Forms\Components;
 
 use Closure;
 use Exception;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\MorphToSelect\Type;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Utilities\Set;
@@ -59,9 +61,9 @@ class MorphToSelect extends Component
     }
 
     /**
-     * @return array<Component>
+     * @return array<Component | Action | ActionGroup>
      */
-    public function getChildComponents(): array
+    public function getDefaultChildComponents(): array
     {
         $relationship = $this->getRelationship();
         $typeColumn = $relationship->getMorphType();
@@ -145,7 +147,15 @@ class MorphToSelect extends Component
 
     public function getRelationship(): MorphTo
     {
-        return $this->getModelInstance()->{$this->getName()}();
+        $record = $this->getModelInstance();
+
+        $relationshipName = $this->getName();
+
+        if (! $record->isRelation($relationshipName)) {
+            throw new Exception("The relationship [{$relationshipName}] does not exist on the model [{$this->getModel()}].");
+        }
+
+        return $record->{$relationshipName}();
     }
 
     /**

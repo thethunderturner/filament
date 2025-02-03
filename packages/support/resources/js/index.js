@@ -5,6 +5,7 @@ import { md5 } from 'js-md5'
 import Sortable from './sortable'
 import Tooltip from '@ryangjchandler/alpine-tooltip'
 import dropdown from './components/dropdown.js'
+import formButton from './components/form-button.js'
 import modal from './components/modal.js'
 
 import '../css/components/actions.css'
@@ -18,6 +19,7 @@ import '../css/components/dropdown/list/index.css'
 import '../css/components/dropdown/list/item.css'
 import '../css/components/fieldset.css'
 import '../css/components/grid.css'
+import '../css/components/icon.css'
 import '../css/components/icon-button.css'
 import '../css/components/input/checkbox.css'
 import '../css/components/input/index.css'
@@ -72,6 +74,7 @@ document.addEventListener('alpine:init', () => {
     window.Alpine.plugin(Sortable)
     window.Alpine.plugin(Tooltip)
     window.Alpine.data('filamentDropdown', dropdown)
+    window.Alpine.data('filamentFormButton', formButton)
     window.Alpine.data('filamentModal', modal)
 })
 

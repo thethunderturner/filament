@@ -5,7 +5,6 @@ namespace Filament\Panel\Concerns;
 use Closure;
 use Filament\Auth\Pages\EditProfile;
 use Filament\Clusters\Cluster;
-use Filament\Livewire\DatabaseNotifications;
 use Filament\Livewire\GlobalSearch;
 use Filament\Livewire\Notifications;
 use Filament\Livewire\Sidebar;
@@ -484,7 +483,7 @@ trait HasComponents
     protected function registerLivewireComponents(): void
     {
         if (! $this->hasCachedComponents()) {
-            $this->queueLivewireComponentForRegistration(DatabaseNotifications::class);
+            $this->queueLivewireComponentForRegistration($this->getDatabaseNotificationsLivewireComponent());
             $this->queueLivewireComponentForRegistration(EditProfile::class);
             $this->queueLivewireComponentForRegistration(GlobalSearch::class);
             $this->queueLivewireComponentForRegistration(Notifications::class);
@@ -498,6 +497,10 @@ trait HasComponents
 
             if ($this->hasLogin() && is_subclass_of($loginRouteAction = $this->getLoginRouteAction(), Component::class)) {
                 $this->queueLivewireComponentForRegistration($loginRouteAction);
+            }
+
+            if ($this->isMultiFactorAuthenticationRequired() && is_subclass_of($setUpRequiredMultiFactorAuthenticationRouteAction = $this->getSetUpRequiredMultiFactorAuthenticationRouteAction(), Component::class)) {
+                $this->queueLivewireComponentForRegistration($setUpRequiredMultiFactorAuthenticationRouteAction);
             }
 
             if ($this->hasPasswordReset()) {

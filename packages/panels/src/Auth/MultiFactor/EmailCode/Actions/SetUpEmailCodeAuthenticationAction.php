@@ -10,7 +10,8 @@ use Filament\Auth\MultiFactor\EmailCode\EmailCodeAuthentication;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\OneTimeCodeInput;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Support\Enums\Width;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\DB;
 
@@ -21,8 +22,8 @@ class SetUpEmailCodeAuthenticationAction
         return Action::make('setUpEmailCodeAuthentication')
             ->label(__('filament-panels::auth/multi-factor/email-code/actions/set-up.label'))
             ->color('primary')
-            ->icon('heroicon-m-lock-closed')
-            ->outlined()
+            ->icon(Heroicon::LockClosed)
+            ->link()
             ->mountUsing(function (HasActions $livewire) use ($emailCodeAuthentication) {
                 $livewire->mergeMountedActionArguments([
                     'encrypted' => encrypt([
@@ -36,8 +37,8 @@ class SetUpEmailCodeAuthenticationAction
 
                 $emailCodeAuthentication->sendCode($user, $secret);
             })
-            ->modalWidth(MaxWidth::Large)
-            ->modalIcon('heroicon-o-lock-closed')
+            ->modalWidth(Width::Large)
+            ->modalIcon(Heroicon::OutlinedLockClosed)
             ->modalIconColor('primary')
             ->modalHeading(__('filament-panels::auth/multi-factor/email-code/actions/set-up.modal.heading'))
             ->modalDescription(__('filament-panels::auth/multi-factor/email-code/actions/set-up.modal.description'))
@@ -71,8 +72,7 @@ class SetUpEmailCodeAuthenticationAction
                     }),
             ])
             ->modalSubmitAction(fn (Action $action) => $action
-                ->label(__('filament-panels::auth/multi-factor/email-code/actions/set-up.modal.actions.submit.label'))
-                ->color('danger'))
+                ->label(__('filament-panels::auth/multi-factor/email-code/actions/set-up.modal.actions.submit.label')))
             ->action(function (array $arguments) use ($emailCodeAuthentication) {
                 /** @var Authenticatable&HasEmailCodeAuthentication $user */
                 $user = Filament::auth()->user();
@@ -92,7 +92,7 @@ class SetUpEmailCodeAuthenticationAction
                 Notification::make()
                     ->title(__('filament-panels::auth/multi-factor/email-code/actions/set-up.notifications.enabled.title'))
                     ->success()
-                    ->icon('heroicon-o-lock-closed')
+                    ->icon(Heroicon::OutlinedLockClosed)
                     ->send();
             })
             ->rateLimit(5);

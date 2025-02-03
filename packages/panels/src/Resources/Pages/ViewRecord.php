@@ -2,8 +2,10 @@
 
 namespace Filament\Resources\Pages;
 
+use BackedEnum;
 use Closure;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -11,6 +13,7 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -28,11 +31,11 @@ class ViewRecord extends Page
      */
     public ?array $data = [];
 
-    public static function getNavigationIcon(): string | Htmlable | null
+    public static function getNavigationIcon(): string | BackedEnum | Htmlable | null
     {
         return static::$navigationIcon
             ?? FilamentIcon::resolve('panels::resources.pages.view-record.navigation-item')
-            ?? 'heroicon-o-eye';
+            ?? Heroicon::OutlinedEye;
     }
 
     public function getBreadcrumb(): string
@@ -202,7 +205,7 @@ class ViewRecord extends Page
     }
 
     /**
-     * @return array<Component>
+     * @return array<Component | Action | ActionGroup>
      */
     public function getContentComponents(): array
     {
