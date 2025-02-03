@@ -9,6 +9,8 @@ use Filament\Pages\Page;
 use Filament\Pages\SimplePage;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
+use Filament\Widgets\ChartWidget;
+use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\Widget;
 use PhpParser\Modifiers;
 use PhpParser\Node;
@@ -89,6 +91,39 @@ class SimplePropertyChangesRector extends AbstractRector
                 'changes' => [
                     'icon' => function (Property $node) {
                         $node->type = new Name('string | \BackedEnum | null');
+                    },
+                ],
+            ],
+            [
+                'class' => [
+                    ChartWidget::class,
+                    StatsOverviewWidget::class,
+                ],
+                'changes' => [
+                    'pollingInterval' => function (Property $node) {
+                        $node->flags &= ~Modifiers::STATIC;
+                    },
+                ],
+            ],
+            [
+                'class' => [
+                    ChartWidget::class,
+                ],
+                'changes' => [
+                    'color' => function (Property $node) {
+                        $node->flags &= ~Modifiers::STATIC;
+                    },
+                    'heading' => function (Property $node) {
+                        $node->flags &= ~Modifiers::STATIC;
+                    },
+                    'description' => function (Property $node) {
+                        $node->flags &= ~Modifiers::STATIC;
+                    },
+                    'maxHeight' => function (Property $node) {
+                        $node->flags &= ~Modifiers::STATIC;
+                    },
+                    'options' => function (Property $node) {
+                        $node->flags &= ~Modifiers::STATIC;
                     },
                 ],
             ],
