@@ -4,6 +4,7 @@ namespace App\Livewire\Panels\Navigation;
 
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 
 class BadgeTooltip extends Page
 {
@@ -16,8 +17,8 @@ class BadgeTooltip extends Page
             ->navigationItems([
                 NavigationItem::make()
                     ->label('Users')
-                    ->url(fn(): string => '#')
-                    ->icon('heroicon-o-user-group')
+                    ->url(fn (): string => '#')
+                    ->icon(Heroicon::OutlinedUserGroup)
                     ->badge(12)
                     ->badgeTooltip('The number of users'),
             ]);

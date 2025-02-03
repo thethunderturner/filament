@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Panels\Navigation;
 
-use Filament\Pages\Page;
 use Filament\Navigation\NavigationItem;
+use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 
 class ChangeIcon extends Page
 {
@@ -17,7 +18,7 @@ class ChangeIcon extends Page
                 NavigationItem::make()
                     ->label('Settings')
                     ->url(fn (): string => '#')
-                    ->icon('heroicon-o-document-text'),
+                    ->icon(Heroicon::OutlinedDocumentText),
             ]);
     }
 }

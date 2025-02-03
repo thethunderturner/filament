@@ -5,7 +5,6 @@ use App\Livewire\Forms\FieldsDemo;
 use App\Livewire\Forms\GettingStartedDemo;
 use App\Livewire\Infolists\EntriesDemo;
 use App\Livewire\NotificationsDemo;
-use App\Livewire\Schema\LayoutDemo;
 use App\Livewire\Panels\Navigation\ActiveIcon;
 use App\Livewire\Panels\Navigation\Badge;
 use App\Livewire\Panels\Navigation\BadgeColor;
@@ -21,6 +20,7 @@ use App\Livewire\Panels\Navigation\SidebarFullyCollapsibleOnDesktop;
 use App\Livewire\Panels\Navigation\SortItems;
 use App\Livewire\Panels\Navigation\TopNavigation;
 use App\Livewire\Panels\Navigation\UserMenuCustomization;
+use App\Livewire\Schema\LayoutDemo;
 use App\Livewire\TablesDemo;
 use Illuminate\Support\Facades\Route;
 

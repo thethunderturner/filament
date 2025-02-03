@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Panels\Navigation;
 
-use Filament\Pages\Page;
 use Filament\Navigation\NavigationItem;
+use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 
 class SidebarFullyCollapsibleOnDesktop extends Page
 {
@@ -17,7 +18,7 @@ class SidebarFullyCollapsibleOnDesktop extends Page
                 NavigationItem::make()
                     ->label('Products')
                     ->sort(2)
-                    ->icon('heroicon-o-document-text')
+                    ->icon(Heroicon::OutlinedDocumentText)
                     ->url(fn (): string => '#'),
             ])
             ->sidebarFullyCollapsibleOnDesktop();

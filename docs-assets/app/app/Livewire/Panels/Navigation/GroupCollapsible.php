@@ -5,6 +5,7 @@ namespace App\Livewire\Panels\Navigation;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 
 class GroupCollapsible extends Page
 {
@@ -15,14 +16,14 @@ class GroupCollapsible extends Page
         filament()
             ->getCurrentPanel()
             ->navigationGroups([
-                NavigationGroup::make('Settings')->collapsed()
+                NavigationGroup::make('Settings')->collapsed(),
             ])
             ->navigationItems([
                 NavigationItem::make()
                     ->label('Bank Accounts')
-                    ->url(fn(): string => '#')
+                    ->url(fn (): string => '#')
                     ->group('Settings')
-                    ->icon('heroicon-o-currency-dollar'),
+                    ->icon(Heroicon::OutlinedCurrencyDollar),
             ]);
     }
 }
