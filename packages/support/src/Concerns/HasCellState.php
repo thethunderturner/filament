@@ -162,16 +162,20 @@ trait HasCellState
         return $this->hasRelationship($record);
     }
 
-    public function getRelationship(Model $record, ?string $name = null): ?Relation
+    public function getRelationship(Model $record, ?string $relationshipName = null): ?Relation
     {
-        $name ??= $this->getName();
+        if (isset($relationshipName)) {
+            $nameParts = explode('.', $relationshipName);
+        } else {
+            $name = $this->getName();
 
-        if (! str($name)->contains('.')) {
-            return null;
+            if (! str($name)->contains('.')) {
+                return null;
+            }
+
+            $nameParts = explode('.', $name);
+            array_pop($nameParts);
         }
-
-        $nameParts = explode('.', $name);
-        array_pop($nameParts);
 
         $relationship = null;
 
@@ -241,9 +245,9 @@ trait HasCellState
         return $results;
     }
 
-    public function getAttributeName(Model $record, ?string $name = null): string
+    public function getAttributeName(Model $record): string
     {
-        $name ??= $this->getName();
+        $name = $this->getName();
 
         if (! str($name)->contains('.')) {
             return $name;
@@ -262,9 +266,9 @@ trait HasCellState
         return Arr::first($nameParts);
     }
 
-    public function getFullAttributeName(Model $record, ?string $name = null): string
+    public function getFullAttributeName(Model $record): string
     {
-        $name ??= $this->getName();
+        $name = $this->getName();
 
         if (! str($name)->contains('.')) {
             return $name;
@@ -330,9 +334,9 @@ trait HasCellState
         return implode('.', $inverseRelationshipParts);
     }
 
-    public function getRelationshipName(Model $record, ?string $name = null): ?string
+    public function getRelationshipName(Model $record): ?string
     {
-        $name ??= $this->getName();
+        $name = $this->getName();
 
         if (! str($name)->contains('.')) {
             return null;
