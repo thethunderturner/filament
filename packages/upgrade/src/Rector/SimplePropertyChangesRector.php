@@ -4,7 +4,6 @@ namespace Filament\Upgrade\Rector;
 
 use Closure;
 use Filament\Auth\Pages\EditProfile;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\BasePage;
 use Filament\Pages\Page;
 use Filament\Pages\SimplePage;
