@@ -10,9 +10,9 @@ The slider component allows you to select a value from a range of values. The co
 <AutoScreenshot name="forms/fields/slider/simple" alt="Slider" version="4.x" />
 
 
-## Changing the range
+## Range
 
-By default, the slider has a range of 0 to 100. You can change using the `range()` method:
+By default, the slider has a range of 0 to 100. You can change this, using the `range()` method:
 
 ```php
 use Filament\Forms\Components\Slider;
@@ -21,9 +21,9 @@ Slider::make('slider')
     ->range(['min' => 0, 'max' => 300]),
 ```
 
-## Changing the step
+## Step
 
-You can add steps to the slider, where every its dragged, it will "jump" to the next step. This can enable using the `step()` method:
+You can add steps to the slider, where every time its dragged, it will "jump" to the next step. This can enabled using the `step()` method:
 
 ```php
 use Filament\Forms\Components\Slider;
@@ -53,7 +53,7 @@ Slider::make('slider')
 
 <AutoScreenshot name="forms/fields/slider/pips" alt="Slider" version="4.x" />
 
-## Multiple handles
+## Multiple Handles
 
 You can add multiple handles to your slider by setting multiple values in the `start()` method, where each values represents the staring point of each handle:
 
@@ -79,7 +79,8 @@ Slider::make('slider')
 
 The slider component offers several ways to handle user interaction.
 
-The slider handle can be `tapped`, `dragged`, `fixed` etc. The slider behaviour is defined by `SliderBehaviour::Drag`,`SliderBehaviour::DragAll`,`SliderBehaviour::Tap`,`SliderBehaviour::Fixed`,`SliderBehaviour::Snap`,`SliderBehaviour::Unconstrained`,`SliderBehaviour::InvertConnects`,`SliderBehaviour::None`
+The slider handle can be `tapped`, `dragged`, `fixed` etc. The slider behaviour is defined by `SliderBehaviour::Drag`,`SliderBehaviour::DragAll`,`SliderBehaviour::Tap`,`SliderBehaviour::Fixed`,`SliderBehaviour::Snap`,`SliderBehaviour::Unconstrained`,`SliderBehaviour::InvertConnects` and `SliderBehaviour::None`.
+
 ```php
 use Filament\Forms\Components\Slider;
 use Filament\Forms\Components\Enums\SliderBehaviour;
@@ -124,7 +125,7 @@ In order to use this method you need at least 2 handles.
 
 ## Margin
 
-The `margin()` method sets the maximum distance between the handles:
+The `margin()` method sets the minimum distance between the handles:
 ```php
 use Filament\Forms\Components\Slider;
 
@@ -168,7 +169,7 @@ Slider::make('slider')
     ->range(['min' => 0, 'max' => 200]),
 ```
 
-If you would like to use Aria format for the tooltips, you can use the `ariaFormat()` method:
+If you would like to use Aria format for the tooltips, you should use the `ariaFormat()` method:
 
 ```php
 use Filament\Forms\Components\Slider;
