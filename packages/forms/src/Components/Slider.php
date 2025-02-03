@@ -174,7 +174,7 @@ class Slider extends Field
         return $this;
     }
 
-    public function     pips(RawJs | Closure | null $pips = null): static
+    public function pips(RawJs | Closure | null $pips = null): static
     {
         $this->pips = $pips;
 
