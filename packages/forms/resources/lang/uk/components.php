@@ -404,6 +404,8 @@ return [
 
             'create_option' => [
 
+                'label' => 'Створити',
+
                 'modal' => [
 
                     'heading' => 'Створити',
@@ -424,6 +426,8 @@ return [
             ],
 
             'edit_option' => [
+
+                'label' => 'Змінити',
 
                 'modal' => [
 
@@ -486,22 +490,6 @@ return [
         'boolean' => [
             'true' => 'Так',
             'false' => 'Ні',
-        ],
-
-    ],
-
-    'wizard' => [
-
-        'actions' => [
-
-            'previous_step' => [
-                'label' => 'Назад',
-            ],
-
-            'next_step' => [
-                'label' => 'Далі',
-            ],
-
         ],
 
     ],

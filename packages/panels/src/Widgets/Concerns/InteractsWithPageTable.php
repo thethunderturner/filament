@@ -7,6 +7,8 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Reactive;
 
 use function Livewire\trigger;
@@ -53,11 +55,22 @@ trait InteractsWithPageTable
     #[Reactive]
     public ?string $activeTab = null;
 
+    #[Reactive] #[Locked]
+    public ?Model $parentRecord = null;
+
     protected HasTable $tablePage;
 
     protected function getTablePage(): string
     {
         throw new Exception('You must define a `getTablePage()` method on your widget that returns the name of a Livewire component.');
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getTablePageMountParameters(): array
+    {
+        return [];
     }
 
     protected function getTablePageInstance(): HasTable
@@ -68,18 +81,20 @@ trait InteractsWithPageTable
 
         /** @var HasTable $tableComponent */
         $page = app('livewire')->new($this->getTablePage());
-        trigger('mount', $page, [], null, null);
-
-        $page->activeTab = $this->activeTab;
-        $page->paginators = $this->paginators;
-        $page->tableColumnSearches = $this->tableColumnSearches;
-        $page->tableFilters = $this->tableFilters;
-        $page->tableGrouping = $this->tableGrouping;
-        $page->tableGroupingDirection = $this->tableGroupingDirection;
-        $page->tableRecordsPerPage = $this->tableRecordsPerPage;
-        $page->tableSearch = $this->tableSearch;
-        $page->tableSortColumn = $this->tableSortColumn;
-        $page->tableSortDirection = $this->tableSortDirection;
+        trigger('mount', $page, [
+            'activeTab' => $this->activeTab,
+            'paginators' => $this->paginators,
+            'parentRecord' => $this->parentRecord,
+            'tableColumnSearches' => $this->tableColumnSearches,
+            'tableFilters' => $this->tableFilters,
+            'tableGrouping' => $this->tableGrouping,
+            'tableGroupingDirection' => $this->tableGroupingDirection,
+            'tableRecordsPerPage' => $this->tableRecordsPerPage,
+            'tableSearch' => $this->tableSearch,
+            'tableSortColumn' => $this->tableSortColumn,
+            'tableSortDirection' => $this->tableSortDirection,
+            ...$this->getTablePageMountParameters(),
+        ], null, null);
 
         return $this->tablePage = $page;
     }

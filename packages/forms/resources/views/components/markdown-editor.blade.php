@@ -1,15 +1,16 @@
 @php
     use Filament\Support\Facades\FilamentView;
 
+    $key = $getKey();
     $statePath = $getStatePath();
 @endphp
 
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
     @if ($isDisabled())
         <div
-            class="fi-fo-markdown-editor fi-disabled prose block w-full max-w-none rounded-lg bg-gray-50 px-3 py-3 text-gray-500 shadow-sm ring-1 ring-gray-950/10 dark:prose-invert dark:bg-transparent dark:text-gray-400 dark:ring-white/10 sm:text-sm"
+            class="fi-fo-markdown-editor fi-disabled prose dark:prose-invert block w-full max-w-none rounded-lg bg-gray-50 px-3 py-3 text-gray-500 ring-1 shadow-xs ring-gray-950/10 sm:text-sm dark:bg-transparent dark:text-gray-400 dark:ring-white/10"
         >
-            {!! str($getState())->markdown()->sanitizeHtml() !!}
+            {!! str($getState())->sanitizeHtml()->markdown($getCommonMarkOptions(), $getCommonMarkExtensions()) !!}
         </div>
     @else
         <x-filament::input.wrapper
@@ -20,9 +21,9 @@
             "
         >
             <div
-                {{-- prettier-ignore-start --}}ax-load="visible || event (ax-modal-opened)"
+                {{-- prettier-ignore-start --}}x-load="visible || event (x-modal-opened)"
                 {{-- prettier-ignore-end --}}
-                ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('markdown-editor', 'filament/forms') }}"
+                x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('markdown-editor', 'filament/forms') }}"
                 x-data="markdownEditorFormComponent({
                             canAttachFiles: @js($hasToolbarButton('attachFiles')),
                             isLiveDebounced: @js($isLiveDebounced()),
@@ -35,9 +36,12 @@
                             toolbarButtons: @js($getToolbarButtons()),
                             translations: @js(__('filament-forms::components.markdown_editor')),
                             uploadFileAttachmentUsing: async (file, onSuccess, onError) => {
-                                $wire.upload(`componentFileAttachments.{{ $statePath }}`, file, () => {
+                                $wire.upload(`componentFileAttachments.{{ $key }}`, file, () => {
                                     $wire
-                                        .getFormComponentFileAttachmentUrl('{{ $statePath }}')
+                                        .callSchemaComponentMethod(
+                                            '{{ $key }}',
+                                            'saveUploadedFileAttachment',
+                                        )
                                         .then((url) => {
                                             if (! url) {
                                                 return onError()
@@ -48,7 +52,6 @@
                                 })
                             },
                         })"
-                x-ignore
                 wire:ignore
                 {{ $getExtraAlpineAttributeBag() }}
             >

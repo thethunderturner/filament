@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Forms;
 
-use Filament\Forms\Components\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
@@ -10,7 +12,6 @@ use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Radio;
@@ -25,12 +26,15 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
-class FieldsDemo extends Component implements HasForms
+class FieldsDemo extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public $data = [];
@@ -40,7 +44,7 @@ class FieldsDemo extends Component implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->statePath('data')
@@ -54,53 +58,6 @@ class FieldsDemo extends Component implements HasForms
                         TextInput::make('simple')
                             ->label('Name')
                             ->default('Dan Harrin'),
-                    ]),
-                Group::make()
-                    ->id('helperText')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextInput::make('helperText')
-                            ->label('Name')
-                            ->default('Dan Harrin')
-                            ->helperText(str('Your **full name** here, including any middle names.')->inlineMarkdown()->toHtmlString()),
-                    ]),
-                Group::make()
-                    ->id('hint')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextInput::make('hint')
-                            ->label('Password')
-                            ->password()
-                            ->default('password')
-                            ->hint(str('[Forgotten your password?](forgotten-password)')->inlineMarkdown()->toHtmlString()),
-                    ]),
-                Group::make()
-                    ->id('hintColor')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-5xl',
-                    ])
-                    ->schema([
-                        RichEditor::make('hintColor')
-                            ->label('Content')
-                            ->default('Filament es el mejor.')
-                            ->hint('Translatable')
-                            ->hintColor('primary'),
-                    ]),
-                Group::make()
-                    ->id('hintIcon')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-5xl',
-                    ])
-                    ->schema([
-                        RichEditor::make('hintIcon')
-                            ->label('Content')
-                            ->default('Filament es el mejor.')
-                            ->hint('Translatable')
-                            ->hintIcon('heroicon-m-language'),
                     ]),
                 Group::make()
                     ->id('disabled')
@@ -154,7 +111,7 @@ class FieldsDemo extends Component implements HasForms
                         TextInput::make('textInputSuffixIcon')
                             ->label('Domain')
                             ->default('https://filamentphp.com')
-                            ->suffixIcon('heroicon-m-globe-alt'),
+                            ->suffixIcon(Heroicon::GlobeAlt),
                     ]),
                 Group::make()
                     ->id('textInputRevealablePassword')
@@ -308,7 +265,7 @@ class FieldsDemo extends Component implements HasForms
                             ->options([
                                 'filament' => 'filamentphp',
                             ])
-                            ->suffixIcon('heroicon-m-globe-alt'),
+                            ->suffixIcon(Heroicon::GlobeAlt),
                     ]),
                 Group::make()
                     ->id('checkbox')
@@ -356,8 +313,8 @@ class FieldsDemo extends Component implements HasForms
                     ->schema([
                         Toggle::make('toggleIcons')
                             ->label('Is admin')
-                            ->onIcon('heroicon-m-bolt')
-                            ->offIcon('heroicon-m-user'),
+                            ->onIcon(Heroicon::Bolt)
+                            ->offIcon(Heroicon::User),
                     ]),
                 Group::make()
                     ->id('toggleOffColor')
@@ -567,19 +524,6 @@ class FieldsDemo extends Component implements HasForms
                             ->default(true),
                     ]),
                 Group::make()
-                    ->id('inlineRadioUnderLabel')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        Radio::make('inlineRadioUnderLabel')
-                            ->label('Like this post?')
-                            ->boolean()
-                            ->inline()
-                            ->inlineLabel(false)
-                            ->default(true),
-                    ]),
-                Group::make()
                     ->id('disabledOptionRadio')
                     ->extraAttributes([
                         'class' => 'p-16 max-w-xl',
@@ -685,7 +629,7 @@ class FieldsDemo extends Component implements HasForms
                     ->schema([
                         TimePicker::make('dateTimePickerPrefixIcon')
                             ->label('At')
-                            ->prefixIcon('heroicon-m-play')
+                            ->prefixIcon(Heroicon::Play)
                             ->default('2000-01-01'),
                     ]),
                 Group::make()
@@ -1035,9 +979,9 @@ class FieldsDemo extends Component implements HasForms
                                             ->label('Paragraph')
                                             ->required(),
                                     ])
-                                    ->icon('heroicon-m-bars-3-bottom-left'),
+                                    ->icon(Heroicon::Bars3BottomLeft),
                                 Builder\Block::make('image')
-                                    ->icon('heroicon-m-photo'),
+                                    ->icon(Heroicon::Photo),
                             ])
                             ->default([
                                 [
@@ -1063,7 +1007,7 @@ class FieldsDemo extends Component implements HasForms
                                             ->label('Paragraph')
                                             ->required(),
                                     ])
-                                    ->icon('heroicon-m-bars-3-bottom-left'),
+                                    ->icon(Heroicon::Bars3BottomLeft),
                             ])
                             ->default([
                                 [
@@ -1102,7 +1046,7 @@ class FieldsDemo extends Component implements HasForms
                                             ->label('Paragraph')
                                             ->required(),
                                     ])
-                                    ->icon('heroicon-m-bars-3-bottom-left'),
+                                    ->icon(Heroicon::Bars3BottomLeft),
                             ])
                             ->default([
                                 [
@@ -1141,7 +1085,7 @@ class FieldsDemo extends Component implements HasForms
                                             ->label('Paragraph')
                                             ->required(),
                                     ])
-                                    ->icon('heroicon-m-bars-3-bottom-left'),
+                                    ->icon(Heroicon::Bars3BottomLeft),
                             ])
                             ->default([
                                 [
@@ -1273,9 +1217,9 @@ class FieldsDemo extends Component implements HasForms
                                 'published' => 'Published',
                             ])
                             ->icons([
-                                'draft' => 'heroicon-o-pencil',
-                                'scheduled' => 'heroicon-o-clock',
-                                'published' => 'heroicon-o-check-circle',
+                                'draft' => Heroicon::OutlinedPencil,
+                                'scheduled' => Heroicon::OutlinedClock,
+                                'published' => Heroicon::OutlinedCheckCircle,
                             ])
                             ->default('scheduled'),
                     ]),
@@ -1394,22 +1338,7 @@ class FieldsDemo extends Component implements HasForms
                             ->default('22.66')
                             ->suffixAction(
                                 Action::make('copyCostToPrice')
-                                    ->icon('heroicon-m-clipboard'),
-                            ),
-                    ]),
-                Group::make()
-                    ->id('hintAction')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextInput::make('hintAction')
-                            ->label('Cost')
-                            ->prefix('€')
-                            ->default('22.66')
-                            ->hintAction(
-                                Action::make('copyCostToPrice')
-                                    ->icon('heroicon-m-clipboard'),
+                                    ->icon(Heroicon::Clipboard),
                             ),
                     ]),
             ]);

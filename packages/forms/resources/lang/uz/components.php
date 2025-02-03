@@ -12,14 +12,62 @@ return [
 
             'add' => [
                 'label' => ':labelga qo\'shish',
+
+                'modal' => [
+
+                    'heading' => ':labelga qo\'shish',
+
+                    'actions' => [
+
+                        'add' => [
+                            'label' => 'Qo\'shish',
+                        ],
+
+                    ],
+
+                ],
             ],
 
             'add_between' => [
                 'label' => 'Orasiga kiritish',
+
+                'modal' => [
+
+                    'heading' => ':labelga qo\'shish',
+
+                    'actions' => [
+
+                        'add' => [
+                            'label' => 'Qo\'shish',
+                        ],
+
+                    ],
+
+                ],
             ],
 
             'delete' => [
                 'label' => 'O\'chirish',
+            ],
+
+            'edit' => [
+
+                'label' => 'O\'zgartirish',
+
+                'modal' => [
+
+                    'heading' => 'O\'zgartirish',
+
+                    'actions' => [
+
+                        'save' => [
+                            'label' => 'O\'zgarishlarni saqlash',
+                        ],
+
+                    ],
+
+                ],
+
             ],
 
             'reorder' => [
@@ -406,18 +454,27 @@ return [
         'placeholder' => 'Yangi teg',
     ],
 
-    'wizard' => [
+    'text_input' => [
 
         'actions' => [
 
-            'previous_step' => [
-                'label' => 'Orqaga',
+            'hide_password' => [
+                'label' => 'Parolni yashirish',
             ],
 
-            'next_step' => [
-                'label' => 'Keyingi',
+            'show_password' => [
+                'label' => 'Parolni ko\'rsatish',
             ],
 
+        ],
+
+    ],
+
+    'toggle_buttons' => [
+
+        'boolean' => [
+            'true' => 'Ha',
+            'false' => 'Yo\'q',
         ],
 
     ],

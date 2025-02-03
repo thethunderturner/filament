@@ -35,19 +35,19 @@
                 x-transition:enter-end="opacity-100"
             @endif
             @class([
-                'fi-sidebar-group-button flex items-center gap-x-3 px-2 py-2',
+                'fi-sidebar-group-btn flex items-center gap-x-3 px-2 py-2',
                 'cursor-pointer' => $collapsible,
             ])
         >
             @if ($icon)
                 <x-filament::icon
                     :icon="$icon"
-                    class="fi-sidebar-group-icon h-6 w-6 text-gray-400 dark:text-gray-500"
+                    class="fi-sidebar-group-icon size-6 text-gray-400 dark:text-gray-500"
                 />
             @endif
 
             <span
-                class="fi-sidebar-group-label flex-1 text-sm font-medium leading-6 text-gray-500 dark:text-gray-400"
+                class="fi-sidebar-group-label flex-1 text-sm leading-6 font-medium text-gray-500 dark:text-gray-400"
             >
                 {{ $label }}
             </span>
@@ -55,12 +55,12 @@
             @if ($collapsible)
                 <x-filament::icon-button
                     color="gray"
-                    icon="heroicon-m-chevron-up"
+                    :icon="\Filament\Support\Icons\Heroicon::ChevronUp"
                     icon-alias="panels::sidebar.group.collapse-button"
                     :label="$label"
                     x-bind:aria-expanded="! $store.sidebar.groupIsCollapsed(label)"
                     x-on:click.stop="$store.sidebar.toggleCollapsedGroup(label)"
-                    class="fi-sidebar-group-collapse-button"
+                    class="fi-sidebar-group-collapse-btn"
                     x-bind:class="{ '-rotate-180': $store.sidebar.groupIsCollapsed(label) }"
                 />
             @endif
@@ -86,12 +86,12 @@
                               }
                     "
                     x-tooltip.html="tooltip"
-                    class="relative flex flex-1 items-center justify-center gap-x-3 rounded-lg px-2 py-2 outline-none transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+                    class="relative flex flex-1 items-center justify-center gap-x-3 rounded-lg px-2 py-2 outline-hidden transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
                 >
                     <x-filament::icon
                         :icon="$icon"
                         @class([
-                            'h-6 w-6',
+                            'size-6',
                             'text-gray-400 dark:text-gray-500' => ! $active,
                             'text-primary-600 dark:text-primary-400' => $active,
                         ])

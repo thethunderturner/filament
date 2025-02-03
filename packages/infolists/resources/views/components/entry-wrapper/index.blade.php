@@ -3,12 +3,6 @@
     'alignment' => null,
     'entry' => null,
     'hasInlineLabel' => null,
-    'helperText' => null,
-    'hint' => null,
-    'hintActions' => null,
-    'hintColor' => null,
-    'hintIcon' => null,
-    'hintIconTooltip' => null,
     'id' => null,
     'label' => null,
     'labelPrefix' => null,
@@ -27,12 +21,6 @@
         $action ??= $entry->getAction();
         $alignment ??= $entry->getAlignment();
         $hasInlineLabel ??= $entry->hasInlineLabel();
-        $helperText ??= $entry->getHelperText();
-        $hint ??= $entry->getHint();
-        $hintActions ??= $entry->getHintActions();
-        $hintColor ??= $entry->getHintColor();
-        $hintIcon ??= $entry->getHintIcon();
-        $hintIconTooltip ??= $entry->getHintIconTooltip();
         $id ??= $entry->getId();
         $label ??= $entry->getLabel();
         $labelSrOnly ??= $entry->isLabelHidden();
@@ -46,16 +34,16 @@
         $alignment = filled($alignment) ? (Alignment::tryFrom($alignment) ?? $alignment) : null;
     }
 
-    $hintActions = array_filter(
-        $hintActions ?? [],
-        fn (\Filament\Infolists\Components\Actions\Action $hintAction): bool => $hintAction->isVisible(),
-    );
+    $beforeLabelContainer = $entry?->getChildComponentContainer($entry::BEFORE_LABEL_CONTAINER)?->toHtmlString();
+    $afterLabelContainer = $entry?->getChildComponentContainer($entry::AFTER_LABEL_CONTAINER)?->toHtmlString();
+    $beforeContentContainer = $entry?->getChildComponentContainer($entry::BEFORE_CONTENT_CONTAINER)?->toHtmlString();
+    $afterContentContainer = $entry?->getChildComponentContainer($entry::AFTER_CONTENT_CONTAINER)?->toHtmlString();
 @endphp
 
 <div
     {{
         $attributes
-            ->merge($entry?->getExtraEntryWrapperAttributes() ?? [])
+            ->merge($entry?->getExtraEntryWrapperAttributes() ?? [], escape: false)
             ->class(['fi-in-entry-wrp'])
     }}
 >
@@ -71,15 +59,17 @@
             'sm:grid-cols-3 sm:items-start sm:gap-x-4' => $hasInlineLabel,
         ])
     >
-        @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || filled($hint) || $hintIcon)
+        {{ $entry?->getChildComponentContainer($entry::ABOVE_LABEL_CONTAINER) }}
+
+        @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || $beforeLabelContainer || $afterLabelContainer)
             <div
                 @class([
                     'flex items-center gap-x-3',
-                    'justify-between' => (! $labelSrOnly) || $labelPrefix || $labelSuffix,
-                    'justify-end' => $labelSrOnly && ! ($labelPrefix || $labelSuffix),
                     ($label instanceof \Illuminate\View\ComponentSlot) ? $label->attributes->get('class') : null,
                 ])
             >
+                {{ $beforeLabelContainer }}
+
                 @if ($label && (! $labelSrOnly))
                     <x-filament-infolists::entry-wrapper.label
                         :prefix="$labelPrefix"
@@ -93,18 +83,11 @@
                     {{ $labelSuffix }}
                 @endif
 
-                @if (filled($hint) || $hintIcon || count($hintActions))
-                    <x-filament-infolists::entry-wrapper.hint
-                        :actions="$hintActions"
-                        :color="$hintColor"
-                        :icon="$hintIcon"
-                        :tooltip="$hintIconTooltip"
-                    >
-                        {{ $hint }}
-                    </x-filament-infolists::entry-wrapper.hint>
-                @endif
+                {{ $afterLabelContainer }}
             </div>
         @endif
+
+        {{ $entry?->getChildComponentContainer($entry::BELOW_LABEL_CONTAINER) }}
 
         <div
             @class([
@@ -112,57 +95,70 @@
                 'sm:col-span-2' => $hasInlineLabel,
             ])
         >
-            <dd
-                @if (filled($tooltip))
-                    x-data="{}"
-                    x-tooltip="{
-                        content: @js($tooltip),
-                        theme: $store.theme,
-                    }"
-                @endif
-                @class([
-                    match ($alignment) {
-                        Alignment::Start => 'text-start',
-                        Alignment::Center => 'text-center',
-                        Alignment::End => 'text-end',
-                        Alignment::Justify, Alignment::Between => 'text-justify',
-                        Alignment::Left => 'text-left',
-                        Alignment::Right => 'text-right',
-                        default => $alignment,
-                    },
-                ])
-            >
-                @if ($url)
-                    <a
-                        {{ \Filament\Support\generate_href_html($url, $shouldOpenUrlInNewTab) }}
-                        class="block"
-                    >
-                        {{ $slot }}
-                    </a>
-                @elseif ($action)
-                    @php
-                        $wireClickAction = $action->getLivewireClickHandler();
-                    @endphp
+            {{ $entry?->getChildComponentContainer($entry::ABOVE_CONTENT_CONTAINER) }}
 
-                    <button
-                        type="button"
-                        wire:click="{{ $wireClickAction }}"
-                        wire:loading.attr="disabled"
-                        wire:target="{{ $wireClickAction }}"
-                        class="block"
-                    >
-                        {{ $slot }}
-                    </button>
-                @else
-                    {{ $slot }}
-                @endif
-            </dd>
+            @capture($content)
+                <dd
+                    @if (filled($tooltip))
+                        x-tooltip="{
+                            content: @js($tooltip),
+                            theme: $store.theme,
+                        }"
+                    @endif
+                    @class([
+                        match ($alignment) {
+                            Alignment::Start => 'text-start',
+                            Alignment::Center => 'text-center',
+                            Alignment::End => 'text-end',
+                            Alignment::Justify, Alignment::Between => 'text-justify',
+                            Alignment::Left => 'text-left',
+                            Alignment::Right => 'text-right',
+                            default => $alignment,
+                        },
+                    ])
+                >
+                    @if ($url)
+                        <a
+                            {{ \Filament\Support\generate_href_html($url, $shouldOpenUrlInNewTab) }}
+                            class="block"
+                        >
+                            {{ $slot }}
+                        </a>
+                    @elseif ($action)
+                        @php
+                            $wireClickAction = $action->getLivewireClickHandler();
+                        @endphp
 
-            @if (filled($helperText))
-                <x-filament-infolists::entry-wrapper.helper-text>
-                    {{ $helperText }}
-                </x-filament-infolists::entry-wrapper.helper-text>
+                        <button
+                            type="button"
+                            wire:click="{{ $wireClickAction }}"
+                            wire:loading.attr="disabled"
+                            wire:target="{{ $wireClickAction }}"
+                            class="block"
+                        >
+                            {{ $slot }}
+                        </button>
+                    @else
+                        {{ $slot }}
+                    @endif
+                </dd>
+            @endcapture
+
+            @if ($beforeContentContainer || $afterContentContainer)
+                <div class="flex w-full items-center gap-x-3">
+                    {{ $beforeContentContainer }}
+
+                    <div class="w-full">
+                        {{ $content() }}
+                    </div>
+
+                    {{ $afterContentContainer }}
+                </div>
+            @else
+                {{ $content() }}
             @endif
+
+            {{ $entry?->getChildComponentContainer($entry::BELOW_CONTENT_CONTAINER) }}
         </div>
     </div>
 </div>

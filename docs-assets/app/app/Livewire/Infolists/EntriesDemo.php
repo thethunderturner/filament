@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Infolists;
 
+use Filament\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\ColorEntry;
-use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
@@ -13,10 +12,12 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
 
 class EntriesDemo extends Component implements HasInfolists
@@ -24,7 +25,7 @@ class EntriesDemo extends Component implements HasInfolists
     use InteractsWithForms;
     use InteractsWithInfolists;
 
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $infolist): Schema
     {
         return $infolist
             ->schema([
@@ -47,51 +48,6 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         TextEntry::make('title')
                             ->placeholder('Dan Harrin'),
-                    ]),
-                Group::make()
-                    ->id('helperText')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextEntry::make('name')
-                            ->state('Dan Harrin')
-                            ->helperText(str('Your **full name** here, including any middle names.')->inlineMarkdown()->toHtmlString()),
-                    ]),
-                Group::make()
-                    ->id('hint')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextEntry::make('apiKey')
-                            ->label('API key')
-                            ->state('HGA3CH5AB345JD9MQ3')
-                            ->hint(str('[Documentation](/documentation)')->inlineMarkdown()->toHtmlString()),
-                    ]),
-                Group::make()
-                    ->id('hintColor')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextEntry::make('apiKey')
-                            ->label('API key')
-                            ->state('HGA3CH5AB345JD9MQ3')
-                            ->hint(str('[Documentation](/documentation)')->inlineMarkdown()->toHtmlString())
-                            ->hintColor('primary'),
-                    ]),
-                Group::make()
-                    ->id('hintIcon')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextEntry::make('apiKey')
-                            ->label('API key')
-                            ->state('HGA3CH5AB345JD9MQ3')
-                            ->hint(str('[Documentation](/documentation)')->inlineMarkdown()->toHtmlString())
-                            ->hintIcon('heroicon-m-question-mark-circle'),
                     ]),
                 Group::make()
                     ->id('tooltips')
@@ -167,7 +123,7 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         TextEntry::make('email')
                             ->state('dan@filamentphp.com')
-                            ->icon('heroicon-m-envelope'),
+                            ->icon(Heroicon::Envelope),
                     ]),
                 Group::make()
                     ->id('textIconAfter')
@@ -177,7 +133,7 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         TextEntry::make('email')
                             ->state('dan@filamentphp.com')
-                            ->icon('heroicon-m-envelope')
+                            ->icon(Heroicon::Envelope)
                             ->iconPosition(IconPosition::After),
                     ]),
                 Group::make()
@@ -188,7 +144,7 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         TextEntry::make('email')
                             ->state('dan@filamentphp.com')
-                            ->icon('heroicon-m-envelope')
+                            ->icon(Heroicon::Envelope)
                             ->iconColor('primary'),
                     ]),
                 Group::make()
@@ -199,7 +155,7 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         TextEntry::make('title')
                             ->state('What is Filament?')
-                            ->size(TextEntry\TextEntrySize::Large),
+                            ->size(TextEntry\Enums\TextEntrySize::Large),
                     ]),
                 Group::make()
                     ->id('textBold')
@@ -243,10 +199,10 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         IconEntry::make('status')
                             ->state('reviewing')
-                            ->icon(fn (string $state): string => match ($state) {
-                                'draft' => 'heroicon-o-pencil',
-                                'reviewing' => 'heroicon-o-clock',
-                                'published' => 'heroicon-o-check-circle',
+                            ->icon(fn (string $state): Heroicon => match ($state) {
+                                'draft' => Heroicon::OutlinedPencil,
+                                'reviewing' => Heroicon::OutlinedClock,
+                                'published' => Heroicon::OutlinedCheckCircle,
                             }),
                     ]),
                 Group::make()
@@ -257,10 +213,10 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         IconEntry::make('status')
                             ->state('reviewing')
-                            ->icon(fn (string $state): string => match ($state) {
-                                'draft' => 'heroicon-o-pencil',
-                                'reviewing' => 'heroicon-o-clock',
-                                'published' => 'heroicon-o-check-circle',
+                            ->icon(fn (string $state): Heroicon => match ($state) {
+                                'draft' => Heroicon::OutlinedPencil,
+                                'reviewing' => Heroicon::OutlinedClock,
+                                'published' => Heroicon::OutlinedCheckCircle,
                             })
                             ->color(fn (string $state): string => match ($state) {
                                 'draft' => 'info',
@@ -277,10 +233,10 @@ class EntriesDemo extends Component implements HasInfolists
                     ->schema([
                         IconEntry::make('status')
                             ->state('reviewing')
-                            ->icon(fn (string $state): string => match ($state) {
-                                'draft' => 'heroicon-o-pencil',
-                                'reviewing' => 'heroicon-o-clock',
-                                'published' => 'heroicon-o-check-circle',
+                            ->icon(fn (string $state): Heroicon => match ($state) {
+                                'draft' => Heroicon::OutlinedPencil,
+                                'reviewing' => Heroicon::OutlinedClock,
+                                'published' => Heroicon::OutlinedCheckCircle,
                             })
                             ->color(fn (string $state): string => match ($state) {
                                 'draft' => 'danger',
@@ -288,7 +244,7 @@ class EntriesDemo extends Component implements HasInfolists
                                 'published' => 'success',
                                 default => 'gray',
                             })
-                            ->size(IconEntry\IconEntrySize::Medium),
+                            ->size(IconEntry\Enums\IconEntrySize::Medium),
                     ]),
                 Group::make()
                     ->id('iconBoolean')
@@ -312,13 +268,13 @@ class EntriesDemo extends Component implements HasInfolists
                         IconEntry::make('is_featured')
                             ->state(0)
                             ->boolean()
-                            ->trueIcon('heroicon-o-check-badge')
-                            ->falseIcon('heroicon-o-x-mark'),
+                            ->trueIcon(Heroicon::OutlinedCheckBadge)
+                            ->falseIcon(Heroicon::OutlinedXMark),
                         IconEntry::make('is_featured')
                             ->state(1)
                             ->boolean()
-                            ->trueIcon('heroicon-o-check-badge')
-                            ->falseIcon('heroicon-o-x-mark'),
+                            ->trueIcon(Heroicon::OutlinedCheckBadge)
+                            ->falseIcon(Heroicon::OutlinedXMark),
                     ]),
                 Group::make()
                     ->id('iconBooleanColor')
@@ -522,26 +478,11 @@ class EntriesDemo extends Component implements HasInfolists
                             ->default('22.66')
                             ->suffixAction(
                                 Action::make('copyCostToPrice')
-                                    ->icon('heroicon-m-clipboard'),
-                            ),
-                    ]),
-                Group::make()
-                    ->id('hintAction')
-                    ->extraAttributes([
-                        'class' => 'p-16 max-w-xl',
-                    ])
-                    ->schema([
-                        TextEntry::make('hintAction')
-                            ->label('Cost')
-                            ->prefix('€')
-                            ->default('22.66')
-                            ->hintAction(
-                                Action::make('copyCostToPrice')
-                                    ->icon('heroicon-m-clipboard'),
+                                    ->icon(Heroicon::Clipboard),
                             ),
                     ]),
             ])
-            ->state([
+            ->constantState([
                 'comments' => [
                     [
                         'author' => ['name' => 'Jane Doe'],

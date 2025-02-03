@@ -407,6 +407,7 @@ return [
         'actions' => [
 
             'create_option' => [
+                'label' => 'Cipta',
 
                 'modal' => [
 
@@ -429,6 +430,7 @@ return [
             ],
 
             'edit_option' => [
+                'label' => 'Sunting',
 
                 'modal' => [
 
@@ -492,22 +494,6 @@ return [
         'boolean' => [
             'true' => 'Ya',
             'false' => 'Tidak',
-        ],
-
-    ],
-
-    'wizard' => [
-
-        'actions' => [
-
-            'previous_step' => [
-                'label' => 'Sebelum',
-            ],
-
-            'next_step' => [
-                'label' => 'Seterus',
-            ],
-
         ],
 
     ],

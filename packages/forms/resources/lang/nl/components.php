@@ -408,6 +408,8 @@ return [
 
             'create_option' => [
 
+                'label' => 'Aanmaken',
+
                 'modal' => [
 
                     'heading' => 'Aanmaken',
@@ -429,6 +431,8 @@ return [
             ],
 
             'edit_option' => [
+
+                'label' => 'Bewerken',
 
                 'modal' => [
 
@@ -492,22 +496,6 @@ return [
         'boolean' => [
             'true' => 'Ja',
             'false' => 'Nee',
-        ],
-
-    ],
-
-    'wizard' => [
-
-        'actions' => [
-
-            'previous_step' => [
-                'label' => 'Vorige',
-            ],
-
-            'next_step' => [
-                'label' => 'Volgende',
-            ],
-
         ],
 
     ],

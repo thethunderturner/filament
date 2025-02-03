@@ -3,13 +3,21 @@
 namespace Filament\Forms\Components;
 
 use Closure;
-use Filament\Forms\ComponentContainer;
-use Filament\Forms\Components\Actions\Action;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Concerns\CanBeCollapsed;
+use Filament\Schemas\Components\Concerns\HasContainerGridLayout;
+use Filament\Schemas\Components\Contracts\CanConcealComponents;
+use Filament\Schemas\Components\Contracts\HasExtraItemActions;
+use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasReorderAnimationDuration;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -20,14 +28,14 @@ use Illuminate\Support\Str;
 use function Filament\Forms\array_move_after;
 use function Filament\Forms\array_move_before;
 
-class Repeater extends Field implements Contracts\CanConcealComponents, Contracts\HasExtraItemActions
+class Repeater extends Field implements CanConcealComponents, HasExtraItemActions
 {
+    use CanBeCollapsed;
     use Concerns\CanBeCloned;
-    use Concerns\CanBeCollapsed;
     use Concerns\CanGenerateUuids;
     use Concerns\CanLimitItemsLength;
-    use Concerns\HasContainerGridLayout;
     use Concerns\HasExtraItemActions;
+    use HasContainerGridLayout;
     use HasReorderAnimationDuration;
 
     protected string | Closure | null $addActionLabel = null;
@@ -93,7 +101,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
      */
     protected ?array $hydratedDefaultState = null;
 
-    protected bool $shouldMergeHydratedDefaultStateWithChildComponentContainerStateAfterStateHydrated = true;
+    protected bool $shouldMergeHydratedDefaultStateWithItemsStateAfterStateHydrated = true;
 
     protected string | Closure | null $labelBetweenItems = null;
 
@@ -108,9 +116,9 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
         $this->afterStateHydrated(static function (Repeater $component, ?array $state): void {
             if (
                 is_array($component->hydratedDefaultState) &&
-                $component->shouldMergeHydratedDefaultStateWithChildComponentContainerStateAfterStateHydrated
+                $component->shouldMergeHydratedDefaultStateWithItemsStateAfterStateHydrated
             ) {
-                $component->mergeHydratedDefaultStateWithChildComponentContainerState();
+                $component->mergeHydratedDefaultStateWithItemsState();
             }
 
             if (is_array($component->hydratedDefaultState)) {
@@ -185,6 +193,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->button()
             ->size(ActionSize::Small)
@@ -260,6 +270,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->button()
             ->size(ActionSize::Small)
@@ -302,7 +314,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getCloneActionName())
             ->label(__('filament-forms::components.repeater.actions.clone.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.clone') ?? 'heroicon-m-square-2-stack')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.clone') ?? Heroicon::Square2Stack)
             ->color('gray')
             ->action(function (array $arguments, Repeater $component): void {
                 $newUuid = $component->generateUuid();
@@ -320,6 +332,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->iconButton()
             ->size(ActionSize::Small)
@@ -350,7 +364,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getDeleteActionName())
             ->label(__('filament-forms::components.repeater.actions.delete.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.delete') ?? 'heroicon-m-trash')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.delete') ?? Heroicon::Trash)
             ->color('danger')
             ->action(function (array $arguments, Repeater $component): void {
                 $items = $component->getState();
@@ -359,6 +373,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->state($items);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->iconButton()
             ->size(ActionSize::Small)
@@ -389,7 +405,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getMoveDownActionName())
             ->label(__('filament-forms::components.repeater.actions.move_down.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.move-down') ?? 'heroicon-m-arrow-down')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.move-down') ?? Heroicon::ArrowDown)
             ->color('gray')
             ->action(function (array $arguments, Repeater $component): void {
                 $items = array_move_after($component->getState(), $arguments['item']);
@@ -397,6 +413,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->state($items);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->iconButton()
             ->size(ActionSize::Small)
@@ -427,7 +445,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getMoveUpActionName())
             ->label(__('filament-forms::components.repeater.actions.move_up.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.move-up') ?? 'heroicon-m-arrow-up')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.move-up') ?? Heroicon::ArrowUp)
             ->color('gray')
             ->action(function (array $arguments, Repeater $component): void {
                 $items = array_move_before($component->getState(), $arguments['item']);
@@ -435,6 +453,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->state($items);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->iconButton()
             ->size(ActionSize::Small)
@@ -465,7 +485,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getReorderActionName())
             ->label(__('filament-forms::components.repeater.actions.reorder.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.reorder') ?? 'heroicon-m-arrows-up-down')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.reorder') ?? Heroicon::ArrowsUpDown)
             ->color('gray')
             ->action(function (array $arguments, Repeater $component): void {
                 $items = [
@@ -476,6 +496,8 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 $component->state($items);
 
                 $component->callAfterStateUpdated();
+
+                $component->partiallyRender();
             })
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
@@ -507,7 +529,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getCollapseActionName())
             ->label(__('filament-forms::components.repeater.actions.collapse.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.collapse') ?? 'heroicon-m-chevron-up')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.collapse') ?? Heroicon::ChevronUp)
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
@@ -538,7 +560,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     {
         $action = Action::make($this->getExpandActionName())
             ->label(__('filament-forms::components.repeater.actions.expand.label'))
-            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.expand') ?? 'heroicon-m-chevron-down')
+            ->icon(FilamentIcon::resolve('forms::components.repeater.actions.expand') ?? Heroicon::ChevronDown)
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
@@ -668,7 +690,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
             return array_fill(0, $count, $component->isSimple() ? null : []);
         });
 
-        $this->shouldMergeHydratedDefaultStateWithChildComponentContainerStateAfterStateHydrated = false;
+        $this->shouldMergeHydratedDefaultStateWithItemsStateAfterStateHydrated = false;
 
         return $this;
     }
@@ -699,7 +721,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
             return $items;
         });
 
-        $this->shouldMergeHydratedDefaultStateWithChildComponentContainerStateAfterStateHydrated = true;
+        $this->shouldMergeHydratedDefaultStateWithItemsStateAfterStateHydrated = true;
 
         return $this;
     }
@@ -777,32 +799,31 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
         return $this;
     }
 
-    public function getChildComponents(): array
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getDefaultChildComponents(): array
     {
         if ($simpleField = $this->getSimpleField()) {
             return [$simpleField];
         }
 
-        return parent::getChildComponents();
+        return parent::getDefaultChildComponents();
     }
 
     /**
-     * @return array<ComponentContainer>
+     * @return array<Schema>
      */
-    public function getChildComponentContainers(bool $withHidden = false): array
+    public function getItems(): array
     {
-        if ((! $withHidden) && $this->isHidden()) {
-            return [];
-        }
-
         $relationship = $this->getRelationship();
 
         $records = $relationship ? $this->getCachedExistingRecords() : null;
 
-        $containers = [];
+        $items = [];
 
         foreach ($this->getState() ?? [] as $itemKey => $itemData) {
-            $containers[$itemKey] = $this
+            $items[$itemKey] = $this
                 ->getChildComponentContainer()
                 ->statePath($itemKey)
                 ->model($relationship ? $records[$itemKey] ?? $this->getRelatedModel() : null)
@@ -810,7 +831,15 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 ->getClone();
         }
 
-        return $containers;
+        return $items;
+    }
+
+    /**
+     * @return array<Schema>
+     */
+    public function getDefaultChildComponentContainers(): array
+    {
+        return $this->getItems();
     }
 
     public function getAddActionLabel(): string
@@ -889,7 +918,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 return;
             }
 
-            $component->mergeHydratedDefaultStateWithChildComponentContainerState();
+            $component->mergeHydratedDefaultStateWithItemsState();
         });
 
         $this->loadStateFromRelationshipsUsing(static function (Repeater $component) {
@@ -923,16 +952,12 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
                 ->get()
                 ->each(static fn (Model $record) => $record->delete());
 
-            $childComponentContainers = $component->getChildComponentContainers(
-                withHidden: $component->shouldSaveRelationshipsWhenHidden(),
-            );
-
             $itemOrder = 1;
             $orderColumn = $component->getOrderColumn();
 
             $translatableContentDriver = $livewire->makeFilamentTranslatableContentDriver();
 
-            foreach ($childComponentContainers as $itemKey => $item) {
+            foreach ($component->getItems() as $itemKey => $item) {
                 $itemData = $item->getState(shouldCallHooksBefore: false);
 
                 if ($orderColumn) {
@@ -992,7 +1017,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
      * child component containers, so that the default state of the fields inside
      * the repeater is preserved.
      */
-    protected function mergeHydratedDefaultStateWithChildComponentContainerState(): void
+    protected function mergeHydratedDefaultStateWithItemsState(): void
     {
         $state = $this->getState();
         $items = $this->hydratedDefaultState;
@@ -1069,7 +1094,15 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
             return null;
         }
 
-        return $this->getModelInstance()->{$this->getRelationshipName()}();
+        $record = $this->getModelInstance();
+
+        $relationshipName = $this->getRelationshipName();
+
+        if (! $record->isRelation($relationshipName)) {
+            throw new Exception("The relationship [{$relationshipName}] does not exist on the model [{$this->getModel()}].");
+        }
+
+        return $this->getModelInstance()->{$relationshipName}();
     }
 
     public function getRelationshipName(): ?string
@@ -1130,6 +1163,7 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
 
         return $this->evaluate($this->itemLabel, [
             'container' => $container,
+            'item' => $container,
             'state' => $container->getRawState(),
             'uuid' => $uuid,
         ]);
@@ -1162,6 +1196,9 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
         $this->cachedExistingRecords = null;
     }
 
+    /**
+     * @return class-string<Model>
+     */
     public function getRelatedModel(): string
     {
         return $this->getRelationship()->getModel()::class;
@@ -1287,5 +1324,14 @@ class Repeater extends Field implements Contracts\CanConcealComponents, Contract
     public function getRawItemState(string $uuid): array
     {
         return $this->getChildComponentContainer($uuid)->getRawState();
+    }
+
+    public function getHeadingsCount(): int
+    {
+        if (! $this->hasItemLabels()) {
+            return 0;
+        }
+
+        return 1;
     }
 }

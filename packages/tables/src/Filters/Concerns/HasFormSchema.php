@@ -3,21 +3,23 @@
 namespace Filament\Tables\Filters\Concerns;
 
 use Closure;
-use Filament\Forms\ComponentContainer;
-use Filament\Forms\Components\Component;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Schema;
 
 trait HasFormSchema
 {
     /**
-     * @var array<Component> | Closure | null
+     * @var array<Component | Action | ActionGroup> | Closure | null
      */
     protected array | Closure | null $formSchema = null;
 
     protected ?Closure $modifyFormFieldUsing = null;
 
     /**
-     * @param  array<Component> | Closure | null  $schema
+     * @param  array<Component | Action | ActionGroup> | Closure | null  $schema
      */
     public function form(array | Closure | null $schema): static
     {
@@ -34,7 +36,7 @@ trait HasFormSchema
     }
 
     /**
-     * @return array<Component>
+     * @return array<Component | Action | ActionGroup>
      */
     public function getFormSchema(): array
     {
@@ -75,7 +77,7 @@ trait HasFormSchema
         return null;
     }
 
-    public function getForm(): ComponentContainer
+    public function getForm(): Schema
     {
         return $this->getLivewire()
             ->getTableFiltersForm()

@@ -3,9 +3,12 @@
 namespace Filament\Forms\Components;
 
 use Closure;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\MorphToSelect\Type;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class MorphToSelect extends Component
@@ -36,18 +39,31 @@ class MorphToSelect extends Component
         $this->name($name);
     }
 
-    public static function make(string $name): static
+    public static function make(?string $name = null): static
     {
-        $static = app(static::class, ['name' => $name]);
+        $morphToSelectClass = static::class;
+
+        $name ??= static::getDefaultName();
+
+        if (blank($name)) {
+            throw new Exception("MorphToSelect of class [$morphToSelectClass] must have a unique name, passed to the [make()] method.");
+        }
+
+        $static = app($morphToSelectClass, ['name' => $name]);
         $static->configure();
 
         return $static;
     }
 
+    public static function getDefaultName(): ?string
+    {
+        return null;
+    }
+
     /**
-     * @return array<Component>
+     * @return array<Component | Action | ActionGroup>
      */
-    public function getChildComponents(): array
+    public function getDefaultChildComponents(): array
     {
         $relationship = $this->getRelationship();
         $typeColumn = $relationship->getMorphType();
@@ -56,8 +72,10 @@ class MorphToSelect extends Component
         $types = $this->getTypes();
         $isRequired = $this->isRequired();
 
+        $get = $this->makeGetUtility();
+
         /** @var ?Type $selectedType */
-        $selectedType = $types[$this->evaluate(fn (Get $get): ?string => $get($typeColumn))] ?? null;
+        $selectedType = $types[$get($typeColumn)] ?? null;
 
         return [
             Select::make($typeColumn)
@@ -129,7 +147,15 @@ class MorphToSelect extends Component
 
     public function getRelationship(): MorphTo
     {
-        return $this->getModelInstance()->{$this->getName()}();
+        $record = $this->getModelInstance();
+
+        $relationshipName = $this->getName();
+
+        if (! $record->isRelation($relationshipName)) {
+            throw new Exception("The relationship [{$relationshipName}] does not exist on the model [{$this->getModel()}].");
+        }
+
+        return $record->{$relationshipName}();
     }
 
     /**

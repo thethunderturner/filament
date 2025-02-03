@@ -4,7 +4,8 @@ namespace Filament\Infolists\Components\Concerns;
 
 use Closure;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
+use Filament\Support\Concerns\CanConfigureCommonMark;
 use Filament\Support\Contracts\HasLabel as LabelInterface;
 use Filament\Support\Enums\ArgumentValue;
 use Illuminate\Contracts\Support\Htmlable;
@@ -15,6 +16,8 @@ use Illuminate\Support\Str;
 
 trait CanFormatState
 {
+    use CanConfigureCommonMark;
+
     protected ?Closure $formatStateUsing = null;
 
     protected int | Closure | null $characterLimit = null;
@@ -56,7 +59,7 @@ trait CanFormatState
     {
         $this->isDate = true;
 
-        $format ??= Infolist::$defaultDateDisplayFormat;
+        $format ??= Schema::$defaultDateDisplayFormat;
 
         $this->formatStateUsing(static function (TextEntry $component, $state) use ($format, $timezone): ?string {
             if (blank($state)) {
@@ -75,9 +78,38 @@ trait CanFormatState
     {
         $this->isDateTime = true;
 
-        $format ??= Infolist::$defaultDateTimeDisplayFormat;
+        $format ??= Schema::$defaultDateTimeDisplayFormat;
 
         $this->date($format, $timezone);
+
+        return $this;
+    }
+
+    public function isoDate(?string $format = null): static
+    {
+        $this->isDate = true;
+
+        $format ??= Schema::$defaultIsoDateDisplayFormat;
+
+        $this->formatStateUsing(static function (TextEntry $component, $state) use ($format): ?string {
+            if (blank($state)) {
+                return null;
+            }
+
+            return Carbon::parse($state)
+                ->isoFormat($format);
+        });
+
+        return $this;
+    }
+
+    public function isoDateTime(?string $format = null): static
+    {
+        $this->isDateTime = true;
+
+        $format ??= Schema::$defaultIsoDateTimeDisplayFormat;
+
+        $this->isoDate($format);
 
         return $this;
     }
@@ -101,7 +133,7 @@ trait CanFormatState
 
     public function dateTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
-        $format ??= Infolist::$defaultDateDisplayFormat;
+        $format ??= Schema::$defaultDateDisplayFormat;
 
         $this->tooltip(static function (TextEntry $component, mixed $state) use ($format, $timezone): ?string {
             if (blank($state)) {
@@ -118,7 +150,7 @@ trait CanFormatState
 
     public function dateTimeTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
-        $format ??= Infolist::$defaultDateTimeDisplayFormat;
+        $format ??= Schema::$defaultDateTimeDisplayFormat;
 
         $this->dateTooltip($format, $timezone);
 
@@ -127,7 +159,7 @@ trait CanFormatState
 
     public function timeTooltip(string | Closure | null $format = null, ?string $timezone = null): static
     {
-        $format ??= Infolist::$defaultTimeDisplayFormat;
+        $format ??= Schema::$defaultTimeDisplayFormat;
 
         $this->dateTooltip($format, $timezone);
 
@@ -149,6 +181,40 @@ trait CanFormatState
         return $this;
     }
 
+    public function isoDateTooltip(?string $format = null): static
+    {
+        $format ??= Schema::$defaultIsoDateDisplayFormat;
+
+        $this->tooltip(static function (TextEntry $component, mixed $state) use ($format): ?string {
+            if (blank($state)) {
+                return null;
+            }
+
+            return Carbon::parse($state)
+                ->isoFormat($format);
+        });
+
+        return $this;
+    }
+
+    public function isoDateTimeTooltip(?string $format = null): static
+    {
+        $format ??= Schema::$defaultIsoDateTimeDisplayFormat;
+
+        $this->isoDateTooltip($format);
+
+        return $this;
+    }
+
+    public function isoTimeTooltip(?string $format = null): static
+    {
+        $format ??= Schema::$defaultIsoTimeDisplayFormat;
+
+        $this->isoDateTooltip($format);
+
+        return $this;
+    }
+
     public function money(string | Closure | null $currency = null, int $divideBy = 0, string | Closure | null $locale = null): static
     {
         $this->isMoney = true;
@@ -162,8 +228,8 @@ trait CanFormatState
                 return $state;
             }
 
-            $currency = $component->evaluate($currency) ?? Infolist::$defaultCurrency;
-            $locale = $component->evaluate($locale) ?? Infolist::$defaultNumberLocale ?? config('app.locale');
+            $currency = $component->evaluate($currency) ?? Schema::$defaultCurrency;
+            $locale = $component->evaluate($locale) ?? Schema::$defaultNumberLocale ?? config('app.locale');
 
             if ($divideBy) {
                 $state /= $divideBy;
@@ -204,7 +270,7 @@ trait CanFormatState
                 );
             }
 
-            $locale = $component->evaluate($locale) ?? Infolist::$defaultNumberLocale ?? config('app.locale');
+            $locale = $component->evaluate($locale) ?? Schema::$defaultNumberLocale ?? config('app.locale');
 
             return Number::format($state, $decimalPlaces, $component->evaluate($maxDecimalPlaces), $locale);
         });
@@ -216,9 +282,20 @@ trait CanFormatState
     {
         $this->isTime = true;
 
-        $format ??= Infolist::$defaultTimeDisplayFormat;
+        $format ??= Schema::$defaultTimeDisplayFormat;
 
         $this->date($format, $timezone);
+
+        return $this;
+    }
+
+    public function isoTime(?string $format = null): static
+    {
+        $this->isTime = true;
+
+        $format ??= Schema::$defaultIsoTimeDisplayFormat;
+
+        $this->isoDate($format);
 
         return $this;
     }
@@ -304,7 +381,7 @@ trait CanFormatState
         }
 
         if ($isHtml && $this->isMarkdown()) {
-            $state = Str::markdown($state);
+            $state = Str::markdown($state, $this->getCommonMarkOptions(), $this->getCommonMarkExtensions());
         }
 
         $prefix = $this->getPrefix();

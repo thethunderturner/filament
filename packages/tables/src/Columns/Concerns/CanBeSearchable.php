@@ -12,7 +12,7 @@ trait CanBeSearchable
 
     protected bool $isIndividuallySearchable = false;
 
-    protected bool $isSearchable = false;
+    protected bool | Closure $isSearchable = false;
 
     /**
      * @var array<string> | null
@@ -24,10 +24,10 @@ trait CanBeSearchable
     protected bool | Closure | null $isSearchForcedCaseInsensitive = null;
 
     /**
-     * @param  bool | array<string> | string  $condition
+     * @param  bool | array<string> | string | Closure  $condition
      */
     public function searchable(
-        bool | array | string $condition = true,
+        bool | array | string | Closure $condition = true,
         ?Closure $query = null,
         bool $isIndividual = false,
         bool $isGlobal = true,
@@ -64,7 +64,7 @@ trait CanBeSearchable
 
     public function isSearchable(): bool
     {
-        return $this->isSearchable;
+        return $this->evaluate($this->isSearchable);
     }
 
     public function isGloballySearchable(): bool

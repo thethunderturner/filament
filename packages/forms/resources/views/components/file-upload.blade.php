@@ -6,6 +6,7 @@
     $imageResizeTargetHeight = $getImageResizeTargetHeight();
     $imageResizeTargetWidth = $getImageResizeTargetWidth();
     $isAvatar = $isAvatar();
+    $key = $getKey();
     $statePath = $getStatePath();
     $isDisabled = $isDisabled();
     $hasImageEditor = $hasImageEditor();
@@ -25,11 +26,11 @@
 >
     <div
         @if (FilamentView::hasSpaMode())
-            {{-- format-ignore-start --}}ax-load="visible || event (ax-modal-opened)"{{-- format-ignore-end --}}
+            {{-- format-ignore-start --}}x-load="visible || event (x-modal-opened)"{{-- format-ignore-end --}}
         @else
-            ax-load
+            x-load
         @endif
-        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('file-upload', 'filament/forms') }}"
+        x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('file-upload', 'filament/forms') }}"
         x-data="fileUploadFormComponent({
                     acceptedFileTypes: @js($getAcceptedFileTypes()),
                     imageEditorEmptyFillColor: @js($getImageEditorEmptyFillColor()),
@@ -37,10 +38,17 @@
                     imageEditorViewportHeight: @js($getImageEditorViewportHeight()),
                     imageEditorViewportWidth: @js($getImageEditorViewportWidth()),
                     deleteUploadedFileUsing: async (fileKey) => {
-                        return await $wire.deleteUploadedFile(@js($statePath), fileKey)
+                        return await $wire.callSchemaComponentMethod(
+                            @js($key),
+                            'deleteUploadedFile',
+                            { fileKey },
+                        )
                     },
                     getUploadedFilesUsing: async () => {
-                        return await $wire.getFormUploadedFiles(@js($statePath))
+                        return await $wire.callSchemaComponentMethod(
+                            @js($key),
+                            'getUploadedFiles',
+                        )
                     },
                     hasImageEditor: @js($hasImageEditor),
                     hasCircleCropper: @js($hasCircleCropper),
@@ -71,12 +79,21 @@
                     maxFiles: @js($getMaxFiles()),
                     maxSize: @js(($size = $getMaxSize()) ? "{$size}KB" : null),
                     minSize: @js(($size = $getMinSize()) ? "{$size}KB" : null),
+                    maxParallelUploads: @js($getMaxParallelUploads()),
                     removeUploadedFileUsing: async (fileKey) => {
-                        return await $wire.removeFormUploadedFile(@js($statePath), fileKey)
+                        return await $wire.callSchemaComponentMethod(
+                            @js($key),
+                            'removeUploadedFile',
+                            { fileKey },
+                        )
                     },
                     removeUploadedFileButtonPosition: @js($getRemoveUploadedFileButtonPosition()),
-                    reorderUploadedFilesUsing: async (files) => {
-                        return await $wire.reorderFormUploadedFiles(@js($statePath), files)
+                    reorderUploadedFilesUsing: async (fileKeys) => {
+                        return await $wire.callSchemaComponentMethod(
+                            @js($key),
+                            'reorderUploadedFiles',
+                            { fileKeys },
+                        )
                     },
                     shouldAppendFiles: @js($shouldAppendFiles()),
                     shouldOrientImageFromExif: @js($shouldOrientImagesFromExif()),
@@ -100,7 +117,6 @@
                     },
                 })"
         wire:ignore
-        x-ignore
         {{
             $attributes
                 ->merge([
@@ -143,7 +159,7 @@
             x-show="error"
             x-text="error"
             x-cloak
-            class="text-sm text-danger-600 dark:text-danger-400"
+            class="text-danger-600 dark:text-danger-400 text-sm"
         ></div>
 
         @if ($hasImageEditor && (! $isDisabled))
@@ -168,7 +184,7 @@
                     class="isolate z-10 flex h-full w-full items-center justify-center"
                 >
                     <div
-                        class="mx-auto flex h-full w-full flex-col overflow-hidden rounded-xl bg-white ring-1 ring-gray-900/10 dark:bg-gray-800 dark:ring-gray-50/10 lg:flex-row"
+                        class="mx-auto flex h-full w-full flex-col overflow-hidden rounded-xl bg-white ring-1 ring-gray-900/10 lg:flex-row dark:bg-gray-800 dark:ring-gray-50/10"
                     >
                         <div class="w-full flex-1 overflow-auto p-4 lg:h-full">
                             <div class="h-full w-full">
@@ -177,7 +193,7 @@
                         </div>
 
                         <div
-                            class="shadow-top z-[1] flex h-96 w-full flex-col overflow-auto bg-gray-50 dark:bg-gray-900/30 lg:h-full lg:max-w-xs lg:shadow-none"
+                            class="shadow-top z-1 flex h-96 w-full flex-col overflow-auto bg-gray-50 lg:h-full lg:max-w-xs lg:shadow-none dark:bg-gray-900/30"
                         >
                             <div class="flex-1 overflow-hidden">
                                 <div
@@ -219,7 +235,7 @@
                                                     ],
                                                 ] as $input)
                                                     <label
-                                                        class="flex w-full items-center rounded-lg border border-gray-300 bg-gray-100 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                                                        class="flex w-full items-center rounded-lg border border-gray-300 bg-gray-100 text-sm shadow-xs dark:border-gray-700 dark:bg-gray-800"
                                                     >
                                                         <span
                                                             class="flex w-20 shrink-0 items-center justify-center self-stretch border-e border-gray-300 px-2 dark:border-gray-700"
@@ -229,7 +245,7 @@
 
                                                         <input
                                                             @class([
-                                                                'block w-full border-none text-sm transition duration-75 focus-visible:border-primary-500 focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary-500 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus-visible:border-primary-500',
+                                                                'focus-visible:border-primary-500 focus-visible:ring-primary-500 dark:focus-visible:border-primary-500 block w-full border-none text-sm transition duration-75 focus-visible:ring-1 focus-visible:ring-inset disabled:opacity-70 dark:bg-gray-700 dark:text-white',
                                                             ])
                                                             x-on:keyup.enter.stop.prevent="{{ $input['alpineSaveHandler'] }}"
                                                             x-on:blur="{{ $input['alpineSaveHandler'] }}"
@@ -248,7 +264,7 @@
                                             </div>
 
                                             <div class="space-y-3">
-                                                @foreach ($getImageEditorActions(iconSizeClasses: 'h-5 w-5 mx-auto') as $groupedActions)
+                                                @foreach ($getImageEditorActions(iconSizeClasses: 'size-5 mx-auto') as $groupedActions)
                                                     <x-filament::button.group
                                                         class="w-full"
                                                     >
@@ -285,7 +301,7 @@
                                                                     :x-tooltip="'{ content: ' . \Illuminate\Support\Js::from(__('filament-forms::components.file_upload.editor.actions.set_aspect_ratio.label', ['ratio' => $label])) . ', theme: $store.theme }'"
                                                                     x-on:click.stop.prevent="currentRatio = '{{ $label }}'; editor.setAspectRatio({{ $ratio }})"
                                                                     color="gray"
-                                                                    x-bind:class="{'!bg-gray-50 dark:!bg-gray-700': currentRatio === '{{ $label }}'}"
+                                                                    x-bind:class="{'bg-gray-50! dark:bg-gray-700!': currentRatio === '{{ $label }}'}"
                                                                     grouped
                                                                 >
                                                                     {{ $label }}

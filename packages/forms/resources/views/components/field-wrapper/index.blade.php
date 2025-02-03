@@ -6,12 +6,6 @@
     'field' => null,
     'hasInlineLabel' => null,
     'hasNestedRecursiveValidationRules' => null,
-    'helperText' => null,
-    'hint' => null,
-    'hintActions' => null,
-    'hintColor' => null,
-    'hintIcon' => null,
-    'hintIconTooltip' => null,
     'id' => null,
     'inlineLabelVerticalAlignment' => VerticalAlignment::Start,
     'isDisabled' => null,
@@ -27,12 +21,6 @@
     if ($field) {
         $hasInlineLabel ??= $field->hasInlineLabel();
         $hasNestedRecursiveValidationRules ??= $field instanceof \Filament\Forms\Components\Contracts\HasNestedRecursiveValidationRules;
-        $helperText ??= $field->getHelperText();
-        $hint ??= $field->getHint();
-        $hintActions ??= $field->getHintActions();
-        $hintColor ??= $field->getHintColor();
-        $hintIcon ??= $field->getHintIcon();
-        $hintIconTooltip ??= $field->getHintIconTooltip();
         $id ??= $field->getId();
         $isDisabled ??= $field->isDisabled();
         $label ??= $field->getLabel();
@@ -41,10 +29,14 @@
         $statePath ??= $field->getStatePath();
     }
 
-    $hintActions = array_filter(
-        $hintActions ?? [],
-        fn (\Filament\Forms\Components\Actions\Action $hintAction): bool => $hintAction->isVisible(),
-    );
+    $beforeLabelContainer = $field?->getChildComponentContainer($field::BEFORE_LABEL_CONTAINER)?->toHtmlString();
+    $afterLabelContainer = $field?->getChildComponentContainer($field::AFTER_LABEL_CONTAINER)?->toHtmlString();
+    $aboveContentContainer = $field?->getChildComponentContainer($field::ABOVE_CONTENT_CONTAINER)?->toHtmlString();
+    $belowContentContainer = $field?->getChildComponentContainer($field::BELOW_CONTENT_CONTAINER)?->toHtmlString();
+    $beforeContentContainer = $field?->getChildComponentContainer($field::BEFORE_CONTENT_CONTAINER)?->toHtmlString();
+    $afterContentContainer = $field?->getChildComponentContainer($field::AFTER_CONTENT_CONTAINER)?->toHtmlString();
+    $aboveErrorMessageContainer = $field?->getChildComponentContainer($field::ABOVE_ERROR_MESSAGE_CONTAINER)?->toHtmlString();
+    $belowErrorMessageContainer = $field?->getChildComponentContainer($field::BELOW_ERROR_MESSAGE_CONTAINER)?->toHtmlString();
 
     $hasError = filled($statePath) && ($errors->has($statePath) || ($hasNestedRecursiveValidationRules && $errors->has("{$statePath}.*")));
 @endphp
@@ -53,7 +45,7 @@
     data-field-wrapper
     {{
         $attributes
-            ->merge($field?->getExtraFieldWrapperAttributes() ?? [])
+            ->merge($field?->getExtraFieldWrapperAttributes() ?? [], escape: false)
             ->class(['fi-fo-field-wrp'])
     }}
 >
@@ -74,15 +66,17 @@
             } => $hasInlineLabel,
         ])
     >
-        @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || filled($hint) || $hintIcon || count($hintActions))
+        {{ $field?->getChildComponentContainer($field::ABOVE_LABEL_CONTAINER) }}
+
+        @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || $beforeLabelContainer || $afterLabelContainer)
             <div
                 @class([
                     'flex items-center gap-x-3',
-                    'justify-between' => (! $labelSrOnly) || $labelPrefix || $labelSuffix,
-                    'justify-end' => $labelSrOnly && ! ($labelPrefix || $labelSuffix),
                     ($label instanceof \Illuminate\View\ComponentSlot) ? $label->attributes->get('class') : null,
                 ])
             >
+                {{ $beforeLabelContainer }}
+
                 @if ($label && (! $labelSrOnly))
                     <x-filament-forms::field-wrapper.label
                         :for="$id"
@@ -99,27 +93,38 @@
                     {{ $labelSuffix }}
                 @endif
 
-                @if (filled($hint) || $hintIcon || count($hintActions))
-                    <x-filament-forms::field-wrapper.hint
-                        :actions="$hintActions"
-                        :color="$hintColor"
-                        :icon="$hintIcon"
-                        :tooltip="$hintIconTooltip"
-                    >
-                        {{ $hint }}
-                    </x-filament-forms::field-wrapper.hint>
-                @endif
+                {{ $afterLabelContainer }}
             </div>
         @endif
 
-        @if ((! \Filament\Support\is_slot_empty($slot)) || $hasError || filled($helperText))
+        {{ $field?->getChildComponentContainer($field::BELOW_LABEL_CONTAINER) }}
+
+        @if ((! \Filament\Support\is_slot_empty($slot)) || $hasError || $aboveContentContainer || $belowContentContainer || $beforeContentContainer || $afterContentContainer || $aboveErrorMessageContainer || $belowErrorMessageContainer)
             <div
                 @class([
                     'grid auto-cols-fr gap-y-2',
                     'sm:col-span-2' => $hasInlineLabel,
                 ])
             >
-                {{ $slot }}
+                {{ $aboveContentContainer }}
+
+                @if ($beforeContentContainer || $afterContentContainer)
+                    <div class="flex w-full items-center gap-x-3">
+                        {{ $beforeContentContainer }}
+
+                        <div class="w-full">
+                            {{ $slot }}
+                        </div>
+
+                        {{ $afterContentContainer }}
+                    </div>
+                @else
+                    {{ $slot }}
+                @endif
+
+                {{ $belowContentContainer }}
+
+                {{ $aboveErrorMessageContainer }}
 
                 @if ($hasError)
                     <x-filament-forms::field-wrapper.error-message>
@@ -127,11 +132,7 @@
                     </x-filament-forms::field-wrapper.error-message>
                 @endif
 
-                @if (filled($helperText))
-                    <x-filament-forms::field-wrapper.helper-text>
-                        {{ $helperText }}
-                    </x-filament-forms::field-wrapper.helper-text>
-                @endif
+                {{ $belowErrorMessageContainer }}
             </div>
         @endif
     </div>
