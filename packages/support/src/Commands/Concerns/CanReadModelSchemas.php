@@ -152,6 +152,7 @@ trait CanReadModelSchemas
 
         $values = is_null($values) ? [] : match ($type) {
             'string', 'char', 'binary', 'bit' => ['length' => (int) $values[0]],
+            'enum' => ['values' => array_map(fn (string $value): string => trim($value, '\''), $values)],
             default => [],
         };
 
@@ -227,5 +228,19 @@ trait CanReadModelSchemas
     public function getRecordTitleAttribute(): ?string
     {
         return null;
+    }
+
+    /**
+     * @param  class-string<Model>  $model
+     * @return array<string>
+     */
+    protected function getEnumCasts(string $model): array
+    {
+        $casts = app($model)->getCasts();
+
+        return array_filter(
+            $casts,
+            fn (mixed $cast): bool => is_string($cast) ? enum_exists($cast) : false,
+        );
     }
 }
