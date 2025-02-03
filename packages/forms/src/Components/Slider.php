@@ -34,8 +34,10 @@ class Slider extends Field
 
     protected int | Closure | null $limit = null;
 
+    /** @var array<int, int>|Closure|null */
     protected array | Closure | null $padding = null;
 
+    /** @var array<int, int>|Closure|null */
     protected bool | array | Closure | null $connect = null;
 
     protected string | Closure | null $direction = null;
@@ -220,6 +222,7 @@ class Slider extends Field
         return $this->evaluate($this->padding);
     }
 
+    /** @return bool|array<int, bool>|null */
     public function getConnect(): array | bool | null
     {
         return $this->evaluate($this->connect);
