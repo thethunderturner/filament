@@ -11,7 +11,7 @@ use Filament\Support\Icons\Heroicon;
 
 class Settings extends Page
 {
-    protected static string $view = 'pages.settings';
+    protected string $view = 'pages.settings';
 
     protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 

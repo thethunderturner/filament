@@ -8,7 +8,7 @@ use Filament\Support\Icons\Heroicon;
 
 class UserMenuCustomization extends Page
 {
-    protected static string $view = 'livewire.panels.navigation.empty';
+    protected string $view = 'livewire.panels.navigation.empty';
 
     public function mount()
     {

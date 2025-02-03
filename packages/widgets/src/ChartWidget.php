@@ -39,7 +39,7 @@ abstract class ChartWidget extends Widget implements HasSchemas
     /**
      * @var view-string
      */
-    protected static string $view = 'filament-widgets::chart-widget';
+    protected string $view = 'filament-widgets::chart-widget';
 
     public function mount(): void
     {

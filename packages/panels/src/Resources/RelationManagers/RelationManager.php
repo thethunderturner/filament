@@ -53,7 +53,7 @@ class RelationManager extends Component implements Actions\Contracts\HasActions,
     /**
      * @var view-string
      */
-    protected static string $view = 'filament-panels::resources.relation-manager';
+    protected string $view = 'filament-panels::resources.relation-manager';
 
     #[Locked]
     public Model $ownerRecord;
@@ -137,7 +137,7 @@ class RelationManager extends Component implements Actions\Contracts\HasActions,
 
     public function render(): View
     {
-        return view(static::$view, $this->getViewData());
+        return view($this->view, $this->getViewData());
     }
 
     /**

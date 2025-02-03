@@ -32,7 +32,7 @@ class StatsOverviewWidget extends Widget implements HasSchemas
     /**
      * @var view-string
      */
-    protected static string $view = 'filament-widgets::stats-overview-widget';
+    protected string $view = 'filament-widgets::stats-overview-widget';
 
     public function content(Schema $schema): Schema
     {

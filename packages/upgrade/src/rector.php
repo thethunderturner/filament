@@ -6,11 +6,6 @@ use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\Rector\String_\RenameStringRector;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->rules([
-        Rector\SimpleMethodChangesRector::class,
-        Rector\SimplePropertyChangesRector::class,
-    ]);
-
     $rectorConfig->ruleWithConfiguration(
         RenameClassRector::class,
         // @todo Alphabetical
@@ -260,4 +255,9 @@ return static function (RectorConfig $rectorConfig): void {
             'filament-infolists::components.split' => 'filament-schemas::components.split',
         ],
     );
+
+    $rectorConfig->rules([
+        Rector\SimpleMethodChangesRector::class,
+        Rector\SimplePropertyChangesRector::class,
+    ]);
 };

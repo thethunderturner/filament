@@ -55,7 +55,7 @@ class EditProfile extends Page
 
     protected static bool $isDiscovered = false;
 
-    protected static string $view;
+    protected string $view;
 
     public function getLayout(): string
     {
@@ -69,7 +69,7 @@ class EditProfile extends Page
 
     public function getView(): string
     {
-        return static::$view ?? 'filament-panels::auth.pages.edit-profile';
+        return $this->view ?? 'filament-panels::auth.pages.edit-profile';
     }
 
     public static function getLabel(): string
