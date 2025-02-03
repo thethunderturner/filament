@@ -126,7 +126,7 @@ class ExportColumn extends Component
             return $query;
         }
 
-        $relationshipName = $this->getRelationshipName();
+        $relationshipName = $this->getRelationshipName($query->getModel());
 
         if (array_key_exists($relationshipName, $query->getEagerLoads())) {
             return $query;
