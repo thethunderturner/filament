@@ -1,10 +1,9 @@
 @import 'nouislider/dist/nouislider.css';
 
 .noUi-connect {
-    --tw-bg-opacity: 1;
-    background: rgba(var(--color-primary-500), var(--tw-bg-opacity));
+    @apply bg-primary-600 opacity-100;
 }
 
 .fi-slider-vh {
-    height: 10rem;
+    @apply h-40;
 }
