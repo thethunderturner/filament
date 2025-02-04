@@ -48,7 +48,7 @@ class DownloadImportFailureCsv
 
         $import->failedRows()
             ->lazyById(100)
-            ->each(fn (FailedImportRow $failedImportRow) => $csv->insertOne([ /** @phpstan-ignore argument.type */
+            ->each(fn (FailedImportRow $failedImportRow) => $csv->insertOne([/** @phpstan-ignore argument.type */
                 ...$failedImportRow->data,
                 'error' => $failedImportRow->validation_error ?? __('filament-actions::import.failure_csv.system_error'),
             ]));

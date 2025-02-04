@@ -5,13 +5,13 @@ namespace Filament\Schemas\Components;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Schemas\Components\Wizard\Step;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Components\Attributes\ExposedLivewireMethod;
 use Filament\Support\Concerns;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Exceptions\Halt;
 use Illuminate\Contracts\Support\Htmlable;
 use Livewire\Component as LivewireComponent;
-use Filament\Schemas\Contracts\HasSchemas;
 
 class Wizard extends Component
 {

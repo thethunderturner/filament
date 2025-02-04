@@ -229,7 +229,6 @@ class ImportAction extends Action
 
             /** @var array<array<array<string, string>>> $importChunks */
             $importChunks = $importChunkIterator->get(); /** @phpstan-ignore varTag.nativeType */
-
             $job = $action->getJob();
 
             $options = array_merge(

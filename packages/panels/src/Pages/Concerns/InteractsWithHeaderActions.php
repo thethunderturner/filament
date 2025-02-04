@@ -4,7 +4,6 @@ namespace Filament\Pages\Concerns;
 
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
-use InvalidArgumentException;
 
 trait InteractsWithHeaderActions
 {
