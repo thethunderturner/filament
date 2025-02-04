@@ -22,7 +22,7 @@ use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
-class SimplePropertyChangesRector extends AbstractRector
+class FixPropertiesRector extends AbstractRector
 {
     /**
      * @return array<array{
