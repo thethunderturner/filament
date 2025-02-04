@@ -177,9 +177,9 @@ abstract class EditTenantProfile extends Page
         return null;
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**

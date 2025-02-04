@@ -223,9 +223,9 @@ class QueryBuilder extends BaseFilter
         return $builder;
     }
 
-    protected function getNestedRuleBuilder(Schema $ruleBuilderBlockContainer, string $orGroupIndex): RuleBuilder
+    protected function getNestedRuleBuilder(Schema $schema, string $orGroupIndex): RuleBuilder
     {
-        $builder = $ruleBuilderBlockContainer
+        $builder = $schema
             ->getComponent(fn (Component $component): bool => $component instanceof Repeater)
             ->getChildComponentContainer($orGroupIndex)
             ->getComponent(fn (Component $component): bool => $component instanceof RuleBuilder);
@@ -240,7 +240,7 @@ class QueryBuilder extends BaseFilter
     /**
      * @param  array<string, mixed>  $rule
      */
-    protected function tapOperatorFromRule(array $rule, Schema $ruleBuilderBlockContainer, Closure $callback): void
+    protected function tapOperatorFromRule(array $rule, Schema $schema, Closure $callback): void
     {
         $constraint = $this->getConstraint($rule['type']);
 
@@ -263,7 +263,7 @@ class QueryBuilder extends BaseFilter
         }
 
         try {
-            $ruleBuilderBlockContainer->validate();
+            $schema->validate();
         } catch (ValidationException) {
             return;
         }

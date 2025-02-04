@@ -281,19 +281,19 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
         $action = Action::make($this->getCreateOptionActionName())
             ->label(__('filament-forms::components.select.actions.create_option.label'))
-            ->form(function (Select $component, Schema $form): array | Schema | null {
-                return $component->getCreateOptionActionForm($form->model(
+            ->form(function (Select $component, Schema $schema): array | Schema | null {
+                return $component->getCreateOptionActionForm($schema->model(
                     $component->getRelationship() ? $component->getRelationship()->getModel()::class : null,
                 ));
             })
-            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $form): void {
+            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $schema): void {
                 if (! $component->getCreateOptionUsing()) {
                     throw new Exception("Select field [{$component->getStatePath()}] must have a [createOptionUsing()] closure set.");
                 }
 
                 $createdOptionKey = $component->evaluate($component->getCreateOptionUsing(), [
                     'data' => $data,
-                    'form' => $form,
+                    'form' => $schema,
                 ]);
 
                 $state = $component->isMultiple()
@@ -312,7 +312,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
                 $action->callAfter();
 
-                $form->fill();
+                $schema->fill();
 
                 $action->halt();
             })
@@ -365,9 +365,9 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
     /**
      * @return array<Component | Action | ActionGroup> | Schema | null
      */
-    public function getCreateOptionActionForm(Schema $form): array | Schema | null
+    public function getCreateOptionActionForm(Schema $schema): array | Schema | null
     {
-        return $this->evaluate($this->createOptionActionForm, ['form' => $form]);
+        return $this->evaluate($this->createOptionActionForm, ['form' => $schema]);
     }
 
     public function hasCreateOptionActionFormSchema(): bool
@@ -378,9 +378,9 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
     /**
      * @return array<Component | Action | ActionGroup> | Schema | null
      */
-    public function getEditOptionActionForm(Schema $form): array | Schema | null
+    public function getEditOptionActionForm(Schema $schema): array | Schema | null
     {
-        return $this->evaluate($this->editOptionActionForm, ['form' => $form]);
+        return $this->evaluate($this->editOptionActionForm, ['form' => $schema]);
     }
 
     public function hasEditOptionActionFormSchema(): bool
@@ -436,20 +436,20 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
         $action = Action::make($this->getEditOptionActionName())
             ->label(__('filament-forms::components.select.actions.edit_option.label'))
-            ->form(function (Select $component, Schema $form): array | Schema | null {
+            ->form(function (Select $component, Schema $schema): array | Schema | null {
                 return $component->getEditOptionActionForm(
-                    $form->model($component->getSelectedRecord()),
+                    $schema->model($component->getSelectedRecord()),
                 );
             })
             ->fillForm($this->getEditOptionActionFormData())
-            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $form): void {
+            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $schema): void {
                 if (! $component->getUpdateOptionUsing()) {
                     throw new Exception("Select field [{$component->getStatePath()}] must have a [updateOptionUsing()] closure set.");
                 }
 
                 $component->evaluate($component->getUpdateOptionUsing(), [
                     'data' => $data,
-                    'form' => $form,
+                    'form' => $schema,
                 ]);
 
                 $component->refreshSelectedOptionLabel();
@@ -1061,12 +1061,12 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
             $relationship->syncWithPivotValues($state, $pivotData, detaching: false);
         });
 
-        $this->createOptionUsing(static function (Select $component, array $data, Schema $form) {
+        $this->createOptionUsing(static function (Select $component, array $data, Schema $schema) {
             $record = $component->getRelationship()->getRelated();
             $record->fill($data);
             $record->save();
 
-            $form->model($record)->saveRelationships();
+            $schema->model($record)->saveRelationships();
 
             return $record->getKey();
         });
@@ -1075,8 +1075,8 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
             return $component->getSelectedRecord()?->attributesToArray();
         });
 
-        $this->updateOptionUsing(static function (array $data, Schema $form): void {
-            $form->getRecord()?->update($data);
+        $this->updateOptionUsing(static function (array $data, Schema $schema): void {
+            $schema->getRecord()?->update($data);
         });
 
         $this->dehydrated(fn (Select $component): bool => ! $component->isMultiple());

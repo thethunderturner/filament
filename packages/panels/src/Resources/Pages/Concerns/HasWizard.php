@@ -14,9 +14,9 @@ trait HasWizard /** @phpstan-ignore trait.unused */
         return 1;
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return parent::form($form)
+        return parent::form($schema)
             ->schema([
                 Wizard::make($this->getSteps())
                     ->startOnStep($this->getStartStep())

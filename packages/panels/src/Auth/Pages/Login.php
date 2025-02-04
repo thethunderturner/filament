@@ -151,14 +151,14 @@ class Login extends SimplePage
         ]);
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
-    public function multiFactorChallengeForm(Schema $form): Schema
+    public function multiFactorChallengeForm(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**

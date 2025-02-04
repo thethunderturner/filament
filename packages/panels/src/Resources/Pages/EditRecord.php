@@ -255,16 +255,16 @@ class EditRecord extends Page
         return $data;
     }
 
-    public function configureForm(Schema $form): Schema
+    public function configureForm(Schema $schema): Schema
     {
-        $form->columns($this->hasInlineLabels() ? 1 : 2);
-        $form->inlineLabel($this->hasInlineLabels());
+        $schema->columns($this->hasInlineLabels() ? 1 : 2);
+        $schema->inlineLabel($this->hasInlineLabels());
 
-        static::getResource()::form($form);
+        static::getResource()::form($schema);
 
-        $this->form($form);
+        $this->form($schema);
 
-        return $form;
+        return $schema;
     }
 
     public function getDefaultActionSchemaResolver(Action $action): ?Closure
@@ -326,9 +326,9 @@ class EditRecord extends Page
             ->color('gray');
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**

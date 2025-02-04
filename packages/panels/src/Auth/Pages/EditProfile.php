@@ -336,9 +336,9 @@ class EditProfile extends Page
             ->dehydrated(false);
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**

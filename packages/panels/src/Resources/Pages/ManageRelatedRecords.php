@@ -155,14 +155,14 @@ class ManageRelatedRecords extends Page implements Tables\Contracts\HasTable
         return $this->getRecord();
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
-    public function infolist(Schema $infolist): Schema
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist;
+        return $schema;
     }
 
     /**

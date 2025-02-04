@@ -148,9 +148,9 @@ class Register extends SimplePage
         $user->notify($notification);
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**

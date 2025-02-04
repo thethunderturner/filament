@@ -259,5 +259,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rules([
         Rector\SimpleMethodChangesRector::class,
         Rector\SimplePropertyChangesRector::class,
+        Rector\RenameSchemaParamToMatchTypeRector::class,
     ]);
 };

@@ -15,9 +15,9 @@ trait HasFiltersForm /** @phpstan-ignore trait.unused */
         ];
     }
 
-    public function filtersForm(Schema $form): Schema
+    public function filtersForm(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     public function getFiltersForm(): Schema

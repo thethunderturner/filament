@@ -201,14 +201,14 @@ class RelationManager extends Component implements Actions\Contracts\HasActions,
         return $this->ownerRecord;
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
-    public function infolist(Schema $infolist): Schema
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist;
+        return $schema;
     }
 
     public function isReadOnly(): bool

@@ -49,9 +49,9 @@ trait HasForm
     /**
      * @deprecated Use `getSchema()` instead.
      */
-    public function getForm(Schema $form): ?Schema
+    public function getForm(Schema $schema): ?Schema
     {
-        return $this->getSchema($form);
+        return $this->getSchema($schema);
     }
 
     public function mutateFormDataUsing(?Closure $callback): static

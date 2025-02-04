@@ -71,7 +71,7 @@ trait InteractsWithForms
                     return [$form => $this->{$form}($this->makeSchema())];
                 })
                 ->forget('')
-                ->map(fn (Schema $form, string $formName) => $form->key($formName))
+                ->map(fn (Schema $schema, string $formName) => $schema->key($formName))
                 ->all(),
         ];
 
@@ -140,9 +140,9 @@ trait InteractsWithForms
         ];
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema($this->getFormSchema())
             ->model($this->getFormModel())
             ->statePath($this->getFormStatePath())
