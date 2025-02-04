@@ -8,10 +8,11 @@ use Filament\Actions\Action;
 use Filament\Actions\Testing\TestsActions as BaseTestsActions;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Support\Arr;
+use Livewire\Component;
 use Livewire\Features\SupportTesting\Testable;
 
 /**
- * @method HasTable instance()
+ * @method Component&HasTable instance()
  *
  * @mixin Testable
  * @mixin BaseTestsActions

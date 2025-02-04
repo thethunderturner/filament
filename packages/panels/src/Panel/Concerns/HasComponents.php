@@ -244,7 +244,7 @@ trait HasComponents
 
         $this->discoverComponents(
             Cluster::class,
-            $this->clusters,
+            $this->clusters, /** @phpstan-ignore assign.propertyType */
             directory: $in,
             namespace: $for,
         );
@@ -334,7 +334,7 @@ trait HasComponents
 
         $this->discoverComponents(
             Widget::class,
-            $this->widgets,
+            $this->widgets, /** @phpstan-ignore assign.propertyType */
             directory: $in,
             namespace: $for,
         );
@@ -448,7 +448,7 @@ trait HasComponents
                 $this->queueLivewireComponentForRegistration($class);
             }
 
-            if (! is_subclass_of($class, $baseClass)) {
+            if (! is_subclass_of($class, $baseClass)) { /** @phpstan-ignore function.alreadyNarrowedType */
                 continue;
             }
 
@@ -459,7 +459,7 @@ trait HasComponents
                 continue;
             }
 
-            $register[$file->getRealPath()] = $class;
+            $register[$file->getRealPath()] = $class; /** @phpstan-ignore parameterByRef.type */
             $this->registerToCluster($class);
         }
     }

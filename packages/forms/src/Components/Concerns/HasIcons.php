@@ -48,7 +48,7 @@ trait HasIcons
             is_a($enum, IconInterface::class, allow_string: true)
         ) {
             return array_reduce($enum::cases(), function (array $carry, IconInterface & UnitEnum $case): array {
-                $carry[$case?->value ?? $case->name] = $case->getIcon();
+                $carry[$case->value ?? $case->name] = $case->getIcon();
 
                 return $carry;
             }, []);

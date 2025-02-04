@@ -88,10 +88,6 @@ trait HasActions
             $name = $modalActionName;
         }
 
-        if (! $action instanceof Action) {
-            return null;
-        }
-
         return $action;
     }
 

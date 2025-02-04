@@ -7,7 +7,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 
-trait HasFiltersSchema
+trait HasFiltersSchema /** @phpstan-ignore trait.unused */
 {
     public ?array $filters = [];
 

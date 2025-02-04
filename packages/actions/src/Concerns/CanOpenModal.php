@@ -420,10 +420,6 @@ trait CanOpenModal
 
     public function prepareModalAction(Action $action): Action
     {
-        if (! $action instanceof Action) {
-            return $action;
-        }
-
         return $action
             ->schemaComponentContainer($this->getSchemaComponentContainer())
             ->schemaComponent($this->getSchemaComponent())

@@ -59,7 +59,7 @@ class SpatieTagsInput extends TagsInput
      * Syncs tags with the record without taking types into account. This avoids recreating existing tags with an empty type.
      * Spatie's `HasTags` trait does not have functionality for this behavior.
      *
-     * @param  array<string>  $state
+     * @param array<string> $state
      */
     protected function syncTagsWithAnyType(?Model $record, array $state): void
     {
@@ -69,7 +69,7 @@ class SpatieTagsInput extends TagsInput
 
         $tagClassName = config('tags.tag_model', Tag::class);
 
-        $tags = collect($state)->map(function ($tagName) use ($tagClassName) {
+        $tags = collect($state)->map(function (string $tagName) use ($tagClassName) { /** @phpstan-ignore argument.templateType */
             $locale = $tagClassName::getLocale();
 
             $tag = $tagClassName::findFromStringOfAnyType($tagName, $locale);

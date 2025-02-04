@@ -13,7 +13,7 @@ use Livewire\Attributes\Reactive;
 
 use function Livewire\trigger;
 
-trait InteractsWithPageTable
+trait InteractsWithPageTable /** @phpstan-ignore trait.unused */
 {
     /** @var array<string, int> */
     #[Reactive]

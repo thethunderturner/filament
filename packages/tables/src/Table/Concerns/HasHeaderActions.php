@@ -51,9 +51,7 @@ trait HasHeaderActions
 
             if ($action instanceof ActionGroup) {
                 foreach ($action->getFlatActions() as $flatAction) {
-                    if ($flatAction instanceof Action) {
-                        $this->cacheAction($flatAction);
-                    }
+                    $this->cacheAction($flatAction);
                 }
             } elseif ($action instanceof Action) {
                 $this->cacheAction($action);

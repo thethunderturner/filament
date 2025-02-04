@@ -277,7 +277,7 @@ trait HasState
 
         if (! ($isDehydrated && $this->isDehydrated())) {
             if ($this->hasStatePath()) {
-                Arr::forget($state, $this->getStatePath());
+                Arr::forget($state, $this->getStatePath()); /** @phpstan-ignore parameterByRef.type */
 
                 return;
             }
@@ -295,7 +295,7 @@ trait HasState
 
         if (filled($this->getStatePath(isAbsolute: false))) {
             foreach ($this->getStateToDehydrate() as $key => $value) {
-                Arr::set($state, $key, $value);
+                Arr::set($state, $key, $value); /** @phpstan-ignore parameterByRef.type */
             }
         }
 
@@ -377,7 +377,7 @@ trait HasState
 
         $this->state($defaultState);
 
-        Arr::set($hydratedDefaultState, $statePath, $defaultState);
+        Arr::set($hydratedDefaultState, $statePath, $defaultState); /** @phpstan-ignore parameterByRef.type */
     }
 
     public function fillStateWithNull(): void

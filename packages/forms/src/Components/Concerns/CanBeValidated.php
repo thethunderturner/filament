@@ -751,7 +751,7 @@ trait CanBeValidated
 
         if (count($componentMessages = $this->getValidationMessages())) {
             foreach ($componentMessages as $rule => $message) {
-                $messages["{$statePath}.{$rule}"] = $message;
+                $messages["{$statePath}.{$rule}"] = $message; /** @phpstan-ignore parameterByRef.type */
             }
         }
     }

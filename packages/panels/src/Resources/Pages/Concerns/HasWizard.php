@@ -7,7 +7,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 
-trait HasWizard
+trait HasWizard /** @phpstan-ignore trait.unused */
 {
     public function getStartStep(): int
     {

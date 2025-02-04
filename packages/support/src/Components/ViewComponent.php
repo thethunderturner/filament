@@ -12,9 +12,6 @@ use Illuminate\View\ComponentAttributeBag;
 
 abstract class ViewComponent extends Component implements Htmlable
 {
-    /**
-     * @var view-string
-     */
     protected string $view;
 
     /**

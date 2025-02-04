@@ -124,7 +124,7 @@ class AssetManager
         foreach ($this->scriptData as $package => $packageData) {
             if (
                 ($packages !== null) &&
-                ($package !== null) &&
+                filled($package) &&
                 (! in_array($package, $packages))
             ) {
                 continue;
@@ -246,7 +246,7 @@ class AssetManager
         foreach ($this->cssVariables as $package => $packageVariables) {
             if (
                 ($packages !== null) &&
-                ($package !== null) &&
+                filled($package) &&
                 (! in_array($package, $packages))
             ) {
                 continue;

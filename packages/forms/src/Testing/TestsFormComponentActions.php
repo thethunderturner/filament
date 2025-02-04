@@ -6,6 +6,8 @@ use BackedEnum;
 use Closure;
 use Illuminate\Support\Arr;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Component;
+use Filament\Schemas\Contracts\HasSchemas;
 
 /**
  * @method Component&HasSchemas instance()

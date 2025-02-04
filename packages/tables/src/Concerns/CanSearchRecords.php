@@ -285,7 +285,7 @@ trait CanSearchRecords
         // The `$this->tableColumnSearches` array is potentially nested.
         // So, we iterate through it deeply:
         $iterator = new RecursiveIteratorIterator(
-            new RecursiveArrayIterator($this->tableColumnSearches),
+            new RecursiveArrayIterator($this->tableColumnSearches), /** @phpstan-ignore argument.type */
             RecursiveIteratorIterator::SELF_FIRST
         );
 

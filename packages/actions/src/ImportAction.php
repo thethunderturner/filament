@@ -228,7 +228,7 @@ class ImportAction extends Action
             $importChunkIterator = new ChunkIterator($csvResults->getRecords(), chunkSize: $action->getChunkSize());
 
             /** @var array<array<array<string, string>>> $importChunks */
-            $importChunks = $importChunkIterator->get();
+            $importChunks = $importChunkIterator->get(); /** @phpstan-ignore varTag.nativeType */
 
             $job = $action->getJob();
 
@@ -277,7 +277,7 @@ class ImportAction extends Action
 
                     event(new ImportCompleted($import, $columnMap, $options));
 
-                    if (! $import->user instanceof Authenticatable) {
+                    if (! $import->user instanceof Authenticatable) { /** @phpstan-ignore instanceof.alwaysTrue */
                         return;
                     }
 

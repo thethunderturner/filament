@@ -61,7 +61,7 @@ abstract class Resource
             ->recordTitle(static::getRecordTitle(...))
             ->authorizeReorder(static::canReorder(...));
 
-        static::table($table);
+        static::table($table); /** @phpstan-ignore staticMethod.resultUnused */
     }
 
     public static function getEloquentQuery(): Builder

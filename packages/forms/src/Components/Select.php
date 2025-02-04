@@ -11,6 +11,7 @@ use Filament\Schemas\Components\Contracts\HasAffixActions;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Schemas\Components\StateCasts\EnumArrayStateCast;
 use Filament\Schemas\Components\StateCasts\EnumStateCast;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Components\Attributes\ExposedLivewireMethod;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
@@ -1282,7 +1283,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
             $this->state($state);
 
             if (is_array($hydratedDefaultState)) {
-                Arr::set($hydratedDefaultState, $this->getStatePath(), $state);
+                Arr::set($hydratedDefaultState, $this->getStatePath(), $state); /** @phpstan-ignore parameterByRef.type */
             }
         }
     }
@@ -1311,7 +1312,6 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
 
     public function refreshSelectedOptionLabel(): void
     {
-        /** @var LivewireComponent $livewire */
         $livewire = $this->getLivewire();
 
         $livewire->dispatch(

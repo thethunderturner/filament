@@ -11,6 +11,7 @@ use Filament\Support\Enums\IconPosition;
 use Filament\Support\Exceptions\Halt;
 use Illuminate\Contracts\Support\Htmlable;
 use Livewire\Component as LivewireComponent;
+use Filament\Schemas\Contracts\HasSchemas;
 
 class Wizard extends Component
 {
@@ -98,7 +99,7 @@ class Wizard extends Component
             }
         }
 
-        /** @var LivewireComponent $livewire */
+        /** @var HasSchemas&LivewireComponent $livewire */
         $livewire = $this->getLivewire();
         $livewire->dispatch('next-wizard-step', key: $this->getKey());
     }
