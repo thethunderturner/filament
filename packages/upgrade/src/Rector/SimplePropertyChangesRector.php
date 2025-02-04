@@ -41,7 +41,7 @@ class SimplePropertyChangesRector extends AbstractRector
                     Widget::class,
                 ],
                 'changes' => [
-                    'view' => function (Property $node) {
+                    'view' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
                 ],
@@ -52,7 +52,7 @@ class SimplePropertyChangesRector extends AbstractRector
                     EditProfile::class,
                 ],
                 'changes' => [
-                    'maxWidth' => function (Property $node) {
+                    'maxWidth' => function (Property $node): void {
                         $node->type = new Name('\Filament\Support\Enums\Width | string | null');
                     },
                 ],
@@ -62,7 +62,7 @@ class SimplePropertyChangesRector extends AbstractRector
                     BasePage::class,
                 ],
                 'changes' => [
-                    'maxContentWidth' => function (Property $node) {
+                    'maxContentWidth' => function (Property $node): void {
                         $node->type = new Name('\Filament\Support\Enums\Width | string | null');
                     },
                 ],
@@ -73,13 +73,13 @@ class SimplePropertyChangesRector extends AbstractRector
                     Page::class,
                 ],
                 'changes' => [
-                    'activeNavigationIcon' => function (Property $node) {
+                    'activeNavigationIcon' => function (Property $node): void {
                         $node->type = new Name('string | \BackedEnum | null');
                     },
-                    'navigationIcon' => function (Property $node) {
+                    'navigationIcon' => function (Property $node): void {
                         $node->type = new Name('string | \BackedEnum | null');
                     },
-                    'subNavigationPosition' => function (Property $node) {
+                    'subNavigationPosition' => function (Property $node): void {
                         $node->type = new Name('?\Filament\Pages\Enums\SubNavigationPosition');
                     },
                 ],
@@ -89,7 +89,7 @@ class SimplePropertyChangesRector extends AbstractRector
                     RelationManager::class,
                 ],
                 'changes' => [
-                    'icon' => function (Property $node) {
+                    'icon' => function (Property $node): void {
                         $node->type = new Name('string | \BackedEnum | null');
                     },
                 ],
@@ -100,7 +100,7 @@ class SimplePropertyChangesRector extends AbstractRector
                     StatsOverviewWidget::class,
                 ],
                 'changes' => [
-                    'pollingInterval' => function (Property $node) {
+                    'pollingInterval' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
                 ],
@@ -110,19 +110,19 @@ class SimplePropertyChangesRector extends AbstractRector
                     ChartWidget::class,
                 ],
                 'changes' => [
-                    'color' => function (Property $node) {
+                    'color' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
-                    'heading' => function (Property $node) {
+                    'heading' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
-                    'description' => function (Property $node) {
+                    'description' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
-                    'maxHeight' => function (Property $node) {
+                    'maxHeight' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
-                    'options' => function (Property $node) {
+                    'options' => function (Property $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
                 ],

@@ -53,7 +53,7 @@ class DownloadImportFailureCsv
                 'error' => $failedImportRow->validation_error ?? __('filament-actions::import.failure_csv.system_error'),
             ]));
 
-        return response()->streamDownload(function () use ($csv) {
+        return response()->streamDownload(function () use ($csv): void {
             foreach ($csv->chunk(1000) as $offset => $chunk) {
                 echo $chunk;
 

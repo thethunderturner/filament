@@ -52,7 +52,7 @@ class ReplicateAction extends Action
         });
 
         $this->action(function () {
-            $result = $this->process(function (array $data, Model $record) {
+            $result = $this->process(function (array $data, Model $record): void {
                 $this->replica = $record->replicate($this->getExcludedAttributes());
 
                 $this->replica->fill($data);

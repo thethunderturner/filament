@@ -168,7 +168,7 @@ trait HasGlobalSearch
         );
 
         foreach ($searchWords as $searchWord) {
-            $query->where(function (Builder $query) use ($searchWord) {
+            $query->where(function (Builder $query) use ($searchWord): void {
                 $isFirst = true;
 
                 foreach (static::getGloballySearchableAttributes() as $attributes) {

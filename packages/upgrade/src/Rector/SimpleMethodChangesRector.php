@@ -43,13 +43,13 @@ class SimpleMethodChangesRector extends AbstractRector
                     Page::class,
                 ],
                 'changes' => [
-                    'getFooterWidgetsColumns' => function (ClassMethod $node) {
+                    'getFooterWidgetsColumns' => function (ClassMethod $node): void {
                         $node->returnType = new UnionType([new Identifier('int'), new Identifier('array')]);
                     },
-                    'getHeaderWidgetsColumns' => function (ClassMethod $node) {
+                    'getHeaderWidgetsColumns' => function (ClassMethod $node): void {
                         $node->returnType = new UnionType([new Identifier('int'), new Identifier('array')]);
                     },
-                    'getSubNavigationPosition' => function (ClassMethod $node) {
+                    'getSubNavigationPosition' => function (ClassMethod $node): void {
                         $node->flags &= Modifiers::STATIC;
                     },
                 ],
@@ -59,7 +59,7 @@ class SimpleMethodChangesRector extends AbstractRector
                     CreateRecord::class,
                 ],
                 'changes' => [
-                    'canCreateAnother' => function (ClassMethod $node) {
+                    'canCreateAnother' => function (ClassMethod $node): void {
                         $node->flags &= ~Modifiers::STATIC;
                     },
                 ],
@@ -69,7 +69,7 @@ class SimpleMethodChangesRector extends AbstractRector
                     Dashboard::class,
                 ],
                 'changes' => [
-                    'getColumns' => function (ClassMethod $node) {
+                    'getColumns' => function (ClassMethod $node): void {
                         $node->returnType = new UnionType([new Identifier('int'), new Identifier('array')]);
                     },
                 ],

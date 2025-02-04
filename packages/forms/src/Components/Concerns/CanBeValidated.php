@@ -537,7 +537,7 @@ trait CanBeValidated
     public function distinct(bool | Closure $condition = true): static
     {
         $this->rule(static function (Field $component, mixed $state) {
-            return function (string $attribute, mixed $value, Closure $fail) use ($component, $state) {
+            return function (string $attribute, mixed $value, Closure $fail) use ($component, $state): void {
                 if (blank($state)) {
                     return;
                 }

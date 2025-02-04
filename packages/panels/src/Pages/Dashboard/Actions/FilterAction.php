@@ -38,7 +38,7 @@ class FilterAction extends Action
             return $livewire->filters;
         });
 
-        $this->action(function (array $data, Component $livewire) {
+        $this->action(function (array $data, Component $livewire): void {
             if (! property_exists($livewire, 'filters')) {
                 return;
             }

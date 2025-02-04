@@ -286,7 +286,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
                     $component->getRelationship() ? $component->getRelationship()->getModel()::class : null,
                 ));
             })
-            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $form) {
+            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $form): void {
                 if (! $component->getCreateOptionUsing()) {
                     throw new Exception("Select field [{$component->getStatePath()}] must have a [createOptionUsing()] closure set.");
                 }
@@ -442,7 +442,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
                 );
             })
             ->fillForm($this->getEditOptionActionFormData())
-            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $form) {
+            ->action(static function (Action $action, array $arguments, Select $component, array $data, Schema $form): void {
                 if (! $component->getUpdateOptionUsing()) {
                     throw new Exception("Select field [{$component->getStatePath()}] must have a [updateOptionUsing()] closure set.");
                 }
@@ -998,7 +998,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
                 ->toArray();
         });
 
-        $this->saveRelationshipsUsing(static function (Select $component, Model $record, $state) use ($modifyQueryUsing) {
+        $this->saveRelationshipsUsing(static function (Select $component, Model $record, $state) use ($modifyQueryUsing): void {
             $relationship = $component->getRelationship();
 
             if (
@@ -1075,7 +1075,7 @@ class Select extends Field implements Contracts\CanDisableOptions, Contracts\Has
             return $component->getSelectedRecord()?->attributesToArray();
         });
 
-        $this->updateOptionUsing(static function (array $data, Schema $form) {
+        $this->updateOptionUsing(static function (array $data, Schema $form): void {
             $form->getRecord()?->update($data);
         });
 

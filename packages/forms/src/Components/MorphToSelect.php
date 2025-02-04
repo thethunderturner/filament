@@ -85,7 +85,7 @@ class MorphToSelect extends Component
                 ->native($this->isNative())
                 ->required($isRequired)
                 ->live()
-                ->afterStateUpdated(function (Set $set) use ($keyColumn) {
+                ->afterStateUpdated(function (Set $set) use ($keyColumn): void {
                     $set($keyColumn, null);
                     $this->callAfterStateUpdated();
                 }),
@@ -112,7 +112,7 @@ class MorphToSelect extends Component
                     $this->isLive(),
                     fn (Select $component) => $component->live(onBlur: $this->isLiveOnBlur()),
                 )
-                ->afterStateUpdated(function () {
+                ->afterStateUpdated(function (): void {
                     $this->callAfterStateUpdated();
                 }),
         ];

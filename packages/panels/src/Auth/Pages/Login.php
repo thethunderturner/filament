@@ -262,7 +262,7 @@ class Login extends SimplePage
                         $enabledMultiFactorAuthenticationProviders,
                     ))
                     ->live()
-                    ->afterStateUpdated(function (?string $state) use ($enabledMultiFactorAuthenticationProviders, $section, $user) {
+                    ->afterStateUpdated(function (?string $state) use ($enabledMultiFactorAuthenticationProviders, $section, $user): void {
                         $provider = $enabledMultiFactorAuthenticationProviders[$state] ?? null;
 
                         if (! $provider) {

@@ -913,7 +913,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
         $this->relationship = $name ?? $this->getName();
         $this->modifyRelationshipQueryUsing = $modifyQueryUsing;
 
-        $this->afterStateHydrated(function (Repeater $component) {
+        $this->afterStateHydrated(function (Repeater $component): void {
             if (! is_array($component->hydratedDefaultState)) {
                 return;
             }
@@ -921,13 +921,13 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             $component->mergeHydratedDefaultStateWithItemsState();
         });
 
-        $this->loadStateFromRelationshipsUsing(static function (Repeater $component) {
+        $this->loadStateFromRelationshipsUsing(static function (Repeater $component): void {
             $component->clearCachedExistingRecords();
 
             $component->fillFromRelationship();
         });
 
-        $this->saveRelationshipsUsing(static function (Repeater $component, HasForms $livewire, ?array $state) {
+        $this->saveRelationshipsUsing(static function (Repeater $component, HasForms $livewire, ?array $state): void {
             if (! is_array($state)) {
                 $state = [];
             }

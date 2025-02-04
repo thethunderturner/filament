@@ -108,7 +108,7 @@ trait CanExportRecords
             ...$action->getExporter()::getOptionsFormComponents(),
         ]);
 
-        $this->action(function (ExportAction | ExportBulkAction $action, array $data, Component $livewire) {
+        $this->action(function (ExportAction | ExportBulkAction $action, array $data, Component $livewire): void {
             $exporter = $action->getExporter();
 
             if ($livewire instanceof HasTable) {

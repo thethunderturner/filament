@@ -133,7 +133,7 @@ class EditRecord extends Page
 
             $this->callHook('beforeValidate');
 
-            $data = $this->form->getState(afterValidate: function () {
+            $data = $this->form->getState(afterValidate: function (): void {
                 $this->callHook('afterValidate');
 
                 $this->callHook('beforeSave');

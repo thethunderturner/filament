@@ -22,7 +22,7 @@ class DisableEmailCodeAuthenticationAction
             ->color('danger')
             ->icon(Heroicon::LockOpen)
             ->link()
-            ->mountUsing(function () use ($emailCodeAuthentication) {
+            ->mountUsing(function () use ($emailCodeAuthentication): void {
                 /** @var HasEmailCodeAuthentication $user */
                 $user = Filament::auth()->user();
 
@@ -39,7 +39,7 @@ class DisableEmailCodeAuthenticationAction
                     ->belowContent(Action::make('resend')
                         ->label(__('filament-panels::auth/multi-factor/email-code/actions/disable.modal.form.code.actions.resend.label'))
                         ->link()
-                        ->action(function () use ($emailCodeAuthentication) {
+                        ->action(function () use ($emailCodeAuthentication): void {
                             /** @var HasEmailCodeAuthentication $user */
                             $user = Filament::auth()->user();
 
@@ -63,11 +63,11 @@ class DisableEmailCodeAuthenticationAction
             ])
             ->modalSubmitAction(fn (Action $action) => $action
                 ->label(__('filament-panels::auth/multi-factor/email-code/actions/disable.modal.actions.submit.label')))
-            ->action(function () use ($emailCodeAuthentication) {
+            ->action(function () use ($emailCodeAuthentication): void {
                 /** @var HasEmailCodeAuthentication $user */
                 $user = Filament::auth()->user();
 
-                DB::transaction(function () use ($emailCodeAuthentication, $user) {
+                DB::transaction(function () use ($emailCodeAuthentication, $user): void {
                     $emailCodeAuthentication->saveSecret($user, null);
                 });
 

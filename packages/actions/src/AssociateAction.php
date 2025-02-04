@@ -84,7 +84,7 @@ class AssociateAction extends Action
                 /** @var BelongsTo $inverseRelationship */
                 $inverseRelationship = $table->getInverseRelationshipFor($record);
 
-                $this->process(function () use ($inverseRelationship, $record, $relationship) {
+                $this->process(function () use ($inverseRelationship, $record, $relationship): void {
                     $inverseRelationship->associate($relationship->getParent());
                     $record->save();
                 }, [

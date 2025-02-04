@@ -30,7 +30,7 @@ trait EntanglesStateWithSingularRelationship
         $this->relationship = $name;
         $this->statePath($name);
 
-        $this->loadStateFromRelationshipsUsing(static function (Component | CanEntangleWithSingularRelationships $component) {
+        $this->loadStateFromRelationshipsUsing(static function (Component | CanEntangleWithSingularRelationships $component): void {
             $component->clearCachedExistingRecord();
 
             $component->fillFromRelationship();

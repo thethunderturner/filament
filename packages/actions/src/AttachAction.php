@@ -86,7 +86,7 @@ class AttachAction extends Action
                 $this->record($record);
             }
 
-            $this->process(function () use ($data, $record, $relationship) {
+            $this->process(function () use ($data, $record, $relationship): void {
                 $relationship->attach(
                     $record,
                     Arr::only($data, $relationship->getPivotColumns()),

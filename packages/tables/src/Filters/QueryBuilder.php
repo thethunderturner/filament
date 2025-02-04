@@ -38,11 +38,11 @@ class QueryBuilder extends BaseFilter
                 ->live(onBlur: true),
         ]);
 
-        $this->query(function (Builder $query, array $data) {
+        $this->query(function (Builder $query, array $data): void {
             $this->applyRulesToQuery($query, $data['rules'], $this->getRuleBuilder());
         });
 
-        $this->baseQuery(function (Builder $query, array $data) {
+        $this->baseQuery(function (Builder $query, array $data): void {
             $this->applyRulesToBaseQuery($query, $data['rules'], $this->getRuleBuilder());
         });
 
@@ -101,11 +101,11 @@ class QueryBuilder extends BaseFilter
             $ruleBuilderBlockContainer = $ruleBuilder->getChildComponentContainer($ruleIndex);
 
             if ($rule['type'] === RuleBuilder::OR_BLOCK_NAME) {
-                $query->where(function (Builder $query) use ($rule, $ruleBuilderBlockContainer) {
+                $query->where(function (Builder $query) use ($rule, $ruleBuilderBlockContainer): void {
                     $isFirst = true;
 
                     foreach ($rule['data'][RuleBuilder::OR_BLOCK_GROUPS_REPEATER_NAME] as $orGroupIndex => $orGroup) {
-                        $query->{$isFirst ? 'where' : 'orWhere'}(function (Builder $query) use ($orGroup, $orGroupIndex, $ruleBuilderBlockContainer) {
+                        $query->{$isFirst ? 'where' : 'orWhere'}(function (Builder $query) use ($orGroup, $orGroupIndex, $ruleBuilderBlockContainer): void {
                             $this->applyRulesToQuery(
                                 $query,
                                 $orGroup['rules'],

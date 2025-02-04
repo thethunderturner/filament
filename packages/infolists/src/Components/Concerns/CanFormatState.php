@@ -412,7 +412,7 @@ trait CanFormatState
                 $suffix = e($suffix);
             }
 
-            $state = $state . $suffix;
+            $state .= $suffix;
         }
 
         return $isHtml ? new HtmlString($state) : $state;

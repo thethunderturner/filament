@@ -177,7 +177,7 @@ class EmailCodeAuthentication implements HasBeforeChallengeHook, MultiFactorAuth
                 ->belowContent(Action::make('resend')
                     ->label(__('filament-panels::auth/multi-factor/email-code/provider.login_form.code.actions.resend.label'))
                     ->link()
-                    ->action(function () use ($user) {
+                    ->action(function () use ($user): void {
                         $this->sendCode($user);
 
                         Notification::make()

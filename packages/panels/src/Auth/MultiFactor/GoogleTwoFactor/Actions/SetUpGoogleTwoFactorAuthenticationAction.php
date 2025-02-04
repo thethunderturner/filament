@@ -38,7 +38,7 @@ class SetUpGoogleTwoFactorAuthenticationAction
             ->color('primary')
             ->icon(Heroicon::LockClosed)
             ->link()
-            ->mountUsing(function (HasActions $livewire, $action) use ($googleTwoFactorAuthentication) {
+            ->mountUsing(function (HasActions $livewire, $action) use ($googleTwoFactorAuthentication): void {
                 $livewire->mergeMountedActionArguments([
                     'encrypted' => encrypt([
                         'secret' => $googleTwoFactorAuthentication->generateSecret(),
@@ -144,7 +144,7 @@ class SetUpGoogleTwoFactorAuthenticationAction
             })
             ->modalSubmitAction(fn (Action $action) => $action
                 ->label(__('filament-panels::auth/multi-factor/google-two-factor/actions/set-up.modal.actions.submit.label')))
-            ->action(function (array $arguments) use ($googleTwoFactorAuthentication) {
+            ->action(function (array $arguments) use ($googleTwoFactorAuthentication): void {
                 /** @var Authenticatable&HasGoogleTwoFactorAuthentication&HasGoogleTwoFactorAuthenticationRecovery $user */
                 $user = Filament::auth()->user();
 
@@ -156,7 +156,7 @@ class SetUpGoogleTwoFactorAuthenticationAction
                     return;
                 }
 
-                DB::transaction(function () use ($googleTwoFactorAuthentication, $encrypted, $user) {
+                DB::transaction(function () use ($googleTwoFactorAuthentication, $encrypted, $user): void {
                     $googleTwoFactorAuthentication->saveSecret($user, $encrypted['secret']);
 
                     if ($googleTwoFactorAuthentication->isRecoverable()) {

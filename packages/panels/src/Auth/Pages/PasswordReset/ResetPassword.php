@@ -76,7 +76,7 @@ class ResetPassword extends SimplePage
 
         $status = Password::broker(Filament::getAuthPasswordBroker())->reset(
             $data,
-            function (CanResetPassword | Model | Authenticatable $user) use ($data) {
+            function (CanResetPassword | Model | Authenticatable $user) use ($data): void {
                 $user->forceFill([
                     'password' => Hash::make($data['password']),
                     'remember_token' => Str::random(60),
