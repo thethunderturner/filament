@@ -185,8 +185,8 @@ class SupportServiceProvider extends PackageServiceProvider
                 ])
                 ->style(array_map(
                     fn (string $breakpoint, int $columns): string => match ($direction) {
-                        GridDirection::Row => "--cols-{$breakpoint}: repeat({$columns}, minmax(0, 1fr))",
-                        GridDirection::Column => "--cols-{$breakpoint}: {$columns}",
+                        GridDirection::Row => '--cols-' . str_replace('!', 'n', str_replace('@', 'c', $breakpoint)) . ": repeat({$columns}, minmax(0, 1fr))",
+                        GridDirection::Column => '--cols-' . str_replace('!', 'n', str_replace('@', 'c', $breakpoint)) . ": {$columns}",
                     },
                     array_keys($columns),
                     array_values($columns),
@@ -203,6 +203,7 @@ class SupportServiceProvider extends PackageServiceProvider
             }
 
             $span = array_filter($span);
+
             $start = array_filter($start);
 
             return $this
@@ -226,7 +227,7 @@ class SupportServiceProvider extends PackageServiceProvider
                 ])
                 ->style([
                     ...array_map(
-                        fn (string $breakpoint, int | string $span): string => "--col-span-{$breakpoint}: " . match ($span) {
+                        fn (string $breakpoint, int | string $span): string => '--col-span-' . str_replace('!', 'n', str_replace('@', 'c', $breakpoint)) . ': ' . match ($span) {
                             'full' => '1 / -1',
                             default => "span {$span} / span {$span}",
                         },
@@ -234,7 +235,7 @@ class SupportServiceProvider extends PackageServiceProvider
                         array_values($span),
                     ),
                     ...array_map(
-                        fn (string $breakpoint, int $start): string => "--col-start-{$breakpoint}: {$start}",
+                        fn (string $breakpoint, int $start): string => '--col-start-' . str_replace('!', 'n', str_replace('@', 'c', $breakpoint)) . ': ' . $start,
                         array_keys($start),
                         array_values($start),
                     ),

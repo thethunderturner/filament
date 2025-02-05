@@ -89,13 +89,23 @@ document.addEventListener('livewire:init', () => {
                 for (const [name, html] of Object.entries(
                     component.effects.partials ?? {},
                 )) {
-                    let el = component.el.querySelector(
-                        '[wire\\:partial="' + name + '"]',
-                    )
+                    let els = Array.from(
+                        component.el.querySelectorAll(
+                            '[wire\\:partial="' + name + '"]',
+                        ),
+                    ).filter((el) => closestComponent(el) === component)
 
-                    if (!el) {
+                    if (!els.length) {
                         continue
                     }
+
+                    if (els.length > 1) {
+                        throw new Error(
+                            `Multiple elements found for partial [${name}].`,
+                        )
+                    }
+
+                    let el = els[0]
 
                     let wrapperTag = el.parentElement
                         ? // If the root element is a "tr", we need the wrapper to be a "table"...
@@ -105,13 +115,7 @@ document.addEventListener('livewire:init', () => {
                     let wrapper = document.createElement(wrapperTag)
 
                     wrapper.innerHTML = html
-                    let parentComponent
-
-                    try {
-                        parentComponent = closestComponent(el.parentElement)
-                    } catch (exception) {}
-
-                    parentComponent && (wrapper.__livewire = parentComponent)
+                    wrapper.__livewire = component
 
                     let to = wrapper.firstElementChild
 
@@ -121,6 +125,16 @@ document.addEventListener('livewire:init', () => {
                         updating: (el, toEl, childrenOnly, skip) => {
                             if (isntElement(el)) {
                                 return
+                            }
+
+                            if (el.__livewire_replace === true) {
+                                el.innerHTML = toEl.innerHTML
+                            }
+
+                            if (el.__livewire_replace_self === true) {
+                                el.outerHTML = toEl.outerHTML
+
+                                return skip()
                             }
 
                             if (el.__livewire_ignore === true) {

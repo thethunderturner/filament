@@ -136,7 +136,7 @@
     }
 
     & .fi-modal-window {
-        @apply pointer-events-auto relative row-start-2 flex w-full cursor-default flex-col bg-white ring-1 shadow-xl ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10;
+        @apply @container pointer-events-auto relative row-start-2 flex w-full cursor-default flex-col bg-white ring-1 shadow-xl ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10;
 
         &.fi-align-start,
         &.fi-align-left {
@@ -333,7 +333,7 @@
             @apply px-6;
 
             & .fi-modal-footer-actions {
-                @apply flex flex-col-reverse sm:grid sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))];
+                @apply flex flex-col-reverse;
             }
         }
 
@@ -357,6 +357,28 @@
 
             & > .fi-icon {
                 @apply text-color-600 dark:text-color-400;
+            }
+        }
+    }
+
+    @supports (container-type: inline-size) {
+        @apply @container;
+
+        & .fi-modal-footer {
+            &.fi-align-center {
+                & .fi-modal-footer-actions {
+                    @apply @sm:grid @sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))];
+                }
+            }
+        }
+    }
+
+    @supports not (container-type: inline-size) {
+        & .fi-modal-footer {
+            &.fi-align-center {
+                & .fi-modal-footer-actions {
+                    @apply sm:grid sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))];
+                }
             }
         }
     }

@@ -16,7 +16,7 @@ export default ({ id }) => ({
     close: function () {
         this.closeQuietly()
 
-        this.$root.dispatchEvent(new CustomEvent('modal-closed', { id }))
+        this.$dispatch('modal-closed', { id })
     },
 
     closeQuietly: function () {
