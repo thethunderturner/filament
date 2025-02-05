@@ -36,6 +36,10 @@
 @endphp
 
 @if ((! $isDirectlyHidden()) && $hasVisibleComponents)
+    @if ($isRoot)
+        {!! '<div class="fi-grid-ctn">' !!}
+    @endif
+
     <div
         {{
             $getExtraAttributeBag()
@@ -149,6 +153,9 @@
                                 x-show="{{ $xShow }}"
                                 x-cloak
                             @endif
+                            @class([
+                                'fi-grid-ctn' => $schemaComponent->isGridContainer(),
+                            ])
                         >
                             {{ $schemaComponent }}
                         </div>
@@ -159,4 +166,8 @@
             @endif
         @endforeach
     </div>
+
+    @if ($isRoot)
+        {!! '</div>' !!}
+    @endif
 @endif

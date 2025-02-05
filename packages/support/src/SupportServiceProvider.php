@@ -164,10 +164,13 @@ class SupportServiceProvider extends PackageServiceProvider
 
         ComponentAttributeBag::macro('grid', function (array | int | null $columns = [], GridDirection $direction = GridDirection::Row): ComponentAttributeBag {
             if (! is_array($columns)) {
-                $columns = ['lg' => $columns];
+                $columns = ['@lg' => $columns];
             }
 
-            $columns = array_filter($columns);
+            $columns = collect($columns)
+                ->filter()
+                ->mapWithKeys(fn (int $columns, string $breakpoint): array => [str_replace($breakpoint, '@', 'c') => $columns])
+                ->all();
 
             $columns['default'] ??= 1;
 
@@ -202,8 +205,15 @@ class SupportServiceProvider extends PackageServiceProvider
                 $start = ['default' => $start];
             }
 
-            $span = array_filter($span);
-            $start = array_filter($start);
+            $span = collect($span)
+                ->filter()
+                ->mapWithKeys(fn (int | string $span, string $breakpoint): array => [str_replace($breakpoint, '@', 'c') => $span])
+                ->all();
+
+            $start = collect($start)
+                ->filter()
+                ->mapWithKeys(fn (int $start, string $breakpoint): array => [str_replace($breakpoint, '@', 'c') => $start])
+                ->all();
 
             return $this
                 ->class([

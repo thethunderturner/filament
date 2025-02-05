@@ -6,6 +6,7 @@ use Filament\Schemas\Components\Concerns\BelongsToContainer;
 use Filament\Schemas\Components\Concerns\BelongsToModel;
 use Filament\Schemas\Components\Concerns\CanBeConcealed;
 use Filament\Schemas\Components\Concerns\CanBeDisabled;
+use Filament\Schemas\Components\Concerns\CanBeGridContainer;
 use Filament\Schemas\Components\Concerns\CanBeHidden;
 use Filament\Schemas\Components\Concerns\CanBeLiberatedFromContainerGrid;
 use Filament\Schemas\Components\Concerns\CanBeRepeated;
@@ -41,6 +42,7 @@ class Component extends ViewComponent
     use BelongsToModel;
     use CanBeConcealed;
     use CanBeDisabled;
+    use CanBeGridContainer;
     use CanBeHidden;
     use CanBeLiberatedFromContainerGrid;
     use CanBeRepeated;
