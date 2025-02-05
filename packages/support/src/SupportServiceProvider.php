@@ -227,7 +227,7 @@ class SupportServiceProvider extends PackageServiceProvider
                 ])
                 ->style([
                     ...array_map(
-                        fn (string $breakpoint, int | string $span): string => "--col-span-" . str_replace('@', 'c', $breakpoint) . ": " . match ($span) {
+                        fn (string $breakpoint, int | string $span): string => '--col-span-' . str_replace('@', 'c', $breakpoint) . ': ' . match ($span) {
                             'full' => '1 / -1',
                             default => "span {$span} / span {$span}",
                         },
@@ -235,7 +235,7 @@ class SupportServiceProvider extends PackageServiceProvider
                         array_values($span),
                     ),
                     ...array_map(
-                        fn (string $breakpoint, int $start): string => "--col-start-" . str_replace('@', 'c', $breakpoint) . ": " . $start,
+                        fn (string $breakpoint, int $start): string => '--col-start-' . str_replace('@', 'c', $breakpoint) . ': ' . $start,
                         array_keys($start),
                         array_values($start),
                     ),
