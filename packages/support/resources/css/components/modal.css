@@ -136,7 +136,7 @@
     }
 
     & .fi-modal-window {
-        @apply @container pointer-events-auto relative row-start-2 flex w-full cursor-default flex-col bg-white ring-1 shadow-xl ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10;
+        @apply pointer-events-auto relative row-start-2 flex w-full cursor-default flex-col bg-white ring-1 shadow-xl ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10;
 
         &.fi-align-start,
         &.fi-align-left {
@@ -362,7 +362,9 @@
     }
 
     @supports (container-type: inline-size) {
-        @apply @container;
+        & .fi-modal-window {
+            @apply @container;
+        }
 
         & .fi-modal-footer {
             &.fi-align-center {
