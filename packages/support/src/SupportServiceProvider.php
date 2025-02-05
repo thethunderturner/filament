@@ -164,13 +164,10 @@ class SupportServiceProvider extends PackageServiceProvider
 
         ComponentAttributeBag::macro('grid', function (array | int | null $columns = [], GridDirection $direction = GridDirection::Row): ComponentAttributeBag {
             if (! is_array($columns)) {
-                $columns = ['@lg' => $columns];
+                $columns = ['lg' => $columns];
             }
 
-            $columns = collect($columns)
-                ->filter()
-                ->mapWithKeys(fn (int $columns, string $breakpoint): array => [str_replace($breakpoint, '@', 'c') => $columns])
-                ->all();
+            $columns = array_filter($columns);
 
             $columns['default'] ??= 1;
 
@@ -188,8 +185,8 @@ class SupportServiceProvider extends PackageServiceProvider
                 ])
                 ->style(array_map(
                     fn (string $breakpoint, int $columns): string => match ($direction) {
-                        GridDirection::Row => "--cols-{$breakpoint}: repeat({$columns}, minmax(0, 1fr))",
-                        GridDirection::Column => "--cols-{$breakpoint}: {$columns}",
+                        GridDirection::Row => '--cols-' . str_replace('@', 'c', $breakpoint) . ": repeat({$columns}, minmax(0, 1fr))",
+                        GridDirection::Column => '--cols-' . str_replace('@', 'c', $breakpoint) . ": {$columns}",
                     },
                     array_keys($columns),
                     array_values($columns),
@@ -205,15 +202,9 @@ class SupportServiceProvider extends PackageServiceProvider
                 $start = ['default' => $start];
             }
 
-            $span = collect($span)
-                ->filter()
-                ->mapWithKeys(fn (int | string $span, string $breakpoint): array => [str_replace($breakpoint, '@', 'c') => $span])
-                ->all();
+            $span = array_filter($span);
 
-            $start = collect($start)
-                ->filter()
-                ->mapWithKeys(fn (int $start, string $breakpoint): array => [str_replace($breakpoint, '@', 'c') => $start])
-                ->all();
+            $start = array_filter($start);
 
             return $this
                 ->class([
@@ -236,7 +227,7 @@ class SupportServiceProvider extends PackageServiceProvider
                 ])
                 ->style([
                     ...array_map(
-                        fn (string $breakpoint, int | string $span): string => "--col-span-{$breakpoint}: " . match ($span) {
+                        fn (string $breakpoint, int | string $span): string => "--col-span-" . str_replace('@', 'c', $breakpoint) . ": " . match ($span) {
                             'full' => '1 / -1',
                             default => "span {$span} / span {$span}",
                         },
@@ -244,7 +235,7 @@ class SupportServiceProvider extends PackageServiceProvider
                         array_values($span),
                     ),
                     ...array_map(
-                        fn (string $breakpoint, int $start): string => "--col-start-{$breakpoint}: {$start}",
+                        fn (string $breakpoint, int $start): string => "--col-start-" . str_replace('@', 'c', $breakpoint) . ": " . $start,
                         array_keys($start),
                         array_values($start),
                     ),
