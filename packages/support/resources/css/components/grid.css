@@ -32,28 +32,23 @@
             }
 
             &.\@xs\:fi-grid-cols {
-                @apply
-                @xs:grid-cols-(--cols-cxs);
+                @apply @xs:grid-cols-(--cols-cxs);
             }
 
             &.\@sm\:fi-grid-cols {
-                @apply
-                @sm:grid-cols-(--cols-csm);
+                @apply @sm:grid-cols-(--cols-csm);
             }
 
             &.\@md\:fi-grid-cols {
-                @apply
-                @md:grid-cols-(--cols-cmd);
+                @apply @md:grid-cols-(--cols-cmd);
             }
 
             &.\@lg\:fi-grid-cols {
-                @apply
-                @lg:grid-cols-(--cols-clg);
+                @apply @lg:grid-cols-(--cols-clg);
             }
 
             &.\@xl\:fi-grid-cols {
-                @apply
-                @xl:grid-cols-(--cols-cxl);
+                @apply @xl:grid-cols-(--cols-cxl);
             }
 
             &.\@2xl\:fi-grid-cols {
@@ -137,28 +132,23 @@
             }
 
             &.\@xs\:fi-grid-cols {
-                @apply
-                @xs:columns-(--cols-cxs);
+                @apply @xs:columns-(--cols-cxs);
             }
 
             &.\@sm\:fi-grid-cols {
-                @apply
-                @sm:columns-(--cols-csm);
+                @apply @sm:columns-(--cols-csm);
             }
 
             &.\@md\:fi-grid-cols {
-                @apply
-                @md:columns-(--cols-cmd);
+                @apply @md:columns-(--cols-cmd);
             }
 
             &.\@lg\:fi-grid-cols {
-                @apply
-                @lg:columns-(--cols-clg);
+                @apply @lg:columns-(--cols-clg);
             }
 
             &.\@xl\:fi-grid-cols {
-                @apply
-                @xl:columns-(--cols-cxl);
+                @apply @xl:columns-(--cols-cxl);
             }
 
             &.\@2xl\:fi-grid-cols {
@@ -249,28 +239,23 @@
         }
 
         &.\@xs\:fi-grid-col-span {
-            @apply
-            @xs:col-(--col-span-cxs);
+            @apply @xs:col-(--col-span-cxs);
         }
 
         &.\@sm\:fi-grid-col-span {
-            @apply
-            @sm:col-(--col-span-csm);
+            @apply @sm:col-(--col-span-csm);
         }
 
         &.\@md\:fi-grid-col-span {
-            @apply
-            @md:col-(--col-span-cmd);
+            @apply @md:col-(--col-span-cmd);
         }
 
         &.\@lg\:fi-grid-col-span {
-            @apply
-            @lg:col-(--col-span-clg);
+            @apply @lg:col-(--col-span-clg);
         }
 
         &.\@xl\:fi-grid-col-span {
-            @apply
-            @xl:col-(--col-span-cxl);
+            @apply @xl:col-(--col-span-cxl);
         }
 
         &.\@2xl\:fi-grid-col-span {
@@ -354,28 +339,23 @@
         }
 
         &.\@xs\:fi-grid-col-start {
-            @apply
-            @xs:col-start-(--col-start-cxs);
+            @apply @xs:col-start-(--col-start-cxs);
         }
 
         &.\@sm\:fi-grid-col-start {
-            @apply
-            @sm:col-start-(--col-start-csm);
+            @apply @sm:col-start-(--col-start-csm);
         }
 
         &.\@md\:fi-grid-col-start {
-            @apply
-            @md:col-start-(--col-start-cmd);
+            @apply @md:col-start-(--col-start-cmd);
         }
 
         &.\@lg\:fi-grid-col-start {
-            @apply
-            @lg:col-start-(--col-start-clg);
+            @apply @lg:col-start-(--col-start-clg);
         }
 
         &.\@xl\:fi-grid-col-start {
-            @apply
-            @xl:col-start-(--col-start-cxl);
+            @apply @xl:col-start-(--col-start-cxl);
         }
 
         &.\@2xl\:fi-grid-col-start {
