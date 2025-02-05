@@ -6,13 +6,9 @@ use Closure;
 use Filament\Pages\Dashboard;
 use Filament\Pages\Page;
 use Filament\Resources\Pages\CreateRecord;
-use Filament\Schemas\Components\Component;
 use PhpParser\Modifiers;
 use PhpParser\Node;
-use PhpParser\Node\Expr\ConstFetch;
-use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
-use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -23,7 +19,7 @@ use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
-class FixMethodsRector extends AbstractRector
+class SimpleMethodChangesRector extends AbstractRector
 {
     protected VariableRenamer $variableRenamer;
 
@@ -75,19 +71,6 @@ class FixMethodsRector extends AbstractRector
                 'changes' => [
                     'getColumns' => function (ClassMethod $node): void {
                         $node->returnType = new UnionType([new Identifier('int'), new Identifier('array')]);
-                    },
-                ],
-            ],
-            [
-                'class' => [
-                    Component::class,
-                ],
-                'changes' => [
-                    'getChildComponents' => function (ClassMethod $node): void {
-                        $param = new Param(new Variable('slot'), default: new ConstFetch(new Name('null')));
-                        $param->type = new Name('?string');
-
-                        $node->params = [$param];
                     },
                 ],
             ],
