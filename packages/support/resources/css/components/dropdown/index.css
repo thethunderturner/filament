@@ -1,9 +1,4 @@
 .fi-dropdown {
-    @supports (container-type: inline-size) {
-        /* https://github.com/floating-ui/floating-ui/issues/3067 */
-        contain: layout;
-    }
-
     & .fi-dropdown-trigger {
         @apply flex cursor-pointer;
     }

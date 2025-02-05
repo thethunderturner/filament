@@ -36,10 +36,6 @@
 @endphp
 
 @if ((! $isDirectlyHidden()) && $hasVisibleComponents)
-    @if ($isRoot)
-        {!! '<div class="fi-grid-ctn">' !!}
-    @endif
-
     <div
         {{
             $getExtraAttributeBag()
@@ -166,8 +162,4 @@
             @endif
         @endforeach
     </div>
-
-    @if ($isRoot)
-        {!! '</div>' !!}
-    @endif
 @endif
