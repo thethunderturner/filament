@@ -1,72 +1,65 @@
-import Trix from 'trix'
-
-Trix.config.blockAttributes.default.tagName = 'p'
-
-Trix.config.blockAttributes.default.breakOnReturn = true
-
-Trix.config.blockAttributes.heading = {
-    tagName: 'h2',
-    terminal: true,
-    breakOnReturn: true,
-    group: false,
-}
-
-Trix.config.blockAttributes.subHeading = {
-    tagName: 'h3',
-    terminal: true,
-    breakOnReturn: true,
-    group: false,
-}
-
-Trix.config.textAttributes.underline = {
-    style: { textDecoration: 'underline' },
-    inheritable: true,
-    parser: (element) => {
-        const style = window.getComputedStyle(element)
-
-        return style.textDecoration.includes('underline')
-    },
-}
-
-Trix.Block.prototype.breaksOnReturn = function () {
-    const lastAttribute = this.getLastAttribute()
-    const blockConfig =
-        Trix.config.blockAttributes[lastAttribute ? lastAttribute : 'default']
-
-    return blockConfig?.breakOnReturn ?? false
-}
-
-Trix.LineBreakInsertion.prototype.shouldInsertBlockBreak = function () {
-    if (
-        this.block.hasAttributes() &&
-        this.block.isListItem() &&
-        !this.block.isEmpty()
-    ) {
-        return this.startLocation.offset > 0
-    } else {
-        return !this.shouldBreakFormattedBlock() ? this.breaksOnReturn : false
-    }
-}
-
-Trix.config.textAttributes.sub = { tagName: 'sub', inheritable: true }
-
-Trix.config.textAttributes.sup = { tagName: 'sup', inheritable: true }
+import { Editor } from '@tiptap/core'
+import Blockquote from '@tiptap/extension-blockquote'
+import Bold from '@tiptap/extension-bold'
+import BulletList from '@tiptap/extension-bullet-list'
+import Code from '@tiptap/extension-code'
+import CodeBlock from '@tiptap/extension-code-block'
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import History from '@tiptap/extension-history'
+import Italic from '@tiptap/extension-italic'
+import Link from '@tiptap/extension-link'
+import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Strike from '@tiptap/extension-strike'
+import Subscript from '@tiptap/extension-subscript'
+import Superscript from '@tiptap/extension-superscript'
+import Text from '@tiptap/extension-text'
+import Underline from '@tiptap/extension-underline'
 
 export default function richEditorFormComponent({ state }) {
+    let editor
+
     return {
         state,
 
         init: function () {
-            this.$refs.trixValue.value = this.state
-            this.$refs.trix.editor?.loadHTML(this.state ?? '')
+            editor = new Editor({
+                element: this.$refs.editor,
+                extensions: [
+                    Blockquote,
+                    Bold,
+                    BulletList,
+                    Code,
+                    CodeBlock,
+                    Document,
+                    Heading,
+                    History,
+                    Italic,
+                    Link,
+                    ListItem,
+                    OrderedList,
+                    Paragraph,
+                    Strike,
+                    Subscript,
+                    Superscript,
+                    Text,
+                    Underline,
+                ],
+                content: this.state,
+            })
+
+            editor.on('update', ({ editor }) => {
+                this.state = editor.getJSON()
+            })
 
             this.$watch('state', () => {
-                if (document.activeElement === this.$refs.trix) {
+                if (editor.isFocused) {
                     return
                 }
 
-                this.$refs.trixValue.value = this.state
-                this.$refs.trix.editor?.loadHTML(this.state ?? '')
+                editor.commands.setContent(this.state)
             })
         },
     }

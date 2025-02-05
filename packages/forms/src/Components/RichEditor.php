@@ -3,6 +3,8 @@
 namespace Filament\Forms\Components;
 
 use Closure;
+use Filament\Forms\Components\StateCasts\RichEditorStateCast;
+use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 
 class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Contracts\HasFileAttachments
@@ -40,4 +42,15 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
         'underline',
         'undo',
     ];
+
+    /**
+     * @return array<StateCast>
+     */
+    public function getDefaultStateCasts(): array
+    {
+        return [
+            ...parent::getDefaultStateCasts(),
+            app(RichEditorStateCast::class, ['richEditor' => $this]),
+        ];
+    }
 }
