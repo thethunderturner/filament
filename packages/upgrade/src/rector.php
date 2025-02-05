@@ -1,8 +1,6 @@
 <?php
 
-use Filament\Infolists\Components\ImageEntry;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Upgrade\Rector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
@@ -262,16 +260,12 @@ return static function (RectorConfig $rectorConfig): void {
     );
 
     $rectorConfig->rules([
-        Rector\FixMethodsRector::class,
-        Rector\FixPropertiesRector::class,
+        Rector\SimpleMethodChangesRector::class,
+        Rector\SimplePropertyChangesRector::class,
         Rector\RenameSchemaParamToMatchTypeRector::class,
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
         new MethodCallRename(Schema::class, 'schema', 'components'),
-        new MethodCallRename(ImageColumn::class, 'height', 'imageHeight'),
-        new MethodCallRename(ImageColumn::class, 'width', 'imageWidth'),
-        new MethodCallRename(ImageEntry::class, 'height', 'imageHeight'),
-        new MethodCallRename(ImageEntry::class, 'width', 'imageWidth'),
     ]);
 };
