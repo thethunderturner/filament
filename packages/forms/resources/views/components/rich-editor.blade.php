@@ -315,7 +315,11 @@
                 </div>
             </div>
 
-            <div class="prose max-w-none w-full px-5" x-ref="editor" wire:ignore></div>
+            <div
+                class="prose w-full max-w-none px-5"
+                x-ref="editor"
+                wire:ignore
+            ></div>
         </x-filament::input.wrapper>
     </div>
 </x-dynamic-component>

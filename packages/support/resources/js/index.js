@@ -103,7 +103,9 @@ document.addEventListener('livewire:init', () => {
                         component.el.querySelectorAll(
                             `[wire\\:partial="${name}"]`,
                         ),
-                    ).filter((el) => findClosestLivewireComponent(el) === component)
+                    ).filter(
+                        (el) => findClosestLivewireComponent(el) === component,
+                    )
 
                     if (!els.length) {
                         continue
@@ -199,7 +201,7 @@ document.addEventListener('livewire:init', () => {
     Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
         succeed(({ snapshot, effects }) => {
             effects.dispatches?.forEach((dispatch) => {
-                if (! dispatch.params?.awaitSchemaComponent) {
+                if (!dispatch.params?.awaitSchemaComponent) {
                     return
                 }
 
@@ -217,9 +219,17 @@ document.addEventListener('livewire:init', () => {
                     throw `Multiple schema components found with key [${dispatch.params.awaitSchemaComponent}].`
                 }
 
-                window.addEventListener(`schema-component-${component.id}-${dispatch.params.awaitSchemaComponent}-loaded`, () => {
-                    window.dispatchEvent(new CustomEvent(dispatch.name, { detail: dispatch.params }))
-                }, { once: true })
+                window.addEventListener(
+                    `schema-component-${component.id}-${dispatch.params.awaitSchemaComponent}-loaded`,
+                    () => {
+                        window.dispatchEvent(
+                            new CustomEvent(dispatch.name, {
+                                detail: dispatch.params,
+                            }),
+                        )
+                    },
+                    { once: true },
+                )
             })
         })
     })

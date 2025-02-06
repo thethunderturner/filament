@@ -5,11 +5,9 @@ namespace Filament\Forms\Components;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Components\StateCasts\RichEditorStateCast;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
-use Livewire\Component;
 
 class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Contracts\HasFileAttachments
 {
@@ -86,6 +84,10 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     * @param  array<string, mixed>  $editorSelection
+     */
     public function runCommand(string $name, array $options, array $editorSelection): void
     {
         $key = $this->getKey();

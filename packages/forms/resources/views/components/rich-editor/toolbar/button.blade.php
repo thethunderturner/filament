@@ -6,7 +6,8 @@
 <button
     @if ($type)
         x-bind:class="{
-            'text-primary-600 dark:text-primary-400 bg-gray-50 dark:bg-white/5': editorUpdatedAt && getEditor().isActive(@js($type), @js($activeOptions)),
+            'text-primary-600 dark:text-primary-400 bg-gray-50 dark:bg-white/5':
+                editorUpdatedAt && getEditor().isActive(@js($type), @js($activeOptions)),
         }"
     @endif
     {{

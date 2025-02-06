@@ -12,6 +12,9 @@ class RichEditorStateCast implements StateCast
         protected RichEditor $richEditor,
     ) {}
 
+    /**
+     * @return string | array<string, mixed>
+     */
     public function get(mixed $state): string | array
     {
         return (new Editor)
@@ -22,6 +25,9 @@ class RichEditorStateCast implements StateCast
             ->getHTML();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function set(mixed $state): array
     {
         return (new Editor)

@@ -75,7 +75,7 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
             })
 
             this.$watch('state', () => {
-                if (! this.shouldUpdateState) {
+                if (!this.shouldUpdateState) {
                     this.shouldUpdateState = true
 
                     return
@@ -85,12 +85,17 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
             })
 
             window.addEventListener('run-rich-editor-command', (event) => {
-                if ((event.detail.livewireId === livewireId) && (event.detail.key === key)) {
+                if (
+                    event.detail.livewireId === livewireId &&
+                    event.detail.key === key
+                ) {
                     this.runEditorCommand(event.detail)
                 }
             })
 
-            window.dispatchEvent(new CustomEvent(`schema-component-${livewireId}-${key}-loaded`))
+            window.dispatchEvent(
+                new CustomEvent(`schema-component-${livewireId}-${key}-loaded`),
+            )
         },
 
         getEditor: function () {
@@ -98,17 +103,25 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
         },
 
         setEditorSelection: function (selection) {
-            if (! selection) {
+            if (!selection) {
                 return
             }
 
             this.editorSelection = selection
 
-            editor.chain().command(({ tr }) => {
-                tr.setSelection(Selection.fromJSON(editor.state.doc, this.editorSelection))
+            editor
+                .chain()
+                .command(({ tr }) => {
+                    tr.setSelection(
+                        Selection.fromJSON(
+                            editor.state.doc,
+                            this.editorSelection,
+                        ),
+                    )
 
-                return true
-            }).run()
+                    return true
+                })
+                .run()
         },
 
         runEditorCommand: function ({ name, options, editorSelection }) {
@@ -116,6 +129,5 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
 
             editor.chain()[name](options).run()
         },
-
     }
 }
