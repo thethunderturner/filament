@@ -17,6 +17,7 @@ import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
 import Text from '@tiptap/extension-text'
 import Underline from '@tiptap/extension-underline'
+import { Selection } from '@tiptap/pm/state'
 
 export default function richEditorFormComponent({ state }) {
     let editor
@@ -24,9 +25,11 @@ export default function richEditorFormComponent({ state }) {
     return {
         state,
 
+        editorSelection: null,
+
         shouldUpdateState: true,
 
-        updatedAt: Date.now(),
+        editorUpdatedAt: Date.now(),
 
         init: function () {
             editor = new Editor({
@@ -55,19 +58,20 @@ export default function richEditorFormComponent({ state }) {
             })
 
             editor.on('create', ({ editor }) => {
-                this.updatedAt = Date.now()
+                this.editorUpdatedAt = Date.now()
             })
 
             editor.on('update', ({ editor }) => {
-                this.updatedAt = Date.now()
+                this.editorUpdatedAt = Date.now()
 
                 this.state = editor.getJSON()
 
                 this.shouldUpdateState = false
             })
 
-            editor.on('selectionUpdate', ({ editor }) => {
-                this.updatedAt = Date.now()
+            editor.on('selectionUpdate', ({ editor, transaction }) => {
+                this.editorUpdatedAt = Date.now()
+                this.editorSelection = transaction.selection.toJSON()
             })
 
             this.$watch('state', () => {
@@ -83,6 +87,22 @@ export default function richEditorFormComponent({ state }) {
 
         getEditor: function () {
             return editor
+        },
+
+        setEditorSelection: function (selection) {
+            this.editorSelection = selection
+
+            editor.chain().command(({ tr }) => {
+                tr.setSelection(Selection.fromJSON(editor.state.doc, this.editorSelection))
+
+                return true
+            }).run()
+        },
+
+        runEditorCommand: function ({ name, options, editorSelection }) {
+            this.setEditorSelection(editorSelection)
+
+            editor.chain()[name](options).run()
         },
 
     }

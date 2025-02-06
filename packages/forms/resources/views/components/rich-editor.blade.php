@@ -17,6 +17,7 @@
         x-data="richEditorFormComponent({
                     state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')", isOptimisticallyLive: false) }},
                 })"
+        x-on:run-rich-editor-command.window="if (($event.detail.livewireId === @js($this->getId())) && ($event.detail.key === @js($key))) runEditorCommand($event.detail)"
         x-cloak
         wire:ignore
     >
@@ -35,9 +36,7 @@
             >
                 <div class="flex gap-x-3 overflow-x-auto">
                     @if ($hasToolbarButton(['bold', 'italic', 'underline', 'strike', 'link']))
-                        <x-filament-forms::rich-editor.toolbar.group
-                            data-trix-button-group="text-tools"
-                        >
+                        <x-filament-forms::rich-editor.toolbar.group>
                             @if ($hasToolbarButton('bold'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="bold"
@@ -146,9 +145,8 @@
 
                             @if ($hasToolbarButton('link'))
                                 <x-filament-forms::rich-editor.toolbar.button
-                                    type="href"
-                                    data-trix-action="link"
-                                    x-on:click="getEditor().chain().focus().toggleLink().run()"
+                                    type="link"
+                                    :x-on:click="'$wire.mountAction(\'link\', { editorSelection }, ' . \Illuminate\Support\Js::from(['schemaComponent' => $key]) . ')'"
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.link') }}"
                                     tabindex="-1"
                                 >
@@ -162,9 +160,7 @@
                     @endif
 
                     @if ($hasToolbarButton(['h1', 'h2', 'h3']))
-                        <x-filament-forms::rich-editor.toolbar.group
-                            data-trix-button-group="heading-tools"
-                        >
+                        <x-filament-forms::rich-editor.toolbar.group>
                             @if ($hasToolbarButton('h1'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="heading"
@@ -213,9 +209,7 @@
                     @endif
 
                     @if ($hasToolbarButton(['blockquote', 'codeBlock', 'bulletList', 'orderedList']))
-                        <x-filament-forms::rich-editor.toolbar.group
-                            data-trix-button-group="block-tools"
-                        >
+                        <x-filament-forms::rich-editor.toolbar.group>
                             @if ($hasToolbarButton('blockquote'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="blockquote"
@@ -275,11 +269,8 @@
                     @endif
 
                     @if ($hasToolbarButton('attachFiles'))
-                        <x-filament-forms::rich-editor.toolbar.group
-                            data-trix-button-group="file-tools"
-                        >
+                        <x-filament-forms::rich-editor.toolbar.group>
                             <x-filament-forms::rich-editor.toolbar.button
-                                data-trix-action="attachFiles"
                                 title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.attach_files') }}"
                                 tabindex="-1"
                             >
@@ -292,9 +283,7 @@
                     @endif
 
                     @if ($hasToolbarButton(['undo', 'redo']))
-                        <x-filament-forms::rich-editor.toolbar.group
-                            data-trix-button-group="history-tools"
-                        >
+                        <x-filament-forms::rich-editor.toolbar.group>
                             @if ($hasToolbarButton('undo'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     x-on:click="getEditor().chain().focus().undo().run()"
