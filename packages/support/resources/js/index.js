@@ -79,6 +79,16 @@ document.addEventListener('alpine:init', () => {
 })
 
 document.addEventListener('livewire:init', () => {
+    const findClosestLivewireComponent = (el) => {
+        let closestRoot = Alpine.findClosest(el, (i) => i.__livewire)
+
+        if (!closestRoot) {
+            throw 'Could not find Livewire component in DOM tree'
+        }
+
+        return closestRoot.__livewire
+    }
+
     Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
         respond(() => {
             queueMicrotask(() => {
@@ -91,18 +101,16 @@ document.addEventListener('livewire:init', () => {
                 )) {
                     let els = Array.from(
                         component.el.querySelectorAll(
-                            '[wire\\:partial="' + name + '"]',
+                            `[wire\\:partial="${name}"]`,
                         ),
-                    ).filter((el) => closestComponent(el) === component)
+                    ).filter((el) => findClosestLivewireComponent(el) === component)
 
                     if (!els.length) {
                         continue
                     }
 
                     if (els.length > 1) {
-                        throw new Error(
-                            `Multiple elements found for partial [${name}].`,
-                        )
+                        throw `Multiple elements found for partial [${name}].`
                     }
 
                     let el = els[0]
@@ -186,19 +194,34 @@ document.addEventListener('livewire:init', () => {
         function isComponentRootEl(el) {
             return el.hasAttribute('wire:id')
         }
+    })
 
-        function closestComponent(el, strict = true) {
-            let closestRoot = Alpine.findClosest(el, (i) => i.__livewire)
+    Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+        succeed(({ snapshot, effects }) => {
+            effects.dispatches?.forEach((dispatch) => {
+                if (! dispatch.params?.awaitSchemaComponent) {
+                    return
+                }
 
-            if (!closestRoot) {
-                if (strict)
-                    throw 'Could not find Livewire component in DOM tree'
+                let els = Array.from(
+                    component.el.querySelectorAll(
+                        `[wire\\:partial="schema-component::${dispatch.params.awaitSchemaComponent}"]`,
+                    ),
+                ).filter((el) => findClosestLivewireComponent(el) === component)
 
-                return
-            }
+                if (els.length === 1) {
+                    return
+                }
 
-            return closestRoot.__livewire
-        }
+                if (els.length > 1) {
+                    throw `Multiple schema components found with key [${dispatch.params.awaitSchemaComponent}].`
+                }
+
+                window.addEventListener(`schema-component-${component.id}-${dispatch.params.awaitSchemaComponent}-loaded`, () => {
+                    window.dispatchEvent(new CustomEvent(dispatch.name, { detail: dispatch.params }))
+                }, { once: true })
+            })
+        })
     })
 })
 

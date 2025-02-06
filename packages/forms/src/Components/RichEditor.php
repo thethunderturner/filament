@@ -56,13 +56,16 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
                 ->form([
                     TextInput::make('href')
                         ->label('URL')
-                        ->default('https://google.com')
                         ->url(),
                 ])
-                ->action(function (array $arguments, array $data, RichEditor $component, Component&HasForms $livewire) {
-                    $livewire->dispatch('run-rich-editor-command', livewireId: $livewire->getId(), key: $component->getKey(), editorSelection: $arguments['editorSelection'], name: 'toggleLink', options: [
-                        'href' => $data['href'],
-                    ]);
+                ->action(function (array $arguments, array $data, RichEditor $component) {
+                    $component->runCommand(
+                        name: 'toggleLink',
+                        options: [
+                            'href' => $data['href'],
+                        ],
+                        editorSelection: $arguments['editorSelection'],
+                    );
 
                     Notification::make()
                         ->title('Link Added')
@@ -81,5 +84,21 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
             ...parent::getDefaultStateCasts(),
             app(RichEditorStateCast::class, ['richEditor' => $this]),
         ];
+    }
+
+    public function runCommand(string $name, array $options, array $editorSelection): void
+    {
+        $key = $this->getKey();
+        $livewire = $this->getLivewire();
+
+        $livewire->dispatch(
+            'run-rich-editor-command',
+            awaitSchemaComponent: $key,
+            livewireId: $livewire->getId(),
+            key: $key,
+            editorSelection: $editorSelection,
+            name: $name,
+            options: $options,
+        );
     }
 }

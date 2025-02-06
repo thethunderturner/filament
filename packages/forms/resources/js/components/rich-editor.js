@@ -19,7 +19,7 @@ import Text from '@tiptap/extension-text'
 import Underline from '@tiptap/extension-underline'
 import { Selection } from '@tiptap/pm/state'
 
-export default function richEditorFormComponent({ state }) {
+export default function richEditorFormComponent({ key, livewireId, state }) {
     let editor
 
     return {
@@ -83,6 +83,14 @@ export default function richEditorFormComponent({ state }) {
 
                 editor.commands.setContent(this.state)
             })
+
+            window.addEventListener('run-rich-editor-command', (event) => {
+                if ((event.detail.livewireId === livewireId) && (event.detail.key === key)) {
+                    this.runEditorCommand(event.detail)
+                }
+            })
+
+            window.dispatchEvent(new CustomEvent(`schema-component-${livewireId}-${key}-loaded`))
         },
 
         getEditor: function () {
@@ -90,6 +98,10 @@ export default function richEditorFormComponent({ state }) {
         },
 
         setEditorSelection: function (selection) {
+            if (! selection) {
+                return
+            }
+
             this.editorSelection = selection
 
             editor.chain().command(({ tr }) => {

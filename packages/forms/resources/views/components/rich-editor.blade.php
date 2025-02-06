@@ -15,11 +15,12 @@
         @endif
         x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('rich-editor', 'filament/forms') }}"
         x-data="richEditorFormComponent({
+                    key: @js($key),
+                    livewireId: @js($this->getId()),
                     state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')", isOptimisticallyLive: false) }},
+                    partialKey: @js("schema-component::{$key}"),
                 })"
-        x-on:run-rich-editor-command.window="if (($event.detail.livewireId === @js($this->getId())) && ($event.detail.key === @js($key))) runEditorCommand($event.detail)"
         x-cloak
-        wire:ignore
     >
         <x-filament::input.wrapper
             :valid="! $errors->has($statePath)"
@@ -314,7 +315,7 @@
                 </div>
             </div>
 
-            <div class="prose max-w-none w-full px-5" x-ref="editor"></div>
+            <div class="prose max-w-none w-full px-5" x-ref="editor" wire:ignore></div>
         </x-filament::input.wrapper>
     </div>
 </x-dynamic-component>
