@@ -1,0 +1,5 @@
+.fi-fo-rich-editor {
+    & .tiptap:focus {
+        @apply outline-none;
+    }
+}

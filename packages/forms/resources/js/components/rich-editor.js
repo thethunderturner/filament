@@ -24,6 +24,10 @@ export default function richEditorFormComponent({ state }) {
     return {
         state,
 
+        shouldUpdateState: true,
+
+        updatedAt: Date.now(),
+
         init: function () {
             editor = new Editor({
                 element: this.$refs.editor,
@@ -50,17 +54,36 @@ export default function richEditorFormComponent({ state }) {
                 content: this.state,
             })
 
+            editor.on('create', ({ editor }) => {
+                this.updatedAt = Date.now()
+            })
+
             editor.on('update', ({ editor }) => {
+                this.updatedAt = Date.now()
+
                 this.state = editor.getJSON()
+
+                this.shouldUpdateState = false
+            })
+
+            editor.on('selectionUpdate', ({ editor }) => {
+                this.updatedAt = Date.now()
             })
 
             this.$watch('state', () => {
-                if (editor.isFocused) {
+                if (! this.shouldUpdateState) {
+                    this.shouldUpdateState = true
+
                     return
                 }
 
                 editor.commands.setContent(this.state)
             })
         },
+
+        getEditor: function () {
+            return editor
+        },
+
     }
 }
