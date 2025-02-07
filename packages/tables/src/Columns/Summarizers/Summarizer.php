@@ -81,7 +81,7 @@ class Summarizer extends ViewComponent implements HasEmbeddedView
 
         if ($column->hasRelationship($query->getModel())) {
             $relationship = $column->getRelationship($query->getModel());
-            $attribute = $column->getRelationshipAttribute();
+            $attribute = $column->getFullAttributeName($query->getModel());
 
             $inverseRelationship = $column->getInverseRelationshipName($query->getModel());
 

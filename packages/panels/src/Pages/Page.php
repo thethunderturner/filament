@@ -56,7 +56,7 @@ abstract class Page extends BasePage
 
     protected static bool $shouldRegisterNavigation = true;
 
-    protected static string $view = 'filament-panels::pages.page';
+    protected string $view = 'filament-panels::pages.page';
 
     public function getLayout(): string
     {

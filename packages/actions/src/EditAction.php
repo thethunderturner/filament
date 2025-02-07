@@ -54,7 +54,7 @@ class EditAction extends Action
         });
 
         $this->action(function (): void {
-            $this->process(function (array $data, HasActions & HasSchemas $livewire, Model $record, ?Table $table) {
+            $this->process(function (array $data, HasActions & HasSchemas $livewire, Model $record, ?Table $table): void {
                 $relationship = $table?->getRelationship();
 
                 $translatableContentDriver = $livewire->makeFilamentTranslatableContentDriver();

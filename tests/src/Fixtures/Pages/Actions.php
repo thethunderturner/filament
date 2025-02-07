@@ -11,7 +11,7 @@ use Filament\Support\Icons\Heroicon;
 
 class Actions extends Page
 {
-    protected static string $view = 'pages.actions';
+    protected string $view = 'pages.actions';
 
     protected function getHeaderActions(): array
     {

@@ -48,7 +48,7 @@ $isReady = strtolower(trim(ask(<<<HTML
     <span class="bg-amber-600 text-amber-50 mr-1">
         Are you ready to continue? y/n
     </span>
-HTML))) === 'y';
+HTML) ?? 'y')) === 'y';
 
 if (! $isReady) {
     render(<<<HTML

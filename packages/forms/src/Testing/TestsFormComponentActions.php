@@ -4,7 +4,9 @@ namespace Filament\Forms\Testing;
 
 use BackedEnum;
 use Closure;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Support\Arr;
+use Livewire\Component;
 use Livewire\Features\SupportTesting\Testable;
 
 /**

@@ -70,7 +70,7 @@ class AttachAction extends Action
 
         $this->form(fn (): array => [$this->getRecordSelect()]);
 
-        $this->action(function (array $arguments, array $data, Schema $form, Table $table): void {
+        $this->action(function (array $arguments, array $data, Schema $schema, Table $table): void {
             /** @var BelongsToMany $relationship */
             $relationship = Relation::noConstraints(fn () => $table->getRelationship());
 
@@ -86,7 +86,7 @@ class AttachAction extends Action
                 $this->record($record);
             }
 
-            $this->process(function () use ($data, $record, $relationship) {
+            $this->process(function () use ($data, $record, $relationship): void {
                 $relationship->attach(
                     $record,
                     Arr::only($data, $relationship->getPivotColumns()),
@@ -101,7 +101,7 @@ class AttachAction extends Action
 
                 $this->record(null);
 
-                $form->fill();
+                $schema->fill();
 
                 $this->halt();
 

@@ -8,12 +8,12 @@ use Filament\Actions\BulkAction;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Livewire\Component;
 use Livewire\Features\SupportTesting\Testable;
 
 /**
- * @method HasTable instance()
+ * @method Component&HasTable instance()
  *
- * @mixin Testable
  * @mixin Testable
  */
 class TestsBulkActions

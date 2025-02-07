@@ -1742,7 +1742,7 @@
                                                             {{ \Filament\Support\generate_href_html($columnUrl ?: $recordUrl, $columnUrl ? $column->shouldOpenUrlInNewTab() : $openRecordUrlInNewTab) }}
                                                         @elseif ($columnWrapperTag === 'button')
                                                             type="button"
-                                                            wire:click="{{ $columnWireClickAction }}"
+                                                            wire:click.stop.prevent="{{ $columnWireClickAction }}"
                                                             wire:loading.attr="disabled"
                                                             wire:target="{{ $columnWireClickAction }}"
                                                         @endif

@@ -24,7 +24,7 @@ class SetUpEmailCodeAuthenticationAction
             ->color('primary')
             ->icon(Heroicon::LockClosed)
             ->link()
-            ->mountUsing(function (HasActions $livewire) use ($emailCodeAuthentication) {
+            ->mountUsing(function (HasActions $livewire) use ($emailCodeAuthentication): void {
                 $livewire->mergeMountedActionArguments([
                     'encrypted' => encrypt([
                         'secret' => $secret = $emailCodeAuthentication->generateSecret(),
@@ -48,7 +48,7 @@ class SetUpEmailCodeAuthenticationAction
                     ->belowContent(Action::make('resend')
                         ->label(__('filament-panels::auth/multi-factor/email-code/actions/set-up.modal.form.code.actions.resend.label'))
                         ->link()
-                        ->action(function () use ($arguments, $emailCodeAuthentication) {
+                        ->action(function () use ($arguments, $emailCodeAuthentication): void {
                             /** @var HasEmailCodeAuthentication $user */
                             $user = Filament::auth()->user();
 
@@ -73,7 +73,7 @@ class SetUpEmailCodeAuthenticationAction
             ])
             ->modalSubmitAction(fn (Action $action) => $action
                 ->label(__('filament-panels::auth/multi-factor/email-code/actions/set-up.modal.actions.submit.label')))
-            ->action(function (array $arguments) use ($emailCodeAuthentication) {
+            ->action(function (array $arguments) use ($emailCodeAuthentication): void {
                 /** @var Authenticatable&HasEmailCodeAuthentication $user */
                 $user = Filament::auth()->user();
 
@@ -85,7 +85,7 @@ class SetUpEmailCodeAuthenticationAction
                     return;
                 }
 
-                DB::transaction(function () use ($emailCodeAuthentication, $encrypted, $user) {
+                DB::transaction(function () use ($emailCodeAuthentication, $encrypted, $user): void {
                     $emailCodeAuthentication->saveSecret($user, $encrypted['secret']);
                 });
 

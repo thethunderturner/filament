@@ -74,11 +74,11 @@ class DisableGoogleTwoFactorAuthenticationAction
             ])
             ->modalSubmitAction(fn (Action $action) => $action
                 ->label(__('filament-panels::auth/multi-factor/google-two-factor/actions/disable.modal.actions.submit.label')))
-            ->action(function () use ($googleTwoFactorAuthentication, $isRecoverable) {
+            ->action(function () use ($googleTwoFactorAuthentication, $isRecoverable): void {
                 /** @var HasGoogleTwoFactorAuthentication&HasGoogleTwoFactorAuthenticationRecovery $user */
                 $user = Filament::auth()->user();
 
-                DB::transaction(function () use ($googleTwoFactorAuthentication, $isRecoverable, $user) {
+                DB::transaction(function () use ($googleTwoFactorAuthentication, $isRecoverable, $user): void {
                     $googleTwoFactorAuthentication->saveSecret($user, null);
 
                     if ($isRecoverable) {

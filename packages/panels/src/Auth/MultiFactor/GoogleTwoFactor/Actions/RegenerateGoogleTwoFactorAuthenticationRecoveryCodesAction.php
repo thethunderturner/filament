@@ -61,7 +61,7 @@ class RegenerateGoogleTwoFactorAuthenticationRecoveryCodesAction
             ->modalSubmitAction(fn (Action $action) => $action
                 ->label(__('filament-panels::auth/multi-factor/google-two-factor/actions/regenerate-recovery-codes.modal.actions.submit.label'))
                 ->color('danger'))
-            ->action(function (Action $action, HasActions $livewire) use ($googleTwoFactorAuthentication) {
+            ->action(function (Action $action, HasActions $livewire) use ($googleTwoFactorAuthentication): void {
                 $recoveryCodes = $googleTwoFactorAuthentication->generateRecoveryCodes();
 
                 /** @var HasGoogleTwoFactorAuthenticationRecovery $user */

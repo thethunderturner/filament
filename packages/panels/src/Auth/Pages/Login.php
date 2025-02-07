@@ -151,14 +151,14 @@ class Login extends SimplePage
         ]);
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
-    public function multiFactorChallengeForm(Schema $form): Schema
+    public function multiFactorChallengeForm(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**
@@ -262,7 +262,7 @@ class Login extends SimplePage
                         $enabledMultiFactorAuthenticationProviders,
                     ))
                     ->live()
-                    ->afterStateUpdated(function (?string $state) use ($enabledMultiFactorAuthenticationProviders, $section, $user) {
+                    ->afterStateUpdated(function (?string $state) use ($enabledMultiFactorAuthenticationProviders, $section, $user): void {
                         $provider = $enabledMultiFactorAuthenticationProviders[$state] ?? null;
 
                         if (! $provider) {

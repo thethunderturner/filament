@@ -4,6 +4,8 @@ namespace Filament\Infolists\Testing;
 
 use BackedEnum;
 use Closure;
+use Filament\Schemas\Contracts\HasSchemas;
+use Livewire\Component;
 use Livewire\Features\SupportTesting\Testable;
 
 /**

@@ -91,7 +91,7 @@ class ImportAction extends Action
                 ->placeholder(__('filament-actions::import.modal.form.file.placeholder'))
                 ->acceptedFileTypes(['text/csv', 'text/x-csv', 'application/csv', 'application/x-csv', 'text/comma-separated-values', 'text/x-comma-separated-values', 'text/plain', 'application/vnd.ms-excel'])
                 ->rules($action->getFileValidationRules())
-                ->afterStateUpdated(function (FileUpload $component, Component $livewire, Set $set, ?TemporaryUploadedFile $state) use ($action) {
+                ->afterStateUpdated(function (FileUpload $component, Component $livewire, Set $set, ?TemporaryUploadedFile $state) use ($action): void {
                     if (! $state instanceof TemporaryUploadedFile) {
                         return;
                     }
@@ -179,7 +179,7 @@ class ImportAction extends Action
                 ->visible(fn (Get $get): bool => $get('file') instanceof TemporaryUploadedFile),
         ], $action->getImporter()::getOptionsFormComponents()));
 
-        $this->action(function (ImportAction $action, array $data) {
+        $this->action(function (ImportAction $action, array $data): void {
             /** @var TemporaryUploadedFile $csvFile */
             $csvFile = $data['file'];
 
@@ -228,8 +228,7 @@ class ImportAction extends Action
             $importChunkIterator = new ChunkIterator($csvResults->getRecords(), chunkSize: $action->getChunkSize());
 
             /** @var array<array<array<string, string>>> $importChunks */
-            $importChunks = $importChunkIterator->get();
-
+            $importChunks = $importChunkIterator->get(); /** @phpstan-ignore varTag.nativeType */
             $job = $action->getJob();
 
             $options = array_merge(
@@ -272,12 +271,12 @@ class ImportAction extends Action
                     filled($jobBatchName = $importer->getJobBatchName()),
                     fn (PendingBatch $batch) => $batch->name($jobBatchName),
                 )
-                ->finally(function () use ($authGuard, $columnMap, $import, $jobConnection, $options) {
+                ->finally(function () use ($authGuard, $columnMap, $import, $jobConnection, $options): void {
                     $import->touch('completed_at');
 
                     event(new ImportCompleted($import, $columnMap, $options));
 
-                    if (! $import->user instanceof Authenticatable) {
+                    if (! $import->user instanceof Authenticatable) { /** @phpstan-ignore instanceof.alwaysTrue */
                         return;
                     }
 
@@ -374,7 +373,7 @@ class ImportAction extends Action
 
                     $csv->insertAll($exampleRows);
 
-                    return response()->streamDownload(function () use ($csv) {
+                    return response()->streamDownload(function () use ($csv): void {
                         $csv->setOutputBOM(Bom::Utf8);
 
                         echo $csv->toString();
@@ -602,7 +601,7 @@ class ImportAction extends Action
         $fileRules = [
             'extensions:csv,txt',
             File::types(['csv', 'txt'])->rules([
-                function (string $attribute, mixed $value, Closure $fail) {
+                function (string $attribute, mixed $value, Closure $fail): void {
                     $csvStream = $this->getUploadedFileStream($value);
 
                     if (! $csvStream) {

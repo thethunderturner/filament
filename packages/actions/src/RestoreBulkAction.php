@@ -64,7 +64,7 @@ class RestoreBulkAction extends BulkAction
         $this->modalIcon(FilamentIcon::resolve('actions::restore-action.modal') ?? Heroicon::OutlinedArrowUturnLeft);
 
         $this->action(fn () => $this->processIndividualRecords(
-            static function (Model $record) {
+            static function (Model $record): void {
                 if (! method_exists($record, 'restore')) {
                     return;
                 }

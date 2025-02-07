@@ -32,7 +32,7 @@ abstract class BasePage extends Component implements HasActions, HasForms, HasIn
 
     protected ?string $subheading = null;
 
-    protected static string $view;
+    protected string $view;
 
     public static ?Closure $reportValidationErrorUsing = null;
 
@@ -61,7 +61,7 @@ abstract class BasePage extends Component implements HasActions, HasForms, HasIn
 
     public function getView(): string
     {
-        return static::$view;
+        return $this->view;
     }
 
     public function getLayout(): string

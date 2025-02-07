@@ -83,35 +83,31 @@
     }
 
     @supports (container-type: inline-size) {
-        @apply contain-inline-size;
+        @apply @container;
 
-        @container (min-width: 28rem) {
-            & .fi-pagination-records-per-page-select {
-                &:not(.fi-compact) {
-                    @apply inline;
-                }
+        & .fi-pagination-records-per-page-select {
+            &:not(.fi-compact) {
+                @apply @md:inline;
+            }
 
-                &.fi-compact {
-                    @apply hidden;
-                }
+            &.fi-compact {
+                @apply @md:hidden;
             }
         }
 
-        @container (min-width: 56rem) {
-            &:not(.fi-simple) {
-                & .fi-pagination-previous-btn,
-                & .fi-pagination-next-btn {
-                    @apply hidden;
-                }
+        &:not(.fi-simple) {
+            & .fi-pagination-previous-btn,
+            & .fi-pagination-next-btn {
+                @apply @4xl:hidden;
             }
+        }
 
-            & .fi-pagination-overview {
-                @apply inline;
-            }
+        & .fi-pagination-overview {
+            @apply @4xl:inline;
+        }
 
-            & .fi-pagination-items {
-                @apply flex;
-            }
+        & .fi-pagination-items {
+            @apply @4xl:flex;
         }
     }
 

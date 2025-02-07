@@ -24,7 +24,7 @@ class FilamentIcon extends Facade
      */
     public static function register(array $icons): void
     {
-        static::resolved(function (IconManager $iconManager) use ($icons) {
+        static::resolved(function (IconManager $iconManager) use ($icons): void {
             $iconManager->register($icons);
         });
     }

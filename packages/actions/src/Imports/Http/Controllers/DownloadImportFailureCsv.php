@@ -38,6 +38,7 @@ class DownloadImportFailureCsv
         $csv = Writer::createFromFileObject(new SplTempFileObject);
         $csv->setOutputBOM(Bom::Utf8);
 
+        /** @var ?FailedImportRow $firstFailedRow */
         $firstFailedRow = $import->failedRows()->first();
 
         $columnHeaders = $firstFailedRow ? array_keys($firstFailedRow->data) : [];
@@ -47,12 +48,12 @@ class DownloadImportFailureCsv
 
         $import->failedRows()
             ->lazyById(100)
-            ->each(fn (FailedImportRow $failedImportRow) => $csv->insertOne([
+            ->each(fn (FailedImportRow $failedImportRow) => $csv->insertOne([/** @phpstan-ignore argument.type */
                 ...$failedImportRow->data,
                 'error' => $failedImportRow->validation_error ?? __('filament-actions::import.failure_csv.system_error'),
             ]));
 
-        return response()->streamDownload(function () use ($csv) {
+        return response()->streamDownload(function () use ($csv): void {
             foreach ($csv->chunk(1000) as $offset => $chunk) {
                 echo $chunk;
 

@@ -215,7 +215,7 @@ class SettingsPageClassGenerator extends ClassGenerator
             $isFloatType = fn (ReflectionType $type): bool => $type instanceof ReflectionNamedType && $type->getName() === 'float';
             $isIntegerType = fn (ReflectionType $type): bool => $type instanceof ReflectionNamedType && $type->getName() === 'int';
 
-            $setUpNumericComponentData = function () use (&$componentData, $componentName) {
+            $setUpNumericComponentData = function () use (&$componentData, $componentName): void {
                 $componentData['numeric'] = [];
 
                 if (in_array($componentName, [

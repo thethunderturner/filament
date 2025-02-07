@@ -149,6 +149,9 @@
                                 x-show="{{ $xShow }}"
                                 x-cloak
                             @endif
+                            @class([
+                                'fi-grid-ctn' => $schemaComponent->isGridContainer(),
+                            ])
                         >
                             {{ $schemaComponent }}
                         </div>

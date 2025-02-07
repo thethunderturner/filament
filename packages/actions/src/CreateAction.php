@@ -54,10 +54,10 @@ class CreateAction extends Action
 
         $this->record(null);
 
-        $this->action(function (array $arguments, Schema $form): void {
+        $this->action(function (array $arguments, Schema $schema): void {
             if ($arguments['another'] ?? false) {
                 $preserveRawState = $this->evaluate($this->preserveFormDataWhenCreatingAnotherUsing, [
-                    'data' => $form->getRawState(),
+                    'data' => $schema->getRawState(),
                 ]) ?? [];
             }
 
@@ -104,7 +104,7 @@ class CreateAction extends Action
             });
 
             $this->record($record);
-            $form->model($record)->saveRelationships();
+            $schema->model($record)->saveRelationships();
 
             if ($arguments['another'] ?? false) {
                 $this->callAfter();
@@ -113,12 +113,12 @@ class CreateAction extends Action
                 $this->record(null);
 
                 // Ensure that the form record is anonymized so that relationships aren't loaded.
-                $form->model($model);
+                $schema->model($model);
 
-                $form->fill();
+                $schema->fill();
 
-                $form->rawState([
-                    ...$form->getRawState(),
+                $schema->rawState([
+                    ...$schema->getRawState(),
                     ...$preserveRawState ?? [],
                 ]);
 

@@ -191,7 +191,7 @@ trait CanFormatState
                 $suffix = e($suffix);
             }
 
-            $state = $state . $suffix;
+            $state .= $suffix;
         }
 
         if (blank($state)) {

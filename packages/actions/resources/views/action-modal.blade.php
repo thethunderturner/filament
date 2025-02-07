@@ -39,7 +39,7 @@
         :sticky-header="$actionIsModalHeaderSticky"
         :width="$actionModalWidth"
         :wire:key="$actionModalWireKey"
-        x-on:modal-closed.stop="$wire.unmountAction(false)"
+        :x-on:modal-closed="'if ($event.detail.id === ' . \Illuminate\Support\Js::from($actionModalId) . ') $wire.unmountAction(false)'"
     >
         {{ $action->getModalContent() }}
 

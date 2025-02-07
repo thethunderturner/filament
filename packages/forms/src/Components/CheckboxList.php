@@ -54,7 +54,7 @@ class CheckboxList extends Field implements Contracts\CanDisableOptions, Contrac
 
         $this->default([]);
 
-        $this->afterStateHydrated(static function (CheckboxList $component, $state) {
+        $this->afterStateHydrated(static function (CheckboxList $component, $state): void {
             if (is_array($state)) {
                 return;
             }
@@ -196,7 +196,7 @@ class CheckboxList extends Field implements Contracts\CanDisableOptions, Contrac
             );
         });
 
-        $this->saveRelationshipsUsing(static function (CheckboxList $component, ?array $state) use ($modifyQueryUsing) {
+        $this->saveRelationshipsUsing(static function (CheckboxList $component, ?array $state) use ($modifyQueryUsing): void {
             $relationship = $component->getRelationship();
 
             if ($modifyQueryUsing) {

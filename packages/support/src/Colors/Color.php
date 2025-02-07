@@ -329,9 +329,9 @@ class Color
         }
 
         // Normalize RGB values to between 0 and 1
-        $red = $red / 255;
-        $green = $green / 255;
-        $blue = $blue / 255;
+        $red /= 255;
+        $green /= 255;
+        $blue /= 255;
 
         // Linearize RGB values
         $red = $red <= 0.04045 ? $red / 12.92 : pow(($red + 0.055) / 1.055, 2.4);

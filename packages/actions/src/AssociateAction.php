@@ -70,7 +70,7 @@ class AssociateAction extends Action
 
         $this->form(fn (): array => [$this->getRecordSelect()]);
 
-        $this->action(function (array $arguments, array $data, Schema $form, Table $table): void {
+        $this->action(function (array $arguments, array $data, Schema $schema, Table $table): void {
             /** @var HasMany | MorphMany $relationship */
             $relationship = Relation::noConstraints(fn () => $table->getRelationship());
 
@@ -84,7 +84,7 @@ class AssociateAction extends Action
                 /** @var BelongsTo $inverseRelationship */
                 $inverseRelationship = $table->getInverseRelationshipFor($record);
 
-                $this->process(function () use ($inverseRelationship, $record, $relationship) {
+                $this->process(function () use ($inverseRelationship, $record, $relationship): void {
                     $inverseRelationship->associate($relationship->getParent());
                     $record->save();
                 }, [
@@ -99,7 +99,7 @@ class AssociateAction extends Action
 
                 $this->record(null);
 
-                $form->fill();
+                $schema->fill();
 
                 $this->halt();
 

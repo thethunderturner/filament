@@ -106,9 +106,9 @@ class RequestPasswordReset extends SimplePage
             ->danger();
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     /**
