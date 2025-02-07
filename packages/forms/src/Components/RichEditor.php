@@ -4,10 +4,13 @@ namespace Filament\Forms\Components;
 
 use Closure;
 use Filament\Actions\Action;
+use Filament\Forms\Components\RichEditor\Actions\LinkAction;
+use Filament\Forms\Components\RichEditor\EditorCommand;
 use Filament\Forms\Components\StateCasts\RichEditorStateCast;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
+use Filament\Support\Enums\Width;
 
 class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Contracts\HasFileAttachments
 {
@@ -50,26 +53,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
         parent::setUp();
 
         $this->registerActions([
-            Action::make('link')
-                ->form([
-                    TextInput::make('href')
-                        ->label('URL')
-                        ->url(),
-                ])
-                ->action(function (array $arguments, array $data, RichEditor $component) {
-                    $component->runCommand(
-                        name: 'toggleLink',
-                        options: [
-                            'href' => $data['href'],
-                        ],
-                        editorSelection: $arguments['editorSelection'],
-                    );
-
-                    Notification::make()
-                        ->title('Link Added')
-                        ->success()
-                        ->send();
-                }),
+            LinkAction::make(),
         ]);
     }
 
@@ -85,22 +69,21 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
     }
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param  array<EditorCommand>  $commands
      * @param  array<string, mixed>  $editorSelection
      */
-    public function runCommand(string $name, array $options, array $editorSelection): void
+    public function runCommands(array $commands, array $editorSelection): void
     {
         $key = $this->getKey();
         $livewire = $this->getLivewire();
 
         $livewire->dispatch(
-            'run-rich-editor-command',
+            'run-rich-editor-commands',
             awaitSchemaComponent: $key,
             livewireId: $livewire->getId(),
             key: $key,
             editorSelection: $editorSelection,
-            name: $name,
-            options: $options,
+            commands: array_map(fn (EditorCommand $command): array => $command->toArray(), $commands),
         );
     }
 }

@@ -147,7 +147,7 @@
                             @if ($hasToolbarButton('link'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="link"
-                                    :x-on:click="'$wire.mountAction(\'link\', { editorSelection }, ' . \Illuminate\Support\Js::from(['schemaComponent' => $key]) . ')'"
+                                    :x-on:click="$getAction('link')->getAlpineClickHandler()"
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.link') }}"
                                     tabindex="-1"
                                 >

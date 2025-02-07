@@ -44,7 +44,10 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
                     Heading,
                     History,
                     Italic,
-                    Link,
+                    Link.configure({
+                        autolink: true,
+                        openOnClick: false,
+                    }),
                     ListItem,
                     OrderedList,
                     Paragraph,
@@ -84,13 +87,16 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
                 editor.commands.setContent(this.state)
             })
 
-            window.addEventListener('run-rich-editor-command', (event) => {
-                if (
-                    event.detail.livewireId === livewireId &&
-                    event.detail.key === key
-                ) {
-                    this.runEditorCommand(event.detail)
+            window.addEventListener('run-rich-editor-commands', (event) => {
+                if (event.detail.livewireId !== livewireId) {
+                    return
                 }
+
+                if (event.detail.key !== key) {
+                    return
+                }
+
+                this.runEditorCommands(event.detail)
             })
 
             window.dispatchEvent(
@@ -124,10 +130,14 @@ export default function richEditorFormComponent({ key, livewireId, state }) {
                 .run()
         },
 
-        runEditorCommand: function ({ name, options, editorSelection }) {
+        runEditorCommands: function ({ commands, editorSelection }) {
             this.setEditorSelection(editorSelection)
 
-            editor.chain()[name](options).run()
+            let commandChain = editor.chain()
+
+            commands.forEach((command) => commandChain = commandChain[command.name](...(command.arguments ?? [])))
+
+            commandChain.run()
         },
     }
 }
