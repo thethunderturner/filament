@@ -33,7 +33,12 @@ class RichEditorStateCast implements StateCast
         return (new Editor)
             ->setContent($state ?? [
                 'type' => 'doc',
-                'content' => [],
+                'content' => [
+                    [
+                        'type' => 'paragraph',
+                        'content' => [],
+                    ],
+                ],
             ])
             ->getDocument();
     }

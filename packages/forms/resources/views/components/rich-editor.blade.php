@@ -18,9 +18,15 @@
                     key: @js($key),
                     livewireId: @js($this->getId()),
                     state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')", isOptimisticallyLive: false) }},
-                    partialKey: @js("schema-component::{$key}"),
+                    statePath: @js($statePath),
+                    uploadingFileMessage: @js($getUploadingFileMessage()),
                 })"
         x-cloak
+        x-bind:class="{
+            'pointer-events-none opacity-50 cursor-wait': isUploadingFile,
+        }"
+        x-on:tiptap-uploading-file.stop="if ($event.detail.statePath === @js($statePath)) isUploadingFile = true"
+        x-on:tiptap-uploaded-file.stop="if ($event.detail.statePath === @js($statePath)) isUploadingFile = false"
     >
         <x-filament::input.wrapper
             :valid="! $errors->has($statePath)"
@@ -316,7 +322,7 @@
             </div>
 
             <div
-                class="prose w-full max-w-none px-5"
+                class="prose min-h-full w-full max-w-none px-5"
                 x-ref="editor"
                 wire:ignore
             ></div>

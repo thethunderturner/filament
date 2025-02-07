@@ -3,14 +3,11 @@
 namespace Filament\Forms\Components;
 
 use Closure;
-use Filament\Actions\Action;
 use Filament\Forms\Components\RichEditor\Actions\LinkAction;
 use Filament\Forms\Components\RichEditor\EditorCommand;
 use Filament\Forms\Components\StateCasts\RichEditorStateCast;
-use Filament\Notifications\Notification;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
-use Filament\Support\Enums\Width;
 
 class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Contracts\HasFileAttachments
 {
@@ -47,6 +44,8 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
         'underline',
         'undo',
     ];
+
+    protected string | Closure | null $uploadingFileMessage = null;
 
     protected function setUp(): void
     {
@@ -85,5 +84,17 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
             editorSelection: $editorSelection,
             commands: array_map(fn (EditorCommand $command): array => $command->toArray(), $commands),
         );
+    }
+
+    public function uploadingFileMessage(string | Closure | null $message): static
+    {
+        $this->uploadingFileMessage = $message;
+
+        return $this;
+    }
+
+    public function getUploadingFileMessage(): string
+    {
+        return $this->evaluate($this->uploadingFileMessage) ?? __('filament::components/button.messages.uploading_file');
     }
 }

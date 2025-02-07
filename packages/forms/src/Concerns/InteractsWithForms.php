@@ -194,14 +194,6 @@ trait InteractsWithForms
     }
 
     /**
-     * @deprecated Use `getSchemaComponentFileAttachment()` instead.
-     */
-    public function getFormComponentFileAttachment(string $statePath): ?TemporaryUploadedFile
-    {
-        return $this->getSchemaComponentFileAttachment($statePath);
-    }
-
-    /**
      * @deprecated Use `getActiveSchemaLocale()` instead.
      */
     public function getActiveFormsLocale(): ?string

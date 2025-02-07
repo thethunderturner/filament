@@ -2,4 +2,8 @@
     & .tiptap:focus {
         @apply outline-none;
     }
+
+    & .filament-tiptap-loading-image {
+        @apply animate-pulse;
+    }
 }

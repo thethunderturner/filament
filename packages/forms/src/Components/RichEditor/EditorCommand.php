@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 class EditorCommand implements Arrayable
 {
     /**
-     * @param array<mixed> $arguments
+     * @param  array<mixed>  $arguments
      */
     public function __construct(
         readonly public string $name,
