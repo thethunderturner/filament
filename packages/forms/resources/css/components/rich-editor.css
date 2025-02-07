@@ -3,7 +3,7 @@
         @apply outline-none;
     }
 
-    & .filament-tiptap-loading-image {
+    & img.fi-loading {
         @apply animate-pulse;
     }
 }

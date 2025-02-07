@@ -34,9 +34,7 @@ export default ({
     Heading,
     History,
     Italic,
-    Image.configure({
-        inline: true,
-    }),
+    Image,
     Link.configure({
         autolink: true,
         openOnClick: false,

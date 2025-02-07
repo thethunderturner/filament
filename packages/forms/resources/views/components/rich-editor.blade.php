@@ -25,8 +25,6 @@
         x-bind:class="{
             'pointer-events-none opacity-50 cursor-wait': isUploadingFile,
         }"
-        x-on:tiptap-uploading-file.stop="if ($event.detail.statePath === @js($statePath)) isUploadingFile = true"
-        x-on:tiptap-uploaded-file.stop="if ($event.detail.statePath === @js($statePath)) isUploadingFile = false"
     >
         <x-filament::input.wrapper
             :valid="! $errors->has($statePath)"

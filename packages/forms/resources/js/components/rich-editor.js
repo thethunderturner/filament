@@ -67,6 +67,34 @@ export default function richEditorFormComponent({ key, livewireId, state, stateP
                 this.runEditorCommands(event.detail)
             })
 
+            window.addEventListener('rich-editor-uploading-file', (event) => {
+                if (event.detail.livewireId !== livewireId) {
+                    return
+                }
+
+                if (event.detail.key !== key) {
+                    return
+                }
+
+                this.isUploadingFile = true
+
+                event.stopPropagation()
+            })
+
+            window.addEventListener('rich-editor-uploaded-file', (event) => {
+                if (event.detail.livewireId !== livewireId) {
+                    return
+                }
+
+                if (event.detail.key !== key) {
+                    return
+                }
+
+                this.isUploadingFile = false
+
+                event.stopPropagation()
+            })
+
             window.dispatchEvent(
                 new CustomEvent(`schema-component-${livewireId}-${key}-loaded`),
             )

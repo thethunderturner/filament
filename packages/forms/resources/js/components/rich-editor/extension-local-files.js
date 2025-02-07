@@ -53,9 +53,12 @@ const LocalFilesPlugin = ({
                 files.forEach((file, fileIndex) => {
                     editor.setEditable(false)
                     editorView.dom.dispatchEvent(
-                        new CustomEvent('tiptap-uploading-file', {
+                        new CustomEvent('rich-editor-uploading-file', {
                             bubbles: true,
-                            detail: {statePath},
+                            detail: {
+                                key,
+                                livewireId: $wire().id,
+                            },
                         }),
                     )
 
@@ -68,7 +71,7 @@ const LocalFilesPlugin = ({
                             .insertContentAt(position?.pos ?? 0, {
                                 type: 'image',
                                 attrs: {
-                                    class: 'filament-tiptap-loading-image',
+                                    class: 'fi-loading',
                                     src: fileReader.result,
                                 },
                             })
@@ -96,26 +99,21 @@ const LocalFilesPlugin = ({
 
                                 editor
                                     .chain()
-                                    .insertContentAt(
-                                        {
-                                            from: position?.pos ?? 0,
-                                            to: (position?.pos ?? 0) + 1,
-                                        },
-                                        {
-                                            type: 'image',
-                                            attrs: {
-                                                id: fileKey,
-                                                src: url,
-                                            },
-                                        },
-                                    )
+                                    .updateAttributes('image', {
+                                        class: null,
+                                        id: fileKey,
+                                        src: url,
+                                    })
                                     .run()
 
                                 editor.setEditable(true)
                                 editorView.dom.dispatchEvent(
-                                    new CustomEvent('tiptap-uploaded-file', {
+                                    new CustomEvent('rich-editor-uploaded-file', {
                                         bubbles: true,
-                                        detail: {statePath},
+                                        detail: {
+                                            key,
+                                            livewireId: $wire().id,
+                                        },
                                     }),
                                 )
 
@@ -155,9 +153,12 @@ const LocalFilesPlugin = ({
                 files.forEach((file, fileIndex) => {
                     editor.setEditable(false)
                     editorView.dom.dispatchEvent(
-                        new CustomEvent('tiptap-uploading-file', {
+                        new CustomEvent('rich-editor-uploading-file', {
                             bubbles: true,
-                            detail: {statePath},
+                            detail: {
+                                key,
+                                livewireId: $wire().id,
+                            },
                         }),
                     )
 
@@ -170,7 +171,7 @@ const LocalFilesPlugin = ({
                             .insertContentAt(editor.state.selection.anchor, {
                                 type: 'image',
                                 attrs: {
-                                    class: 'filament-tiptap-loading-image',
+                                    class: 'fi-loading',
                                     src: fileReader.result,
                                 },
                             })
@@ -198,28 +199,21 @@ const LocalFilesPlugin = ({
 
                                 editor
                                     .chain()
-                                    .insertContentAt(
-                                        {
-                                            from:
-                                                editor.state.selection.anchor -
-                                                1,
-                                            to: editor.state.selection.anchor,
-                                        },
-                                        {
-                                            type: 'image',
-                                            attrs: {
-                                                id: fileKey,
-                                                src: url,
-                                            },
-                                        },
-                                    )
+                                    .updateAttributes('image', {
+                                        class: null,
+                                        id: fileKey,
+                                        src: url,
+                                    })
                                     .run()
 
                                 editor.setEditable(true)
                                 editorView.dom.dispatchEvent(
-                                    new CustomEvent('tiptap-uploaded-file', {
+                                    new CustomEvent('rich-editor-uploaded-file', {
                                         bubbles: true,
-                                        detail: {statePath},
+                                        detail: {
+                                            key,
+                                            livewireId: $wire().id,
+                                        },
                                     }),
                                 )
 
