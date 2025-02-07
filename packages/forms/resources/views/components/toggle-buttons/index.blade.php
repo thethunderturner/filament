@@ -9,6 +9,7 @@
     $isInline = $isInline();
     $isMultiple = $isMultiple();
     $statePath = $getStatePath();
+    $areButtonLabelsHidden = $areButtonLabelsHidden();
 @endphp
 
 <x-dynamic-component
@@ -65,6 +66,7 @@
                     :disabled="$shouldOptionBeDisabled"
                     :for="$inputId"
                     :icon="$getIcon($value)"
+                    :label-sr-only="$areButtonLabelsHidden"
                     tag="label"
                 >
                     {{ $label }}
