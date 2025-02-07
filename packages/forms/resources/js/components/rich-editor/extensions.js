@@ -19,12 +19,7 @@ import Superscript from '@tiptap/extension-superscript'
 import Text from '@tiptap/extension-text'
 import Underline from '@tiptap/extension-underline'
 
-export default ({
-    key,
-    statePath,
-    uploadingFileMessage,
-    $wire,
-}) => [
+export default ({ key, statePath, uploadingFileMessage, $wire }) => [
     Blockquote,
     Bold,
     BulletList,

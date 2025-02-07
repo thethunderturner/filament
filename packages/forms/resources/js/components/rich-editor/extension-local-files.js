@@ -20,7 +20,10 @@ const LocalFilesPlugin = ({
     uploadingMessage,
     $wire,
 }) => {
-    const getFileAttachmentUrl = (fileKey) => $wire().callSchemaComponentMethod(key, 'saveUploadedFileAttachment', { attachment: fileKey })
+    const getFileAttachmentUrl = (fileKey) =>
+        $wire().callSchemaComponentMethod(key, 'saveUploadedFileAttachment', {
+            attachment: fileKey,
+        })
 
     return new Plugin({
         key: new PluginKey('localFiles'),
@@ -108,13 +111,16 @@ const LocalFilesPlugin = ({
 
                                 editor.setEditable(true)
                                 editorView.dom.dispatchEvent(
-                                    new CustomEvent('rich-editor-uploaded-file', {
-                                        bubbles: true,
-                                        detail: {
-                                            key,
-                                            livewireId: $wire().id,
+                                    new CustomEvent(
+                                        'rich-editor-uploaded-file',
+                                        {
+                                            bubbles: true,
+                                            detail: {
+                                                key,
+                                                livewireId: $wire().id,
+                                            },
                                         },
-                                    }),
+                                    ),
                                 )
 
                                 if (fileIndex === files.length - 1) {
@@ -208,13 +214,16 @@ const LocalFilesPlugin = ({
 
                                 editor.setEditable(true)
                                 editorView.dom.dispatchEvent(
-                                    new CustomEvent('rich-editor-uploaded-file', {
-                                        bubbles: true,
-                                        detail: {
-                                            key,
-                                            livewireId: $wire().id,
+                                    new CustomEvent(
+                                        'rich-editor-uploaded-file',
+                                        {
+                                            bubbles: true,
+                                            detail: {
+                                                key,
+                                                livewireId: $wire().id,
+                                            },
                                         },
-                                    }),
+                                    ),
                                 )
 
                                 if (fileIndex === files.length - 1) {
@@ -231,7 +240,7 @@ const LocalFilesPlugin = ({
                 return true
             },
         },
-    });
+    })
 }
 
 export default Extension.create({

@@ -2,7 +2,13 @@ import { Editor } from '@tiptap/core'
 import extensions from './rich-editor/extensions'
 import { Selection } from '@tiptap/pm/state'
 
-export default function richEditorFormComponent({ key, livewireId, state, statePath, uploadingFileMessage }) {
+export default function richEditorFormComponent({
+    key,
+    livewireId,
+    state,
+    statePath,
+    uploadingFileMessage,
+}) {
     let editor
 
     return {

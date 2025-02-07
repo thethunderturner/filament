@@ -3,7 +3,6 @@
 namespace Filament\Forms\Components\RichEditor\Actions;
 
 use Filament\Actions\Action;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\RichEditor\EditorCommand;
