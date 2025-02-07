@@ -15,7 +15,7 @@ class LinkAction
     public static function make(): Action
     {
         return Action::make('link')
-            ->alpineClickHandler(fn (RichEditor $component): string => '$wire.mountAction(\'link\', { url: getEditor().getAttributes(\'link\').href, shouldOpenInNewTab: getEditor().getAttributes(\'link\').target === \'_blank\', editorSelection }, ' . Js::from(['schemaComponent' => $component->getKey()]) . ')')
+            ->alpineClickHandler(fn (RichEditor $component): string => '$wire.mountAction(\'link\', { url: getEditor().getAttributes(\'link\')?.href, shouldOpenInNewTab: getEditor().getAttributes(\'link\')?.target === \'_blank\', editorSelection }, ' . Js::from(['schemaComponent' => $component->getKey()]) . ')')
             ->modalHeading('Link')
             ->modalWidth(Width::Large)
             ->fillForm(fn (array $arguments): array => [

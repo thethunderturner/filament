@@ -3,6 +3,7 @@
 namespace Filament\Forms\Components;
 
 use Closure;
+use Filament\Forms\Components\RichEditor\Actions\AttachFilesAction;
 use Filament\Forms\Components\RichEditor\Actions\LinkAction;
 use Filament\Forms\Components\RichEditor\EditorCommand;
 use Filament\Forms\Components\StateCasts\RichEditorStateCast;
@@ -52,6 +53,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained, Cont
         parent::setUp();
 
         $this->registerActions([
+            AttachFilesAction::make(),
             LinkAction::make(),
         ]);
     }

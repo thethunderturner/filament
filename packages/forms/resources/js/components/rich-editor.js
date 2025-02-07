@@ -8,7 +8,7 @@ export default function richEditorFormComponent({ key, livewireId, state, stateP
     return {
         state,
 
-        editorSelection: null,
+        editorSelection: { type: 'text', anchor: 1, head: 1 },
 
         isUploadingFile: false,
 

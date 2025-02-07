@@ -276,6 +276,8 @@
                     @if ($hasToolbarButton('attachFiles'))
                         <x-filament-forms::rich-editor.toolbar.group>
                             <x-filament-forms::rich-editor.toolbar.button
+                                type="image"
+                                :x-on:click="$getAction('attachFiles')->getAlpineClickHandler()"
                                 title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.attach_files') }}"
                                 tabindex="-1"
                             >
