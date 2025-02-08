@@ -12,7 +12,7 @@ The slider component allows you to select a value from a range of values. The co
 
 ## Range
 
-By default, the slider has a range of 0 to 100. You can change this, using the `range()` method:
+All values on the slider are part of a range. The range has a minimum and maximum value. By default, the slider has a range of 0 to 100. This can be changed using the `range()` method:
 
 ```php
 use Filament\Forms\Components\Slider;
@@ -21,20 +21,9 @@ Slider::make('slider')
     ->range(['min' => 0, 'max' => 300]),
 ```
 
-## Step
-
-You can add steps to the slider, where every time its dragged, it will "jump" to the next step. This can enabled using the `step()` method:
-
-```php
-use Filament\Forms\Components\Slider;
-
-Slider::make('slider')
-    ->step(true),
-```
-
 ## Pips
 
-Pips allow the user to see the in between values of the sliders, which can be enabled by injecting Javascript code into the slider component:
+Pips allows the generation of points along the slider by injecting Javascript code into the slider component:
 
 ```php
 use Filament\Forms\Components\Slider;
@@ -55,7 +44,7 @@ Slider::make('slider')
 
 ## Multiple Handles
 
-You can add multiple handles to your slider by setting multiple values in the `start()` method, where each values represents the staring point of each handle:
+The number of handles can be set using the `start()` method. This option accepts an array of initial handle positions. A handle is created for every provided value.
 
 ```php
 use Filament\Forms\Components\Slider;
@@ -75,53 +64,17 @@ Slider::make('slider')
 
 <AutoScreenshot name="forms/fields/slider/increased" alt="Slider" version="4.x" />
 
-## User Interaction
+## Connect
 
-The slider component offers several ways to handle user interaction.
-
-The slider handle can be `tapped`, `dragged`, `fixed` etc. The slider behaviour is defined by `SliderBehaviour::Drag`,`SliderBehaviour::DragAll`,`SliderBehaviour::Tap`,`SliderBehaviour::Fixed`,`SliderBehaviour::Snap`,`SliderBehaviour::Unconstrained`,`SliderBehaviour::InvertConnects` and `SliderBehaviour::None`.
-
-```php
-use Filament\Forms\Components\Slider;
-use Filament\Forms\Components\Enums\SliderBehaviour;
-
-Slider::make('slider')
-    ->behaviour(SliderBehaviour::Drag),
-```
-
-The orientation of the slider can be set to `horizontal` or `vertical`:
-```php
-use Filament\Forms\Components\Slider;
-use Filament\Forms\Components\Enums\SliderOrientation;
-
-Slider::make('slider')
-    ->orientation(SliderOrientation::Vertical),
-```
-
-The direction of the slider can be set to `ltr` or `rtl`:
-```php
-use Filament\Forms\Components\Slider;
-use Filament\Forms\Components\Enums\SliderDirection;
-
-Slider::make('slider')
-    ->direction(SliderDirection::LTR),
-```
-
-## Limit
-
-The `limit()` method sets the maximum distance between the handles:
-
+The `connect()` method is used to control the bar between the handles or the edges of the slider.
 ```php
 use Filament\Forms\Components\Slider;
 
 Slider::make('slider')
     ->connect(true)
-    ->step(true)
-    ->start([10, 50])
-    ->limit(90)
+    ->start([10, 100])
     ->range(['min' => 0, 'max' => 200]),
 ```
-In order to use this method you need at least 2 handles.
 
 ## Margin
 
@@ -137,9 +90,25 @@ Slider::make('slider')
     ->range(['min' => 0, 'max' => 200]),
 ```
 
+## Limit
+
+The `limit()` method limits the maximum distance between the handles:
+
+```php
+use Filament\Forms\Components\Slider;
+
+Slider::make('slider')
+    ->connect(true)
+    ->step(true)
+    ->start([10, 50])
+    ->limit(90)
+    ->range(['min' => 0, 'max' => 200]),
+```
+In order to use this method you need at least 2 handles.
+
 ## Padding
 
-The `padding()` method limits how close to the slider edges handles can be.
+The `padding()` method limits how close to the slider edges handles can be:
 
 ```php
 use Filament\Forms\Components\Slider;
@@ -148,6 +117,39 @@ Slider::make('slider')
     ->start([20, 80])
     ->padding([10,15])
     ->range(['min' => 0, 'max' => 100]),
+```
+
+## Step
+
+You can add steps to the slider, which determines the amount the slider changes on movement, allowing it to "snap" into values. This can enabled using the `step()` method:
+
+```php
+use Filament\Forms\Components\Slider;
+
+Slider::make('slider')
+    ->step(true),
+```
+
+## Orientation
+
+The orientation of the slider can be set to `horizontal` or `vertical`:
+```php
+use Filament\Forms\Components\Slider;
+use Filament\Forms\Components\Enums\SliderOrientation;
+
+Slider::make('slider')
+    ->orientation(SliderOrientation::Vertical),
+```
+
+## Direction
+
+The direction of the slider can be set to `ltr` or `rtl`:
+```php
+use Filament\Forms\Components\Slider;
+use Filament\Forms\Components\Enums\SliderDirection;
+
+Slider::make('slider')
+    ->direction(SliderDirection::LTR),
 ```
 
 ## Tooltips
@@ -184,3 +186,16 @@ Slider::make('slider')
     ->range(['min' => 0, 'max' => 200]),
 ```
 
+## Slider Behaviour
+
+The Slider component offers several ways to handle user interaction. The range can be made draggable, or handles can move to tapped positions. All these effects are optional, and can be enabled by adding their keyword to the behaviour option.
+
+The slider handle can be `tapped`, `dragged`, `fixed` etc. The slider behaviour is defined by `SliderBehaviour::Drag`,`SliderBehaviour::DragAll`,`SliderBehaviour::Tap`,`SliderBehaviour::Fixed`,`SliderBehaviour::Snap`,`SliderBehaviour::Unconstrained`,`SliderBehaviour::InvertConnects` and `SliderBehaviour::None`.
+
+```php
+use Filament\Forms\Components\Slider;
+use Filament\Forms\Components\Enums\SliderBehaviour;
+
+Slider::make('slider')
+    ->behaviour([SliderBehaviour::Drag]),
+```
