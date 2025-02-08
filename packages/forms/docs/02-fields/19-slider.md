@@ -95,7 +95,7 @@ use Filament\Forms\Components\Slider;
 use Filament\Forms\Components\Enums\SliderOrientation;
 
 Slider::make('slider')
-    ->orientation(SliderOrientation::Drag),
+    ->orientation(SliderOrientation::Vertical),
 ```
 
 The direction of the slider can be set to `ltr` or `rtl`:
