@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\Forms\Components\StateCasts;
+namespace Filament\Forms\Components\RichEditor\StateCasts;
 
 use Filament\Forms\Components\RichEditor;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
@@ -17,12 +17,12 @@ class RichEditorStateCast implements StateCast
      */
     public function get(mixed $state): string | array
     {
-        return (new Editor)
+        return (new Editor($this->richEditor->getTipTapPhpConfiguration()))
             ->setContent($state ?? [
                 'type' => 'doc',
                 'content' => [],
             ])
-            ->getHTML();
+            ->{$this->richEditor->isJson() ? 'getDocument' : 'getHtml'}();
     }
 
     /**
@@ -30,7 +30,7 @@ class RichEditorStateCast implements StateCast
      */
     public function set(mixed $state): array
     {
-        return (new Editor)
+        return (new Editor($this->richEditor->getTipTapPhpConfiguration()))
             ->setContent($state ?? [
                 'type' => 'doc',
                 'content' => [

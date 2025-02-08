@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/core'
-import extensions from './rich-editor/extensions'
+import getExtensions from './rich-editor/extensions'
 import { Selection } from '@tiptap/pm/state'
 
 export default function richEditorFormComponent({
@@ -25,7 +25,7 @@ export default function richEditorFormComponent({
         init: function () {
             editor = new Editor({
                 element: this.$refs.editor,
-                extensions: extensions({
+                extensions: getExtensions({
                     key,
                     statePath,
                     uploadingFileMessage,
