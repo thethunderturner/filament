@@ -10,7 +10,6 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait InteractsWithForms
 {
@@ -191,14 +190,6 @@ trait InteractsWithForms
     public function isCachingForms(): bool
     {
         return $this->isCachingSchemas();
-    }
-
-    /**
-     * @deprecated Use `getSchemaComponentFileAttachment()` instead.
-     */
-    public function getFormComponentFileAttachment(string $statePath): ?TemporaryUploadedFile
-    {
-        return $this->getSchemaComponentFileAttachment($statePath);
     }
 
     /**
