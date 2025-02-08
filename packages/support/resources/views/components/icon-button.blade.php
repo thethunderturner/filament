@@ -88,7 +88,7 @@
                 'wire:target' => ($hasLoadingIndicator && $loadingIndicatorTarget) ? $loadingIndicatorTarget : null,
             ], escape: false)
             ->merge([
-                'title' => $label,
+                'title' => $hasTooltip ? null : $label,
             ], escape: true)
             ->when(
                 $disabled && filled($tooltip),
