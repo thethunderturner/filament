@@ -23,7 +23,6 @@ use Filament\Support\Facades\FilamentView;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
 use Throwable;
 
@@ -105,16 +104,14 @@ class EditRecord extends Page
     }
 
     /**
-     * @param  array<string>  $attributes
+     * @param  array<string>  $statePaths
      */
-    public function refreshFormData(array $attributes): void
+    public function refreshFormData(array $statePaths): void
     {
-        $data = [
-            ...$this->data,
-            ...Arr::only($this->getRecord()->attributesToArray(), $attributes),
-        ];
-
-        $this->form->fill($data);
+        $this->form->fillPartially(
+            $this->mutateFormDataBeforeFill($this->getRecord()->attributesToArray()),
+            $statePaths,
+        );
     }
 
     /**
