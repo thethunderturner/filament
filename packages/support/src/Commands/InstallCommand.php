@@ -152,7 +152,6 @@ class InstallCommand extends Command
     {
         return [
             ...Arr::except($packages, [
-                '@tailwindcss/postcss',
                 'axios',
                 'lodash',
             ]),
