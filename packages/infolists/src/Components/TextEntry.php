@@ -9,6 +9,7 @@ use Filament\Infolists\View\Components\TextEntry\Item\Icon;
 use Filament\Schemas\Components\Contracts\HasAffixActions;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Concerns\CanBeCopied;
+use Filament\Support\Concerns\CanWrap;
 use Filament\Support\Concerns\HasFontFamily;
 use Filament\Support\Concerns\HasLineClamp;
 use Filament\Support\Concerns\HasWeight;
@@ -30,6 +31,7 @@ use function Filament\Support\generate_icon_html;
 class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
 {
     use CanBeCopied;
+    use CanWrap;
     use Concerns\CanFormatState;
     use Concerns\HasAffixes;
     use Concerns\HasColor;
@@ -52,8 +54,6 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     protected TextEntrySize | string | Closure | null $size = null;
 
     protected bool | Closure $isLimitedListExpandable = false;
-
-    protected bool | Closure $canWrap = false;
 
     public function badge(bool | Closure $condition = true): static
     {
@@ -155,16 +155,9 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         return (bool) $this->evaluate($this->isLimitedListExpandable);
     }
 
-    public function wrap(bool | Closure $condition = true): static
+    public function canWrapByDefault(): bool
     {
-        $this->canWrap = $condition;
-
-        return $this;
-    }
-
-    public function canWrap(): bool
-    {
-        return (bool) $this->evaluate($this->canWrap);
+        return true;
     }
 
     public function toEmbeddedHtml(): string

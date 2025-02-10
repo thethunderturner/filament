@@ -4,6 +4,7 @@ namespace Filament\Tables\Columns;
 
 use Closure;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
+use Filament\Support\Concerns\CanWrap;
 use Filament\Support\Concerns\HasFontFamily;
 use Filament\Support\Concerns\HasLineClamp;
 use Filament\Support\Concerns\HasWeight;
@@ -28,6 +29,7 @@ use function Filament\Support\generate_icon_html;
 
 class TextColumn extends Column implements HasEmbeddedView
 {
+    use CanWrap;
     use Concerns\CanBeCopied;
     use Concerns\CanFormatState;
     use Concerns\HasColor;
@@ -37,8 +39,6 @@ class TextColumn extends Column implements HasEmbeddedView
     use HasFontFamily;
     use HasLineClamp;
     use HasWeight;
-
-    protected bool | Closure $canWrap = false;
 
     protected bool | Closure $isBadge = false;
 
@@ -97,13 +97,6 @@ class TextColumn extends Column implements HasEmbeddedView
         return $this;
     }
 
-    public function wrap(bool | Closure $condition = true): static
-    {
-        $this->canWrap = $condition;
-
-        return $this;
-    }
-
     public function size(TextColumnSize | string | Closure | null $size): static
     {
         $this->size = $size;
@@ -130,11 +123,6 @@ class TextColumn extends Column implements HasEmbeddedView
         }
 
         return $size;
-    }
-
-    public function canWrap(): bool
-    {
-        return (bool) $this->evaluate($this->canWrap);
     }
 
     public function isBadge(): bool

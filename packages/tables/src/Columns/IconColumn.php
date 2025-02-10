@@ -21,13 +21,13 @@ use function Filament\Support\generate_icon_html;
 
 class IconColumn extends Column implements HasEmbeddedView
 {
-    use Concerns\CanWrap;
     use Concerns\HasColor {
         getColor as getBaseColor;
     }
     use Concerns\HasIcon {
         getIcon as getBaseIcon;
     }
+    use \Filament\Support\Concerns\CanWrap;
 
     protected bool | Closure | null $isBoolean = null;
 
@@ -48,6 +48,11 @@ class IconColumn extends Column implements HasEmbeddedView
     protected bool | Closure $isListWithLineBreaks = false;
 
     protected IconColumnSize | string | Closure | null $size = null;
+
+    public function canWrapByDefault(): bool
+    {
+        return true;
+    }
 
     public function boolean(bool | Closure $condition = true): static
     {

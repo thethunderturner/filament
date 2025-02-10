@@ -17,7 +17,7 @@ use Throwable;
 
 class ImageColumn extends Column implements HasEmbeddedView
 {
-    use Concerns\CanWrap;
+    use \Filament\Support\Concerns\CanWrap;
 
     protected string | Closure | null $disk = null;
 
@@ -51,6 +51,11 @@ class ImageColumn extends Column implements HasEmbeddedView
     protected string | Closure | null $limitedRemainingTextSize = null;
 
     protected bool | Closure $shouldCheckFileExistence = true;
+
+    public function canWrapByDefault(): bool
+    {
+        return true;
+    }
 
     public function disk(string | Closure | null $disk): static
     {
