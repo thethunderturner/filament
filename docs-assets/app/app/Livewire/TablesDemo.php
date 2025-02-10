@@ -22,6 +22,8 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
+use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ColorColumn;
@@ -430,7 +432,7 @@ class TablesDemo extends Component implements HasForms, HasTable
         return $this->postsTable($table)
             ->columns([
                 TextColumn::make('title')
-                    ->size(TextColumn\Enums\TextColumnSize::Large),
+                    ->size(TextSize::Large),
             ]);
     }
 
@@ -510,7 +512,7 @@ class TablesDemo extends Component implements HasForms, HasTable
                         'reviewing' => Heroicon::OutlinedClock,
                         'published' => Heroicon::OutlinedCheckCircle,
                     })
-                    ->size(IconColumn\Enums\IconColumnSize::Medium),
+                    ->size(IconSize::Medium),
             ]);
     }
 

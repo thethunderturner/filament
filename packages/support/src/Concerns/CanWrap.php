@@ -22,6 +22,6 @@ trait CanWrap
 
     public function canWrapByDefault(): bool
     {
-        return true;
+        return false;
     }
 }

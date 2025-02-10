@@ -123,4 +123,9 @@ class ColorEntry extends Entry implements HasEmbeddedView
 
         <?php return ob_get_clean();
     }
+
+    public function canWrapByDefault(): bool
+    {
+        return true;
+    }
 }

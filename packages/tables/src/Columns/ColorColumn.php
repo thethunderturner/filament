@@ -15,11 +15,6 @@ class ColorColumn extends Column implements HasEmbeddedView
     use CanWrap;
     use Concerns\CanBeCopied;
 
-    public function canWrapByDefault(): bool
-    {
-        return true;
-    }
-
     public function toEmbeddedHtml(): string
     {
         $state = $this->getState();

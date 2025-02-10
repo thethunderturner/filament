@@ -381,10 +381,10 @@ Text columns have small font size by default, but you may change this to `TextEn
 For instance, you may make the text larger using `size(TextEntrySize::Large)`:
 
 ```php
-use Filament\Infolists\Components\TextEntry;
+use Filament\Support\Enums\TextSize;
 
 TextEntry::make('title')
-    ->size(TextEntry\Enums\TextEntrySize::Large)
+    ->size(TextSize::Large)
 ```
 
 <AutoScreenshot name="infolists/entries/text/large" alt="Text entry in a large font size" version="4.x" />

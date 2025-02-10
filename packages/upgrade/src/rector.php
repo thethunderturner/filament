@@ -189,10 +189,6 @@ return static function (RectorConfig $rectorConfig): void {
             'Filament\\Support\\Concerns\\HasFooterActionsAlignment' => 'Filament\\Schemas\\Components\\Concerns\\HasFooterActionsAlignment',
             'Filament\\Support\\Concerns\\HasHeading' => 'Filament\\Schemas\\Components\\Concerns\\HasHeading',
             'Filament\\Support\\Concerns\\ResolvesDynamicLivewireProperties' => 'Filament\\Schemas\\Concerns\\ResolvesDynamicLivewireProperties',
-            'Filament\\Infolists\\Components\\IconEntry\\IconEntrySize' => 'Filament\\Infolists\\Components\\IconEntry\\Enums\\IconEntrySize',
-            'Filament\\Infolists\\Components\\TextEntry\\TextEntrySize' => 'Filament\\Infolists\\Components\\TextEntry\\Enums\\TextEntrySize',
-            'Filament\\Tables\\Columns\\IconColumn\\IconColumnSize' => 'Filament\\Tables\\Columns\\IconColumn\\Enums\\IconColumnSize',
-            'Filament\\Tables\\Columns\\TextColumn\\TextColumnSize' => 'Filament\\Tables\\Columns\\TextColumn\\Enums\\TextColumnSize',
             'Filament\\Pages\\SubNavigationPosition' => 'Filament\\Pages\\Enums\\SubNavigationPosition',
             'Filament\\Resources\\Pages\\ContentTabPosition' => 'Filament\\Resources\\Pages\\Enums\\ContentTabPosition',
             'Filament\\Tables\\Columns\\Concerns\\HasTooltip' => 'Filament\\Support\\Concerns\\HasTooltip',
@@ -228,6 +224,10 @@ return static function (RectorConfig $rectorConfig): void {
             'Filament\\Pages\\Auth\\PasswordReset\\ResetPassword' => 'Filament\\Auth\\Pages\\PasswordReset\\ResetPassword',
             'Filament\\Pages\\Auth\\Register' => 'Filament\\Auth\\Pages\\Register',
             'Filament\\Support\\Enums\\MaxWidth' => 'Filament\\Support\\Enums\\Width',
+            'Filament\\Infolists\\Components\\IconEntry\\IconEntrySize' => 'Filament\\Support\\Enums\\IconSize',
+            'Filament\\Infolists\\Components\\TextEntry\\TextEntrySize' => 'Filament\\Support\\Enums\\TextSize',
+            'Filament\\Tables\\Columns\\IconColumn\\IconColumnSize' => 'Filament\\Support\\Enums\\IconSize',
+            'Filament\\Tables\\Columns\\TextColumn\\TextColumnSize' => 'Filament\\Support\\Enums\\TextSize',
         ],
     );
 

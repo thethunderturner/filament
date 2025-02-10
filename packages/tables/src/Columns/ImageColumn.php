@@ -52,11 +52,6 @@ class ImageColumn extends Column implements HasEmbeddedView
 
     protected bool | Closure $shouldCheckFileExistence = true;
 
-    public function canWrapByDefault(): bool
-    {
-        return true;
-    }
-
     public function disk(string | Closure | null $disk): static
     {
         $this->disk = $disk;

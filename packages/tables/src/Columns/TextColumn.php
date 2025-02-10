@@ -13,8 +13,8 @@ use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\View\Components\Badge;
-use Filament\Tables\Columns\TextColumn\Enums\TextColumnSize;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\View\Components\Columns\TextColumn\Item;
 use Filament\Tables\View\Components\Columns\TextColumn\Item\Icon;
@@ -48,7 +48,7 @@ class TextColumn extends Column implements HasEmbeddedView
 
     protected int | Closure | null $listLimit = null;
 
-    protected TextColumnSize | string | Closure | null $size = null;
+    protected TextSize | string | Closure | null $size = null;
 
     protected bool | Closure $isLimitedListExpandable = false;
 
@@ -97,29 +97,29 @@ class TextColumn extends Column implements HasEmbeddedView
         return $this;
     }
 
-    public function size(TextColumnSize | string | Closure | null $size): static
+    public function size(TextSize | string | Closure | null $size): static
     {
         $this->size = $size;
 
         return $this;
     }
 
-    public function getSize(mixed $state): TextColumnSize | string
+    public function getSize(mixed $state): TextSize | string
     {
         $size = $this->evaluate($this->size, [
             'state' => $state,
         ]);
 
         if (blank($size)) {
-            return TextColumnSize::Small;
+            return TextSize::Small;
         }
 
         if (is_string($size)) {
-            $size = TextColumnSize::tryFrom($size) ?? $size;
+            $size = TextSize::tryFrom($size) ?? $size;
         }
 
         if ($size === 'base') {
-            return TextColumnSize::Medium;
+            return TextSize::Medium;
         }
 
         return $size;
@@ -274,8 +274,8 @@ class TextColumn extends Column implements HasEmbeddedView
 
             $iconHtml = generate_icon_html($this->getIcon($stateItem), attributes: (new ComponentAttributeBag)
                 ->color(Icon::class, $iconColor), size: match ($size) {
-                    TextColumnSize::Medium => IconSize::Medium,
-                    TextColumnSize::Large => IconSize::Large,
+                    TextSize::Medium => IconSize::Medium,
+                    TextSize::Large => IconSize::Large,
                     default => IconSize::Small,
                 })?->toHtml();
 
@@ -315,7 +315,7 @@ class TextColumn extends Column implements HasEmbeddedView
                         ! $isBadge,
                         fn (ComponentAttributeBag $attributes) => $attributes
                             ->class([
-                                ($size instanceof TextColumnSize) ? "fi-size-{$size->value}" : $size,
+                                ($size instanceof TextSize) ? "fi-size-{$size->value}" : $size,
                                 (($weight = $this->getWeight($stateItem)) instanceof FontWeight) ? "fi-font-{$weight->value}" : (is_string($weight) ? $weight : ''),
                             ])
                             ->when($lineClamp, fn (ComponentAttributeBag $attributes) => $attributes->style([
@@ -327,7 +327,7 @@ class TextColumn extends Column implements HasEmbeddedView
                     ? (new ComponentAttributeBag)
                         ->class([
                             'fi-badge',
-                            ($size instanceof TextColumnSize) ? "fi-size-{$size->value}" : $size,
+                            ($size instanceof TextSize) ? "fi-size-{$size->value}" : $size,
                         ])
                         ->color(Badge::class, $color ?? 'primary')
                     : null,

@@ -1,8 +1,8 @@
 <?php
 
-namespace Filament\Tables\Columns\TextColumn\Enums;
+namespace Filament\Support\Enums;
 
-enum TextColumnSize: string
+enum TextSize: string
 {
     case ExtraSmall = 'xs';
 

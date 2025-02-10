@@ -9,7 +9,6 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn\Enums\IconColumnSize;
 use Filament\Tables\View\Components\Columns\IconColumn\Icon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
@@ -47,12 +46,7 @@ class IconColumn extends Column implements HasEmbeddedView
 
     protected bool | Closure $isListWithLineBreaks = false;
 
-    protected IconColumnSize | string | Closure | null $size = null;
-
-    public function canWrapByDefault(): bool
-    {
-        return true;
-    }
+    protected IconSize | string | Closure | null $size = null;
 
     public function boolean(bool | Closure $condition = true): static
     {
@@ -140,14 +134,14 @@ class IconColumn extends Column implements HasEmbeddedView
         return $this;
     }
 
-    public function size(IconColumnSize | string | Closure | null $size): static
+    public function size(IconSize | string | Closure | null $size): static
     {
         $this->size = $size;
 
         return $this;
     }
 
-    public function getSize(mixed $state): IconColumnSize | string | null
+    public function getSize(mixed $state): IconSize | string | null
     {
         $size = $this->evaluate($this->size, [
             'state' => $state,
@@ -162,7 +156,7 @@ class IconColumn extends Column implements HasEmbeddedView
         }
 
         if (is_string($size)) {
-            $size = IconColumnSize::tryFrom($size) ?? $size;
+            $size = IconSize::tryFrom($size) ?? $size;
         }
 
         return $size;
@@ -307,12 +301,6 @@ class IconColumn extends Column implements HasEmbeddedView
                 <?php
                     $color = $this->getColor($stateItem);
                 $size = $this->getSize($stateItem);
-
-                if ($size instanceof IconColumnSize) {
-                    $iconSize = "fi-size-{$size->value}";
-                } else {
-                    $iconSize = $size;
-                }
                 ?>
 
                 <?= generate_icon_html($this->getIcon($stateItem), attributes: (new ComponentAttributeBag)
@@ -324,7 +312,7 @@ class IconColumn extends Column implements HasEmbeddedView
                             }'
                             : null,
                     ], escape: false)
-                    ->color(Icon::class, $color), size: $iconSize ?? IconSize::Large)
+                    ->color(Icon::class, $color), size: $size ?? IconSize::Large)
                     ->toHtml() ?>
             <?php } ?>
         </div>

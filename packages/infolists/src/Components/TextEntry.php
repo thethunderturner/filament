@@ -3,7 +3,6 @@
 namespace Filament\Infolists\Components;
 
 use Closure;
-use Filament\Infolists\Components\TextEntry\Enums\TextEntrySize;
 use Filament\Infolists\View\Components\TextEntry\Item;
 use Filament\Infolists\View\Components\TextEntry\Item\Icon;
 use Filament\Schemas\Components\Contracts\HasAffixActions;
@@ -18,6 +17,7 @@ use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\View\Components\Badge;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -51,7 +51,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
 
     protected int | Closure | null $listLimit = null;
 
-    protected TextEntrySize | string | Closure | null $size = null;
+    protected TextSize | string | Closure | null $size = null;
 
     protected bool | Closure $isLimitedListExpandable = false;
 
@@ -90,29 +90,29 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         return $this;
     }
 
-    public function size(TextEntrySize | string | Closure | null $size): static
+    public function size(TextSize | string | Closure | null $size): static
     {
         $this->size = $size;
 
         return $this;
     }
 
-    public function getSize(mixed $state): TextEntrySize | string
+    public function getSize(mixed $state): TextSize | string
     {
         $size = $this->evaluate($this->size, [
             'state' => $state,
         ]);
 
         if (blank($size)) {
-            return TextEntrySize::Small;
+            return TextSize::Small;
         }
 
         if (is_string($size)) {
-            $size = TextEntrySize::tryFrom($size) ?? $size;
+            $size = TextSize::tryFrom($size) ?? $size;
         }
 
         if ($size === 'base') {
-            return TextEntrySize::Medium;
+            return TextSize::Medium;
         }
 
         return $size;
@@ -153,11 +153,6 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     public function isLimitedListExpandable(): bool
     {
         return (bool) $this->evaluate($this->isLimitedListExpandable);
-    }
-
-    public function canWrapByDefault(): bool
-    {
-        return true;
     }
 
     public function toEmbeddedHtml(): string
@@ -286,8 +281,8 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
 
             $iconHtml = generate_icon_html($this->getIcon($stateItem), attributes: (new ComponentAttributeBag)
                 ->color(Icon::class, $iconColor), size: match ($size) {
-                    TextEntrySize::Medium => IconSize::Medium,
-                    TextEntrySize::Large => IconSize::Large,
+                    TextSize::Medium => IconSize::Medium,
+                    TextSize::Large => IconSize::Large,
                     default => IconSize::Small,
                 })?->toHtml();
 
@@ -328,7 +323,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                         ! $isBadge,
                         fn (ComponentAttributeBag $attributes) => $attributes
                             ->class([
-                                ($size instanceof TextEntrySize) ? "fi-size-{$size->value}" : $size,
+                                ($size instanceof TextSize) ? "fi-size-{$size->value}" : $size,
                                 (($weight = $this->getWeight($stateItem)) instanceof FontWeight) ? "fi-font-{$weight->value}" : (is_string($weight) ? $weight : ''),
                             ])
                             ->when($lineClamp, fn (ComponentAttributeBag $attributes) => $attributes->style([
@@ -340,7 +335,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                     ? (new ComponentAttributeBag)
                         ->class([
                             'fi-badge',
-                            ($size instanceof TextEntrySize) ? "fi-size-{$size->value}" : $size,
+                            ($size instanceof TextSize) ? "fi-size-{$size->value}" : $size,
                         ])
                         ->color(Badge::class, $color ?? 'primary')
                     : null,
@@ -495,5 +490,10 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         </ul>
 
         <?php return ob_get_clean();
+    }
+
+    public function canWrapByDefault(): bool
+    {
+        return true;
     }
 }
