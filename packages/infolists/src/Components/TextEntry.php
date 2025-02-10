@@ -219,7 +219,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             $item = '';
 
             if (filled($url)) {
-                $item .= '<a ' . generate_href_html($url, $shouldOpenUrlInNewTab) . '>';
+                $item .= '<a ' . generate_href_html($url, $shouldOpenUrlInNewTab)->toHtml() . '>';
             }
 
             $item .= e($this->formatState($stateItem));
@@ -391,105 +391,77 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         if ($stateOverListLimitCount) {
             $attributes = $attributes
                 ->merge([
-                    'x-data' => ($stateOverListLimitCount && $isLimitedListExpandable)
+                    'x-data' => $isLimitedListExpandable
                         ? '{ isLimited: true }'
                         : null,
                 ], escape: false)
                 ->class([
-                    'fi-in-text-list-limited' => $stateOverListLimitCount,
+                    'fi-in-text-list-limited',
                 ]);
 
             ob_start(); ?>
 
             <div <?= $attributes->toHtml() ?>>
-                <?php if (($stateCount === 1) && (! $isBulleted)) { ?>
-                    <?php
-                    $stateItem = Arr::first($state);
-                    [
-                        'attributes' => $stateItemAttributes,
-                        'badgeAttributes' => $stateItemBadgeAttributes,
-                        'iconAfterHtml' => $stateItemIconAfterHtml,
-                        'iconBeforeHtml' => $stateItemIconBeforeHtml,
-                    ] = $getStateItem($stateItem);
-                    ?>
+                <ul>
+                    <?php $stateIteration = 1; ?>
 
-                    <p <?= $stateItemAttributes->toHtml() ?>>
-                        <?php if ($isBadge) { ?>
-                        <span <?= $stateItemBadgeAttributes->toHtml() ?>>
-                        <?php } ?>
+                    <?php foreach ($state as $stateItem) { ?>
+                        <?php [
+                            'attributes' => $stateItemAttributes,
+                            'badgeAttributes' => $stateItemBadgeAttributes,
+                            'iconAfterHtml' => $stateItemIconAfterHtml,
+                            'iconBeforeHtml' => $stateItemIconBeforeHtml,
+                        ] = $getStateItem($stateItem); ?>
 
-                        <?= $stateItemIconBeforeHtml ?>
-                        <?= $formatState($stateItem) ?>
-                        <?= $stateItemIconAfterHtml ?>
-
-                        <?php if ($isBadge) { ?>
-                            </span>
-                    <?php } ?>
-                    </p>
-                <?php } else { ?>
-                    <ul>
-                        <?php $stateIteration = 1; ?>
-
-                        <?php foreach ($state as $stateItem) { ?>
-                            <?php [
-                                'attributes' => $stateItemAttributes,
-                                'badgeAttributes' => $stateItemBadgeAttributes,
-                                'iconAfterHtml' => $stateItemIconAfterHtml,
-                                'iconBeforeHtml' => $stateItemIconBeforeHtml,
-                            ] = $getStateItem($stateItem); ?>
-
-                            <li
-                                <?php if ($stateIteration > $listLimit) { ?>
-                                    x-show="! isLimited"
-                                    x-cloak
-                                    x-transition
-                                <?php } ?>
-                                <?= $stateItemAttributes->toHtml() ?>
-                            >
-                                <?php if ($isBadge) { ?>
-                                <span <?= $stateItemBadgeAttributes->toHtml() ?>>
-                                <?php } ?>
-
-                                <?= $stateItemIconBeforeHtml ?>
-                                <?= $formatState($stateItem) ?>
-                                <?= $stateItemIconAfterHtml ?>
-
-                                <?php if ($isBadge) { ?>
-                                    </span>
-                            <?php } ?>
-                            </li>
-
-                            <?php $stateIteration++ ?>
-                        <?php } ?>
-                    </ul>
-                <?php } ?>
-
-                <?php if ($stateOverListLimitCount) { ?>
-                    <p class="fi-in-text-list-limited-message">
-                        <?php if ($isLimitedListExpandable) { ?>
-                            <button
-                                type="button"
-                                x-on:click.prevent="isLimited = false"
-                                x-show="isLimited"
-                                class="fi-link fi-size-xs"
-                            >
-                                <?= trans_choice('filament-infolists::components.entries.text.actions.expand_list', $stateOverListLimitCount) ?>
-                            </button>
-
-                            <button
-                                type="button"
-                                x-on:click.prevent="isLimited = true"
-                                x-cloak
+                        <li
+                            <?php if ($stateIteration > $listLimit) { ?>
                                 x-show="! isLimited"
-                                class="fi-link fi-size-xs"
-                            >
-                                <?= trans_choice('filament-infolists::components.entries.text.actions.collapse_list', $stateOverListLimitCount) ?>
-                            </button>
-                        <?php } else { ?>
-                            <?= trans_choice('filament-infolists::components.entries.text.more_list_items', $stateOverListLimitCount) ?>
+                                x-cloak
+                                x-transition
+                            <?php } ?>
+                            <?= $stateItemAttributes->toHtml() ?>
+                        >
+                            <?php if ($isBadge) { ?>
+                            <span <?= $stateItemBadgeAttributes->toHtml() ?>>
+                            <?php } ?>
+
+                            <?= $stateItemIconBeforeHtml ?>
+                            <?= $formatState($stateItem) ?>
+                            <?= $stateItemIconAfterHtml ?>
+
+                            <?php if ($isBadge) { ?>
+                                </span>
                         <?php } ?>
-                    </p>
-                <?php } ?>
+                        </li>
+
+                        <?php $stateIteration++ ?>
+                    <?php } ?>
+                </ul>
+
+                <p class="fi-in-text-list-limited-message">
+                    <?php if ($isLimitedListExpandable) { ?>
+                        <button
+                            type="button"
+                            x-on:click.prevent="isLimited = false"
+                            x-show="isLimited"
+                            class="fi-link fi-size-xs"
+                        >
+                            <?= trans_choice('filament-infolists::components.entries.text.actions.expand_list', $stateOverListLimitCount) ?>
+                        </button>
+
+                        <button
+                            type="button"
+                            x-on:click.prevent="isLimited = true"
+                            x-cloak
+                            x-show="! isLimited"
+                            class="fi-link fi-size-xs"
+                        >
+                            <?= trans_choice('filament-infolists::components.entries.text.actions.collapse_list', $stateOverListLimitCount) ?>
+                        </button>
+                    <?php } else { ?>
+                        <?= trans_choice('filament-infolists::components.entries.text.more_list_items', $stateOverListLimitCount) ?>
+                    <?php } ?>
+                </p>
             </div>
 
             <?php return ob_get_clean();

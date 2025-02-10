@@ -209,7 +209,7 @@ class TextColumn extends Column implements HasEmbeddedView
             $item = '';
 
             if (filled($url)) {
-                $item .= '<a ' . generate_href_html($url, $shouldOpenUrlInNewTab) . '>';
+                $item .= '<a ' . generate_href_html($url, $shouldOpenUrlInNewTab)->toHtml() . '>';
             }
 
             $item .= e($this->formatState($stateItem));
