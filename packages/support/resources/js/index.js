@@ -67,6 +67,24 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import '../css/sortable.css'
 
+const upgradeAsyncAlpine = () => {
+    document.querySelectorAll('[ax-load][x-ignore]').forEach((el) => {
+        el.removeAttribute('x-ignore')
+        el.setAttribute('x-load', el.getAttribute('ax-load'))
+        el.setAttribute('x-load-src', el.getAttribute('ax-load-src'))
+    })
+
+    document.querySelectorAll('[ax-load]').forEach((el) => {
+        el.setAttribute('x-load', el.getAttribute('ax-load'))
+        el.setAttribute('x-load-src', el.getAttribute('ax-load-src'))
+    })
+}
+
+upgradeAsyncAlpine()
+
+const observer = new MutationObserver(upgradeAsyncAlpine)
+observer.observe(document.body, { childList: true, subtree: true })
+
 document.addEventListener('alpine:init', () => {
     window.Alpine.plugin(AlpineFloatingUI)
     window.Alpine.plugin(AlpineLazyLoadAssets)
