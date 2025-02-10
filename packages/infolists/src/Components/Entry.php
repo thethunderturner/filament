@@ -11,7 +11,6 @@ use Filament\Schemas\Components\Concerns\CanOpenUrl;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasAlignment;
 use Filament\Support\Concerns\HasPlaceholder;
-use Filament\Support\Concerns\HasTooltip;
 use Filament\Support\Enums\ActionSize;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -22,9 +21,9 @@ class Entry extends Component
     use Concerns\HasHelperText;
     use Concerns\HasHint;
     use Concerns\HasName;
+    use Concerns\HasTooltip;
     use HasAlignment;
     use HasPlaceholder;
-    use Concerns\HasTooltip;
 
     protected string $viewIdentifier = 'entry';
 
