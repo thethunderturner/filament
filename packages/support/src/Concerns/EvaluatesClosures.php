@@ -5,7 +5,6 @@ namespace Filament\Support\Concerns;
 use Closure;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use ReflectionFunction;
 use ReflectionNamedType;
 use ReflectionParameter;
