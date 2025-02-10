@@ -110,7 +110,7 @@
     }
 
     &.fi-in-text-item-prose {
-        @apply prose max-w-none dark:prose-invert;
+        @apply prose dark:prose-invert max-w-none;
 
         & > *:first-child {
             @apply mt-0;

@@ -58,14 +58,16 @@
                 {{ $beforeLabelContainer }}
 
                 @if ($label && (! $labelSrOnly))
-                    <dt {{
-                        (
-                            ($label instanceof \Illuminate\View\ComponentSlot)
+                    <dt
+                        {{
+                            (
+                                ($label instanceof \Illuminate\View\ComponentSlot)
                                 ? $label->attributes
-                                : (new ComponentAttributeBag())
-                        )
-                            ->class(['fi-in-entry-label'])
-                    }}>
+                                : (new ComponentAttributeBag)
+                            )
+                                ->class(['fi-in-entry-label'])
+                        }}
+                    >
                         {{ $labelPrefix }}
 
                         {{ $label }}
