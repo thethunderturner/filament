@@ -360,10 +360,6 @@ class ImageColumn extends Column implements HasEmbeddedView
             $size = TextSize::tryFrom($size) ?? $size;
         }
 
-        if ($size === 'base') {
-            return TextSize::Medium;
-        }
-
         return $size;
     }
 

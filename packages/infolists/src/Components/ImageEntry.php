@@ -371,10 +371,6 @@ class ImageEntry extends Entry implements HasEmbeddedView
             $size = TextSize::tryFrom($size) ?? $size;
         }
 
-        if ($size === 'base') {
-            return TextSize::Medium;
-        }
-
         return $size;
     }
 

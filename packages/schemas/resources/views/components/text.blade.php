@@ -55,7 +55,7 @@
                 default => 'fi-color text-color-600 dark:text-color-400',
             },
             is_string($color) ? "fi-color-{$color}" : null,
-            match ($size) {
+            match ($size) { // @todo: Support TextSize enum here
                 'xs' => 'text-xs',
                 null => 'text-sm',
                 default => $size,
