@@ -3,9 +3,6 @@
 namespace Filament\Tables\Columns\Concerns;
 
 use Closure;
-use Illuminate\Support\Arr;
-use ReflectionFunction;
-use ReflectionParameter;
 
 trait CanOpenUrl
 {
