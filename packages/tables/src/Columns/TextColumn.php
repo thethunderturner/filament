@@ -23,6 +23,7 @@ use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
 use stdClass;
 
+use function Filament\Support\generate_href_html;
 use function Filament\Support\generate_icon_html;
 
 class TextColumn extends Column implements HasEmbeddedView
@@ -212,7 +213,25 @@ class TextColumn extends Column implements HasEmbeddedView
             <?php return ob_get_clean();
         }
 
-        $formatState = fn (mixed $stateItem): string => e($this->formatState($stateItem));
+        $shouldOpenUrlInNewTab = $this->shouldOpenUrlInNewTab();
+
+        $formatState = function (mixed $stateItem) use ($shouldOpenUrlInNewTab): string {
+            $url = $this->getUrl($stateItem);
+
+            $item = '';
+
+            if (filled($url)) {
+                $item .= '<a ' . generate_href_html($url, $shouldOpenUrlInNewTab) . '>';
+            }
+
+            $item .= e($this->formatState($stateItem));
+
+            if (filled($url)) {
+                $item .= '</a>';
+            }
+
+            return $item;
+        };
 
         $state = Arr::wrap($state);
         $stateCount = count($state);
@@ -243,7 +262,7 @@ class TextColumn extends Column implements HasEmbeddedView
             ];
 
             $stateCount = 1;
-            $formatState = fn (mixed $stateItem): string => e($stateItem);
+            $formatState = fn (mixed $stateItem): string => $stateItem;
         }
 
         $alignment = $this->getAlignment();

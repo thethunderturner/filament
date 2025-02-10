@@ -112,6 +112,10 @@
 .fi-ta-text-item {
     @apply text-gray-950 dark:text-white;
 
+    & a {
+        @apply hover:underline focus-visible:underline;
+    }
+
     &:not(.fi-bulleted li.fi-ta-text-item) {
         /* Line clamping sets the `display` property of the list item to `-webkit-box` instead of `list-item`, which hides the bullet point. */
         @apply line-clamp-(--line-clamp,none);
@@ -212,16 +216,16 @@
     & > .fi-icon {
         @apply -mt-1 inline-block;
     }
+}
 
-    &:is(.fi-ta-col-has-column-url .fi-ta-text-item) {
-        @apply hover:underline focus-visible:underline;
+.fi-ta-col-has-column-url .fi-ta-text-item {
+    @apply hover:underline focus-visible:underline;
 
-        & > .fi-icon {
-            @apply hover:no-underline focus-visible:no-underline;
-        }
+    & > .fi-icon {
+        @apply hover:no-underline focus-visible:no-underline;
+    }
 
-        & > .fi-badge {
-            @apply hover:no-underline focus-visible:no-underline;
-        }
+    & > .fi-badge {
+        @apply hover:no-underline focus-visible:no-underline;
     }
 }
