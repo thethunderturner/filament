@@ -253,7 +253,7 @@
                         @apply hidden 2xl:block;
                     }
 
-                    & .fi-ta-col-wrp {
+                    & .fi-ta-col {
                         @apply flex justify-start text-start disabled:pointer-events-none;
 
                         &.fi-growable {

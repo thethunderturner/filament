@@ -5,6 +5,7 @@ namespace Filament\Support\Concerns;
 use Closure;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use ReflectionFunction;
 use ReflectionNamedType;
 use ReflectionParameter;
@@ -100,6 +101,21 @@ trait EvaluatesClosures
         $staticClass = static::class;
 
         throw new BindingResolutionException("An attempt was made to evaluate a closure for [{$staticClass}], but [\${$parameterName}] was unresolvable.");
+    }
+
+    protected function evaluationValueIsFunctionAndHasParameter(mixed $value, string $parameterName): bool
+    {
+        if (! $value instanceof Closure) {
+            return false;
+        }
+
+        foreach ((new ReflectionFunction($value))->getParameters() as $parameter) {
+            if ($parameter->getName() === $parameterName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

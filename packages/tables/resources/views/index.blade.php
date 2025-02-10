@@ -1701,11 +1701,12 @@
 
                                                     $columnAction = $column->getAction();
                                                     $columnUrl = $column->getUrl();
+                                                    $columnHasStateBasedUrls = $column->hasStateBasedUrls();
                                                     $isColumnClickDisabled = $column->isClickDisabled() || $isReordering;
 
                                                     $columnWrapperTag = match (true) {
-                                                        ($columnUrl || ($recordUrl && $columnAction === null)) && (! $isColumnClickDisabled) => 'a',
-                                                        ($columnAction || $recordAction) && (! $isColumnClickDisabled) => 'button',
+                                                        ($columnUrl || ($recordUrl && $columnAction === null)) && (! $columnHasStateBasedUrls) && (! $isColumnClickDisabled) => 'a',
+                                                        ($columnAction || $recordAction) && (! $columnHasStateBasedUrls) && (! $isColumnClickDisabled) => 'button',
                                                         default => 'div',
                                                     };
 
@@ -1747,8 +1748,8 @@
                                                             wire:target="{{ $columnWireClickAction }}"
                                                         @endif
                                                         @class([
-                                                            'fi-ta-col-wrp',
-                                                            'fi-ta-col-wrap-has-column-url' => ($columnWrapperTag === 'a') && filled($columnUrl),
+                                                            'fi-ta-col',
+                                                            'fi-ta-col-has-column-url' => ($columnWrapperTag === 'a') && filled($columnUrl),
                                                         ])
                                                     >
                                                         {{ $column }}

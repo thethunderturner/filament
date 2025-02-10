@@ -174,10 +174,10 @@
                         {{ $header }}
                     @else
                         @if ($hasIcon)
-                            <div class="fi-modal-icon-wrp-ctn">
+                            <div class="fi-modal-icon-ctn">
                                 <div
                                     @class([
-                                        'fi-modal-icon-wrp',
+                                        'fi-modal-icon-bg',
                                         ...\Filament\Support\get_component_color_classes(Icon::class, $iconColor),
                                     ])
                                 >
