@@ -55,10 +55,10 @@
                 default => 'fi-color text-color-600 dark:text-color-400',
             },
             is_string($color) ? "fi-color-{$color}" : null,
-            match ($size) { // @todo: Support TextSize enum here
+            match ($size) {
                 'xs' => 'text-xs',
                 null => 'text-sm',
-                default => $size,
+                default => ($size instanceof \Filament\Support\Enums\TextSize) ? $size->value : $size,
             },
             match ($weight) {
                 FontWeight::Thin, 'thin' => 'font-thin',
