@@ -1,9 +1,8 @@
 .fi-in-text {
     @apply w-full;
 
-    &.fi-in-text-has-descriptions,
     &.fi-in-text-list-limited {
-        /* Add space between content and descriptions / list limit message. */
+        /* Add space between content and list limit message. */
         @apply flex flex-col;
 
         &.fi-in-text-has-badges {
@@ -15,10 +14,6 @@
             /* When the content does not contain badges, less gap is required to balance the spacing. */
             @apply gap-y-1;
         }
-    }
-
-    &:not(.fi-inline) {
-        @apply px-3 py-4;
     }
 
     &ul.fi-bulleted,
@@ -68,13 +63,11 @@
 
         & .fi-badge,
         & .fi-in-text-list-limited-message {
-            /* Badge content should not wrap, but descriptions above and below badges should. The list limited
-             message and actions should not wrap. */
+            /* Badge content and list limited message and actions should not wrap. */
             @apply whitespace-nowrap;
         }
     }
 
-    & > .fi-in-text-description,
     & > .fi-in-text-list-limited-message {
         @apply text-sm text-gray-500 dark:text-gray-400;
     }
@@ -111,6 +104,22 @@
 
 .fi-in-text-item {
     @apply text-gray-950 dark:text-white;
+
+    & a {
+        @apply hover:underline focus-visible:underline;
+    }
+
+    &.fi-in-text-item-prose {
+        @apply prose max-w-none dark:prose-invert;
+
+        & > *:first-child {
+            @apply mt-0;
+        }
+
+        & > *:last-child {
+            @apply mb-0;
+        }
+    }
 
     &:not(.fi-bulleted li.fi-in-text-item) {
         /* Line clamping sets the `display` property of the list item to `-webkit-box` instead of `list-item`, which hides the bullet point. */
@@ -211,17 +220,5 @@
 
     & > .fi-icon {
         @apply -mt-1 inline-block;
-    }
-
-    &:is(.fi-in-col-wrp-has-column-url .fi-in-text-item) {
-        @apply hover:underline focus-visible:underline;
-
-        & > .fi-icon {
-            @apply hover:no-underline focus-visible:no-underline;
-        }
-
-        & > .fi-badge {
-            @apply hover:no-underline focus-visible:no-underline;
-        }
     }
 }

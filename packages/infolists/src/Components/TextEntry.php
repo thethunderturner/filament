@@ -16,13 +16,14 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\View\Components\Badge;
-use Filament\Tables\Columns\TextColumn\Enums\TextColumnSize;
-use Filament\Tables\View\Components\Columns\TextColumn\Item;
-use Filament\Tables\View\Components\Columns\TextColumn\Item\Icon;
+use Filament\Infolists\View\Components\TextEntry\Item;
+use Filament\Infolists\View\Components\TextEntry\Item\Icon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
+use Illuminate\View\ComponentSlot;
+use function Filament\Support\generate_href_html;
 use function Filament\Support\generate_icon_html;
 
 class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
@@ -37,11 +38,6 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     use HasLineClamp;
     use HasWeight;
 
-    /**
-     * @var view-string
-     */
-    protected string $view = 'filament-infolists::components.text-entry';
-
     protected bool | Closure $isBadge = false;
 
     protected bool | Closure $isBulleted = false;
@@ -55,6 +51,8 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     protected TextEntrySize | string | Closure | null $size = null;
 
     protected bool | Closure $isLimitedListExpandable = false;
+
+    protected bool | Closure $canWrap = false;
 
     public function badge(bool | Closure $condition = true): static
     {
@@ -98,11 +96,25 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         return $this;
     }
 
-    public function getSize(mixed $state): TextEntrySize | string | null
+    public function getSize(mixed $state): TextEntrySize | string
     {
-        return $this->evaluate($this->size, [
+        $size = $this->evaluate($this->size, [
             'state' => $state,
         ]);
+
+        if (blank($size)) {
+            return TextEntrySize::Small;
+        }
+
+        if (is_string($size)) {
+            $size = TextEntrySize::tryFrom($size) ?? $size;
+        }
+
+        if ($size === 'base') {
+            return TextEntrySize::Medium;
+        }
+
+        return $size;
     }
 
     public function isBadge(): bool
@@ -142,7 +154,27 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         return (bool) $this->evaluate($this->isLimitedListExpandable);
     }
 
+    public function wrap(bool | Closure $condition = true): static
+    {
+        $this->canWrap = $condition;
+
+        return $this;
+    }
+
+    public function canWrap(): bool
+    {
+        return (bool) $this->evaluate($this->canWrap);
+    }
+
     public function toEmbeddedHtml(): string
+    {
+        return view($this->getEntryWrapperAbsoluteView(), [
+            'entry' => $this,
+            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
+        ])->toHtml();
+    }
+
+    public function toEmbeddedContentHtml(): string
     {
         $isBadge = $this->isBadge();
         $isListWithLineBreaks = $this->isListWithLineBreaks();
@@ -157,7 +189,6 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         $attributes = $this->getExtraAttributeBag()
             ->class([
                 'fi-in-text',
-                'fi-inline' => $this->isInline(),
             ]);
 
         if (blank($state)) {
@@ -186,7 +217,25 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             <?php return ob_get_clean();
         }
 
-        $formatState = fn (mixed $stateItem): string => e($this->formatState($stateItem));
+        $shouldOpenUrlInNewTab = $this->shouldOpenUrlInNewTab();
+
+        $formatState = function (mixed $stateItem) use ($shouldOpenUrlInNewTab): string {
+            $url = $this->getUrl($stateItem);
+
+            $item = '';
+
+            if (filled($url)) {
+                $item .= '<a ' . generate_href_html($url, $shouldOpenUrlInNewTab) . '>';
+            }
+
+            $item .= e($this->formatState($stateItem));
+
+            if (filled($url)) {
+                $item .= '</a>';
+            }
+
+            return $item;
+        };
 
         $state = Arr::wrap($state);
         $stateCount = count($state);
@@ -217,7 +266,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             ];
 
             $stateCount = 1;
-            $formatState = fn (mixed $stateItem): string => e($stateItem);
+            $formatState = fn (mixed $stateItem): string => $stateItem;
         }
 
         $alignment = $this->getAlignment();
@@ -232,8 +281,10 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
         $lineClamp = $this->getLineClamp();
         $iconPosition = $this->getIconPosition();
         $isBulleted = $this->isBulleted();
+        $isProse = $this->isProse();
+        $isMarkdown = $this->isMarkdown();
 
-        $getStateItem = function (mixed $stateItem) use ($iconPosition, $isBadge, $lineClamp): array {
+        $getStateItem = function (mixed $stateItem) use ($iconPosition, $isBadge, $isMarkdown, $isProse, $lineClamp): array {
             $color = $this->getColor($stateItem) ?? ($isBadge ? 'primary' : null);
             $iconColor = $this->getIconColor($stateItem);
 
@@ -241,8 +292,8 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
 
             $iconHtml = generate_icon_html($this->getIcon($stateItem), attributes: (new ComponentAttributeBag)
                 ->color(Icon::class, $iconColor), size: match ($size) {
-                TextColumnSize::Medium => IconSize::Medium,
-                TextColumnSize::Large => IconSize::Large,
+                TextEntrySize::Medium => IconSize::Medium,
+                TextEntrySize::Large => IconSize::Large,
                 default => IconSize::Small,
             })?->toHtml();
 
@@ -275,6 +326,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                     ], escape: false)
                     ->class([
                         'fi-in-text-item',
+                        'fi-in-text-item-prose' => $isProse || $isMarkdown,
                         (($fontFamily = $this->getFontFamily($stateItem)) instanceof FontFamily) ? "fi-font-{$fontFamily->value}" : (is_string($fontFamily) ? $fontFamily : ''),
                         'fi-copyable' => $isCopyable,
                     ])
@@ -282,19 +334,19 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                         ! $isBadge,
                         fn (ComponentAttributeBag $attributes) => $attributes
                             ->class([
-                                ($size instanceof TextColumnSize) ? "fi-size-{$size->value}" : $size,
+                                ($size instanceof TextEntrySize) ? "fi-size-{$size->value}" : $size,
                                 (($weight = $this->getWeight($stateItem)) instanceof FontWeight) ? "fi-font-{$weight->value}" : (is_string($weight) ? $weight : ''),
                             ])
-                            ->style([
-                                "--line-clamp: {$lineClamp}" => $lineClamp,
-                            ])
+                            ->when($lineClamp, fn (ComponentAttributeBag $attributes) => $attributes->style([
+                                "--line-clamp: {$lineClamp}",
+                            ]))
                             ->color(Item::class, $color)
                     ),
                 'badgeAttributes' => $isBadge
                     ? (new ComponentAttributeBag)
                         ->class([
                             'fi-badge',
-                            ($size instanceof TextColumnSize) ? "fi-size-{$size->value}" : $size,
+                            ($size instanceof TextEntrySize) ? "fi-size-{$size->value}" : $size,
                         ])
                         ->color(Badge::class, $color ?? 'primary')
                     : null,
@@ -303,14 +355,9 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             ];
         };
 
-        $descriptionAbove = $this->getDescriptionAbove();
-        $descriptionBelow = $this->getDescriptionBelow();
-        $hasDescriptions = filled($descriptionAbove) || filled($descriptionBelow);
-
         if (
             ($stateCount === 1) &&
-            (! $isBulleted) &&
-            (! $hasDescriptions)
+            (! $isBulleted)
         ) {
             $stateItem = Arr::first($state);
             [
@@ -347,7 +394,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                 'fi-in-text-has-line-breaks' => $isListWithLineBreaks,
             ]);
 
-        if ($hasDescriptions || $stateOverListLimitCount) {
+        if ($stateOverListLimitCount) {
             $attributes = $attributes
                 ->merge([
                     'x-data' => ($stateOverListLimitCount && $isLimitedListExpandable)
@@ -355,19 +402,12 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                         : null,
                 ], escape: false)
                 ->class([
-                    'fi-in-text-has-descriptions' => $hasDescriptions,
                     'fi-in-text-list-limited' => $stateOverListLimitCount,
                 ]);
 
             ob_start(); ?>
 
             <div <?= $attributes->toHtml() ?>>
-                <?php if (filled($descriptionAbove)) { ?>
-                    <p class="fi-in-text-description">
-                        <?= e($descriptionAbove) ?>
-                    </p>
-                <?php } ?>
-
                 <?php if (($stateCount === 1) && (! $isBulleted)) { ?>
                     <?php
                     $stateItem = Arr::first($state);
@@ -454,12 +494,6 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                         <?php } else { ?>
                             <?= trans_choice('filament-infolists::components.entries.text.more_list_items', $stateOverListLimitCount) ?>
                         <?php } ?>
-                    </p>
-                <?php } ?>
-
-                <?php if (filled($descriptionBelow)) { ?>
-                    <p class="fi-in-text-description">
-                        <?= e($descriptionBelow) ?>
                     </p>
                 <?php } ?>
             </div>

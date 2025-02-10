@@ -24,7 +24,7 @@ class Entry extends Component
     use Concerns\HasName;
     use HasAlignment;
     use HasPlaceholder;
-    use HasTooltip;
+    use Concerns\HasTooltip;
 
     protected string $viewIdentifier = 'entry';
 

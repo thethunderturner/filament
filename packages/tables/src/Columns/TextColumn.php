@@ -330,9 +330,9 @@ class TextColumn extends Column implements HasEmbeddedView
                                 ($size instanceof TextColumnSize) ? "fi-size-{$size->value}" : $size,
                                 (($weight = $this->getWeight($stateItem)) instanceof FontWeight) ? "fi-font-{$weight->value}" : (is_string($weight) ? $weight : ''),
                             ])
-                            ->style([
-                                "--line-clamp: {$lineClamp}" => $lineClamp,
-                            ])
+                            ->when($lineClamp, fn (ComponentAttributeBag $attributes) => $attributes->style([
+                                "--line-clamp: {$lineClamp}",
+                            ]))
                             ->color(Item::class, $color)
                     ),
                 'badgeAttributes' => $isBadge

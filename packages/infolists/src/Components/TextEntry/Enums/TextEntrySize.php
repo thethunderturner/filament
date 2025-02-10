@@ -2,13 +2,13 @@
 
 namespace Filament\Infolists\Components\TextEntry\Enums;
 
-enum TextEntrySize
+enum TextEntrySize: string
 {
-    case ExtraSmall;
+    case ExtraSmall = 'xs';
 
-    case Small;
+    case Small = 'sm';
 
-    case Medium;
+    case Medium = 'md';
 
-    case Large;
+    case Large = 'lg';
 }
