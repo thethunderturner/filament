@@ -5,6 +5,7 @@ namespace Filament\Tables\Columns;
 use Closure;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\TextSize;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
@@ -48,7 +49,7 @@ class ImageColumn extends Column implements HasEmbeddedView
 
     protected bool | Closure $hasLimitedRemainingText = false;
 
-    protected string | Closure | null $limitedRemainingTextSize = null;
+    protected TextSize | string | Closure | null $limitedRemainingTextSize = null;
 
     protected bool | Closure $shouldCheckFileExistence = true;
 
@@ -340,16 +341,30 @@ class ImageColumn extends Column implements HasEmbeddedView
         return (bool) $this->evaluate($this->hasLimitedRemainingText);
     }
 
-    public function limitedRemainingTextSize(string | Closure | null $size): static
+    public function limitedRemainingTextSize(TextSize | string | Closure | null $size): static
     {
         $this->limitedRemainingTextSize = $size;
 
         return $this;
     }
 
-    public function getLimitedRemainingTextSize(): ?string
+    public function getLimitedRemainingTextSize(): TextSize | string | null
     {
-        return $this->evaluate($this->limitedRemainingTextSize);
+        $size = $this->evaluate($this->limitedRemainingTextSize);
+
+        if (blank($size)) {
+            return null;
+        }
+
+        if (is_string($size)) {
+            $size = TextSize::tryFrom($size) ?? $size;
+        }
+
+        if ($size === 'base') {
+            return TextSize::Medium;
+        }
+
+        return $size;
     }
 
     public function checkFileExistence(bool | Closure $condition = true): static
@@ -465,7 +480,7 @@ class ImageColumn extends Column implements HasEmbeddedView
                 <div <?= (new ComponentAttributeBag)
                 ->class([
                     'fi-ta-image-limited-remaining-text',
-                    "fi-size-{$limitedRemainingTextSize}" => $limitedRemainingTextSize,
+                    (($limitedRemainingTextSize instanceof TextSize) ? "fi-size-{$limitedRemainingTextSize->value}" : $limitedRemainingTextSize) => $limitedRemainingTextSize,
                 ])
                 ->style([
                     "height: {$height}" => $height,
