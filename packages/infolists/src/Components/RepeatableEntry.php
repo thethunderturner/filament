@@ -96,7 +96,7 @@ class RepeatableEntry extends Entry implements HasEmbeddedView
         ob_start(); ?>
 
         <ul <?= $attributes->toHtml() ?>>
-            <?php foreach (($items ?? []) as $item) { ?>
+            <?php foreach ($items as $item) { ?>
                 <li class="fi-in-repeatable-item">
                     <?= $item->toHtml() ?>
                 </li>
