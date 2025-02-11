@@ -2,14 +2,14 @@
 
 namespace Filament\Tests\Fixtures\Livewire;
 
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class Livewire extends Component implements HasForms
+class Livewire extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public $data;
 
@@ -35,7 +35,7 @@ class Livewire extends Component implements HasForms
         return $this->data;
     }
 
-    public function render(): View
+    public function render(): View | string
     {
         return view('livewire.form');
     }

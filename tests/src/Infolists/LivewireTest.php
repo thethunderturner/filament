@@ -1,7 +1,8 @@
 <?php
 
 use Filament\Infolists;
-use Filament\Tests\Infolists\Fixtures\Livewire;
+use Filament\Schemas\Schema;
+use Filament\Tests\Fixtures\Livewire\Livewire;
 use Filament\Tests\TestCase;
 
 use function Filament\Tests\livewire;
@@ -9,7 +10,7 @@ use function Filament\Tests\livewire;
 uses(TestCase::class);
 
 it('can evaluate livewire closure dependency by name', function () {
-    livewire(TestComponentWithInfolist::class)
+    livewire(LivewireInfolists::class)
         ->assertOk()
         ->assertSee('First Entry Label')
         ->assertSee('First Entry State')
@@ -19,7 +20,7 @@ it('can evaluate livewire closure dependency by name', function () {
         ->assertSee('Third Entry State (dynamic)');
 });
 
-class TestComponentWithInfolist extends Livewire
+class LivewireInfolists extends Livewire
 {
     public function mount(): void
     {
@@ -29,9 +30,9 @@ class TestComponentWithInfolist extends Livewire
         ]);
     }
 
-    public function infolist(Infolists\Infolist $infolist): Infolists\Infolist
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->state($this->data)
             ->schema(function (self $livewire) {
                 expect($livewire)->toBe($this);
@@ -43,9 +44,9 @@ class TestComponentWithInfolist extends Livewire
             });
     }
 
-    public function infolistWithCustomName(Infolists\Infolist $infolist): Infolists\Infolist
+    public function infolistWithCustomName(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->state($this->data)
             ->schema(function (self $livewire) {
                 expect($livewire)->toBe($this);
@@ -55,7 +56,7 @@ class TestComponentWithInfolist extends Livewire
                         ->label('Second Entry Label'),
                     Infolists\Components\TextEntry::make('third_entry')
                         ->label('Third Entry Label')
-                        ->getStateUsing(function (self $livewire) {
+                        ->state(function (self $livewire) {
                             expect($livewire)->toBe($this);
 
                             return 'Third Entry State (dynamic)';
