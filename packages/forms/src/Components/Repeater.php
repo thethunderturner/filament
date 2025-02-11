@@ -6,12 +6,12 @@ use Closure;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Concerns\CanBeCollapsed;
 use Filament\Schemas\Components\Concerns\HasContainerGridLayout;
 use Filament\Schemas\Components\Contracts\CanConcealComponents;
 use Filament\Schemas\Components\Contracts\HasExtraItemActions;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasReorderAnimationDuration;
 use Filament\Support\Enums\ActionSize;
@@ -927,7 +927,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             $component->fillFromRelationship();
         });
 
-        $this->saveRelationshipsUsing(static function (Repeater $component, HasForms $livewire, ?array $state): void {
+        $this->saveRelationshipsUsing(static function (Repeater $component, HasSchemas $livewire, ?array $state): void {
             if (! is_array($state)) {
                 $state = [];
             }
