@@ -234,8 +234,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(
         RenameStringRector::class,
         [
-            'filament-forms::component-container' => 'filament-schemas::schema',
-            'filament-infolists::component-container' => 'filament-schemas::schema',
             'filament-forms::components.actions' => 'filament-schemas::components.actions',
             'filament-forms::components.tabs' => 'filament-schemas::components.tabs',
             'filament-forms::components.tabs.tab' => 'filament-schemas::components.tabs.tab',
