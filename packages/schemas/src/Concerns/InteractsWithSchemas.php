@@ -229,6 +229,10 @@ trait InteractsWithSchemas
                 return null;
             }
 
+            if (! in_array($name, $this->discoveredSchemaNames)) {
+                $this->discoveredSchemaNames[] = $name;
+            }
+
             $schema = $this->makeSchema();
 
             return $this->cachedSchemas[$name] = $this->{$name}($schema)->key($name);
@@ -261,15 +265,15 @@ trait InteractsWithSchemas
      */
     public function getCachedSchemas(): array
     {
-        foreach ($this->discoveredSchemaNames as $schemaName) {
-            if (array_key_exists($schemaName, $this->cachedSchemas)) {
-                continue;
+        if (! $this->isCachingSchemas) {
+            foreach ($this->discoveredSchemaNames as $schemaName) {
+                if (array_key_exists($schemaName, $this->cachedSchemas)) {
+                    continue;
+                }
+
+                $this->cacheSchema($schemaName);
             }
-
-            $this->cacheSchema($schemaName);
         }
-
-        $this->discoveredSchemaNames = [];
 
         return $this->cachedSchemas;
     }

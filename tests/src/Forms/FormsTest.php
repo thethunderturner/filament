@@ -146,7 +146,8 @@ class TestComponentWithForm extends Livewire
                         Section::make('I am nested')
                             ->key('nested.section'),
                     ]),
-            ]);
+            ])
+            ->statePath('data');
     }
 }
 

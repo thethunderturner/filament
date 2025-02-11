@@ -10,10 +10,10 @@ uses(TestCase::class);
 
 it('belongs to container', function () {
     $component = (new Component)
-        ->container($container = Schema::make(Livewire::make()));
+        ->container($schema = Schema::make(Livewire::make()));
 
     expect($component)
-        ->getContainer()->toBe($container);
+        ->getContainer()->toBe($schema);
 });
 
 it('can access container\'s Livewire component', function () {

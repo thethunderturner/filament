@@ -8,7 +8,7 @@ use Filament\Tests\TestCase;
 uses(TestCase::class);
 
 test('can get number of container columns at all breakpoints', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->columns([
             'default' => $defaultColumns = rand(1, 12),
             'sm' => $columnsAtSm = rand(1, 12),
@@ -18,7 +18,7 @@ test('can get number of container columns at all breakpoints', function () {
             '2xl' => $columnsAt2xl = rand(1, 12),
         ]);
 
-    expect($container)
+    expect($schema)
         ->getColumns()
         ->toHaveKey('default', $defaultColumns)
         ->toHaveKey('sm', $columnsAtSm)
@@ -29,17 +29,17 @@ test('can get number of container columns at all breakpoints', function () {
 });
 
 test('can get number of container columns at one breakpoint', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->columns([
             '2xl' => $columnsAt2xl = rand(1, 12),
         ]);
 
-    expect($container)
+    expect($schema)
         ->getColumns('2xl')->toBe($columnsAt2xl);
 });
 
 test('can get number of container columns from parent component', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->parentComponent((new Component)->columns([
             'default' => $defaultColumns = rand(1, 12),
             'sm' => $columnsAtSm = rand(1, 12),
@@ -49,7 +49,7 @@ test('can get number of container columns from parent component', function () {
             '2xl' => $columnsAt2xl = rand(1, 12),
         ]));
 
-    expect($container)
+    expect($schema)
         ->getColumns()
         ->toHaveKey('default', $defaultColumns)
         ->toHaveKey('sm', $columnsAtSm)
@@ -60,10 +60,10 @@ test('can get number of container columns from parent component', function () {
 });
 
 test('can set number of container columns at `lg` breakpoint', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->columns($columnsAtLg = rand(1, 12));
 
-    expect($container)
+    expect($schema)
         ->getColumns('lg')->toBe($columnsAtLg);
 });
 

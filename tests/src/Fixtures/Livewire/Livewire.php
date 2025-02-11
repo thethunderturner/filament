@@ -2,13 +2,16 @@
 
 namespace Filament\Tests\Fixtures\Livewire;
 
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class Livewire extends Component implements HasSchemas
+class Livewire extends Component implements HasActions, HasSchemas
 {
+    use InteractsWithActions;
     use InteractsWithSchemas;
 
     public $data;
@@ -35,7 +38,7 @@ class Livewire extends Component implements HasSchemas
         return $this->data;
     }
 
-    public function render(): View | string
+    public function render(): View
     {
         return view('livewire.form');
     }

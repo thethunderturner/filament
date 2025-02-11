@@ -21,7 +21,8 @@ test('components can be hidden', function () {
 test('components can be hidden based on condition', function () {
     $statePath = Str::random();
 
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
+        ->statePath('data')
         ->components([
             (new Component)
                 ->visible(fn (callable $get) => $get($statePath) === false),
@@ -30,47 +31,49 @@ test('components can be hidden based on condition', function () {
             $statePath => true,
         ]);
 
-    expect($container->getComponents())
+    expect($schema->getComponents())
         ->toHaveCount(0);
 
-    $container->components([
+    $schema->components([
         (new Component)
             ->whenTruthy($statePath),
     ]);
 
-    expect($container->getComponents())
+    expect($schema->getComponents())
         ->toHaveLength(1);
 
-    $container->components([
+    $schema->components([
         (new Component)
             ->whenFalsy($statePath),
     ]);
 
-    expect($container->getComponents())
+    expect($schema->getComponents())
         ->toHaveLength(0);
 
-    $container
+    $schema
         ->components([
             (new Component)
                 ->whenFalsy([$statePath, 'bob']),
         ])
         ->fill([
+            $statePath => true,
             'bob' => true,
         ]);
 
-    expect($container->getComponents())
+    expect($schema->getComponents())
         ->toHaveLength(0);
 
-    $container
+    $schema
         ->components([
             (new Component)
                 ->whenTruthy([$statePath, 'bob']),
         ])
         ->fill([
+            $statePath => true,
             'bob' => true,
         ]);
 
-    expect($container->getComponents())
+    expect($schema->getComponents())
         ->toHaveLength(1);
 });
 
@@ -85,7 +88,7 @@ test('hidden components are not returned from container', function () {
         $components[] = (new Component)->hidden();
     }
 
-    $componentsBoundToContainer = ($container = Schema::make(Livewire::make()))
+    $componentsBoundToContainer = ($schema = Schema::make(Livewire::make()))
         ->components($components)
         ->getComponents();
 
@@ -95,7 +98,7 @@ test('hidden components are not returned from container', function () {
             fn ($component) => $component
                 ->toBeInstanceOf(Component::class)
                 ->isHidden()->toBeFalse()
-                ->getContainer()->toBe($container),
+                ->getContainer()->toBe($schema),
         );
 });
 

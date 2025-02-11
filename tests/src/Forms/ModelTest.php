@@ -10,36 +10,36 @@ use Filament\Tests\TestCase;
 uses(TestCase::class);
 
 test('containers can store a record', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->model($record = new Post);
 
-    expect($container)
+    expect($schema)
         ->getRecord()->toBe($record);
 });
 
 test('containers can get their model class', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->model($model = Post::class);
 
-    expect($container)
+    expect($schema)
         ->getModel()->toBe($model);
 
-    $container->model(new Post);
+    $schema->model(new Post);
 
-    expect($container)
+    expect($schema)
         ->getModel()->toBe($model);
 });
 
 test('containers can get an instance of their model', function () {
-    $container = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->model($modelInstance = new Post);
 
-    expect($container)
+    expect($schema)
         ->getModelInstance()->toBe($modelInstance);
 
-    $container->model($model = Post::class);
+    $schema->model($model = Post::class);
 
-    expect($container)
+    expect($schema)
         ->getModelInstance()->toBeInstanceOf($model);
 });
 
