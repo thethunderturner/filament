@@ -58,6 +58,7 @@
 
 @if ($trigger)
     {!! '<div>' !!}
+    {{-- Avoid formatting issues with unclosed elements --}}
 
     <div
         x-on:click="$el.nextElementSibling.dispatchEvent(new CustomEvent(@js($openEventName)))"
@@ -236,4 +237,5 @@
 
 @if ($trigger)
     {!! '</div>' !!}
+    {{-- Avoid formatting issues with unclosed elements --}}
 @endif
