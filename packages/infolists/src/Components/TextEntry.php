@@ -3,6 +3,7 @@
 namespace Filament\Infolists\Components;
 
 use Closure;
+use Filament\Actions\Action;
 use Filament\Infolists\View\Components\TextEntry\Item;
 use Filament\Infolists\View\Components\TextEntry\Item\Icon;
 use Filament\Schemas\Components\Contracts\HasAffixActions;
@@ -344,9 +345,21 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             ];
         };
 
+        $prefixActions = array_filter(
+            $this->getPrefixActions(),
+            fn (Action $prefixAction): bool => $prefixAction->isVisible(),
+        );
+
+        $suffixActions = array_filter(
+            $this->getSuffixActions(),
+            fn (Action $suffixAction): bool => $suffixAction->isVisible(),
+        );
+
         if (
             ($stateCount === 1) &&
-            (! $isBulleted)
+            (! $isBulleted) &&
+            empty($prefixActions) &&
+            empty($suffixActions)
         ) {
             $stateItem = Arr::first($state);
             [
@@ -383,7 +396,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                 'fi-in-text-has-line-breaks' => $isListWithLineBreaks,
             ]);
 
-        if ($stateOverListLimitCount) {
+        if ($stateOverListLimitCount || $prefixActions || $suffixActions) {
             $attributes = $attributes
                 ->merge([
                     'x-data' => $isLimitedListExpandable
@@ -391,12 +404,25 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                         : null,
                 ], escape: false)
                 ->class([
-                    'fi-in-text-list-limited',
+                    'fi-in-text-affixed' => $prefixActions || $suffixActions,
+                    'fi-in-text-list-limited' => $stateOverListLimitCount,
                 ]);
 
             ob_start(); ?>
 
             <div <?= $attributes->toHtml() ?>>
+                <?php if ($prefixActions) { ?>
+                    <div class="fi-in-text-affix">
+                        <?php foreach ($prefixActions as $prefixAction) { ?>
+                            <?= $prefixAction->toHtml() ?>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+
+                <?php if ($prefixActions || $suffixActions) { ?>
+                    <div class="fi-in-text-affixed-content">
+                <?php } ?>
+
                 <ul>
                     <?php $stateIteration = 1; ?>
 
@@ -433,30 +459,44 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                     <?php } ?>
                 </ul>
 
-                <p class="fi-in-text-list-limited-message">
-                    <?php if ($isLimitedListExpandable) { ?>
-                        <button
-                            type="button"
-                            x-on:click.prevent="isLimited = false"
-                            x-show="isLimited"
-                            class="fi-link fi-size-xs"
-                        >
-                            <?= trans_choice('filament-infolists::components.entries.text.actions.expand_list', $stateOverListLimitCount) ?>
-                        </button>
+                <?php if ($stateOverListLimitCount) { ?>
+                    <p class="fi-in-text-list-limited-message">
+                        <?php if ($isLimitedListExpandable) { ?>
+                            <button
+                                type="button"
+                                x-on:click.prevent="isLimited = false"
+                                x-show="isLimited"
+                                class="fi-link fi-size-xs"
+                            >
+                                <?= trans_choice('filament-infolists::components.entries.text.actions.expand_list', $stateOverListLimitCount) ?>
+                            </button>
 
-                        <button
-                            type="button"
-                            x-on:click.prevent="isLimited = true"
-                            x-cloak
-                            x-show="! isLimited"
-                            class="fi-link fi-size-xs"
-                        >
-                            <?= trans_choice('filament-infolists::components.entries.text.actions.collapse_list', $stateOverListLimitCount) ?>
-                        </button>
-                    <?php } else { ?>
-                        <?= trans_choice('filament-infolists::components.entries.text.more_list_items', $stateOverListLimitCount) ?>
-                    <?php } ?>
-                </p>
+                            <button
+                                type="button"
+                                x-on:click.prevent="isLimited = true"
+                                x-cloak
+                                x-show="! isLimited"
+                                class="fi-link fi-size-xs"
+                            >
+                                <?= trans_choice('filament-infolists::components.entries.text.actions.collapse_list', $stateOverListLimitCount) ?>
+                            </button>
+                        <?php } else { ?>
+                            <?= trans_choice('filament-infolists::components.entries.text.more_list_items', $stateOverListLimitCount) ?>
+                        <?php } ?>
+                    </p>
+                <?php } ?>
+
+                <?php if ($prefixActions || $suffixActions) { ?>
+                    </div>
+                <?php } ?>
+
+                <?php if ($suffixActions) { ?>
+                    <div class="fi-in-text-affix">
+                        <?php foreach ($suffixActions as $suffixAction) { ?>
+                            <?= $suffixAction->toHtml() ?>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
             </div>
 
             <?php return ob_get_clean();

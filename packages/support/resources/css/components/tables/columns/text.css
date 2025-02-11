@@ -22,18 +22,18 @@
     }
 
     &ul.fi-bulleted,
-    &.fi-bulleted > ul {
+    &.fi-bulleted ul {
         @apply list-inside list-disc;
     }
 
     &:not(.fi-ta-text-has-line-breaks) {
         &ul.fi-ta-text-has-badges,
-        &.fi-ta-text-has-badges > ul {
+        &.fi-ta-text-has-badges ul {
             /* A list of badges without line breaks need to remain on the same line, not wrap */
             @apply flex gap-x-1.5;
 
             &.fi-wrapped,
-            &:is(.fi-wrapped > ul) {
+            &:is(.fi-wrapped ul) {
                 /* When wrap is enabled, some badges can remain on the same line as others and some should wrap */
                 @apply flex-wrap gap-y-1;
             }
@@ -41,20 +41,20 @@
     }
 
     &ul.fi-ta-text-has-badges,
-    &.fi-ta-text-has-badges > ul {
+    &.fi-ta-text-has-badges ul {
         &.fi-ta-text-has-line-breaks,
-        &:is(.fi-ta-text-has-line-breaks > ul) {
+        &:is(.fi-ta-text-has-line-breaks ul) {
             /* Add vertical gap between badges in a list with line breaks */
             @apply flex flex-col gap-y-1;
         }
 
         &:not(ul.fi-ta-text-has-line-breaks),
-        &:not(.fi-ta-text-has-line-breaks > ul) {
+        &:not(.fi-ta-text-has-line-breaks ul) {
             /* A list of badges without line breaks need to remain on the same line, not wrap */
             @apply flex gap-x-1.5;
 
             &.fi-wrapped,
-            &:is(.fi-wrapped > ul) {
+            &:is(.fi-wrapped ul) {
                 /* When wrap is enabled, some badges can remain on the same line as others and some should wrap */
                 @apply flex-wrap gap-y-1;
             }
@@ -83,7 +83,7 @@
         @apply text-center;
 
         &ul,
-        & > ul {
+        & ul {
             @apply justify-center;
         }
     }
@@ -93,7 +93,7 @@
         @apply text-end;
 
         &ul,
-        & > ul {
+        & ul {
             @apply justify-end;
         }
     }
@@ -103,7 +103,7 @@
         @apply text-justify;
 
         &ul,
-        & > ul {
+        & ul {
             @apply justify-between;
         }
     }

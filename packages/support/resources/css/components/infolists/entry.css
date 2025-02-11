@@ -31,6 +31,10 @@
 
     & .fi-in-entry-content-ctn {
         @apply flex w-full items-center gap-x-3;
+    }
+
+    & .fi-in-entry-content {
+        @apply w-full;
 
         &.fi-align-start {
             @apply text-start;
@@ -56,10 +60,6 @@
         &.fi-align-between {
             @apply text-justify;
         }
-    }
-
-    & .fi-in-entry-content {
-        @apply w-full;
     }
 
     & .fi-in-placeholder {

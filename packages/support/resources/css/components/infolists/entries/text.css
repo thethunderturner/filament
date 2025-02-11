@@ -1,6 +1,18 @@
 .fi-in-text {
     @apply w-full;
 
+    &.fi-in-text-affixed {
+        @apply flex gap-3;
+    }
+
+    & .fi-in-text-affixed-content {
+        @apply min-w-0 flex-1;
+    }
+
+    & .fi-in-text-affix {
+        @apply flex items-center gap-3 self-stretch;
+    }
+
     &.fi-in-text-list-limited {
         /* Add space between content and list limit message. */
         @apply flex flex-col;
@@ -17,18 +29,18 @@
     }
 
     &ul.fi-bulleted,
-    &.fi-bulleted > ul {
+    &.fi-bulleted ul {
         @apply list-inside list-disc;
     }
 
     &:not(.fi-in-text-has-line-breaks) {
         &ul.fi-in-text-has-badges,
-        &.fi-in-text-has-badges > ul {
+        &.fi-in-text-has-badges ul {
             /* A list of badges without line breaks need to remain on the same line, not wrap */
             @apply flex gap-x-1.5;
 
             &.fi-wrapped,
-            &:is(.fi-wrapped > ul) {
+            &:is(.fi-wrapped ul) {
                 /* When wrap is enabled, some badges can remain on the same line as others and some should wrap */
                 @apply flex-wrap gap-y-1;
             }
@@ -36,20 +48,20 @@
     }
 
     &ul.fi-in-text-has-badges,
-    &.fi-in-text-has-badges > ul {
+    &.fi-in-text-has-badges ul {
         &.fi-in-text-has-line-breaks,
-        &:is(.fi-in-text-has-line-breaks > ul) {
+        &:is(.fi-in-text-has-line-breaks ul) {
             /* Add vertical gap between badges in a list with line breaks */
             @apply flex flex-col gap-y-1;
         }
 
         &:not(ul.fi-in-text-has-line-breaks),
-        &:not(.fi-in-text-has-line-breaks > ul) {
+        &:not(.fi-in-text-has-line-breaks ul) {
             /* A list of badges without line breaks need to remain on the same line, not wrap */
             @apply flex gap-x-1.5;
 
             &.fi-wrapped,
-            &:is(.fi-wrapped > ul) {
+            &:is(.fi-wrapped ul) {
                 /* When wrap is enabled, some badges can remain on the same line as others and some should wrap */
                 @apply flex-wrap gap-y-1;
             }
@@ -76,7 +88,7 @@
         @apply text-center;
 
         &ul,
-        & > ul {
+        & ul {
             @apply justify-center;
         }
     }
@@ -86,7 +98,7 @@
         @apply text-end;
 
         &ul,
-        & > ul {
+        & ul {
             @apply justify-end;
         }
     }
@@ -96,7 +108,7 @@
         @apply text-justify;
 
         &ul,
-        & > ul {
+        & ul {
             @apply justify-between;
         }
     }
