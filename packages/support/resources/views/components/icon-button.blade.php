@@ -44,10 +44,6 @@
         default => null,
     };
 
-    if (! $badgeSize instanceof ActionSize) {
-        $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : null;
-    }
-
     $wireTarget = $loadingIndicator ? $attributes->whereStartsWith(['wire:target', 'wire:click'])->filter(fn ($value): bool => filled($value))->first() : null;
 
     $hasLoadingIndicator = filled($wireTarget) || ($type === 'submit' && filled($form));
@@ -56,15 +52,12 @@
         $loadingIndicatorTarget = html_entity_decode($wireTarget ?: $form, ENT_QUOTES);
     }
 
-    $hasTooltip = filled($tooltip);
+    $hasTooltip = $hasTooltip = filled($tooltip);
 @endphp
 
 <{{ $tag }}
-    @if (($tag === 'a') && (! ($disabled && filled($tooltip))))
+    @if (($tag === 'a') && (! ($disabled && $hasTooltip)))
         {{ \Filament\Support\generate_href_html($href, $target === '_blank', $spaMode) }}
-    @endif
-    @if ($keyBindings || $hasTooltip)
-        x-data="{}"
     @endif
     @if ($keyBindings)
         x-bind:id="$id('key-bindings')"
@@ -91,7 +84,7 @@
                 'title' => $hasTooltip ? null : $label,
             ], escape: true)
             ->when(
-                $disabled && filled($tooltip),
+                $disabled && $hasTooltip,
                 fn (ComponentAttributeBag $attributes) => $attributes->filter(
                     fn (mixed $value, string $key): bool => ! str($key)->startsWith(['href', 'x-on:', 'wire:click']),
                 ),

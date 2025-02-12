@@ -59,12 +59,15 @@
     if ($hasLoadingIndicator) {
         $loadingIndicatorTarget = html_entity_decode($wireTarget ?: $form, ENT_QUOTES);
     }
+
+    $hasTooltip = filled($tooltip);
 @endphp
 
 @if ($labeledFrom)
     <x-filament::icon-button
         :badge="$badge"
         :badge-color="$badgeColor"
+        :badge-size="$badgeSize"
         :color="$color"
         :disabled="$disabled"
         :form="$form"
@@ -75,7 +78,9 @@
         :icon-size="$iconSize"
         :key-bindings="$keyBindings"
         :label="$slot"
+        :loading-indicator="$loadingIndicator"
         :size="$size"
+        :spa-mode="$spaMode"
         :tag="$tag"
         :target="$target"
         :tooltip="$tooltip"
@@ -85,14 +90,14 @@
 @endif
 
 <{{ $tag }}
-    @if (($tag === 'a') && (! ($disabled && filled($tooltip))))
+    @if (($tag === 'a') && (! ($disabled && $hasTooltip)))
         {{ \Filament\Support\generate_href_html($href, $target === '_blank', $spaMode) }}
     @endif
     @if ($keyBindings)
         x-bind:id="$id('key-bindings')"
         x-mousetrap.global.{{ collect($keyBindings)->map(fn (string $keyBinding): string => str_replace('+', '-', $keyBinding))->implode('.') }}="document.getElementById($el.id).click()"
     @endif
-    @if (filled($tooltip))
+    @if ($hasTooltip)
         x-tooltip="{
             content: @js($tooltip),
             theme: $store.theme,
@@ -116,7 +121,7 @@
                 'x-bind:aria-label' => ($labelSrOnly && $hasFormProcessingLoadingIndicator) ? ('isProcessing ? processingMessage : ' . \Illuminate\Support\Js::from(trim(strip_tags($slot->toHtml())))) : null,
             ], escape: false)
             ->when(
-                $disabled && filled($tooltip),
+                $disabled && $hasTooltip,
                 fn (ComponentAttributeBag $attributes) => $attributes->filter(
                     fn (mixed $value, string $key): bool => ! str($key)->startsWith(['href', 'x-on:', 'wire:click']),
                 ),
