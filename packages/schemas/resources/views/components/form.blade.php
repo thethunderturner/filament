@@ -6,7 +6,10 @@
                 'wire:submit' => $getLivewireSubmitHandler(),
             ], escape: false)
             ->merge($getExtraAttributes(), escape: false)
-            ->class(['fi-fo-form flex flex-col', $isDense() ? 'gap-3' : 'gap-6'])
+            ->class([
+                'fi-sc-form',
+                'fi-dense' => $isDense(),
+            ])
     }}
 >
     {{ $getChildComponentContainer($schemaComponent::HEADER_CONTAINER) }}

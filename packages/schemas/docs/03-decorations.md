@@ -17,7 +17,8 @@ TextInput::make('url')
 You can also render more complex decorations, like icons, by using a decoration component to configure it:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Icon;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Icon;
 
 TextInput::make('url')
     ->afterLabel(
@@ -29,7 +30,9 @@ TextInput::make('url')
 You can render multiple decorations in one slot, using an array of decoration components:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Icon;use Filament\Schemas\Components\Text;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Icon;
+use Filament\Schemas\Components\Text;
 
 TextInput::make('name')
     ->belowContent([
@@ -42,7 +45,10 @@ TextInput::make('name')
 You can also align decorations using an `AlignDecorations` component, for example, to make the text occupy the left and the icon the far right:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Decorations\Layouts\AlignDecorations;use Filament\Schemas\Components\Icon;use Filament\Schemas\Components\Text;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Decorations\Layouts\AlignDecorations;
+use Filament\Schemas\Components\Icon;
+use Filament\Schemas\Components\Text;
 
 TextInput::make('name')
     ->belowContent(AlignDecorations::between([
@@ -212,7 +218,8 @@ TextInput::make('url')
 Icon decorations can be defined by using an `IconDecoration` component:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Icon;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Icon;
 
 TextInput::make('url')
     ->afterLabel(
@@ -225,7 +232,8 @@ TextInput::make('url')
 You may set a [color](../styling/colors) for an icon decoration using the `color()` method:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Icon;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Icon;
 
 TextInput::make('url')
     ->afterLabel(
@@ -239,7 +247,8 @@ TextInput::make('url')
 You may specify a tooltip to display when you hover over an icon decoration:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Icon;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Icon;
 
 TextInput::make('url')
     ->afterLabel(
@@ -278,7 +287,10 @@ TextInput::make('password')
 You may align decorations within their slot. Each slot has a default alignment depending on where it is, but you may override this by wrapping your decorations in an `AlignDecorations` component. The available alignment options are `AlignDecorations::start()`, `AlignDecorations::end()`, and `AlignDecorations::between()`:
 
 ```php
-use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Decorations\Layouts\AlignDecorations;use Filament\Schemas\Components\Icon;use Filament\Schemas\Components\Text;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Decorations\Layouts\AlignDecorations;
+use Filament\Schemas\Components\Icon;
+use Filament\Schemas\Components\Text;
 
 TextInput::make('name')
     ->afterLabel(AlignDecorations::start([
@@ -303,7 +315,11 @@ TextInput::make('name')
 When using `AlignDecorations::between()`, you may group decorations together at the start or end of the slot using a nested array:
 
 ```php
-use Filament\Actions\Action;use Filament\Forms\Components\TextInput;use Filament\Schemas\Components\Decorations\Layouts\AlignDecorations;use Filament\Schemas\Components\Icon;use Filament\Schemas\Components\Text;
+use Filament\Actions\Action;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Decorations\Layouts\AlignDecorations;
+use Filament\Schemas\Components\Icon;
+use Filament\Schemas\Components\Text;
 
 TextInput::make('name')
     ->belowContent(AlignDecorations::between([
