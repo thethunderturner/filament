@@ -188,7 +188,7 @@ trait CanGenerateButtonHtml
                 <?php } ?>
             <?php } ?>
 
-            <?php if ($hasFormProcessingLoadingIndicator && (! $isLabelSrOnly)) { ?>}
+            <?php if ($hasFormProcessingLoadingIndicator && (! $isLabelSrOnly)) { ?>
                 <span
                     x-cloak
                     x-show="isProcessing"

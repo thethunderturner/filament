@@ -14,6 +14,7 @@ use Filament\Support\Concerns\HasExtraAttributes;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
 use Livewire\Component as LivewireComponent;
@@ -267,9 +268,10 @@ class Schema extends ViewComponent implements HasEmbeddedView
                                     x-show="<?= $xShow ?>"
                                     x-cloak
                                 <?php } ?>
-                                <?php if ($schemaComponent->isGridContainer()) { ?>
-                                    class="fi-grid-ctn"
-                                <?php } ?>
+                                class="<?= Arr::toCssClasses([
+                                    'fi-sc-component',
+                                    'fi-grid-ctn' => $schemaComponent->isGridContainer(),
+                                ]) ?>"
                             >
                                 <?= $schemaComponent->toHtml() ?>
                             </div>

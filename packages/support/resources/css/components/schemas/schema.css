@@ -78,5 +78,9 @@
         &.fi-width-7xl {
             @apply max-w-7xl;
         }
+
+        & > .fi-sc-component {
+            @apply h-full;
+        }
     }
 }

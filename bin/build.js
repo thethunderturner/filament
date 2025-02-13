@@ -133,7 +133,7 @@ compile({
     outfile: `./packages/tables/dist/components/table.js`,
 })
 
-const schemaComponents = ['tabs', 'wizard']
+const schemaComponents = ['actions', 'tabs', 'wizard']
 
 schemaComponents.forEach((component) => {
     compile({
