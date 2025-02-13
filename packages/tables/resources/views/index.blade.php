@@ -1891,7 +1891,7 @@
             @else
                 <div class="fi-ta-empty-state">
                     <div class="fi-ta-empty-state-content">
-                        <div class="fi-ta-empty-state-icon-ctn">
+                        <div class="fi-ta-empty-state-icon-bg">
                             {{ \Filament\Support\generate_icon_html($getEmptyStateIcon(), size: \Filament\Support\Enums\IconSize::Large) }}
                         </div>
 

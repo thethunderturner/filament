@@ -5,14 +5,6 @@
     $isContained = $tabs->isContained();
     $livewireProperty = $tabs->getLivewireProperty();
 
-    $activeTabClasses = \Illuminate\Support\Arr::toCssClasses([
-        'fi-active',
-        'p-6' => $isContained,
-        'mt-6' => ! $isContained,
-    ]);
-
-    $inactiveTabClasses = 'invisible absolute h-0 overflow-hidden p-0';
-
     $childComponentContainer = $getChildComponentContainer();
 @endphp
 
@@ -20,8 +12,7 @@
     @if (blank($livewireProperty))
         <div
             x-bind:class="{
-                @js($activeTabClasses): tab === @js($key),
-                @js($inactiveTabClasses): tab !== @js($key),
+                'fi-active': tab === @js($key),
             }"
             x-on:expand="tab = @js($key)"
             {{
@@ -34,7 +25,7 @@
                         'wire:key' => $getLivewireKey() . '.container',
                     ], escape: false)
                     ->merge($getExtraAttributes(), escape: false)
-                    ->class(['fi-sc-tabs-tab outline-hidden'])
+                    ->class(['fi-sc-tabs-tab'])
             }}
         >
             {{ $childComponentContainer }}
@@ -51,10 +42,7 @@
                         'wire:key' => $getLivewireKey() . '.container',
                     ], escape: false)
                     ->merge($getExtraAttributes(), escape: false)
-                    ->class([
-                        'fi-sc-tabs-tab outline-hidden',
-                        $activeTabClasses,
-                    ])
+                    ->class(['fi-sc-tabs-tab fi-active'])
             }}
         >
             {{ $childComponentContainer }}

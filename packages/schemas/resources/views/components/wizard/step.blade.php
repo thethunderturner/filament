@@ -2,21 +2,12 @@
     $id = $getId();
     $key = $getKey();
     $isContained = $getContainer()->getParentComponent()->isContained();
-
-    $activeStepClasses = \Illuminate\Support\Arr::toCssClasses([
-        'fi-active',
-        'p-6' => $isContained,
-        'mt-6' => ! $isContained,
-    ]);
-
-    $inactiveStepClasses = 'invisible absolute h-0 overflow-hidden p-0';
 @endphp
 
 <div
     x-bind:tabindex="$el.querySelector('[autofocus]') ? '-1' : '0'"
     x-bind:class="{
-        @js($activeStepClasses): step === @js($key),
-        @js($inactiveStepClasses): step !== @js($key),
+        'fi-active': step === @js($key),
     }"
     x-on:expand="
         if (! isStepAccessible(@js($key))) {
@@ -34,7 +25,7 @@
                 'role' => 'tabpanel',
             ], escape: false)
             ->merge($getExtraAttributes(), escape: false)
-            ->class(['fi-fo-wizard-step outline-hidden'])
+            ->class(['fi-sc-wizard-step'])
     }}
 >
     {{ $getChildComponentContainer() }}

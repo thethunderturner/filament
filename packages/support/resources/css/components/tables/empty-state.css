@@ -5,7 +5,7 @@
         @apply mx-auto grid max-w-lg justify-items-center text-center;
     }
 
-    & .fi-ta-empty-state-icon-ctn {
+    & .fi-ta-empty-state-icon-bg {
         @apply mb-4 rounded-full bg-gray-100 p-3 dark:bg-gray-500/20;
 
         & .fi-icon {

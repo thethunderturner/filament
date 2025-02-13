@@ -42,7 +42,7 @@
             {{
                 \Filament\Support\generate_icon_html(
                     $onIcon,
-                    attributes: (new \Illuminate\View\ComponentattributeBag)->merge(['x-cloak' => true], escape: false),
+                    attributes: (new \Illuminate\View\ComponentattributeBag)->merge(['x-cloak' => 'x-cloak'], escape: false),
                     size: \Filament\Support\Enums\IconSize::ExtraSmall,
                 )
             }}

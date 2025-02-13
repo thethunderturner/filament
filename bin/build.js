@@ -117,13 +117,13 @@ const formComponents = [
     'textarea',
 ]
 
-formComponents.forEach((componentName) => {
+formComponents.forEach((component) => {
     compile({
         ...defaultOptions,
         entryPoints: [
-            `./packages/forms/resources/js/components/${componentName}.js`,
+            `./packages/forms/resources/js/components/${component}.js`,
         ],
-        outfile: `./packages/forms/dist/components/${componentName}.js`,
+        outfile: `./packages/forms/dist/components/${component}.js`,
     })
 })
 
@@ -133,48 +133,49 @@ compile({
     outfile: `./packages/tables/dist/components/table.js`,
 })
 
-compile({
-    ...defaultOptions,
-    entryPoints: [
-        `./packages/tables/resources/js/components/columns/checkbox.js`,
-    ],
-    outfile: `./packages/tables/dist/components/columns/checkbox.js`,
+const schemaComponents = [
+    'tabs',
+    'wizard',
+]
+
+schemaComponents.forEach((component) => {
+    compile({
+        ...defaultOptions,
+        entryPoints: [
+            `./packages/schemas/resources/js/components/${component}.js`,
+        ],
+        outfile: `./packages/schemas/dist/components/${component}.js`,
+    })
 })
 
-compile({
-    ...defaultOptions,
-    entryPoints: [
-        `./packages/tables/resources/js/components/columns/select.js`,
-    ],
-    outfile: `./packages/tables/dist/components/columns/select.js`,
+const tableColumns = [
+    'checkbox',
+    'select',
+    'text-input',
+    'toggle',
+]
+
+tableColumns.forEach((column) => {
+    compile({
+        ...defaultOptions,
+        entryPoints: [
+            `./packages/tables/resources/js/components/columns/${column}.js`,
+        ],
+        outfile: `./packages/tables/dist/components/columns/${column}.js`,
+    })
 })
 
-compile({
-    ...defaultOptions,
-    entryPoints: [
-        `./packages/tables/resources/js/components/columns/text-input.js`,
-    ],
-    outfile: `./packages/tables/dist/components/columns/text-input.js`,
-})
+const widgets = [
+    'chart',
+    'stats-overview/stat/chart',
+]
 
-compile({
-    ...defaultOptions,
-    entryPoints: [
-        `./packages/tables/resources/js/components/columns/toggle.js`,
-    ],
-    outfile: `./packages/tables/dist/components/columns/toggle.js`,
-})
-
-compile({
-    ...defaultOptions,
-    entryPoints: [`./packages/widgets/resources/js/components/chart.js`],
-    outfile: `./packages/widgets/dist/components/chart.js`,
-})
-
-compile({
-    ...defaultOptions,
-    entryPoints: [
-        `./packages/widgets/resources/js/components/stats-overview/stat/chart.js`,
-    ],
-    outfile: `./packages/widgets/dist/components/stats-overview/stat/chart.js`,
+widgets.forEach((widget) => {
+    compile({
+        ...defaultOptions,
+        entryPoints: [
+            `./packages/widgets/resources/js/components/${widget}.js`,
+        ],
+        outfile: `./packages/widgets/dist/components/${widget}.js`,
+    })
 })
