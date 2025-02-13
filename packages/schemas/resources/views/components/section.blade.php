@@ -1,8 +1,5 @@
 @php
     $afterHeader = $getChildComponentContainer($schemaComponent::AFTER_HEADER_CONTAINER)?->toHtmlString();
-    $extraAttributes = $getExtraAttributes();
-    $extraAlpineAttributes = $getExtraAlpineAttributes();
-    $id = $getId();
     $isAside = $isAside();
     $isCollapsed = $isCollapsed();
     $isCollapsible = $isCollapsible();
@@ -21,7 +18,17 @@
     $isSecondary = $isSecondary();
 @endphp
 
-<div class="fi-sc-section">
+<div
+    {{
+        $attributes
+            ->merge([
+                'id' => $getId(),
+            ], escape: false)
+            ->merge($getExtraAttributes(), escape: false)
+            ->merge($getExtraAlpineAttributes(), escape: false)
+            ->class(['fi-sc-section'])
+    }}
+>
     @if (filled($label = $getLabel()))
         <div class="fi-sc-section-label-ctn">
             {{ $getChildComponentContainer($schemaComponent::BEFORE_LABEL_CONTAINER) }}
@@ -57,14 +64,6 @@
         :icon-size="$iconSize"
         :persist-collapsed="$shouldPersistCollapsed"
         :secondary="$isSecondary"
-        :attributes="
-            \Filament\Support\prepare_inherited_attributes($attributes)
-                ->merge([
-                    'id' => $id,
-                ], escape: false)
-                ->merge($extraAttributes, escape: false)
-                ->merge($extraAlpineAttributes, escape: false)
-        "
     >
         {{ $getChildComponentContainer()->gap(! $isDivided)->extraAttributes(['class' => 'fi-section-content']) }}
     </x-filament::section>
