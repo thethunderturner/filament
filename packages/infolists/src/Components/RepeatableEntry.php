@@ -8,7 +8,6 @@ use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Concerns\CanBeContained;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Js;
-use Illuminate\View\ComponentSlot;
 
 class RepeatableEntry extends Entry implements HasEmbeddedView
 {
@@ -49,14 +48,6 @@ class RepeatableEntry extends Entry implements HasEmbeddedView
 
     public function toEmbeddedHtml(): string
     {
-        return view($this->getEntryWrapperAbsoluteView(), [
-            'entry' => $this,
-            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
-        ])->toHtml();
-    }
-
-    public function toEmbeddedContentHtml(): string
-    {
         $items = $this->getItems();
 
         $attributes = $this->getExtraAttributeBag()
@@ -88,7 +79,7 @@ class RepeatableEntry extends Entry implements HasEmbeddedView
                 <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         $attributes = $attributes->grid($this->getGridColumns());
@@ -103,6 +94,6 @@ class RepeatableEntry extends Entry implements HasEmbeddedView
             <?php } ?>
         </ul>
 
-        <?php return ob_get_clean();
+        <?php return $this->wrapEmbeddedHtml(ob_get_clean());
     }
 }

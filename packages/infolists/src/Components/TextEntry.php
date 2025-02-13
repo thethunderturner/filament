@@ -24,7 +24,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-use Illuminate\View\ComponentSlot;
 
 use function Filament\Support\generate_href_html;
 use function Filament\Support\generate_icon_html;
@@ -158,14 +157,6 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
 
     public function toEmbeddedHtml(): string
     {
-        return view($this->getEntryWrapperAbsoluteView(), [
-            'entry' => $this,
-            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
-        ])->toHtml();
-    }
-
-    public function toEmbeddedContentHtml(): string
-    {
         $isBadge = $this->isBadge();
         $isListWithLineBreaks = $this->isListWithLineBreaks();
         $isLimitedListExpandable = $this->isLimitedListExpandable();
@@ -204,7 +195,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                 <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         $shouldOpenUrlInNewTab = $this->shouldOpenUrlInNewTab();
@@ -387,7 +378,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         $attributes = $attributes
@@ -499,7 +490,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                 <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         ob_start(); ?>
@@ -529,7 +520,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             <?php } ?>
         </ul>
 
-        <?php return ob_get_clean();
+        <?php return $this->wrapEmbeddedHtml(ob_get_clean());
     }
 
     public function canWrapByDefault(): bool

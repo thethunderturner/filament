@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-use Illuminate\View\ComponentSlot;
 
 class ColorEntry extends Entry implements HasEmbeddedView
 {
@@ -18,14 +17,6 @@ class ColorEntry extends Entry implements HasEmbeddedView
     use CanWrap;
 
     public function toEmbeddedHtml(): string
-    {
-        return view($this->getEntryWrapperAbsoluteView(), [
-            'entry' => $this,
-            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
-        ])->toHtml();
-    }
-
-    public function toEmbeddedContentHtml(): string
     {
         $state = $this->getState();
 
@@ -61,7 +52,7 @@ class ColorEntry extends Entry implements HasEmbeddedView
                 <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         $state = Arr::wrap($state);
@@ -121,7 +112,7 @@ class ColorEntry extends Entry implements HasEmbeddedView
             <?php } ?>
         </div>
 
-        <?php return ob_get_clean();
+        <?php return $this->wrapEmbeddedHtml(ob_get_clean());
     }
 
     public function canWrapByDefault(): bool

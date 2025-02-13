@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-use Illuminate\View\ComponentSlot;
 
 use function Filament\Support\generate_icon_html;
 
@@ -220,14 +219,6 @@ class IconEntry extends Entry implements HasEmbeddedView
 
     public function toEmbeddedHtml(): string
     {
-        return view($this->getEntryWrapperAbsoluteView(), [
-            'entry' => $this,
-            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
-        ])->toHtml();
-    }
-
-    public function toEmbeddedContentHtml(): string
-    {
         $state = $this->getState();
 
         if ($state instanceof Collection) {
@@ -262,7 +253,7 @@ class IconEntry extends Entry implements HasEmbeddedView
                 <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         $state = Arr::wrap($state);
@@ -299,7 +290,7 @@ class IconEntry extends Entry implements HasEmbeddedView
             <?php } ?>
         </div>
 
-        <?php return ob_get_clean();
+        <?php return $this->wrapEmbeddedHtml(ob_get_clean());
     }
 
     public function canWrapByDefault(): bool

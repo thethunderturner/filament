@@ -5,7 +5,6 @@ namespace Filament\Infolists\Components;
 use Closure;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Illuminate\Support\Collection;
-use Illuminate\View\ComponentSlot;
 
 class KeyValueEntry extends Entry implements HasEmbeddedView
 {
@@ -56,14 +55,6 @@ class KeyValueEntry extends Entry implements HasEmbeddedView
 
     public function toEmbeddedHtml(): string
     {
-        return view($this->getEntryWrapperAbsoluteView(), [
-            'entry' => $this,
-            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
-        ])->toHtml();
-    }
-
-    public function toEmbeddedContentHtml(): string
-    {
         $state = $this->getState();
 
         if ($state instanceof Collection) {
@@ -113,6 +104,6 @@ class KeyValueEntry extends Entry implements HasEmbeddedView
             </tbody>
         </table>
 
-        <?php return ob_get_clean();
+        <?php return $this->wrapEmbeddedHtml(ob_get_clean());
     }
 }

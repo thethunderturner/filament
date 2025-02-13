@@ -12,7 +12,10 @@ use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasAlignment;
 use Filament\Support\Concerns\HasPlaceholder;
 use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Arr;
+use Illuminate\View\ComponentSlot;
 
 class Entry extends Component
 {
@@ -217,5 +220,87 @@ class Entry extends Component
         }
 
         return $schema;
+    }
+
+    public function wrapEmbeddedHtml(string $html): string
+    {
+        $view = $this->getEntryWrapperAbsoluteView();
+
+        if ($view !== 'filament-infolists::components.entry-wrapper') {
+            return view($this->getEntryWrapperAbsoluteView(), [
+                'entry' => $this,
+                'slot' => new ComponentSlot($html),
+            ])->toHtml();
+        }
+
+        $alignment = $this->getAlignment();
+        $label = $this->getLabel();
+        $labelSrOnly = $this->isLabelHidden();
+
+        if (! $alignment instanceof Alignment) {
+            $alignment = filled($alignment) ? (Alignment::tryFrom($alignment) ?? $alignment) : null;
+        }
+
+        $beforeLabelContainer = $this->getChildComponentContainer($this::BEFORE_LABEL_CONTAINER)?->toHtmlString();
+        $afterLabelContainer = $this->getChildComponentContainer($this::AFTER_LABEL_CONTAINER)?->toHtmlString();
+        $beforeContentContainer = $this->getChildComponentContainer($this::BEFORE_CONTENT_CONTAINER)?->toHtmlString();
+        $afterContentContainer = $this->getChildComponentContainer($this::AFTER_CONTENT_CONTAINER)?->toHtmlString();
+
+        $attributes = $this->getExtraEntryWrapperAttributesBag()
+            ->class([
+                'fi-in-entry',
+                'fi-in-entry-has-inline-label' => $this->hasInlineLabel(),
+            ]);
+
+        ob_start(); ?>
+
+        <div <?= $attributes->toHtml() ?>>
+            <?php if ($label && $labelSrOnly) { ?>
+                <dt class="fi-in-entry-label fi-hidden">
+                    <?= e($label) ?>
+                </dt>
+            <?php } ?>
+
+            <div class="fi-in-entry-label-col">
+                <?= $this->getChildComponentContainer($this::ABOVE_LABEL_CONTAINER)?->toHtml() ?>
+
+                <?php if (($label && (! $labelSrOnly)) || $beforeLabelContainer || $afterLabelContainer) { ?>
+                    <div class="fi-in-entry-label-ctn">
+                        <?= $beforeLabelContainer?->toHtml() ?>
+
+                        <?php if ($label && (! $labelSrOnly)) { ?>
+                            <dt class="fi-in-entry-label">
+                                <?= e($label) ?>
+                            </dt>
+                        <?php } ?>
+
+                        <?= $afterLabelContainer?->toHtml() ?>
+                    </div>
+                <?php } ?>
+
+                <?= $this->getChildComponentContainer($this::BELOW_LABEL_CONTAINER)?->toHtml() ?>
+            </div>
+
+            <div class="fi-in-entry-content-col">
+                <?= $this->getChildComponentContainer($this::ABOVE_CONTENT_CONTAINER)?->toHtml() ?>
+
+                <div class="fi-in-entry-content-ctn">
+                    <?= $beforeContentContainer?->toHtml() ?>
+
+                    <dd class="<?= Arr::toCssClasses([
+                        'fi-in-entry-content',
+                        (($alignment instanceof Alignment) ? "fi-align-{$alignment->value}" : (is_string($alignment) ? $alignment : '')),
+                    ])?>">
+                        <?= $html ?>
+                    </dd>
+
+                    <?= $afterContentContainer?->toHtml() ?>
+                </div>
+
+                <?= $this->getChildComponentContainer($this::BELOW_CONTENT_CONTAINER)?->toHtml() ?>
+            </div>
+        </div>
+
+        <?php return ob_get_clean();
     }
 }

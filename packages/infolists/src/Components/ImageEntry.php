@@ -14,7 +14,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-use Illuminate\View\ComponentSlot;
 use League\Flysystem\UnableToCheckFileExistence;
 use Throwable;
 
@@ -388,14 +387,6 @@ class ImageEntry extends Entry implements HasEmbeddedView
 
     public function toEmbeddedHtml(): string
     {
-        return view($this->getEntryWrapperAbsoluteView(), [
-            'entry' => $this,
-            'slot' => new ComponentSlot($this->toEmbeddedContentHtml()),
-        ])->toHtml();
-    }
-
-    public function toEmbeddedContentHtml(): string
-    {
         $state = $this->getState();
 
         if ($state instanceof Collection) {
@@ -430,7 +421,7 @@ class ImageEntry extends Entry implements HasEmbeddedView
                 <?php } ?>
             </div>
 
-            <?php return ob_get_clean();
+            <?php return $this->wrapEmbeddedHtml(ob_get_clean());
         }
 
         $state = Arr::wrap($state);
@@ -506,7 +497,7 @@ class ImageEntry extends Entry implements HasEmbeddedView
             <?php } ?>
         </div>
 
-        <?php return ob_get_clean();
+        <?php return $this->wrapEmbeddedHtml(ob_get_clean());
     }
 
     public function canWrapByDefault(): bool
