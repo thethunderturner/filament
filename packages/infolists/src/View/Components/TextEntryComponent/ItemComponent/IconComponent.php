@@ -1,11 +1,11 @@
 <?php
 
-namespace Filament\Infolists\View\Components\TextEntry\Item;
+namespace Filament\Infolists\View\Components\TextEntryComponent\ItemComponent;
 
 use Filament\Support\View\Components\Contracts\HasColor;
 use Filament\Support\View\Components\Contracts\HasDefaultGrayColor;
 
-class Icon implements HasColor, HasDefaultGrayColor
+class IconComponent implements HasColor, HasDefaultGrayColor
 {
     /**
      * @param  array<int, string>  $color

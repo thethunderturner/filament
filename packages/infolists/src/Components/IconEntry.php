@@ -4,7 +4,7 @@ namespace Filament\Infolists\Components;
 
 use BackedEnum;
 use Closure;
-use Filament\Infolists\View\Components\IconEntry\Icon;
+use Filament\Infolists\View\Components\IconEntryComponent\IconComponent;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Concerns\CanWrap;
 use Filament\Support\Enums\Alignment;
@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-
 use function Filament\Support\generate_icon_html;
 
 class IconEntry extends Entry implements HasEmbeddedView
@@ -285,7 +284,7 @@ class IconEntry extends Entry implements HasEmbeddedView
                             }'
                             : null,
                     ], escape: false)
-                    ->color(Icon::class, $color), size: $size ?? IconSize::Large)
+                    ->color(IconComponent::class, $color), size: $size ?? IconSize::Large)
                     ->toHtml() ?>
             <?php } ?>
         </div>

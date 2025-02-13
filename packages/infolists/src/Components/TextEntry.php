@@ -4,8 +4,8 @@ namespace Filament\Infolists\Components;
 
 use Closure;
 use Filament\Actions\Action;
-use Filament\Infolists\View\Components\TextEntry\Item;
-use Filament\Infolists\View\Components\TextEntry\Item\Icon;
+use Filament\Infolists\View\Components\TextEntryComponent\ItemComponent;
+use Filament\Infolists\View\Components\TextEntryComponent\ItemComponent\IconComponent;
 use Filament\Schemas\Components\Contracts\HasAffixActions;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Concerns\CanBeCopied;
@@ -24,7 +24,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-
 use function Filament\Support\generate_href_html;
 use function Filament\Support\generate_icon_html;
 
@@ -272,7 +271,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             $size = $this->getSize($stateItem);
 
             $iconHtml = generate_icon_html($this->getIcon($stateItem), attributes: (new ComponentAttributeBag)
-                ->color(Icon::class, $iconColor), size: match ($size) {
+                ->color(IconComponent::class, $iconColor), size: match ($size) {
                     TextSize::Medium => IconSize::Medium,
                     TextSize::Large => IconSize::Large,
                     default => IconSize::Small,
@@ -321,7 +320,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                             ->when($lineClamp, fn (ComponentAttributeBag $attributes) => $attributes->style([
                                 "--line-clamp: {$lineClamp}",
                             ]))
-                            ->color(Item::class, $color)
+                            ->color(ItemComponent::class, $color)
                     ),
                 'badgeAttributes' => $isBadge
                     ? (new ComponentAttributeBag)
