@@ -32,7 +32,7 @@
             }
 
             & .fi-sc-wizard-header-step-separator {
-                @apply absolute end-0 hidden h-full w-5 md:block text-gray-200 rtl:rotate-180 dark:text-white/5;
+                @apply absolute end-0 hidden h-full w-5 text-gray-200 md:block rtl:rotate-180 dark:text-white/5;
             }
 
             &.fi-completed {
@@ -154,7 +154,7 @@
 
         & .fi-sc-wizard-step {
             &.fi-active {
-                @apply p-6 mt-0;
+                @apply mt-0 p-6;
             }
         }
 

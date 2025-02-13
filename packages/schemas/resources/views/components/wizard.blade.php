@@ -15,11 +15,11 @@
     @endif
     x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('wizard', 'filament/schemas') }}"
     x-data="wizardSchemaComponent({
-        isSkippable: @js($isSkippable()),
-        isStepPersistedInQueryString: @js($isStepPersistedInQueryString()),
-        startStep: @js($getStartStep()),
-        stepQueryStringKey: @js($getStepQueryStringKey()),
-    })"
+                isSkippable: @js($isSkippable()),
+                isStepPersistedInQueryString: @js($isStepPersistedInQueryString()),
+                startStep: @js($getStartStep()),
+                stepQueryStringKey: @js($getStepQueryStringKey()),
+            })"
     x-on:next-wizard-step.window="if ($event.detail.key === @js($key)) goToNextStep()"
     wire:ignore.self
     x-cloak
@@ -77,25 +77,29 @@
                             $completedIcon = $step->getCompletedIcon();
                         @endphp
 
-                        {{ \Filament\Support\generate_icon_html(
-                            $completedIcon ?? \Filament\Support\Icons\Heroicon::OutlinedCheck,
-                            alias: filled($completedIcon) ? null : 'schema::components.wizard.completed-step',
-                            attributes: new \Illuminate\View\ComponentAttributeBag([
-                                'x-cloak' => 'x-cloak',
-                                'x-show' => "getStepIndex(step) > {$loop->index}",
-                            ]),
-                            size: \Filament\Support\Enums\IconSize::Large,
-                        ) }}
-
-                        @if (filled($icon = $step->getIcon()))
-                            {{ \Filament\Support\generate_icon_html(
-                                $icon,
+                        {{
+                            \Filament\Support\generate_icon_html(
+                                $completedIcon ?? \Filament\Support\Icons\Heroicon::OutlinedCheck,
+                                alias: filled($completedIcon) ? null : 'schema::components.wizard.completed-step',
                                 attributes: new \Illuminate\View\ComponentAttributeBag([
                                     'x-cloak' => 'x-cloak',
-                                    'x-show' => "getStepIndex(step) <= {$loop->index}",
+                                    'x-show' => "getStepIndex(step) > {$loop->index}",
                                 ]),
                                 size: \Filament\Support\Enums\IconSize::Large,
-                            ) }}
+                            )
+                        }}
+
+                        @if (filled($icon = $step->getIcon()))
+                            {{
+                                \Filament\Support\generate_icon_html(
+                                    $icon,
+                                    attributes: new \Illuminate\View\ComponentAttributeBag([
+                                        'x-cloak' => 'x-cloak',
+                                        'x-show' => "getStepIndex(step) <= {$loop->index}",
+                                    ]),
+                                    size: \Filament\Support\Enums\IconSize::Large,
+                                )
+                            }}
                         @else
                             <span
                                 x-show="getStepIndex(step) <= {{ $loop->index }}"
@@ -114,9 +118,7 @@
                         @endif
 
                         @if (filled($description = $step->getDescription()))
-                            <span
-                                class="fi-sc-wizard-header-step-description"
-                            >
+                            <span class="fi-sc-wizard-header-step-description">
                                 {{ $description }}
                             </span>
                         @endif
@@ -176,9 +178,7 @@
             {{ $nextAction }}
         </div>
 
-        <div
-            x-bind:class="{ 'fi-hidden': ! isLastStep() }"
-        >
+        <div x-bind:class="{ 'fi-hidden': ! isLastStep() }">
             {{ $getSubmitAction() }}
         </div>
     </div>

@@ -1,4 +1,10 @@
-export default function tabsSchemaComponent({ activeTab, isTabPersistedInQueryString, livewireId, tab, tabQueryStringKey }) {
+export default function tabsSchemaComponent({
+    activeTab,
+    isTabPersistedInQueryString,
+    livewireId,
+    tab,
+    tabQueryStringKey,
+}) {
     return {
         tab,
 
@@ -7,29 +13,32 @@ export default function tabsSchemaComponent({ activeTab, isTabPersistedInQuerySt
 
             const tabs = this.getTabs()
 
-            if (! this.tab || ! tabs.includes(this.tab)) {
+            if (!this.tab || !tabs.includes(this.tab)) {
                 this.tab = tabs[activeTab - 1]
             }
 
-            Livewire.hook('commit', ({ component, commit, succeed, fail, respond }) => {
-                succeed(({ snapshot, effect }) => {
-                    this.$nextTick(() => {
-                        if (component.id !== livewireId) {
-                            return
-                        }
+            Livewire.hook(
+                'commit',
+                ({ component, commit, succeed, fail, respond }) => {
+                    succeed(({ snapshot, effect }) => {
+                        this.$nextTick(() => {
+                            if (component.id !== livewireId) {
+                                return
+                            }
 
-                        const tabs = this.getTabs()
+                            const tabs = this.getTabs()
 
-                        if (! tabs.includes(this.tab)) {
-                            this.tab = tabs[activeTab - 1] ?? this.tab
-                        }
+                            if (!tabs.includes(this.tab)) {
+                                this.tab = tabs[activeTab - 1] ?? this.tab
+                            }
+                        })
                     })
-                })
-            })
+                },
+            )
         },
 
         getTabs: function () {
-            if (! this.$refs.tabsData) {
+            if (!this.$refs.tabsData) {
                 return []
             }
 
@@ -37,7 +46,7 @@ export default function tabsSchemaComponent({ activeTab, isTabPersistedInQuerySt
         },
 
         updateQueryString: function () {
-            if (! isTabPersistedInQueryString) {
+            if (!isTabPersistedInQueryString) {
                 return
             }
 

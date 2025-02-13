@@ -133,10 +133,7 @@ compile({
     outfile: `./packages/tables/dist/components/table.js`,
 })
 
-const schemaComponents = [
-    'tabs',
-    'wizard',
-]
+const schemaComponents = ['tabs', 'wizard']
 
 schemaComponents.forEach((component) => {
     compile({
@@ -148,12 +145,7 @@ schemaComponents.forEach((component) => {
     })
 })
 
-const tableColumns = [
-    'checkbox',
-    'select',
-    'text-input',
-    'toggle',
-]
+const tableColumns = ['checkbox', 'select', 'text-input', 'toggle']
 
 tableColumns.forEach((column) => {
     compile({
@@ -165,10 +157,7 @@ tableColumns.forEach((column) => {
     })
 })
 
-const widgets = [
-    'chart',
-    'stats-overview/stat/chart',
-]
+const widgets = ['chart', 'stats-overview/stat/chart']
 
 widgets.forEach((widget) => {
     compile({

@@ -18,7 +18,7 @@
 
         & .fi-sc-tabs-tab {
             &.fi-active {
-                @apply p-6 mt-0;
+                @apply mt-0 p-6;
             }
         }
     }

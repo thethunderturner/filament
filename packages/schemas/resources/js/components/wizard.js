@@ -1,4 +1,9 @@
-export default function wizardSchemaComponent({ isSkippable, isStepPersistedInQueryString, startStep, stepQueryStringKey }) {
+export default function wizardSchemaComponent({
+    isSkippable,
+    isStepPersistedInQueryString,
+    startStep,
+    stepQueryStringKey,
+}) {
     return {
         step: null,
 
@@ -40,7 +45,7 @@ export default function wizardSchemaComponent({ isSkippable, isStepPersistedInQu
             this.$nextTick(() => {
                 this.$refs.header.children[
                     this.getStepIndex(this.step)
-                    ].scrollIntoView({ behavior: 'smooth', block: 'start' })
+                ].scrollIntoView({ behavior: 'smooth', block: 'start' })
             })
         },
 
@@ -84,7 +89,7 @@ export default function wizardSchemaComponent({ isSkippable, isStepPersistedInQu
         },
 
         updateQueryString: function () {
-            if (! isStepPersistedInQueryString) {
+            if (!isStepPersistedInQueryString) {
                 return
             }
 
