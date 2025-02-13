@@ -2,8 +2,8 @@
     use Filament\Support\Enums\ActionSize;
     use Filament\Support\Enums\IconPosition;
     use Filament\Support\Enums\IconSize;
-    use Filament\Support\View\Components\Badge;
-    use Filament\Support\View\Components\Button;
+    use Filament\Support\View\Components\BadgeComponent;
+    use Filament\Support\View\Components\ButtonComponent;
     use Illuminate\View\ComponentAttributeBag;
 @endphp
 
@@ -133,7 +133,7 @@
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
                 is_string($labeledFrom) ? "fi-labeled-from-{$labeledFrom}" : null,
             ])
-            ->color(app(Button::class, ['isOutlined' => $outlined]), $color)
+            ->color(app(ButtonComponent::class, ['isOutlined' => $outlined]), $color)
     }}
 >
     @if ($iconPosition === IconPosition::Before)
@@ -220,7 +220,7 @@
                 <span
                     @class([
                         'fi-badge',
-                        ...\Filament\Support\get_component_color_classes(Badge::class, $badgeColor),
+                        ...\Filament\Support\get_component_color_classes(BadgeComponent::class, $badgeColor),
                         ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                     ])
                 >

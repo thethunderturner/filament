@@ -4,12 +4,12 @@ namespace Filament\Schemas\Components;
 
 use BackedEnum;
 use Closure;
+use Filament\Schemas\View\Components\IconComponent;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Concerns\HasColor;
 use Filament\Support\Concerns\HasTooltip;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
-use Filament\Schemas\View\Components\IconComponent;
 
 use function Filament\Support\generate_icon_html;
 

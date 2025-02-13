@@ -228,6 +228,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Filament\\Infolists\\Components\\TextEntry\\TextEntrySize' => 'Filament\\Support\\Enums\\TextSize',
             'Filament\\Tables\\Columns\\IconColumn\\IconColumnSize' => 'Filament\\Support\\Enums\\IconSize',
             'Filament\\Tables\\Columns\\TextColumn\\TextColumnSize' => 'Filament\\Support\\Enums\\TextSize',
+            'Filament\\Support\\View\\Components\\Modal' => 'Filament\\Support\\View\\Components\\ModalComponent',
         ],
     );
 

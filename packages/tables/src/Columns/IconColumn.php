@@ -9,7 +9,7 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\View\Components\Columns\IconColumn\Icon;
+use Filament\Tables\View\Components\Columns\IconColumnComponent\IconComponent;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -312,7 +312,7 @@ class IconColumn extends Column implements HasEmbeddedView
                             }'
                             : null,
                     ], escape: false)
-                    ->color(Icon::class, $color), size: $size ?? IconSize::Large)
+                    ->color(IconComponent::class, $color), size: $size ?? IconSize::Large)
                     ->toHtml() ?>
             <?php } ?>
         </div>

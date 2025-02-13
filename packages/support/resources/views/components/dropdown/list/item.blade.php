@@ -1,9 +1,9 @@
 @php
     use Filament\Support\Enums\ActionSize;
     use Filament\Support\Enums\IconSize;
-    use Filament\Support\View\Components\Badge;
-    use Filament\Support\View\Components\Dropdown\Item;
-    use Filament\Support\View\Components\Dropdown\Item\Icon;
+    use Filament\Support\View\Components\BadgeComponent;
+    use Filament\Support\View\Components\DropdownComponent\ItemComponent;
+    use Filament\Support\View\Components\DropdownComponent\ItemComponent\IconComponent;
     use Illuminate\View\ComponentAttributeBag;
 @endphp
 
@@ -35,7 +35,7 @@
     $iconColor ??= $color;
 
     $iconClasses = \Illuminate\Support\Arr::toCssClasses([
-        ...\Filament\Support\get_component_color_classes(Icon::class, $iconColor),
+        ...\Filament\Support\get_component_color_classes(IconComponent::class, $iconColor),
     ]);
 
     $wireTarget = $loadingIndicator ? $attributes->whereStartsWith(['wire:target', 'wire:click'])->filter(fn ($value): bool => filled($value))->first() : null;
@@ -96,7 +96,7 @@
                 'fi-dropdown-list-item',
                 'fi-disabled' => $disabled,
             ])
-            ->color(Item::class, $color)
+            ->color(ItemComponent::class, $color)
     }}
 >
     @if ($icon)
@@ -145,7 +145,7 @@
                 @endif
                 @class([
                     'fi-badge',
-                    ...\Filament\Support\get_component_color_classes(Badge::class, $badgeColor),
+                    ...\Filament\Support\get_component_color_classes(BadgeComponent::class, $badgeColor),
                 ])
             >
                 {{ $badge }}

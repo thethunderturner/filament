@@ -1,5 +1,5 @@
 @php
-    use Filament\Support\View\Components\Toggle;
+    use Filament\Support\View\Components\ToggleComponent;
     use Illuminate\Support\Arr;
 @endphp
 
@@ -18,10 +18,10 @@
     x-bind:class="
         state ? @js(Arr::toCssClasses([
                     'fi-toggle-on',
-                    ...\Filament\Support\get_component_color_classes(Toggle::class, $onColor),
+                    ...\Filament\Support\get_component_color_classes(ToggleComponent::class, $onColor),
                 ])) : @js(Arr::toCssClasses([
                             'fi-toggle-off',
-                            ...\Filament\Support\get_component_color_classes(Toggle::class, $offColor),
+                            ...\Filament\Support\get_component_color_classes(ToggleComponent::class, $offColor),
                         ]))
     "
     {{

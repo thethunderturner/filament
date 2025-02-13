@@ -4,9 +4,9 @@ namespace Filament\Support\View\Concerns;
 
 use BackedEnum;
 use Filament\Support\Enums\IconSize;
-use Filament\Support\View\Components\Badge;
-use Filament\Support\View\Components\Dropdown\Item;
-use Filament\Support\View\Components\Dropdown\Item\Icon;
+use Filament\Support\View\Components\BadgeComponent;
+use Filament\Support\View\Components\DropdownComponent\ItemComponent;
+use Filament\Support\View\Components\DropdownComponent\ItemComponent\IconComponent;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
@@ -53,7 +53,7 @@ trait CanGenerateDropdownItemHtml
         $iconColor ??= $color;
 
         $iconClasses = Arr::toCssClasses([
-            ...get_component_color_classes(Icon::class, $iconColor),
+            ...get_component_color_classes(IconComponent::class, $iconColor),
         ]);
 
         $wireTarget = $hasLoadingIndicator ? $attributes->whereStartsWith(['wire:target', 'wire:click'])->filter(fn ($value): bool => filled($value))->first() : null;
@@ -92,7 +92,7 @@ trait CanGenerateDropdownItemHtml
                 'fi-dropdown-list-item',
                 'fi-disabled' => $isDisabled,
             ])
-            ->color(Item::class, $color);
+            ->color(ItemComponent::class, $color);
 
         ob_start(); ?>
 
@@ -137,7 +137,7 @@ trait CanGenerateDropdownItemHtml
                     <?php } ?>
                     class="<?= Arr::toCssClasses([
                         'fi-badge',
-                        ...get_component_color_classes(Badge::class, $badgeColor),
+                        ...get_component_color_classes(BadgeComponent::class, $badgeColor),
                     ]) ?>"
                 >
                     <?= e($badge) ?>

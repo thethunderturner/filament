@@ -3,8 +3,8 @@
     use Filament\Support\Enums\FontWeight;
     use Filament\Support\Enums\IconPosition;
     use Filament\Support\Enums\IconSize;
-    use Filament\Support\View\Components\Badge;
-    use Filament\Support\View\Components\Link;
+    use Filament\Support\View\Components\BadgeComponent;
+    use Filament\Support\View\Components\LinkComponent;
     use Illuminate\View\ComponentAttributeBag;
 @endphp
 
@@ -102,7 +102,7 @@
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
                 ($weight instanceof FontWeight) ? "fi-font-{$weight->value}" : (is_string($weight) ? $weight : ''),
             ])
-            ->color(Link::class, $color)
+            ->color(LinkComponent::class, $color)
     }}
 >
     @if ($iconPosition === IconPosition::Before)
@@ -157,7 +157,7 @@
                 <span
                     @class([
                         'fi-badge',
-                        ...\Filament\Support\get_component_color_classes(Badge::class, $badgeColor),
+                        ...\Filament\Support\get_component_color_classes(BadgeComponent::class, $badgeColor),
                         ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                     ])
                 >

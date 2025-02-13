@@ -2,16 +2,16 @@
     use Filament\Support\Enums\Alignment;
     use Filament\Support\Enums\Width;
     use Filament\Support\Facades\FilamentView;
-    use Filament\Support\View\Components\Modal\Icon;
+    use Filament\Support\View\Components\ModalComponent\IconComponent;
 @endphp
 
 @props([
     'alignment' => Alignment::Start,
     'ariaLabelledby' => null,
-    'autofocus' => \Filament\Support\View\Components\Modal::$isAutofocused,
-    'closeButton' => \Filament\Support\View\Components\Modal::$hasCloseButton,
-    'closeByClickingAway' => \Filament\Support\View\Components\Modal::$isClosedByClickingAway,
-    'closeByEscaping' => \Filament\Support\View\Components\Modal::$isClosedByEscaping,
+    'autofocus' => \Filament\Support\View\Components\ModalComponent::$isAutofocused,
+    'closeButton' => \Filament\Support\View\Components\ModalComponent::$hasCloseButton,
+    'closeByClickingAway' => \Filament\Support\View\Components\ModalComponent::$isClosedByClickingAway,
+    'closeByEscaping' => \Filament\Support\View\Components\ModalComponent::$isClosedByEscaping,
     'closeEventName' => 'close-modal',
     'closeQuietlyEventName' => 'close-modal-quietly',
     'description' => null,
@@ -181,7 +181,7 @@
                                 <div
                                     @class([
                                         'fi-modal-icon-bg',
-                                        ...\Filament\Support\get_component_color_classes(Icon::class, $iconColor),
+                                        ...\Filament\Support\get_component_color_classes(IconComponent::class, $iconColor),
                                     ])
                                 >
                                     {{ \Filament\Support\generate_icon_html($icon, $iconAlias, size: \Filament\Support\Enums\IconSize::Large) }}

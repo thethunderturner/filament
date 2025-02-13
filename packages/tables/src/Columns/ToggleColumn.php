@@ -8,7 +8,7 @@ use Filament\Support\Components\Contracts\HasEmbeddedView;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentView;
-use Filament\Support\View\Components\Toggle;
+use Filament\Support\View\Components\ToggleComponent;
 use Filament\Tables\Columns\Contracts\Editable;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
@@ -87,10 +87,10 @@ class ToggleColumn extends Column implements Editable, HasEmbeddedView
                 x-on:click="if (! $el.hasAttribute('disabled')) state = ! state"
                 x-bind:class="state ? '<?= Arr::toCssClasses([
                     'fi-toggle-on',
-                    ...get_component_color_classes(Toggle::class, $onColor),
+                    ...get_component_color_classes(ToggleComponent::class, $onColor),
                 ]) ?>' : '<?= Arr::toCssClasses([
                     'fi-toggle-off',
-                    ...get_component_color_classes(Toggle::class, $offColor),
+                    ...get_component_color_classes(ToggleComponent::class, $offColor),
                 ]) ?>'"
                 x-tooltip="
                     error === undefined

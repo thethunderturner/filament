@@ -14,10 +14,10 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Enums\TextSize;
-use Filament\Support\View\Components\Badge;
+use Filament\Support\View\Components\BadgeComponent;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\View\Components\Columns\TextColumn\Item;
-use Filament\Tables\View\Components\Columns\TextColumn\Item\Icon;
+use Filament\Tables\View\Components\Columns\TextColumnComponent\ItemComponent;
+use Filament\Tables\View\Components\Columns\TextColumnComponent\ItemComponent\IconComponent;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
@@ -273,7 +273,7 @@ class TextColumn extends Column implements HasEmbeddedView
             $size = $this->getSize($stateItem);
 
             $iconHtml = generate_icon_html($this->getIcon($stateItem), attributes: (new ComponentAttributeBag)
-                ->color(Icon::class, $iconColor), size: match ($size) {
+                ->color(IconComponent::class, $iconColor), size: match ($size) {
                     TextSize::Medium => IconSize::Medium,
                     TextSize::Large => IconSize::Large,
                     default => IconSize::Small,
@@ -321,7 +321,7 @@ class TextColumn extends Column implements HasEmbeddedView
                             ->when($lineClamp, fn (ComponentAttributeBag $attributes) => $attributes->style([
                                 "--line-clamp: {$lineClamp}",
                             ]))
-                            ->color(Item::class, $color)
+                            ->color(ItemComponent::class, $color)
                     ),
                 'badgeAttributes' => $isBadge
                     ? (new ComponentAttributeBag)
@@ -329,7 +329,7 @@ class TextColumn extends Column implements HasEmbeddedView
                             'fi-badge',
                             ($size instanceof TextSize) ? "fi-size-{$size->value}" : $size,
                         ])
-                        ->color(Badge::class, $color ?? 'primary')
+                        ->color(BadgeComponent::class, $color ?? 'primary')
                     : null,
                 'iconAfterHtml' => ($iconPosition === IconPosition::After) ? $iconHtml : '',
                 'iconBeforeHtml' => ($iconPosition === IconPosition::Before) ? $iconHtml : '',

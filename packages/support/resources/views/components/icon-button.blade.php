@@ -1,8 +1,8 @@
 @php
     use Filament\Support\Enums\ActionSize;
     use Filament\Support\Enums\IconSize;
-    use Filament\Support\View\Components\Badge;
-    use Filament\Support\View\Components\IconButton;
+    use Filament\Support\View\Components\BadgeComponent;
+    use Filament\Support\View\Components\IconButtonComponent;
     use Illuminate\View\ComponentAttributeBag;
 @endphp
 
@@ -94,7 +94,7 @@
                 'fi-disabled' => $disabled,
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
             ])
-            ->color(IconButton::class, $color)
+            ->color(IconButtonComponent::class, $color)
     }}
 >
     {{
@@ -121,7 +121,7 @@
                 <span
                     @class([
                         'fi-badge',
-                        ...\Filament\Support\get_component_color_classes(Badge::class, $badgeColor),
+                        ...\Filament\Support\get_component_color_classes(BadgeComponent::class, $badgeColor),
                         ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                     ])
                 >

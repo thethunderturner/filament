@@ -6,8 +6,8 @@ use BackedEnum;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
-use Filament\Support\View\Components\Badge;
-use Filament\Support\View\Components\Button;
+use Filament\Support\View\Components\BadgeComponent;
+use Filament\Support\View\Components\ButtonComponent;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
@@ -107,7 +107,7 @@ trait CanGenerateButtonHtml
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : $size,
                 is_string($labeledFromBreakpoint) ? "fi-labeled-from-{$labeledFromBreakpoint}" : null,
             ])
-            ->color(app(Button::class, ['isOutlined' => $isOutlined]), $color);
+            ->color(app(ButtonComponent::class, ['isOutlined' => $isOutlined]), $color);
 
         $iconHtml = $icon ? generate_icon_html($icon, $iconAlias, (new ComponentAttributeBag([
             'wire:loading.remove.delay.' . config('filament.livewire_loading_delay', 'default') => $hasLoadingIndicator,
@@ -206,7 +206,7 @@ trait CanGenerateButtonHtml
                 <div class="fi-btn-badge-ctn">
                     <span class="<?= Arr::toCssClasses([
                             'fi-badge',
-                            ...get_component_color_classes(Badge::class, $badgeColor),
+                            ...get_component_color_classes(BadgeComponent::class, $badgeColor),
                             ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                         ]) ?>">
                         <?= e($badge) ?>

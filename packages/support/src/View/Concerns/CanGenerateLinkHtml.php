@@ -7,8 +7,8 @@ use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
-use Filament\Support\View\Components\Badge;
-use Filament\Support\View\Components\Link;
+use Filament\Support\View\Components\BadgeComponent;
+use Filament\Support\View\Components\LinkComponent;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
@@ -106,7 +106,7 @@ trait CanGenerateLinkHtml
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : $size,
                 ($weight instanceof FontWeight) ? "fi-font-{$weight->value}" : $weight,
             ])
-            ->color(Link::class, $color);
+            ->color(LinkComponent::class, $color);
 
         $iconHtml = $icon ? generate_icon_html($icon, $iconAlias, (new ComponentAttributeBag([
             'wire:loading.remove.delay.' . config('filament.livewire_loading_delay', 'default') => $hasLoadingIndicator,
@@ -154,7 +154,7 @@ trait CanGenerateLinkHtml
                 <div class="fi-link-badge-ctn">
                     <span class="<?= Arr::toCssClasses([
                         'fi-badge',
-                        ...get_component_color_classes(Badge::class, $badgeColor),
+                        ...get_component_color_classes(BadgeComponent::class, $badgeColor),
                         ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                     ]) ?>">
                         <?= e($badge) ?>

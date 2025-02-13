@@ -19,11 +19,12 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Enums\TextSize;
-use Filament\Support\View\Components\Badge;
+use Filament\Support\View\Components\BadgeComponent;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
+
 use function Filament\Support\generate_href_html;
 use function Filament\Support\generate_icon_html;
 
@@ -328,7 +329,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
                             'fi-badge',
                             ($size instanceof TextSize) ? "fi-size-{$size->value}" : $size,
                         ])
-                        ->color(Badge::class, $color ?? 'primary')
+                        ->color(BadgeComponent::class, $color ?? 'primary')
                     : null,
                 'iconAfterHtml' => ($iconPosition === IconPosition::After) ? $iconHtml : '',
                 'iconBeforeHtml' => ($iconPosition === IconPosition::Before) ? $iconHtml : '',

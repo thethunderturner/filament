@@ -5,8 +5,8 @@ namespace Filament\Support\View\Concerns;
 use BackedEnum;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconSize;
-use Filament\Support\View\Components\Badge;
-use Filament\Support\View\Components\IconButton;
+use Filament\Support\View\Components\BadgeComponent;
+use Filament\Support\View\Components\IconButtonComponent;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
@@ -97,7 +97,7 @@ trait CanGenerateIconButtonHtml
                 'fi-disabled' => $isDisabled,
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : $size,
             ])
-            ->color(IconButton::class, $color);
+            ->color(IconButtonComponent::class, $color);
 
         ob_start(); ?>
 
@@ -130,7 +130,7 @@ trait CanGenerateIconButtonHtml
                 <div class="fi-icon-btn-badge-ctn">
                     <span class="<?= Arr::toCssClasses([
                         'fi-badge',
-                        ...get_component_color_classes(Badge::class, $badgeColor),
+                        ...get_component_color_classes(BadgeComponent::class, $badgeColor),
                         ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                     ]) ?>">
                         <?= e($badge) ?>

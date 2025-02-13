@@ -6,7 +6,7 @@ use BackedEnum;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
-use Filament\Support\View\Components\Badge;
+use Filament\Support\View\Components\BadgeComponent;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Js;
 use Illuminate\View\ComponentAttributeBag;
@@ -87,7 +87,7 @@ trait CanGenerateBadgeHtml
                 'fi-disabled' => $isDisabled,
                 ($size instanceof ActionSize) ? "fi-size-{$size->value}" : $size,
             ])
-            ->color(Badge::class, $color);
+            ->color(BadgeComponent::class, $color);
 
         $iconHtml = $icon ? generate_icon_html($icon, $iconAlias, (new ComponentAttributeBag([
             'wire:loading.remove.delay.' . config('filament.livewire_loading_delay', 'default') => $hasLoadingIndicator,
