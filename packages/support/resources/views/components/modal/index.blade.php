@@ -61,8 +61,10 @@
     {{-- Avoid formatting issues with unclosed elements --}}
 
     <div
-        x-on:click="$el.nextElementSibling.dispatchEvent(new CustomEvent(@js($openEventName)))"
-        {{ $trigger->attributes->class(['fi-modal-trigger']) }}
+        @if (! $trigger->attributes->get('disabled'))
+            x-on:click="$el.nextElementSibling.dispatchEvent(new CustomEvent(@js($openEventName)))"
+        @endif
+        {{ $trigger->attributes->except(['disabled'])->class(['fi-modal-trigger']) }}
     >
         {{ $trigger }}
     </div>
