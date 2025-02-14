@@ -63,7 +63,7 @@
                         state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
                         splitKeys: @js($getSplitKeys()),
                     })"
-            {{  $getExtraAlpineAttributeBag() }}
+            {{ $getExtraAlpineAttributeBag() }}
         >
             <x-filament::input
                 autocomplete="off"
