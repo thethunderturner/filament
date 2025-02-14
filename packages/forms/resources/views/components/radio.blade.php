@@ -2,6 +2,7 @@
     use Filament\Support\Enums\GridDirection;
     use Illuminate\View\ComponentAttributeBag;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $gridDirection = $getGridDirection() ?? GridDirection::Column;
     $id = $getId();
     $isDisabled = $isDisabled();
@@ -9,7 +10,7 @@
     $statePath = $getStatePath();
 @endphp
 
-<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
+<x-dynamic-component :component="$fieldWrapperView" :field="$field">
     <div
         {{
             $getExtraAttributeBag()

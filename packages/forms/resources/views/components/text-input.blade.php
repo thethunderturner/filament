@@ -2,6 +2,7 @@
     use Filament\Forms\Components\TextInput\Actions\HidePasswordAction;
     use Filament\Forms\Components\TextInput\Actions\ShowPasswordAction;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $datalistOptions = $getDatalistOptions();
     $extraAlpineAttributes = $getExtraAlpineAttributes();
     $hasInlineLabel = $hasInlineLabel();
@@ -38,7 +39,7 @@
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
     :has-inline-label="$hasInlineLabel"
 >

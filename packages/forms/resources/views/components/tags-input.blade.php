@@ -1,6 +1,7 @@
 @php
     use Filament\Support\Facades\FilamentView;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $color = $getColor() ?? 'primary';
     $hasInlineLabel = $hasInlineLabel();
     $id = $getId();
@@ -18,7 +19,7 @@
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
     :has-inline-label="$hasInlineLabel"
 >

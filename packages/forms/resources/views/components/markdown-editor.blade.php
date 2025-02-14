@@ -1,11 +1,12 @@
 @php
     use Filament\Support\Facades\FilamentView;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $key = $getKey();
     $statePath = $getStatePath();
 @endphp
 
-<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
+<x-dynamic-component :component="$fieldWrapperView" :field="$field">
     @if ($isDisabled())
         <div
             class="fi-fo-markdown-editor fi-disabled prose dark:prose-invert block w-full max-w-none rounded-lg bg-gray-50 px-3 py-3 text-gray-500 ring-1 shadow-xs ring-gray-950/10 sm:text-sm dark:bg-transparent dark:text-gray-400 dark:ring-white/10"

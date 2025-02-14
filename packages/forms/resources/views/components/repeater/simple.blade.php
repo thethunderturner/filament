@@ -3,6 +3,8 @@
     use Filament\Support\Enums\Alignment;
     use Illuminate\View\ComponentAttributeBag;
 
+    $fieldWrapperView = $getFieldWrapperView();
+
     $items = $getItems();
 
     $addAction = $getAction($getAddActionName());
@@ -23,7 +25,7 @@
     $statePath = $getStatePath();
 @endphp
 
-<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
+<x-dynamic-component :component="$fieldWrapperView" :field="$field">
     <div
         {{
             $attributes

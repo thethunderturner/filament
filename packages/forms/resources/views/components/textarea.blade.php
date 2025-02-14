@@ -1,6 +1,7 @@
 @php
     use Filament\Support\Facades\FilamentView;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $hasInlineLabel = $hasInlineLabel();
     $isConcealed = $isConcealed();
     $isDisabled = $isDisabled();
@@ -12,7 +13,7 @@
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
     :has-inline-label="$hasInlineLabel"
 >

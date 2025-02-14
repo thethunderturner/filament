@@ -1,9 +1,10 @@
 @php
+    $fieldWrapperView = $getFieldWrapperView();
     $statePath = $getStatePath();
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
     :inline-label-vertical-alignment="\Filament\Support\Enums\VerticalAlignment::Center"
 >

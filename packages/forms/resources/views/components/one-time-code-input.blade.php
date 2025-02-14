@@ -1,4 +1,8 @@
-<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
+@php
+    $fieldWrapperView = $getFieldWrapperView();
+@endphp
+
+<x-dynamic-component :component="$fieldWrapperView" :field="$field">
     <x-filament::input.one-time-code
         :attributes="
             \Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())

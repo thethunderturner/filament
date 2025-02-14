@@ -2,6 +2,7 @@
     use Filament\Actions\Action;
     use Filament\Support\Enums\Alignment;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $items = $getItems();
     $blockPickerBlocks = $getBlockPickerBlocks();
     $blockPickerColumns = $getBlockPickerColumns();
@@ -37,7 +38,7 @@
     $blockLabelHeadingTag = $getHeadingTag();
 @endphp
 
-<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
+<x-dynamic-component :component="$fieldWrapperView" :field="$field">
     <div
         {{
             $attributes

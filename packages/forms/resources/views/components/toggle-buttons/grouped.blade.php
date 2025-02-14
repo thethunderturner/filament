@@ -1,4 +1,5 @@
 @php
+    $fieldWrapperView = $getFieldWrapperView();
     $hasInlineLabel = $hasInlineLabel();
     $id = $getId();
     $isDisabled = $isDisabled();
@@ -8,7 +9,7 @@
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
     :has-inline-label="$hasInlineLabel"
 >

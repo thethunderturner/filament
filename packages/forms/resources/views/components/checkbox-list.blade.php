@@ -1,6 +1,7 @@
 @php
     use Filament\Support\Enums\GridDirection;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $gridDirection = $getGridDirection() ?? GridDirection::Column;
     $isBulkToggleable = $isBulkToggleable();
     $isDisabled = $isDisabled();
@@ -8,7 +9,7 @@
     $statePath = $getStatePath();
 @endphp
 
-<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
+<x-dynamic-component :component="$fieldWrapperView" :field="$field">
     <div
         x-data="{
             areAllCheckboxesChecked: false,

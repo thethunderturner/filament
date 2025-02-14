@@ -2,6 +2,7 @@
     use Filament\Support\Enums\GridDirection;
     use Illuminate\View\ComponentAttributeBag;
 
+    $fieldWrapperView = $getFieldWrapperView();
     $gridDirection = $getGridDirection() ?? GridDirection::Column;
     $hasInlineLabel = $hasInlineLabel();
     $id = $getId();
@@ -13,7 +14,7 @@
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
     :has-inline-label="$hasInlineLabel"
 >
