@@ -95,7 +95,9 @@
                 ->class(['fi-fo-text-input'])
         "
     >
-        <x-filament::input :attributes="\Filament\Support\prepare_inherited_attributes($inputAttributes)" />
+        <x-filament::input
+            :attributes="\Filament\Support\prepare_inherited_attributes($inputAttributes)"
+        />
     </x-filament::input.wrapper>
 
     @if ($datalistOptions)

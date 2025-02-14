@@ -1,5 +1,5 @@
 .fi-fo-tags-input {
-    & > .fi-disabled {
+    &.fi-disabled {
         & .fi-badge-delete-btn {
             @apply hidden;
         }

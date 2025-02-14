@@ -46,7 +46,10 @@
         :attributes="
             \Filament\Support\prepare_inherited_attributes($attributes)
                 ->merge($extraAttributes, escape: false)
-                ->class(['fi-fo-tags-input'])
+                ->class([
+                    'fi-fo-tags-input',
+                    'fi-disabled' => $isDisabled,
+                ])
         "
     >
         <div
@@ -60,8 +63,7 @@
                         state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
                         splitKeys: @js($getSplitKeys()),
                     })"
-            {{ $getExtraAlpineAttributeBag()
-                ->class(['fi-disabled' => $isDisabled]) }}
+            {{  $getExtraAlpineAttributeBag() }}
         >
             <x-filament::input
                 autocomplete="off"
