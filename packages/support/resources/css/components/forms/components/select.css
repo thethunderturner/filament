@@ -1,0 +1,17 @@
+.fi-fo-select {
+    & .fi-hidden {
+        @apply hidden;
+    }
+
+    &.fi-fo-select-has-inline-prefix {
+        & .choices__inner {
+            @apply ps-0;
+        }
+    }
+
+    &:not(.fi-fo-select-native) {
+        & select {
+            @apply h-9 w-full rounded-lg border-none bg-transparent bg-none!;
+        }
+    }
+}
