@@ -72,7 +72,7 @@
                     role="step"
                     class="fi-sc-wizard-header-step-btn"
                 >
-                    <div class="fi-sc-wizard-header-step-icon-bg">
+                    <div class="fi-sc-wizard-header-step-icon-ctn">
                         @php
                             $completedIcon = $step->getCompletedIcon();
                         @endphp

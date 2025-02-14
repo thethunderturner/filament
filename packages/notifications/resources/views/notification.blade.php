@@ -1,5 +1,7 @@
 @php
     use Filament\Notifications\Livewire\Notifications;
+    use Filament\Notifications\View\Components\NotificationComponent;
+    use Filament\Notifications\View\Components\NotificationComponent\IconComponent;
     use Filament\Support\Enums\Alignment;
     use Filament\Support\Enums\VerticalAlignment;
     use Illuminate\Support\Arr;
@@ -15,102 +17,71 @@
     $hasBody = filled($body);
 @endphp
 
-<x-filament-notifications::notification
-    :notification="$notification"
-    :x-transition:enter-start="
-        Arr::toCssClasses([
-            'opacity-0',
-            ($this instanceof Notifications)
-            ? match (static::$alignment) {
-                Alignment::Start, Alignment::Left => '-translate-x-12',
-                Alignment::End, Alignment::Right => 'translate-x-12',
-                Alignment::Center => match (static::$verticalAlignment) {
-                    VerticalAlignment::Start => '-translate-y-12',
-                    VerticalAlignment::End => 'translate-y-12',
-                    default => null,
-                },
-                default => null,
-            }
-            : null,
-        ])
-    "
-    :x-transition:leave-end="
-        Arr::toCssClasses([
-            'opacity-0',
-            'scale-95' => ! $isInline,
-        ])
-    "
-    @class([
-        'fi-no-notification w-full overflow-hidden transition duration-300',
-        ...match ($isInline) {
-            true => [
-                'fi-inline',
-            ],
-            false => [
-                'max-w-sm rounded-xl bg-white shadow-lg ring-1 dark:bg-gray-900',
-                match ($color) {
-                    'gray' => 'ring-gray-950/5 dark:ring-white/10',
-                    default => 'fi-color ring-color-600/20 dark:ring-color-400/30',
-                },
-                is_string($color) ? 'fi-color-' . $color : null,
-                'fi-status-' . $status => $status,
-            ],
-        },
-    ])
-    @style([
-        \Filament\Support\get_color_css_variables(
-            $color,
-            shades: [50, 400, 600],
-            alias: 'notifications::notification',
-        ) => ! ($isInline || $color === 'gray'),
-    ])
+<div
+    x-data="notificationComponent({ notification: @js($notification) })"
+    x-transition:enter-start="fi-transition-enter-start"
+    x-transition:leave-end="fi-transition-leave-end"
+    {{
+        (new \Illuminate\View\ComponentAttributeBag)
+            ->merge([
+                'wire:key' => "{$this->getId()}.notifications.{$notification->getId()}",
+                'x-on:close-notification.window' => "if (\$event.detail.id == '{$notification->getId()}') close()",
+            ], escape: false)
+            ->color(NotificationComponent::class, $color)
+            ->class([
+                'fi-no-notification',
+                'fi-inline' => $isInline,
+                "fi-status-{$status}" => $status,
+            ])
+    }}
 >
-    <div
-        @class([
-            'flex w-full gap-3 p-4',
-            match ($color) {
-                'gray' => null,
-                default => 'bg-color-50 dark:bg-color-400/10',
-            },
-        ])
-    >
-        @if ($icon = $getIcon())
-            <x-filament-notifications::icon
-                :color="$getIconColor()"
-                :icon="$icon"
-                :size="$getIconSize()"
-            />
+    @if ($icon = $getIcon())
+        {{
+            \Filament\Support\generate_icon_html(
+                $icon,
+                attributes: (new \Illuminate\View\ComponentAttributeBag)->color(IconComponent::class, $getIconColor())->class(['fi-no-notification-icon']),
+                size: $getIconSize(),
+            )
+        }}
+    @endif
+
+    <div class="fi-no-notification-main">
+        @if ($hasTitle || $hasDate || $hasBody)
+            <div class="fi-no-notification-text">
+                @if ($hasTitle)
+                    <h3 class="fi-no-notification-title">
+                        {{ str($title)->sanitizeHtml()->toHtmlString() }}
+                    </h3>
+                @endif
+
+                @if ($hasDate)
+                    <time class="fi-no-notification-date">
+                        {{ $date }}
+                    </time>
+                @endif
+
+                @if ($hasBody)
+                    <div class="fi-no-notification-body">
+                        {{ str($body)->sanitizeHtml()->toHtmlString() }}
+                    </div>
+                @endif
+            </div>
         @endif
 
-        <div class="mt-0.5 grid flex-1">
-            @if ($hasTitle)
-                <x-filament-notifications::title>
-                    {{ str($title)->sanitizeHtml()->toHtmlString() }}
-                </x-filament-notifications::title>
-            @endif
-
-            @if ($hasDate)
-                <x-filament-notifications::date @class(['mt-1' => $hasTitle])>
-                    {{ $date }}
-                </x-filament-notifications::date>
-            @endif
-
-            @if ($hasBody)
-                <x-filament-notifications::body
-                    @class(['mt-1' => $hasTitle || $hasDate])
-                >
-                    {{ str($body)->sanitizeHtml()->toHtmlString() }}
-                </x-filament-notifications::body>
-            @endif
-
-            @if ($actions = $getActions())
-                <x-filament-notifications::actions
-                    :actions="$actions"
-                    @class(['mt-3' => $hasTitle || $hasDate || $hasBody])
-                />
-            @endif
-        </div>
-
-        <x-filament-notifications::close-button />
+        @if ($actions = $getActions())
+            <div class="fi-ac fi-no-notification-actions">
+                @foreach ($actions as $action)
+                    {{ $action }}
+                @endforeach
+            </div>
+        @endif
     </div>
-</x-filament-notifications::notification>
+
+    <button
+        type="button"
+        x-on:click="close"
+        class="fi-icon-btn fi-no-notification-close-btn"
+    >
+        {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::XMark, alias: 'notifications::notification.close-button') }}
+    </button>
+</div>

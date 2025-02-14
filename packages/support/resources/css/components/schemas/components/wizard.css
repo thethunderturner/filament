@@ -10,7 +10,7 @@
             & .fi-sc-wizard-header-step-btn {
                 @apply flex h-full items-center gap-x-4 px-6 py-4 text-start;
 
-                & .fi-sc-wizard-header-step-icon-bg {
+                & .fi-sc-wizard-header-step-icon-ctn {
                     @apply flex size-10 shrink-0 items-center justify-center rounded-full;
 
                     & .fi-sc-wizard-header-step-number {
@@ -37,7 +37,7 @@
 
             &.fi-completed {
                 & .fi-sc-wizard-header-step-btn {
-                    & .fi-sc-wizard-header-step-icon-bg {
+                    & .fi-sc-wizard-header-step-icon-ctn {
                         @apply bg-primary-600 dark:bg-primary-500;
 
                         & .fi-icon {
@@ -54,7 +54,7 @@
 
                 &:not(.fi-active) {
                     & .fi-sc-wizard-header-step-btn {
-                        & .fi-sc-wizard-header-step-icon-bg {
+                        & .fi-sc-wizard-header-step-icon-ctn {
                             @apply border-gray-300 dark:border-gray-600;
                         }
 
@@ -69,14 +69,14 @@
 
             &:not(.fi-completed) {
                 & .fi-sc-wizard-header-step-btn {
-                    & .fi-sc-wizard-header-step-icon-bg {
+                    & .fi-sc-wizard-header-step-icon-ctn {
                         @apply border-2;
                     }
                 }
 
                 &.fi-active {
                     & .fi-sc-wizard-header-step-btn {
-                        & .fi-sc-wizard-header-step-icon-bg {
+                        & .fi-sc-wizard-header-step-icon-ctn {
                             & .fi-icon {
                                 @apply text-primary-600 dark:text-primary-500;
                             }
@@ -86,7 +86,7 @@
 
                 &:not(.fi-active) {
                     & .fi-sc-wizard-header-step-btn {
-                        & .fi-sc-wizard-header-step-icon-bg {
+                        & .fi-sc-wizard-header-step-icon-ctn {
                             & .fi-icon {
                                 @apply text-gray-500 dark:text-gray-400;
                             }
@@ -97,7 +97,7 @@
 
             &.fi-active {
                 & .fi-sc-wizard-header-step-btn {
-                    & .fi-sc-wizard-header-step-icon-bg {
+                    & .fi-sc-wizard-header-step-icon-ctn {
                         @apply border-primary-600 dark:border-primary-500;
 
                         & .fi-sc-wizard-header-step-number {
@@ -115,7 +115,7 @@
 
             &:not(.fi-active) {
                 & .fi-sc-wizard-header-step-btn {
-                    & .fi-sc-wizard-header-step-icon-bg {
+                    & .fi-sc-wizard-header-step-icon-ctn {
                         & .fi-sc-wizard-header-step-number {
                             @apply text-gray-500 dark:text-gray-400;
                         }

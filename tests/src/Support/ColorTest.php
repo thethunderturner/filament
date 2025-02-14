@@ -3,6 +3,8 @@
 use Filament\Infolists\View\Components\IconEntryComponent\IconComponent as InfolistIconEntryIconComponent;
 use Filament\Infolists\View\Components\TextEntryComponent\ItemComponent as IconTextEntryItemComponent;
 use Filament\Infolists\View\Components\TextEntryComponent\ItemComponent\IconComponent as InfolistTextEntryItemIconComponent;
+use Filament\Notifications\View\Components\NotificationComponent;
+use Filament\Notifications\View\Components\NotificationComponent\IconComponent as NotificationIconComponent;
 use Filament\Schemas\View\Components\IconComponent as SchemaIconComponent;
 use Filament\Support\Colors\Color;
 use Filament\Support\Colors\ColorManager;
@@ -83,6 +85,8 @@ it('generates component classes', function (string | HasColor $component, string
         'input wrapper icon' => InputWrapperIconComponent::class,
         'link' => LinkComponent::class,
         'modal icon' => ModalIconComponent::class,
+        'notification' => NotificationComponent::class,
+        'notification icon' => NotificationIconComponent::class,
         'schema icon' => SchemaIconComponent::class,
         'section icon' => SectionIconComponent::class,
         'stats overview widget stat description' => StatsOverviewWidgetStatDescriptionComponent::class,

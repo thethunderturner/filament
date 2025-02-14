@@ -622,7 +622,7 @@
                         wire:target="removeTableFilters,removeTableFilter"
                         class="fi-icon-btn fi-size-sm"
                     >
-                        {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::XMark, alias: 'tables::filters.remove-all-button', size: \FIlament\Support\Enums\IconSize::Small) }}
+                        {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::XMark, alias: 'tables::filters.remove-all-button', size: \Filament\Support\Enums\IconSize::Small) }}
                     </button>
                 @endif
             </div>
@@ -902,7 +902,7 @@
                                                 type="button"
                                                 class="fi-icon-btn fi-size-sm"
                                             >
-                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ChevronUp, alias: 'tables::grouping.collapse-button', size: \FIlament\Support\Enums\IconSize::Small) }}
+                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ChevronUp, alias: 'tables::grouping.collapse-button', size: \Filament\Support\Enums\IconSize::Small) }}
                                             </button>
                                         @endif
                                     </div>
@@ -1565,7 +1565,7 @@
                                                                 type="button"
                                                                 class="fi-icon-btn fi-size-sm"
                                                             >
-                                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ChevronUp, alias: 'tables::grouping.collapse-button', size: \FIlament\Support\Enums\IconSize::Small) }}
+                                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ChevronUp, alias: 'tables::grouping.collapse-button', size: \Filament\Support\Enums\IconSize::Small) }}
                                                             </button>
                                                         @endif
                                                     </div>
