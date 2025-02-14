@@ -46,24 +46,22 @@
     {{
         $attributes
             ->merge($field?->getExtraFieldWrapperAttributes() ?? [], escape: false)
-            ->class(['fi-fo-field-wrp'])
+            ->class([
+                'fi-fo-field',
+                'fi-fo-field-has-inline-label' => $hasInlineLabel,
+            ])
     }}
 >
     @if ($label && $labelSrOnly)
-        <label for="{{ $id }}" class="sr-only">
+        <label for="{{ $id }}" class="fi-fo-field-label fi-hidden">
             {{ $label }}
         </label>
     @endif
 
     <div
         @class([
-            'grid gap-y-2',
-            'sm:grid-cols-3 sm:gap-x-4' => $hasInlineLabel,
-            match ($inlineLabelVerticalAlignment) {
-                VerticalAlignment::Start => 'sm:items-start',
-                VerticalAlignment::Center => 'sm:items-center',
-                VerticalAlignment::End => 'sm:items-end',
-            } => $hasInlineLabel,
+            'fi-fo-field-label-col',
+            "fi-vertical-align-{$inlineLabelVerticalAlignment->value}" => $hasInlineLabel,
         ])
     >
         {{ $field?->getChildComponentContainer($field::ABOVE_LABEL_CONTAINER) }}
@@ -71,22 +69,22 @@
         @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || $beforeLabelContainer || $afterLabelContainer)
             <div
                 @class([
-                    'flex items-center gap-x-3',
+                    'fi-fo-field-label-ctn',
                     ($label instanceof \Illuminate\View\ComponentSlot) ? $label->attributes->get('class') : null,
                 ])
             >
                 {{ $beforeLabelContainer }}
 
                 @if ($label && (! $labelSrOnly))
-                    <x-filament-forms::field-wrapper.label
-                        :for="$id"
-                        :disabled="$isDisabled"
-                        :prefix="$labelPrefix"
-                        :required="$required"
-                        :suffix="$labelSuffix"
-                    >
-                        {{ $label }}
-                    </x-filament-forms::field-wrapper.label>
+                    <label class="fi-fo-field-label">
+                        {{ $labelPrefix }}
+
+                        {{-- Deliberately poor formatting to ensure that the asterisk sticks to the final word in the label. --}}
+                        {{ $label }}@if ($required && (! $isDisabled))<sup class="fi-fo-field-label-required-mark">*</sup>
+                        @endif
+
+                        {{ $labelSuffix }}
+                    </label>
                 @elseif ($labelPrefix)
                     {{ $labelPrefix }}
                 @elseif ($labelSuffix)
@@ -100,19 +98,14 @@
         {{ $field?->getChildComponentContainer($field::BELOW_LABEL_CONTAINER) }}
 
         @if ((! \Filament\Support\is_slot_empty($slot)) || $hasError || $aboveContentContainer || $belowContentContainer || $beforeContentContainer || $afterContentContainer || $aboveErrorMessageContainer || $belowErrorMessageContainer)
-            <div
-                @class([
-                    'grid auto-cols-fr gap-y-2',
-                    'sm:col-span-2' => $hasInlineLabel,
-                ])
-            >
+            <div class="fi-fo-field-content-col">
                 {{ $aboveContentContainer }}
 
                 @if ($beforeContentContainer || $afterContentContainer)
-                    <div class="flex w-full items-center gap-x-3">
+                    <div class="fi-fo-field-content-ctn">
                         {{ $beforeContentContainer }}
 
-                        <div class="w-full">
+                        <div class="fi-fo-field-content">
                             {{ $slot }}
                         </div>
 
@@ -127,9 +120,12 @@
                 {{ $aboveErrorMessageContainer }}
 
                 @if ($hasError)
-                    <x-filament-forms::field-wrapper.error-message>
+                    <p
+                        data-validation-error
+                        class="fi-fo-field-wrp-error-message"
+                    >
                         {{ $errors->has($statePath) ? $errors->first($statePath) : ($hasNestedRecursiveValidationRules ? $errors->first("{$statePath}.*") : null) }}
-                    </x-filament-forms::field-wrapper.error-message>
+                    </p>
                 @endif
 
                 {{ $belowErrorMessageContainer }}
