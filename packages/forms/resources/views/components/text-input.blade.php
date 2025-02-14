@@ -40,7 +40,7 @@
         $type = $getType();
     }
 
-    $inputAttributes = \Filament\Support\prepare_inherited_attributes($getExtraInputAttributeBag())
+    $inputAttributes = $getExtraInputAttributeBag()
         ->merge($extraAlpineAttributes, escape: false)
         ->merge([
             'autocapitalize' => $getAutocapitalize(),
@@ -95,7 +95,7 @@
                 ->class(['fi-fo-text-input'])
         "
     >
-        <x-filament::input :attributes="$inputAttributes" />
+        <x-filament::input :attributes="\Filament\Support\prepare_inherited_attributes($inputAttributes)" />
     </x-filament::input.wrapper>
 
     @if ($datalistOptions)
