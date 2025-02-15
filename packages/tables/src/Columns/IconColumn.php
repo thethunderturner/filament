@@ -5,6 +5,7 @@ namespace Filament\Tables\Columns;
 use BackedEnum;
 use Closure;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
+use Filament\Support\Concerns\CanWrap;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Facades\FilamentIcon;
@@ -20,13 +21,13 @@ use function Filament\Support\generate_icon_html;
 
 class IconColumn extends Column implements HasEmbeddedView
 {
+    use CanWrap;
     use Concerns\HasColor {
         getColor as getBaseColor;
     }
     use Concerns\HasIcon {
         getIcon as getBaseIcon;
     }
-    use \Filament\Support\Concerns\CanWrap;
 
     protected bool | Closure | null $isBoolean = null;
 

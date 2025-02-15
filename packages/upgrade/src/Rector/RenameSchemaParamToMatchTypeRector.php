@@ -110,7 +110,7 @@ class RenameSchemaParamToMatchTypeRector extends AbstractRector
     }
 
     /**
-     * @param  \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\Closure|\PhpParser\Node\Expr\ArrowFunction  $classMethod
+     * @param  ClassMethod|Function_|Closure|ArrowFunction  $classMethod
      */
     private function shouldSkipParam(Param $param, string $expectedName, $classMethod): bool
     {
