@@ -24,25 +24,17 @@
                 })"
         x-cloak
         x-bind:class="{
-            'pointer-events-none opacity-50 cursor-wait': isUploadingFile,
+            'fi-fo-rich-editor-uploading-file': isUploadingFile,
         }"
+        {{ $getExtraAttributeBag()->class(['fi-fo-rich-editor']) }}
     >
         <x-filament::input.wrapper
             :valid="! $errors->has($statePath)"
-            :attributes="
-                \Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())
-                    ->class(['fi-fo-rich-editor'])
-            "
         >
-            <div
-                @class([
-                    'fi-fo-rich-editor-toolbar relative flex flex-col gap-x-3 border-b border-gray-100 px-2.5 py-2 dark:border-white/10',
-                    'hidden' => ! count($getToolbarButtons()),
-                ])
-            >
-                <div class="flex gap-x-3 overflow-x-auto">
+            @if (filled($getToolbarButtons()))
+                <div class="fi-fo-rich-editor-toolbar">
                     @if ($hasToolbarButton(['bold', 'italic', 'underline', 'strike', 'link']))
-                        <x-filament-forms::rich-editor.toolbar.group>
+                        <div class="fi-fo-rich-editor-toolbar-group">
                             @if ($hasToolbarButton('bold'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="bold"
@@ -50,10 +42,7 @@
                                     :title="__('filament-forms::components.rich_editor.toolbar_buttons.bold')"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::Bold"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Bold, alias: 'forms:components.rich-editor.toolbar.bold') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -64,10 +53,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.italic') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::Italic"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Italic, alias: 'forms:components.rich-editor.toolbar.italic') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -78,10 +64,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.underline') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::Underline"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Underline, alias: 'forms:components.rich-editor.toolbar.underline') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -92,60 +75,55 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.strike') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::Strikethrough"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Strikethrough, alias: 'forms:components.rich-editor.toolbar.strikethrough') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
-                            @if ($hasToolbarButton('sub'))
+                            @if ($hasToolbarButton('subscript'))
                                 <x-filament-forms::rich-editor.toolbar.button
-                                    type="sub"
+                                    type="subscript"
                                     x-on:click="getEditor().chain().focus().toggleSubscript().run()"
-                                    title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.sub') }}"
+                                    title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.subscript') }}"
                                     tabindex="-1"
                                 >
-                                    <svg
-                                        class="-mx-4 h-4 dark:fill-current"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                        data-prefix="fas"
-                                        data-icon="sub"
-                                        role="img"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512"
-                                    >
-                                        <path
+                                    {{ \Filament\Support\generate_icon_html(new \Illuminate\Support\HtmlString(<<<HTML
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512"
                                             fill="currentColor"
-                                            d="M496 448h-16V304a16 16 0 0 0-16-16h-48a16 16 0 0 0-14.29 8.83l-16 32A16 16 0 0 0 400 352h16v96h-16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h96a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM336 64h-67a16 16 0 0 0-13.14 6.87l-79.9 115-79.9-115A16 16 0 0 0 83 64H16A16 16 0 0 0 0 80v48a16 16 0 0 0 16 16h33.48l77.81 112-77.81 112H16a16 16 0 0 0-16 16v48a16 16 0 0 0 16 16h67a16 16 0 0 0 13.14-6.87l79.9-115 79.9 115A16 16 0 0 0 269 448h67a16 16 0 0 0 16-16v-48a16 16 0 0 0-16-16h-33.48l-77.81-112 77.81-112H336a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16z"
-                                        />
-                                    </svg>
+                                            aria-hidden="true"
+                                            data-slot="icon"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M496 448h-16V304a16 16 0 0 0-16-16h-48a16 16 0 0 0-14.29 8.83l-16 32A16 16 0 0 0 400 352h16v96h-16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h96a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM336 64h-67a16 16 0 0 0-13.14 6.87l-79.9 115-79.9-115A16 16 0 0 0 83 64H16A16 16 0 0 0 0 80v48a16 16 0 0 0 16 16h33.48l77.81 112-77.81 112H16a16 16 0 0 0-16 16v48a16 16 0 0 0 16 16h67a16 16 0 0 0 13.14-6.87l79.9-115 79.9 115A16 16 0 0 0 269 448h67a16 16 0 0 0 16-16v-48a16 16 0 0 0-16-16h-33.48l-77.81-112 77.81-112H336a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16z"
+                                            />
+                                        </svg>
+                                    HTML), alias: 'forms:components.rich-editor.toolbar.subscript') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
-                            @if ($hasToolbarButton('sup'))
+                            @if ($hasToolbarButton('superscript'))
                                 <x-filament-forms::rich-editor.toolbar.button
-                                    type="sup"
+                                    type="superscript"
                                     x-on:click="getEditor().chain().focus().toggleSuperscript().run()"
-                                    title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.sup') }}"
+                                    title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.superscript') }}"
                                     tabindex="-1"
                                 >
-                                    <svg
-                                        class="-mx-4 h-4 dark:fill-current"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                        data-prefix="fas"
-                                        data-icon="sup"
-                                        role="img"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512"
-                                    >
-                                        <path
+                                    {{ \Filament\Support\generate_icon_html(new \Illuminate\Support\HtmlString(<<<HTML
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512"
                                             fill="currentColor"
-                                            d="M496 160h-16V16a16 16 0 0 0-16-16h-48a16 16 0 0 0-14.29 8.83l-16 32A16 16 0 0 0 400 64h16v96h-16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h96a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM336 64h-67a16 16 0 0 0-13.14 6.87l-79.9 115-79.9-115A16 16 0 0 0 83 64H16A16 16 0 0 0 0 80v48a16 16 0 0 0 16 16h33.48l77.81 112-77.81 112H16a16 16 0 0 0-16 16v48a16 16 0 0 0 16 16h67a16 16 0 0 0 13.14-6.87l79.9-115 79.9 115A16 16 0 0 0 269 448h67a16 16 0 0 0 16-16v-48a16 16 0 0 0-16-16h-33.48l-77.81-112 77.81-112H336a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16z"
-                                        />
-                                    </svg>
+                                            aria-hidden="true"
+                                            data-slot="icon"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M496 160h-16V16a16 16 0 0 0-16-16h-48a16 16 0 0 0-14.29 8.83l-16 32A16 16 0 0 0 400 64h16v96h-16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h96a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM336 64h-67a16 16 0 0 0-13.14 6.87l-79.9 115-79.9-115A16 16 0 0 0 83 64H16A16 16 0 0 0 0 80v48a16 16 0 0 0 16 16h33.48l77.81 112-77.81 112H16a16 16 0 0 0-16 16v48a16 16 0 0 0 16 16h67a16 16 0 0 0 13.14-6.87l79.9-115 79.9 115A16 16 0 0 0 269 448h67a16 16 0 0 0 16-16v-48a16 16 0 0 0-16-16h-33.48l-77.81-112 77.81-112H336a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16z"
+                                            />
+                                        </svg>
+                                    HTML), alias: 'forms:components.rich-editor.toolbar.superscript') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -156,17 +134,14 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.link') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::Link"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Link, alias: 'forms:components.rich-editor.toolbar.link') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
-                        </x-filament-forms::rich-editor.toolbar.group>
+                        </div>
                     @endif
 
                     @if ($hasToolbarButton(['h1', 'h2', 'h3']))
-                        <x-filament-forms::rich-editor.toolbar.group>
+                        <div class="fi-fo-rich-editor-toolbar-group">
                             @if ($hasToolbarButton('h1'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="heading"
@@ -175,10 +150,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.h1') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::H1"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::H1, alias: 'forms:components.rich-editor.toolbar.h1') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -190,10 +162,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.h2') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::H2"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::H2, alias: 'forms:components.rich-editor.toolbar.h2') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -205,17 +174,14 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.h3') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::H3"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::H3, alias: 'forms:components.rich-editor.toolbar.h3') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
-                        </x-filament-forms::rich-editor.toolbar.group>
+                        </div>
                     @endif
 
                     @if ($hasToolbarButton(['blockquote', 'codeBlock', 'bulletList', 'orderedList']))
-                        <x-filament-forms::rich-editor.toolbar.group>
+                        <div class="fi-fo-rich-editor-toolbar-group">
                             @if ($hasToolbarButton('blockquote'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     type="blockquote"
@@ -223,10 +189,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.blockquote') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::ChatBubbleBottomCenterText"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ChatBubbleBottomCenterText, alias: 'forms:components.rich-editor.toolbar.blockquote') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -237,10 +200,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.code_block') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::CodeBracket"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::CodeBracket, alias: 'forms:components.rich-editor.toolbar.code-block') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -251,10 +211,7 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.bullet_list') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::ListBullet"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ListBullet, alias: 'forms:components.rich-editor.toolbar.bullet-list') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -265,43 +222,34 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.ordered_list') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::NumberedList"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::NumberedList, alias: 'forms:components.rich-editor.toolbar.ordered-list') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
-                        </x-filament-forms::rich-editor.toolbar.group>
+                        </div>
                     @endif
 
                     @if ($hasToolbarButton('attachFiles'))
-                        <x-filament-forms::rich-editor.toolbar.group>
+                        <div class="fi-fo-rich-editor-toolbar-group">
                             <x-filament-forms::rich-editor.toolbar.button
                                 type="image"
                                 :x-on:click="$getAction('attachFiles')->getAlpineClickHandler()"
                                 title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.attach_files') }}"
                                 tabindex="-1"
                             >
-                                <x-filament::icon
-                                    :icon="\Filament\Support\Icons\Heroicon::Photo"
-                                    class="h-5 w-5"
-                                />
+                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Photo, alias: 'forms:components.rich-editor.toolbar.attach-files') }}
                             </x-filament-forms::rich-editor.toolbar.button>
-                        </x-filament-forms::rich-editor.toolbar.group>
+                        </div>
                     @endif
 
                     @if ($hasToolbarButton(['undo', 'redo']))
-                        <x-filament-forms::rich-editor.toolbar.group>
+                        <div class="fi-fo-rich-editor-toolbar-group">
                             @if ($hasToolbarButton('undo'))
                                 <x-filament-forms::rich-editor.toolbar.button
                                     x-on:click="getEditor().chain().focus().undo().run()"
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.undo') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::ArrowUturnLeft"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ArrowUturnLeft, alias: 'forms:components.rich-editor.toolbar.undo') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
 
@@ -311,19 +259,16 @@
                                     title="{{ __('filament-forms::components.rich_editor.toolbar_buttons.redo') }}"
                                     tabindex="-1"
                                 >
-                                    <x-filament::icon
-                                        :icon="\Filament\Support\Icons\Heroicon::ArrowUturnRight"
-                                        class="h-5 w-5"
-                                    />
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ArrowUturnRight, alias: 'forms:components.rich-editor.toolbar.redo') }}
                                 </x-filament-forms::rich-editor.toolbar.button>
                             @endif
-                        </x-filament-forms::rich-editor.toolbar.group>
+                        </div>
                     @endif
                 </div>
-            </div>
+            @endif
 
             <div
-                class="prose min-h-full w-full max-w-none px-5"
+                class="fi-fo-rich-editor-content"
                 x-ref="editor"
                 wire:ignore
             ></div>

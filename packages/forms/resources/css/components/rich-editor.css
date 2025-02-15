@@ -1,9 +1,0 @@
-.fi-fo-rich-editor {
-    & .tiptap:focus {
-        @apply outline-none;
-    }
-
-    & img.fi-loading {
-        @apply animate-pulse;
-    }
-}
