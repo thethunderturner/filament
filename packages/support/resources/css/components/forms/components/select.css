@@ -117,7 +117,7 @@
         @apply border-0 bg-transparent bg-center bg-no-repeat indent-[-9999px] outline-none;
     }
 
-     & .choices[data-type*='select-one'] .choices__button {
+    & .choices[data-type*='select-one'] .choices__button {
         @apply absolute end-0 me-9 h-4 w-4 p-0 opacity-50 transition-opacity duration-75 dark:opacity-40;
         background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==');
         background-size: 0.7142em 0.7142em;
@@ -137,9 +137,12 @@
         @apply opacity-70 dark:opacity-60;
     }
 
-    & .choices[data-type*='select-one']
-    & .choices__item[data-value='']
-    & .choices__button {
+    &
+        .choices[data-type*='select-one']
+        &
+        .choices__item[data-value='']
+        &
+        .choices__button {
         @apply hidden;
     }
 
