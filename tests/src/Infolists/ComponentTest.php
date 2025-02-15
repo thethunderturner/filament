@@ -5,7 +5,7 @@ use Filament\Tests\TestCase;
 
 uses(TestCase::class);
 
-it('can clone', function () {
+it('can be cloned', function () {
     $cloneCallbackCount = 0;
     $cloneCallbackClone = null;
     $cloneCallbackOriginal = null;

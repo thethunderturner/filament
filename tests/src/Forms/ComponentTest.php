@@ -69,7 +69,7 @@ it('can have meta', function () {
         ]);
 });
 
-it('can clone', function () {
+it('can be cloned', function () {
     $cloneCallbackCount = 0;
     $cloneCallbackClone = null;
     $cloneCallbackOriginal = null;

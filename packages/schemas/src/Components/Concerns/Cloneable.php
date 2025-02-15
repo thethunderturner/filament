@@ -6,18 +6,18 @@ use Closure;
 
 trait Cloneable
 {
-	/**
-	 * @var array<Closure>
-	 */
-	protected array $cloneCallbacks = [];
-	
-	public function afterClone(Closure $callback): static
-	{
-		$this->cloneCallbacks[] = $callback;
-		
-		return $this;
-	}
-	
+    /**
+     * @var array<Closure>
+     */
+    protected array $cloneCallbacks = [];
+
+    public function afterClone(Closure $callback): static
+    {
+        $this->cloneCallbacks[] = $callback;
+
+        return $this;
+    }
+
     public function getClone(): static
     {
         $clone = clone $this;
@@ -25,13 +25,13 @@ trait Cloneable
         $clone->flushCachedAbsoluteStatePath();
         $clone->flushCachedInheritanceKey();
         $clone->cloneChildComponents();
-	    
-	    foreach ($this->cloneCallbacks as $callback) {
-		    $clone->evaluate(
-			    value: $callback->bindTo($clone),
-			    namedInjections: ['clone' => $clone, 'original' => $this]
-		    );
-	    }
+
+        foreach ($this->cloneCallbacks as $callback) {
+            $clone->evaluate(
+                value: $callback->bindTo($clone),
+                namedInjections: ['clone' => $clone, 'original' => $this]
+            );
+        }
 
         return $clone;
     }
