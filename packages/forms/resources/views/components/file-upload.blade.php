@@ -224,12 +224,13 @@
                                                 {{ $input['label'] }}
                                             </x-slot>
 
-                                            <x-filament::input
-                                                :x-on:keyup.enter.stop.prevent="$input['alpineSaveHandler']"
-                                                :x-on:blur="$input['alpineSaveHandler']"
-                                                :x-ref="$input['ref']"
-                                                x-on:keydown.enter.preven=""
+                                            <input
+                                                x-on:keyup.enter.stop.prevent="{!! $input['alpineSaveHandler'] !!}"
+                                                x-on:blur="{!! $input['alpineSaveHandler'] !!}"
+                                                x-ref="{{ $input['ref'] }}"
+                                                x-on:keydown.enter.prevent
                                                 type="text"
+                                                class="fi-input"
                                             />
 
                                             <x-slot name="suffix">
@@ -295,27 +296,29 @@
                         <div
                             class="fi-fo-file-upload-editor-control-panel-footer"
                         >
-                            <x-filament::button
-                                color="gray"
+                            <button
+                                type="button"
                                 x-on:click.prevent="pond.imageEditEditor.oncancel"
+                                class="fi-btn"
                             >
                                 {{ __('filament-forms::components.file_upload.editor.actions.cancel.label') }}
-                            </x-filament::button>
+                            </button>
 
-                            <x-filament::button
-                                color="danger"
+                            <button
+                                type="button"
                                 x-on:click.stop.prevent="editor.reset()"
-                                class="ml-auto"
+                                class="fi-btn fi-color fi-color-danger fi-fo-file-upload-editor-control-panel-reset-action"
                             >
                                 {{ __('filament-forms::components.file_upload.editor.actions.reset.label') }}
-                            </x-filament::button>
+                            </button>
 
-                            <x-filament::button
-                                color="success"
+                            <button
+                                type="button"
                                 x-on:click.prevent="saveEditor"
+                                class="fi-btn fi-color fi-color-success"
                             >
                                 {{ __('filament-forms::components.file_upload.editor.actions.save.label') }}
-                            </x-filament::button>
+                            </button>
                         </div>
                     </div>
                 </div>

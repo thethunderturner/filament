@@ -65,18 +65,25 @@
                     })"
             {{ $getExtraAlpineAttributeBag() }}
         >
-            <x-filament::input
-                autocomplete="off"
-                :autofocus="$isAutofocused"
-                :disabled="$isDisabled"
-                :id="$id"
-                :inline-prefix="$isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel))"
-                :inline-suffix="$isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel))"
-                :list="$id . '-suggestions'"
-                :placeholder="$placeholder"
-                type="text"
-                x-bind="input"
-                :attributes="\Filament\Support\prepare_inherited_attributes($extraInputAttributeBag)"
+            <input
+                {{
+                    $extraInputAttributeBag
+                        ->merge([
+                            'autocomplete' => 'off',
+                            'autofocus' => $isAutofocused,
+                            'disabled' => $isDisabled,
+                            'id' => $id,
+                            'list' => $id . '-suggestions',
+                            'placeholder' => $placeholder,
+                            'type' => 'text',
+                            'x-bind' => 'input',
+                        ], escape: false)
+                        ->class([
+                            'fi-input',
+                            'fi-input-has-inline-prefix' => $isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel)),
+                            'fi-input-has-inline-suffix' => $isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel)),
+                        ])
+                }}
             />
 
             <datalist id="{{ $id }}-suggestions">

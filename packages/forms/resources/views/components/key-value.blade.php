@@ -111,7 +111,7 @@
                                     x-model="row.key"
                                     x-on:input.debounce.{{ $debounce ?? '500ms' }}="updateState"
                                     class="fi-input"
-                                 />
+                                />
                             </td>
 
                             <td>

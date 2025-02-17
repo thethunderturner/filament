@@ -140,6 +140,10 @@
             & .fi-fo-file-upload-editor-control-panel-footer {
                 @apply flex items-center gap-3 px-4 py-3;
             }
+
+            & .fi-fo-file-upload-editor-control-panel-reset-action {
+                @apply ml-auto;
+            }
         }
 
         & .cropper-drag-box.cropper-crop.cropper-modal {

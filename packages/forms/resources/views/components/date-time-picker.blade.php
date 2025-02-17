@@ -53,16 +53,14 @@
         :attributes="\Filament\Support\prepare_inherited_attributes($extraAttributeBag)->class(['fi-fo-date-time-picker'])"
     >
         @if ($isNative())
-            <x-filament::input
-                :attributes="
-                    \Filament\Support\prepare_inherited_attributes($extraInputAttributeBag)
+            <input
+                {{
+                    $extraInputAttributeBag
                         ->merge($extraAlpineAttributes, escape: false)
                         ->merge([
                             'autofocus' => $isAutofocused,
                             'disabled' => $isDisabled,
                             'id' => $id,
-                            'inlinePrefix' => $isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel)),
-                            'inlineSuffix' => $isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel)),
                             'list' => $datalistOptions ? $id . '-list' : null,
                             'max' => $hasTime ? $maxDate : ($maxDate ? \Carbon\Carbon::parse($maxDate)->toDateString() : null),
                             'min' => $hasTime ? $minDate : ($minDate ? \Carbon\Carbon::parse($minDate)->toDateString() : null),
@@ -74,7 +72,12 @@
                             $applyStateBindingModifiers('wire:model') => $statePath,
                             'x-data' => count($extraAlpineAttributes) ? '{}' : null,
                         ], escape: false)
-                "
+                        ->class([
+                            'fi-input',
+                            'fi-input-has-inline-prefix' => $isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel)),
+                            'fi-input-has-inline-suffix' => $isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel)),
+                        ])
+                }}
             />
         @else
             <div
