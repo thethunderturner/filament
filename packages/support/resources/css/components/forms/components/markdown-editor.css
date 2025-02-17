@@ -208,14 +208,14 @@
     }
 
     & .EasyMDEContainer .editor-toolbar button::before {
-        @apply block h-5 w-5 bg-gray-700 dark:bg-gray-300;
+        @apply block h-5 w-5 bg-gray-700;
         content: '';
         mask-position: center;
         mask-repeat: no-repeat;
     }
 
     & .EasyMDEContainer .editor-toolbar button.active::before {
-        @apply bg-primary-600 dark:bg-primary-400;
+        @apply bg-primary-600;
     }
 
     & .EasyMDEContainer .editor-toolbar .separator {
@@ -303,5 +303,13 @@
 
     & .EasyMDEContainer .cm-s-easymde span.CodeMirror-selectedtext {
         filter: invert(100%);
+    }
+
+    & .EasyMDEContainer .editor-toolbar button::before {
+        @apply bg-gray-300;
+    }
+
+    & .EasyMDEContainer .editor-toolbar button.active::before {
+        @apply bg-primary-400;
     }
 }
