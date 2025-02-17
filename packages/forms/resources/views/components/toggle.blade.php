@@ -4,7 +4,7 @@
     $fieldWrapperView = $getFieldWrapperView();
     $statePath = $getStatePath();
 
-    $toggleAttributes = (new ComponentAttributeBag)
+    $attributes = (new ComponentAttributeBag)
         ->merge([
             'aria-checked' => 'false',
             'autofocus' => $isAutofocused(),
@@ -31,12 +31,12 @@
     @if ($isInline())
         <x-slot name="labelPrefix">
             <x-filament::toggle
-                :attributes="\Filament\Support\prepare_inherited_attributes($toggleAttributes)"
+                :attributes="\Filament\Support\prepare_inherited_attributes($attributes)"
             />
         </x-slot>
     @else
         <x-filament::toggle
-            :attributes="\Filament\Support\prepare_inherited_attributes($toggleAttributes)"
+            :attributes="\Filament\Support\prepare_inherited_attributes($attributes)"
         />
     @endif
 </x-dynamic-component>

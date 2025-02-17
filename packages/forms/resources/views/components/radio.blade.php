@@ -42,6 +42,7 @@
                     {{
                         $inputAttributes->class([
                             'fi-radio-input',
+                            'fi-valid' => ! $errors->has($statePath),
                             'fi-invalid' => $errors->has($statePath),
                         ])
                     }}
