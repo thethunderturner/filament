@@ -2,6 +2,11 @@
     use Filament\Support\Facades\FilamentView;
 
     $fieldWrapperView = $getFieldWrapperView();
+    $extraAttributeBag = $getExtraAttributeBag();
+    $canEditKeys = $canEditKeys();
+    $canEditValues = $canEditValues();
+    $keyPlaceholder = $getKeyPlaceholder();
+    $valuePlaceholder = $getValuePlaceholder();
     $debounce = $getLiveDebounce();
     $hasInlineLabel = $hasInlineLabel();
     $isAddable = $isAddable();
@@ -15,21 +20,13 @@
     :component="$fieldWrapperView"
     :field="$field"
     :has-inline-label="$hasInlineLabel"
+    class="fi-fo-key-value-wrp"
 >
-    <x-slot
-        name="label"
-        @class([
-            'sm:pt-1.5' => $hasInlineLabel,
-        ])
-    >
-        {{ $getLabel() }}
-    </x-slot>
-
     <x-filament::input.wrapper
         :disabled="$isDisabled"
         :valid="! $errors->has($statePath)"
         :attributes="
-            \Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())
+            \Filament\Support\prepare_inherited_attributes($extraAttributeBag)
                 ->class(['fi-fo-key-value'])
         "
     >
@@ -47,33 +44,25 @@
             {{
                 $attributes
                     ->merge($getExtraAlpineAttributes(), escape: false)
-                    ->class(['divide-y divide-gray-200 dark:divide-white/10'])
+                    ->class(['fi-fo-key-value-table-ctn'])
             }}
         >
-            <table
-                class="w-full table-auto divide-y divide-gray-200 dark:divide-white/5"
-            >
+            <table class="fi-fo-key-value-table">
                 <thead>
                     <tr>
                         @if ($isReorderable && (! $isDisabled))
                             <th
                                 scope="col"
                                 x-show="rows.length"
-                                class="w-9"
+                                class="fi-has-action"
                             ></th>
                         @endif
 
-                        <th
-                            scope="col"
-                            class="px-3 py-2 text-start text-sm font-medium text-gray-700 dark:text-gray-200"
-                        >
+                        <th scope="col">
                             {{ $getKeyLabel() }}
                         </th>
 
-                        <th
-                            scope="col"
-                            class="px-3 py-2 text-start text-sm font-medium text-gray-700 dark:text-gray-200"
-                        >
+                        <th scope="col">
                             {{ $getValueLabel() }}
                         </th>
 
@@ -81,7 +70,7 @@
                             <th
                                 scope="col"
                                 x-show="rows.length"
-                                class="w-9"
+                                class="fi-has-action"
                             ></th>
                         @endif
                     </tr>
@@ -93,7 +82,6 @@
                         x-sortable
                         data-sortable-animation-duration="{{ $getReorderAnimationDuration() }}"
                     @endif
-                    class="divide-y divide-gray-200 dark:divide-white/5"
                 >
                     <template
                         x-bind:key="index"
@@ -103,20 +91,19 @@
                             @if ($isReorderable)
                                 x-bind:x-sortable-item="row.key"
                             @endif
-                            class="divide-x divide-gray-200 rtl:divide-x-reverse dark:divide-white/5"
                         >
                             @if ($isReorderable && (! $isDisabled))
-                                <td class="p-0.5">
-                                    <div x-sortable-handle class="flex">
+                                <td class="fi-has-action">
+                                    <div x-sortable-handle class="fi-fo-key-value-table-row-sortable-handle">
                                         {{ $getAction('reorder') }}
                                     </div>
                                 </td>
                             @endif
 
-                            <td class="w-1/2 p-0">
+                            <td>
                                 <x-filament::input
-                                    :disabled="(! $canEditKeys()) || $isDisabled"
-                                    :placeholder="filled($placeholder = $getKeyPlaceholder()) ? $placeholder : null"
+                                    :disabled="(! $canEditKeys) || $isDisabled"
+                                    :placeholder="filled($keyPlaceholder) ? $keyPlaceholder : null"
                                     type="text"
                                     x-model="row.key"
                                     :attributes="
@@ -126,14 +113,13 @@
                                             ])
                                         )
                                     "
-                                    class="font-mono"
                                 />
                             </td>
 
-                            <td class="w-1/2 p-0">
+                            <td>
                                 <x-filament::input
-                                    :disabled="(! $canEditValues()) || $isDisabled"
-                                    :placeholder="filled($placeholder = $getValuePlaceholder()) ? $placeholder : null"
+                                    :disabled="(! $canEditValues) || $isDisabled"
+                                    :placeholder="filled($valuePlaceholder) ? $valuePlaceholder : null"
                                     type="text"
                                     x-model="row.value"
                                     :attributes="
@@ -143,12 +129,11 @@
                                             ])
                                         )
                                     "
-                                    class="font-mono"
                                 />
                             </td>
 
                             @if ($isDeletable && (! $isDisabled))
-                                <td class="p-0.5">
+                                <td class="fi-has-action">
                                     <div x-on:click="deleteRow(index)">
                                         {{ $getAction('delete') }}
                                     </div>
@@ -160,10 +145,8 @@
             </table>
 
             @if ($isAddable && (! $isDisabled))
-                <div class="flex justify-center px-3 py-2">
-                    <span x-on:click="addRow" class="flex">
-                        {{ $getAction('add') }}
-                    </span>
+                <div x-on:click="addRow" class="fi-fo-key-value-add-action-ctn">
+                    {{ $getAction('add') }}
                 </div>
             @endif
         </div>
