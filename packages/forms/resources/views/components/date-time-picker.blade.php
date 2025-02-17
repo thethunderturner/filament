@@ -160,9 +160,7 @@
                                 x-model="focusedMonth"
                                 class="fi-fo-date-time-picker-month-select"
                             >
-                                <template
-                                    x-for="(month, index) in months"
-                                >
+                                <template x-for="(month, index) in months">
                                     <option
                                         x-bind:value="index"
                                         x-text="month"
@@ -224,9 +222,7 @@
                     @endif
 
                     @if ($hasTime)
-                        <div
-                            class="fi-fo-date-time-picker-time-inputs"
-                        >
+                        <div class="fi-fo-date-time-picker-time-inputs">
                             <input
                                 max="23"
                                 min="0"
