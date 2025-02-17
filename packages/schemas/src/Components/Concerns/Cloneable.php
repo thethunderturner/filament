@@ -9,11 +9,11 @@ trait Cloneable
     /**
      * @var array<Closure>
      */
-    protected array $cloneCallbacks = [];
+    protected array $afterCloned = [];
 
-    public function afterClone(Closure $callback): static
+    public function afterCloned(Closure $callback): static
     {
-        $this->cloneCallbacks[] = $callback;
+        $this->afterCloned[] = $callback;
 
         return $this;
     }
@@ -26,7 +26,7 @@ trait Cloneable
         $clone->flushCachedInheritanceKey();
         $clone->cloneChildComponents();
 
-        foreach ($this->cloneCallbacks as $callback) {
+        foreach ($this->afterCloned as $callback) {
             $clone->evaluate(
                 value: $callback->bindTo($clone),
                 namedInjections: ['clone' => $clone, 'original' => $this]

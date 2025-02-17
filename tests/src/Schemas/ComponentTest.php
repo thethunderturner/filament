@@ -75,7 +75,7 @@ it('can be cloned', function () {
     $cloneCallbackOriginal = null;
 
     $component = (new Component)
-        ->afterClone(function (Component $clone, Component $original) use (&$cloneCallbackCount, &$cloneCallbackClone, &$cloneCallbackOriginal) {
+        ->afterCloned(function (Component $clone, Component $original) use (&$cloneCallbackCount, &$cloneCallbackClone, &$cloneCallbackOriginal) {
             $cloneCallbackCount++;
             $cloneCallbackClone = $clone;
             $cloneCallbackOriginal = $original;
