@@ -104,34 +104,24 @@
                             @endif
 
                             <td>
-                                <x-filament::input
-                                    :disabled="(! $canEditKeys) || $isDisabled"
-                                    :placeholder="filled($keyPlaceholder) ? $keyPlaceholder : null"
+                                <input
+                                    @disabled((! $canEditKeys) || $isDisabled)
+                                    placeholder="{{ $keyPlaceholder }}"
                                     type="text"
                                     x-model="row.key"
-                                    :attributes="
-                                        \Filament\Support\prepare_inherited_attributes(
-                                            new \Illuminate\View\ComponentAttributeBag([
-                                                'x-on:input.debounce.' . ($debounce ?? '500ms') => 'updateState',
-                                            ])
-                                        )
-                                    "
-                                />
+                                    x-on:input.debounce.{{ $debounce ?? '500ms' }}="updateState"
+                                    class="fi-input"
+                                 />
                             </td>
 
                             <td>
-                                <x-filament::input
-                                    :disabled="(! $canEditValues) || $isDisabled"
-                                    :placeholder="filled($valuePlaceholder) ? $valuePlaceholder : null"
+                                <input
+                                    @disabled((! $canEditValues) || $isDisabled)
+                                    placeholder="{{ $valuePlaceholder }}"
                                     type="text"
                                     x-model="row.value"
-                                    :attributes="
-                                        \Filament\Support\prepare_inherited_attributes(
-                                            new \Illuminate\View\ComponentAttributeBag([
-                                                'x-on:input.debounce.' . ($debounce ?? '500ms') => 'updateState',
-                                            ])
-                                        )
-                                    "
+                                    x-on:input.debounce.{{ $debounce ?? '500ms' }}="updateState"
+                                    class="fi-input"
                                 />
                             </td>
 
