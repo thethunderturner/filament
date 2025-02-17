@@ -6,11 +6,10 @@ use Closure;
 use Exception;
 use Filament\Support\Concerns\HasAlignment;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
-use Filament\Support\Enums\IconSize;
-use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
+
 use function Filament\Support\generate_icon_html;
 
 class FileUpload extends BaseFileUpload
@@ -539,24 +538,24 @@ class FileUpload extends BaseFileUpload
                     'label' => __('filament-forms::components.file_upload.editor.actions.zoom_in.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::MagnifyingGlassPlus,
-                            alias: 'forms::components.file-upload.editor.actions.zoom-in',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.zoom-in',
+                    ),
                     'alpineClickHandler' => 'editor.zoom(0.1)',
                 ],
                 [
                     'label' => __('filament-forms::components.file_upload.editor.actions.zoom_out.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::MagnifyingGlassMinus,
-                            alias: 'forms::components.file-upload.editor.actions.zoom-out',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.zoom-out',
+                    ),
                     'alpineClickHandler' => 'editor.zoom(-0.1)',
                 ],
                 [
                     'label' => __('filament-forms::components.file_upload.editor.actions.zoom_100.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::ArrowsPointingOut,
-                            alias: 'forms::components.file-upload.editor.actions.zoom-100',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.zoom-100',
+                    ),
                     'alpineClickHandler' => 'editor.zoomTo(1)',
                 ],
             ],
@@ -565,32 +564,32 @@ class FileUpload extends BaseFileUpload
                     'label' => __('filament-forms::components.file_upload.editor.actions.move_left.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::ArrowLeftCircle,
-                            alias: 'forms::components.file-upload.editor.actions.move-left',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.move-left',
+                    ),
                     'alpineClickHandler' => 'editor.move(-10, 0)',
                 ],
                 [
                     'label' => __('filament-forms::components.file_upload.editor.actions.move_right.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::ArrowRightCircle,
-                            alias: 'forms::components.file-upload.editor.actions.move-right',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.move-right',
+                    ),
                     'alpineClickHandler' => 'editor.move(10, 0)',
                 ],
                 [
                     'label' => __('filament-forms::components.file_upload.editor.actions.move_up.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::ArrowUpCircle,
-                            alias: 'forms::components.file-upload.editor.actions.move-up',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.move-up',
+                    ),
                     'alpineClickHandler' => 'editor.move(0, -10)',
                 ],
                 [
                     'label' => __('filament-forms::components.file_upload.editor.actions.move_down.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::ArrowDownCircle,
-                            alias: 'forms::components.file-upload.editor.actions.move-down',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.move-down',
+                    ),
                     'alpineClickHandler' => 'editor.move(0, 10)',
                 ],
             ],
@@ -599,16 +598,16 @@ class FileUpload extends BaseFileUpload
                     'label' => __('filament-forms::components.file_upload.editor.actions.rotate_left.label'),
                     'iconHtml' => generate_icon_html(
                         Heroicon::ArrowUturnLeft,
-                            alias: 'forms::components.file-upload.editor.actions.rotate-left',
-                        ),
+                        alias: 'forms::components.file-upload.editor.actions.rotate-left',
+                    ),
                     'alpineClickHandler' => 'editor.rotate(-90)',
                 ],
                 [
                     'label' => __('filament-forms::components.file_upload.editor.actions.rotate_right.label'),
                     'iconHtml' => generate_icon_html(
-                            Heroicon::ArrowUturnRight,
-                            alias: 'forms::components.file-upload.editor.actions.rotate-right',
-                        ),
+                        Heroicon::ArrowUturnRight,
+                        alias: 'forms::components.file-upload.editor.actions.rotate-right',
+                    ),
                     'alpineClickHandler' => 'editor.rotate(90)',
                 ],
                 [

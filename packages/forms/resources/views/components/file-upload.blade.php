@@ -173,14 +173,19 @@
 
                 <div class="fi-fo-file-upload-editor-window">
                     <div class="fi-fo-file-upload-editor-image-ctn">
-                        <img x-ref="editor" class="fi-fo-file-upload-editor-image" />
+                        <img
+                            x-ref="editor"
+                            class="fi-fo-file-upload-editor-image"
+                        />
                     </div>
 
-                    <div
-                        class="fi-fo-file-upload-editor-control-panel"
-                    >
-                        <div class="fi-fo-file-upload-editor-control-panel-main">
-                            <div class="fi-fo-file-upload-editor-control-panel-group">
+                    <div class="fi-fo-file-upload-editor-control-panel">
+                        <div
+                            class="fi-fo-file-upload-editor-control-panel-main"
+                        >
+                            <div
+                                class="fi-fo-file-upload-editor-control-panel-group"
+                            >
                                 @foreach ([
                                     [
                                         'label' => __('filament-forms::components.file_upload.editor.fields.x_position.label'),
@@ -235,7 +240,9 @@
                                 @endforeach
                             </div>
 
-                            <div class="fi-fo-file-upload-editor-control-panel-group">
+                            <div
+                                class="fi-fo-file-upload-editor-control-panel-group"
+                            >
                                 @foreach ($getImageEditorActions() as $groupedActions)
                                     <div class="fi-btn-group">
                                         @foreach ($groupedActions as $action)
@@ -254,8 +261,12 @@
                             </div>
 
                             @if (count($aspectRatios = $getImageEditorAspectRatiosForJs()))
-                                <div class="fi-fo-file-upload-editor-control-panel-group">
-                                    <div class="fi-fo-file-upload-editor-control-panel-group-title">
+                                <div
+                                    class="fi-fo-file-upload-editor-control-panel-group"
+                                >
+                                    <div
+                                        class="fi-fo-file-upload-editor-control-panel-group-title"
+                                    >
                                         {{ __('filament-forms::components.file_upload.editor.aspect_ratios.label') }}
                                     </div>
 
@@ -264,7 +275,10 @@
                                             @foreach ($ratiosChunk as $label => $ratio)
                                                 <button
                                                     type="button"
-                                                    x-on:click.stop.prevent="currentRatio = @js($label); editor.setAspectRatio(@js($ratio))"
+                                                    x-on:click.stop.prevent="
+                                                        currentRatio = @js($label)
+                                                        editor.setAspectRatio(@js($ratio))
+                                                    "
                                                     x-tooltip="{ content: @js(__('filament-forms::components.file_upload.editor.actions.set_aspect_ratio.label', ['ratio' => $label])), theme: $store.theme }"
                                                     x-bind:class="{ 'fi-active': currentRatio === @js($label) }"
                                                     class="fi-btn"
