@@ -276,7 +276,7 @@
                                                 <button
                                                     type="button"
                                                     x-on:click.stop.prevent="
-                                                        currentRatio = @js($label)
+                                                        currentRatio = @js($label);
                                                         editor.setAspectRatio(@js($ratio))
                                                     "
                                                     x-tooltip="{ content: @js(__('filament-forms::components.file_upload.editor.actions.set_aspect_ratio.label', ['ratio' => $label])), theme: $store.theme }"
