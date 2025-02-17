@@ -288,7 +288,7 @@ class AssociateAction extends Action
             ->getOptionLabelsUsing(function (array $values) use ($table): array {
                 $relationship = Relation::noConstraints(fn () => $table->getRelationship());
 
-                return $relationship->getQuery()->find($values)
+                return $relationship->getQuery()->findMany($values)
                     ->mapWithKeys(fn (Model $record): array => [$record->getKey() => $this->getRecordTitle($record)])
                     ->all();
             })

@@ -4,6 +4,7 @@ namespace Filament\Tables\Columns;
 
 use Closure;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
+use Filament\Support\Concerns\CanWrap;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\TextSize;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -18,7 +19,7 @@ use Throwable;
 
 class ImageColumn extends Column implements HasEmbeddedView
 {
-    use \Filament\Support\Concerns\CanWrap;
+    use CanWrap;
 
     protected string | Closure | null $disk = null;
 

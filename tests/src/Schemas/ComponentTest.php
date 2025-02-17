@@ -68,3 +68,28 @@ it('can have meta', function () {
             'bob' => 'baz',
         ]);
 });
+
+it('can be cloned', function () {
+    $afterClonedCallbackCalledCount = 0;
+    $afterClonedCallbackClone = null;
+    $afterClonedCallbackOriginal = null;
+
+    $component = (new Component)
+        ->afterCloned(function (Component $clone, Component $original) use (&$afterClonedCallbackCalledCount, &$afterClonedCallbackClone, &$afterClonedCallbackOriginal) {
+            $afterClonedCallbackCalledCount++;
+            $afterClonedCallbackClone = $clone;
+            $afterClonedCallbackOriginal = $original;
+        });
+
+    $clone = $component->getClone();
+
+    expect($afterClonedCallbackCalledCount)
+        ->toBe(1);
+
+    expect($afterClonedCallbackClone)
+        ->not->toBe($component)
+        ->toBe($clone);
+
+    expect($afterClonedCallbackOriginal)
+        ->toBe($component);
+});
