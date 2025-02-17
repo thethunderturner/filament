@@ -95,8 +95,14 @@
                 ->class(['fi-fo-text-input'])
         "
     >
-        <x-filament::input
-            :attributes="\Filament\Support\prepare_inherited_attributes($inputAttributes)"
+        <input
+            {{
+                $inputAttributes->class([
+                    'fi-input',
+                    'fi-input-has-inline-prefix' => $isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel)),
+                    'fi-input-has-inline-suffix' => $isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel)),
+                ])
+            }}
         />
     </x-filament::input.wrapper>
 

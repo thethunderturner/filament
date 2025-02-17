@@ -37,9 +37,14 @@
             @endphp
 
             <label class="fi-fo-radio-label">
-                <x-filament::input.radio
-                    :valid="! $errors->has($statePath)"
-                    :attributes="\Filament\Support\prepare_inherited_attributes($inputAttributes)"
+                <input
+                    type="radio"
+                    {{
+                        $inputAttributes->class([
+                            'fi-radio-input',
+                            'fi-invalid' => $errors->has($statePath),
+                        ])
+                    }}
                 />
 
                 <div class="fi-fo-radio-label-text">

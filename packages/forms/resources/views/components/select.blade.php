@@ -55,19 +55,21 @@
         "
     >
         @if ($isNative)
-            <x-filament::input.select
-                :autofocus="$isAutofocused"
-                :disabled="$isDisabled"
-                :id="$id"
-                :inline-prefix="$isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel))"
-                :inline-suffix="$isSuffixInline && (count($suffixActions) || $suffixIcon || filled($suffixLabel))"
-                :required="$isRequired && (! $isConcealed)"
-                :attributes="
+            <select
+                {{
                     $extraInputAttributeBag
                         ->merge([
+                            'autofocus' => $isAutofocused,
+                            'disabled' => $isDisabled,
+                            'id' => $id,
+                            'required' => $isRequired && (! $isConcealed),
                             $applyStateBindingModifiers('wire:model') => $statePath,
                         ], escape: false)
-                "
+                        ->class([
+                            'fi-select-input',
+                            'fi-select-input-has-inline-prefix' => $isPrefixInline && (count($prefixActions) || $prefixIcon || filled($prefixLabel)),
+                        ])
+                }}
             >
                 @if ($canSelectPlaceholder)
                     <option value="">
@@ -106,7 +108,7 @@
                         </option>
                     @endif
                 @endforeach
-            </x-filament::input.select>
+            </select>
         @else
             <div
                 class="fi-hidden"
