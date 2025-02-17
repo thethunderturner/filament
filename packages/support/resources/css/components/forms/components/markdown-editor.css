@@ -24,10 +24,6 @@
 
     &:not(.fi-disabled) {
         @apply max-w-full overflow-hidden font-mono text-base text-gray-950 sm:text-sm dark:text-white;
-
-        & textarea {
-            @apply hidden;
-        }
     }
 
     &.fi-disabled {

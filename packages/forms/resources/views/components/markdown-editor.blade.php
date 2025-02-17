@@ -55,7 +55,7 @@
                 wire:ignore
                 {{ $getExtraAlpineAttributeBag() }}
             >
-                <textarea x-ref="editor"></textarea>
+                <textarea x-ref="editor" x-cloak></textarea>
             </div>
         </x-filament::input.wrapper>
     @endif
