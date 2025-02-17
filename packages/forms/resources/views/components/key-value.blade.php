@@ -94,7 +94,10 @@
                         >
                             @if ($isReorderable && (! $isDisabled))
                                 <td class="fi-has-action">
-                                    <div x-sortable-handle class="fi-fo-key-value-table-row-sortable-handle">
+                                    <div
+                                        x-sortable-handle
+                                        class="fi-fo-key-value-table-row-sortable-handle"
+                                    >
                                         {{ $getAction('reorder') }}
                                     </div>
                                 </td>
@@ -145,7 +148,10 @@
             </table>
 
             @if ($isAddable && (! $isDisabled))
-                <div x-on:click="addRow" class="fi-fo-key-value-add-action-ctn">
+                <div
+                    x-on:click="addRow"
+                    class="fi-fo-key-value-add-action-ctn"
+                >
                     {{ $getAction('add') }}
                 </div>
             @endif
