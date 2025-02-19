@@ -398,7 +398,6 @@ class ImportAction extends Action
     public function getUploadedFileStream(TemporaryUploadedFile $file)
     {
         $fileDisk = invade($file)->disk; /** @phpstan-ignore-line */
-
         if (config("filesystems.disks.{$fileDisk}.driver") !== 's3') {
             $resource = $file->readStream();
         } else {
