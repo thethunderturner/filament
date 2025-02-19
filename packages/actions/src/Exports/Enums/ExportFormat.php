@@ -6,10 +6,11 @@ use Filament\Actions\Action as NotificationAction;
 use Filament\Actions\Exports\Downloaders\Contracts\Downloader;
 use Filament\Actions\Exports\Downloaders\CsvDownloader;
 use Filament\Actions\Exports\Downloaders\XlsxDownloader;
+use Filament\Actions\Exports\Enums\Contracts\ExportFormat as ExportFormatInterface;
 use Filament\Actions\Exports\Models\Export;
 use Illuminate\Support\Facades\URL;
 
-enum ExportFormat: string
+enum ExportFormat: string implements ExportFormatInterface
 {
     case Csv = 'csv';
 

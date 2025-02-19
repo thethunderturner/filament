@@ -6,6 +6,7 @@ use AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade;
 use Closure;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ExportBulkAction;
+use Filament\Actions\Exports\Enums\Contracts\ExportFormat as ExportFormatInterface;
 use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
@@ -56,7 +57,7 @@ trait CanExportRecords
     protected string | Closure | null $fileName = null;
 
     /**
-     * @var array<ExportFormat> | Closure | null
+     * @var array<ExportFormatInterface> | Closure | null
      */
     protected array | Closure | null $formats = null;
 
@@ -389,7 +390,7 @@ trait CanExportRecords
     }
 
     /**
-     * @param  array<ExportFormat> | Closure | null  $formats
+     * @param  array<ExportFormatInterface> | Closure | null  $formats
      */
     public function formats(array | Closure | null $formats): static
     {
@@ -399,7 +400,7 @@ trait CanExportRecords
     }
 
     /**
-     * @return array<ExportFormat> | null
+     * @return array<ExportFormatInterface> | null
      */
     public function getFormats(): ?array
     {
