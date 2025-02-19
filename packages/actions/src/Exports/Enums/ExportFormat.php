@@ -2,7 +2,7 @@
 
 namespace Filament\Actions\Exports\Enums;
 
-use Filament\Actions\Action as NotificationAction;
+use Filament\Actions\Action;
 use Filament\Actions\Exports\Downloaders\Contracts\Downloader;
 use Filament\Actions\Exports\Downloaders\CsvDownloader;
 use Filament\Actions\Exports\Downloaders\XlsxDownloader;
@@ -24,9 +24,9 @@ enum ExportFormat: string implements ExportFormatInterface
         };
     }
 
-    public function getDownloadNotificationAction(Export $export, string $authGuard): NotificationAction
+    public function getDownloadNotificationAction(Export $export, string $authGuard): Action
     {
-        return NotificationAction::make("download_{$this->value}")
+        return Action::make("download_{$this->value}")
             ->label(__("filament-actions::export.notifications.completed.actions.download_{$this->value}.label"))
             ->url(URL::signedRoute('filament.exports.download', ['authGuard' => $authGuard, 'export' => $export, 'format' => $this], absolute: false), shouldOpenInNewTab: true)
             ->markAsRead();
