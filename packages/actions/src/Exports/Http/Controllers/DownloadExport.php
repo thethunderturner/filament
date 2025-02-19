@@ -40,8 +40,8 @@ class DownloadExport
         return $format->getDownloader()($export);
     }
 
-     protected function resolveFormatFromRequest(Request $request): ?ExportFormatInterface
-     {
+    protected function resolveFormatFromRequest(Request $request): ?ExportFormatInterface
+    {
         return ExportFormat::tryFrom($request->query('format'));
-     }
+    }
 }
