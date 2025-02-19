@@ -98,7 +98,7 @@
     }
 
     & .fi-fo-repeater-add {
-        @apply flex;
+        @apply flex w-full;
 
         &.fi-align-start,
         &.fi-align-left {
@@ -136,7 +136,7 @@
     }
 
     & .fi-fo-repeater-add {
-        @apply flex;
+        @apply flex w-full;
 
         &.fi-align-start,
         &.fi-align-left {
