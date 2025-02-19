@@ -11,6 +11,7 @@
     $statePath = $getStatePath();
     $options = $getOptions();
     $livewireKey = $getLivewireKey();
+    $wireModelAttribute = $applyStateBindingModifiers('wire:model');
 @endphp
 
 <x-dynamic-component :component="$fieldWrapperView" :field="$field">
@@ -106,7 +107,7 @@
                                         'disabled' => $isDisabled || $isOptionDisabled($value, $label),
                                         'value' => $value,
                                         'wire:loading.attr' => 'disabled',
-                                        $applyStateBindingModifiers('wire:model') => $statePath,
+                                        $wireModelAttribute => $statePath,
                                         'x-on:change' => $isBulkToggleable ? 'checkIfAllCheckboxesAreChecked()' : null,
                                     ], escape: false)
                                     ->class([

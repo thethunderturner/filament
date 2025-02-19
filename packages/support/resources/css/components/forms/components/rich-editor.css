@@ -20,7 +20,7 @@
     }
 
     & .fi-fo-rich-editor-content {
-        @apply prose min-h-full w-full max-w-none px-5;
+        @apply prose dark:prose-invert min-h-full w-full max-w-none px-5;
     }
 
     & .tiptap:focus {
