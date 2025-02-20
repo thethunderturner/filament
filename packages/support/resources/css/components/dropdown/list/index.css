@@ -1,3 +1,5 @@
-.fi-dropdown-list {
-    @apply p-1;
+@layer components {
+    .fi-dropdown-list {
+        @apply p-1;
+    }
 }

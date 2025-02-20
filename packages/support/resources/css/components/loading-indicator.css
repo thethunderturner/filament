@@ -1,3 +1,5 @@
-.fi-loading-indicator {
-    @apply animate-spin;
+@layer components {
+    .fi-loading-indicator {
+        @apply animate-spin;
+    }
 }

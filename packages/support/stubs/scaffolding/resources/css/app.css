@@ -1,2 +1,4 @@
 @import 'tailwindcss';
-@import '/vendor/filament/support/resources/css/tailwind.css';
+@import '/vendor/filament/support/resources/css/index.css';
+
+@variant dark (&:where(.dark, .dark *));

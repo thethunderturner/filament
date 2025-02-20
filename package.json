@@ -3,14 +3,12 @@
     "type": "module",
     "scripts": {
         "dev:js": "node bin/build.js --dev",
-        "dev:forms-css": "npx @tailwindcss/cli -i ./packages/forms/resources/css/index.css -o ./packages/forms/dist/index.css --watch",
+        "dev:forms-css": "npx @tailwindcss/cli -i ./packages/forms/dist/index.css -o ./packages/forms/dist/index.css --watch",
         "dev:panels-css": "npx @tailwindcss/cli -i ./packages/panels/resources/css/theme.css -o ./packages/panels/dist/theme.css --watch",
-        "dev:support-css": "npx @tailwindcss/cli -i ./packages/support/resources/css/index.css -o ./packages/support/dist/index.css --watch",
         "dev": "npm-run-all --parallel dev:*",
         "build:js": "node bin/build.js",
-        "build:forms-css": "npx @tailwindcss/cli -i ./packages/forms/resources/css/index.css -o ./packages/forms/dist/index.css --minify",
+        "build:forms-css": "npx @tailwindcss/cli -i ./packages/forms/dist/index.css -o ./packages/forms/dist/index.css --minify",
         "build:panels-css": "npx @tailwindcss/cli -i ./packages/panels/resources/css/theme.css -o ./packages/panels/dist/theme.css --minify",
-        "build:support-css": "npx @tailwindcss/cli -i ./packages/support/resources/css/index.css -o ./packages/support/dist/index.css --minify",
         "build": "npm-run-all build:*",
         "build-demo": "npm run build && cd ../demo && php artisan filament:upgrade && cd ../filament && cd docs-assets/app && php artisan filament:upgrade && npm run build && cd ../../",
         "prettier": "npx prettier --write ."

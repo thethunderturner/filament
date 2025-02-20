@@ -1,7 +1,15 @@
-@import 'tailwindcss' source(none);
-@import '../../../support/resources/css/tailwind.css';
+@import '../../../support/resources/css/index.css';
+@import '../../../actions/resources/css/index.css';
+@import '../../../forms/resources/css/index.css';
+@import '../../../infolists/resources/css/index.css';
+@import '../../../notifications/resources/css/index.css';
+@import '../../../schemas/resources/css/index.css';
+@import '../../../tables/resources/css/index.css';
+@import '../../../widgets/resources/css/index.css';
 
-@import './base.css' layer(base);
+@import './base.css';
+
+@variant dark (&:where(.dark, .dark *));
 
 @theme inline {
     --font-mono: var(--mono-font-family), ui-monospace, SFMono-Regular, Menlo,

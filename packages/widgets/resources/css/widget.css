@@ -1,0 +1,5 @@
+@layer components {
+    .fi-wi {
+        @apply gap-6;
+    }
+}

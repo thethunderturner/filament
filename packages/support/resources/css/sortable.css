@@ -1,3 +1,5 @@
-.fi-sortable-ghost {
-    @apply opacity-30;
+@layer components {
+    .fi-sortable-ghost {
+        @apply opacity-30;
+    }
 }

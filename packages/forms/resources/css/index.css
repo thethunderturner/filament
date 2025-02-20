@@ -1,6 +1,17 @@
-@import 'tailwindcss';
-@import '../../../support/resources/css/tailwind.css';
-
-@layer components {
-    @import '../../dist/index.css';
-}
+@import '../../dist/index.css' layer(components);
+@import './components/builder.css';
+@import './components/checkbox-list.css';
+@import './components/color-picker.css';
+@import './components/date-time-picker.css';
+@import './components/field.css';
+@import './components/file-upload.css';
+@import './components/key-value.css';
+@import './components/markdown-editor.css';
+@import './components/radio.css';
+@import './components/repeater.css';
+@import './components/rich-editor.css';
+@import './components/select.css';
+@import './components/tags-input.css';
+@import './components/text-input.css';
+@import './components/textarea.css';
+@import './components/toggle-buttons.css';
