@@ -1,9 +1,7 @@
-@layer components {
-    .fi-sc-form {
-        @apply flex flex-col gap-6;
+.fi-sc-form {
+    @apply flex flex-col gap-6;
 
-        &.fi-dense {
-            @apply gap-3;
-        }
+    &.fi-dense {
+        @apply gap-3;
     }
 }

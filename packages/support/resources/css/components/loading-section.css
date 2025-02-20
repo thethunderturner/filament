@@ -1,5 +1,3 @@
-@layer components {
-    .fi-loading-section {
-        @apply animate-pulse;
-    }
+.fi-loading-section {
+    @apply animate-pulse;
 }

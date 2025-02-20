@@ -1,17 +1,15 @@
-@layer components {
-    .fi-sc-unordered-list {
-        @apply ms-3 list-disc text-sm sm:columns-2;
+.fi-sc-unordered-list {
+    @apply ms-3 list-disc text-sm sm:columns-2;
 
-        &.fi-size-xs {
-            @apply text-xs;
-        }
+    &.fi-size-xs {
+        @apply text-xs;
+    }
 
-        &.fi-size-md {
-            @apply text-base;
-        }
+    &.fi-size-md {
+        @apply text-base;
+    }
 
-        &.fi-size-lg {
-            @apply text-lg;
-        }
+    &.fi-size-lg {
+        @apply text-lg;
     }
 }

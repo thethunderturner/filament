@@ -1,3 +1,3 @@
-@import './chart-widget.css';
-@import './stats-overview-widget.css';
-@import './widget.css';
+@import './chart-widget.css' layer(components);
+@import './stats-overview-widget.css' layer(components);
+@import './widget.css' layer(components);

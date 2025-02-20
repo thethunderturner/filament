@@ -7,7 +7,7 @@
 @import '../../../tables/resources/css/index.css';
 @import '../../../widgets/resources/css/index.css';
 
-@import './base.css';
+@import './base.css' layer(base);
 
 @variant dark (&:where(.dark, .dark *));
 
