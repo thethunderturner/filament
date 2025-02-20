@@ -1,31 +1,31 @@
 html.fi {
     @apply min-h-screen;
+}
 
-    & body {
-        @apply min-h-screen bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white;
+.fi-body {
+    @apply min-h-screen bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white;
 
-        &.fi-body-has-sidebar-collapsible-on-desktop,
-        &.fi-body-has-sidebar-fully-collapsible-on-desktop {
-            & .fi-main-ctn {
-                @apply h-full opacity-0 transition-all;
-            }
+    &.fi-body-has-sidebar-collapsible-on-desktop,
+    &.fi-body-has-sidebar-fully-collapsible-on-desktop {
+        & .fi-main-ctn {
+            @apply h-full opacity-0 transition-all;
         }
+    }
 
-        &.fi-body-has-navigation:not(
-                .fi-body-has-sidebar-collapsible-on-desktop
-            ):not(.fi-body-has-sidebar-fully-collapsible-on-desktop):not(
-                .fi-body-has-top-navigation
-            ) {
-            & .fi-main-ctn {
-                @apply opacity-0;
-            }
+    &.fi-body-has-navigation:not(
+            .fi-body-has-sidebar-collapsible-on-desktop
+        ):not(.fi-body-has-sidebar-fully-collapsible-on-desktop):not(
+            .fi-body-has-top-navigation
+        ) {
+        & .fi-main-ctn {
+            @apply opacity-0;
         }
+    }
 
-        &.fi-body-has-top-navigation,
-        &:not(.fi-body-has-navigation) {
-            & .fi-main-ctn {
-                @apply flex;
-            }
+    &.fi-body-has-top-navigation,
+    &:not(.fi-body-has-navigation) {
+        & .fi-main-ctn {
+            @apply flex;
         }
     }
 }

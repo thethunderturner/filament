@@ -42,9 +42,7 @@
                 {{ \Filament\Support\generate_icon_html($icon, size: \Filament\Support\Enums\IconSize::Large) }}
             @endif
 
-            <span
-                class="fi-sidebar-group-label"
-            >
+            <span class="fi-sidebar-group-label">
                 {{ $label }}
             </span>
 
