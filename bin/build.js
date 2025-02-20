@@ -74,6 +74,7 @@ const defaultOptions = {
 }
 
 const corePackages = [
+    'actions',
     'forms',
     'notifications',
     'panels',

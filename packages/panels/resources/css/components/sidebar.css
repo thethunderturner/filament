@@ -1,0 +1,88 @@
+.fi-sidebar-group {
+    @apply flex flex-col gap-y-1;
+
+    &.fi-collapsed {
+        & .fi-sidebar-group-collapse-btn {
+            @apply -rotate-180;
+        }
+    }
+
+    &.fi-active {
+        & .fi-sidebar-group-dropdown-trigger-button {
+            & .fi-icon {
+                @apply text-primary-600 dark:text-primary-400;
+            }
+        }
+    }
+}
+
+.fi-sidebar-group-btn {
+    @apply flex items-center gap-x-3 px-2 py-2;
+}
+
+.fi-sidebar-group-icon {
+    @apply text-gray-400 dark:text-gray-500;
+}
+
+.fi-sidebar-group-label {
+    @apply flex-1 text-sm leading-6 font-medium text-gray-500 dark:text-gray-400;
+}
+
+.fi-sidebar-group-dropdown-trigger-button {
+    @apply relative flex flex-1 items-center justify-center gap-x-3 rounded-lg px-2 py-2 outline-hidden transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5;
+
+    & .fi-icon {
+        @apply text-gray-400 dark:text-gray-500;
+    }
+}
+
+.fi-sidebar-group-items {
+    @apply flex flex-col gap-y-1;
+}
+
+.fi-sidebar-group-btn,
+.fi-sidebar-group-items {
+    &.fi-transition-enter {
+        @apply delay-100 lg:transition;
+    }
+
+    &.fi-transition-enter-start {
+        @apply opacity-0;
+    }
+
+    &.fi-transition-enter-end {
+        @apply opacity-100;
+    }
+}
+
+.fi-sidebar-open {
+    @apply w-(--sidebar-width) translate-x-0 ring-1 shadow-xl ring-gray-950/5 rtl:-translate-x-0 dark:ring-white/10;
+
+    &.fi-sidebar-open {
+        @apply lg:sticky;
+    }
+
+    &:not(.fi-sidebar-open) {
+        @apply -translate-x-full rtl:translate-x-full;
+    }
+}
+
+html.fi {
+    & body {
+        &.fi-body-has-sidebar-collapsible-on-desktop:not(.fi-body-has-top-navigation) {
+            & .fi-sidebar {
+                &:not(.fi-sidebar-open) {
+                    @apply lg:sticky lg:translate-x-0 lg:rtl:-translate-x-0;
+                }
+            }
+        }
+
+        &:not(.fi-body-has-sidebar-collapsible-on-desktop):not(.fi-body-has-sidebar-fully-collapsible-on-desktop):not(.fi-body-has-top-navigation) {
+            & .fi-sidebar {
+                &:not(.fi-sidebar-open) {
+                    @apply w-(--sidebar-width) lg:sticky;
+                }
+            }
+        }
+    }
+}

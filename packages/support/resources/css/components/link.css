@@ -78,8 +78,8 @@
 }
 
 /**
-     * Align links embedded within text.
-     */
+ * Align links embedded within text.
+ */
 p > .fi-link,
 span > .fi-link {
     @apply pb-[2px] align-middle;

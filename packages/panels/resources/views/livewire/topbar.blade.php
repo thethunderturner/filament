@@ -1,4 +1,4 @@
-<div class="fi-topbar-ctn sticky top-0 z-20 overflow-x-clip">
+<div class="fi-topbar-ctn">
     @php
         $navigation = filament()->getNavigation();
     @endphp
