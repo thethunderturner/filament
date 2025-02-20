@@ -145,10 +145,10 @@
         }
 
         &
-        .EasyMDEContainer
-        .cm-s-easymde
-        .cm-formatting-code
-        + .cm-comment:not(.cm-formatting-code) {
+            .EasyMDEContainer
+            .cm-s-easymde
+            .cm-formatting-code
+            + .cm-comment:not(.cm-formatting-code) {
             background-color: var(--color-cm-gray-background);
             color: var(--color-cm-gray);
         }

@@ -97,7 +97,9 @@
         }
 
         & .choices__list--dropdown .choices__item--selectable.is-highlighted,
-        & .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+        &
+            .choices__list[aria-expanded]
+            .choices__item--selectable.is-highlighted {
             @apply bg-gray-50 dark:bg-white/5;
         }
 
@@ -134,16 +136,18 @@
         & .choices[data-type*='select-one'] .choices__button:hover,
         & .choices[data-type*='select-one'] .choices__button:focus-visible,
         & .choices[data-type*='select-multiple'] .choices__button:hover,
-        & .choices[data-type*='select-multiple'] .choices__button:focus-visible {
+        &
+            .choices[data-type*='select-multiple']
+            .choices__button:focus-visible {
             @apply opacity-70 dark:opacity-60;
         }
 
         &
-        .choices[data-type*='select-one']
-        &
-        .choices__item[data-value='']
-        &
-        .choices__button {
+            .choices[data-type*='select-one']
+            &
+            .choices__item[data-value='']
+            &
+            .choices__button {
             @apply hidden;
         }
 
