@@ -69,7 +69,9 @@
 
 .fi-body {
     &.fi-body-has-top-navigation {
-        @apply lg:-translate-x-full lg:rtl:translate-x-full;
+        & .fi-sidebar {
+            @apply lg:-translate-x-full lg:rtl:translate-x-full;
+        }
     }
 
     &:not(.fi-body-has-top-navigation) {
