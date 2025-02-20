@@ -66,6 +66,8 @@ trait CanGenerateDropdownItemHtml
 
         $hasTooltip = filled($tooltip);
 
+        $formAttributes = $attributes->only(['action', 'method', 'wire:submit']);
+
         $attributes = $attributes
             ->when(
                 $tag === 'form',
@@ -96,7 +98,7 @@ trait CanGenerateDropdownItemHtml
 
         ob_start(); ?>
 
-        <?= ($tag === 'form') ? ('<form ' . $attributes->only(['action', 'class', 'method', 'wire:submit'])->toHtml() . '>' . csrf_field()) : '' ?>
+        <?= ($tag === 'form') ? ('<form ' . $formAttributes->toHtml() . '>' . csrf_field()) : '' ?>
 
         <<?= ($tag === 'form') ? 'button' : $tag ?>
             <?php if (($tag === 'a') && (! ($isDisabled && $hasTooltip))) { ?>
