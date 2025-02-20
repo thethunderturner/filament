@@ -12,7 +12,7 @@
         class="fi-global-search"
     >
         <div x-id="['input']" class="fi-global-search-field">
-            <label x-bind:for="$id('input')" class="sr-only">
+            <label x-bind:for="$id('input')" class="fi-sr-only">
                 {{ __('filament-panels::global-search.field.label') }}
             </label>
 

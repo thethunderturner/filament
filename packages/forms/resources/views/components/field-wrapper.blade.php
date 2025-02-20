@@ -53,7 +53,7 @@
     }}
 >
     @if ($label && $labelSrOnly)
-        <label for="{{ $id }}" class="fi-fo-field-label fi-hidden">
+        <label for="{{ $id }}" class="fi-fo-field-label fi-sr-only">
             {{ $label }}
         </label>
     @endif

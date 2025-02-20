@@ -18,6 +18,8 @@
 @import './components/tenant-menu.css' layer(components);
 @import './components/theme-switcher.css' layer(components);
 @import './components/topbar.css' layer(components);
+@import './widgets/account-widget.css' layer(components);
+@import './widgets/filament-info-widget.css' layer(components);
 
 @variant dark (&:where(.dark, .dark *));
 

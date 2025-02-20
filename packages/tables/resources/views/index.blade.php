@@ -319,7 +319,7 @@
                             @if (! $areGroupingSettingsInDropdownOnDesktop)
                                 <div class="fi-ta-grouping-settings-fields">
                                     <label>
-                                        <span class="sr-only">
+                                        <span class="fi-sr-only">
                                             {{ __('filament-tables::table.grouping.fields.group.label') }}
                                         </span>
 
@@ -345,7 +345,7 @@
 
                                     @if (! $isGroupingDirectionSettingHidden)
                                         <label x-cloak x-show="group">
-                                            <span class="sr-only">
+                                            <span class="fi-sr-only">
                                                 {{ __('filament-tables::table.grouping.fields.direction.label') }}
                                             </span>
 
@@ -718,7 +718,7 @@
                                         </label>
 
                                         <label x-cloak x-show="column">
-                                            <span class="sr-only">
+                                            <span class="fi-sr-only">
                                                 {{ __('filament-tables::table.sorting.fields.direction.label') }}
                                             </span>
 

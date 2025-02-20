@@ -19,10 +19,6 @@
         & .fi-fo-field-label-required-mark {
             @apply text-danger-600 dark:text-danger-400 font-medium;
         }
-
-        &.fi-hidden {
-            @apply sr-only;
-        }
     }
 
     & .fi-fo-field-label-col {

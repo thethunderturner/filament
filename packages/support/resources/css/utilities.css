@@ -449,3 +449,7 @@
 .dark\:hover\:fi-text-color-950 {
     --dark-hover-text: var(--color-950);
 }
+
+.fi-sr-only {
+    @apply sr-only;
+}

@@ -40,7 +40,7 @@
     }}
 >
     @if ($label && $labelSrOnly)
-        <dt class="fi-in-entry-label fi-hidden">
+        <dt class="fi-in-entry-label fi-sr-only">
             {{ $label }}
         </dt>
     @endif

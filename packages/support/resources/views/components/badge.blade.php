@@ -155,7 +155,7 @@
             @endif
 
             @if (filled($label = $deleteButton->attributes->get('label')))
-                <span class="sr-only">
+                <span class="fi-sr-only">
                     {{ $label }}
                 </span>
             @endif
