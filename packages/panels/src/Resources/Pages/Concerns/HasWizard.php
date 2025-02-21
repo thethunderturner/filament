@@ -4,6 +4,10 @@ namespace Filament\Resources\Pages\Concerns;
 
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Form;
+use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 
@@ -22,17 +26,16 @@ trait HasWizard /** @phpstan-ignore trait.unused */
                     ->startOnStep($this->getStartStep())
                     ->cancelAction($this->getCancelFormAction())
                     ->submitAction($this->getSubmitFormAction())
-                    ->skippable($this->hasSkippableSteps()),
+                    ->alpineSubmitHandler("\$wire.{$this->getSubmitFormLivewireMethodName()}()")
+                    ->skippable($this->hasSkippableSteps())
+                    ->contained(false),
             ])
             ->columns(null);
     }
 
-    /**
-     * @return array<Action | ActionGroup>
-     */
-    public function getFormActions(): array
+    public function getFormContentComponent(): Component
     {
-        return [];
+        return NestedSchema::make('form');
     }
 
     public function getSteps(): array
