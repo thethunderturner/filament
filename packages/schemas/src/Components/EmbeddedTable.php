@@ -7,7 +7,7 @@ use Exception;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Contracts\View\View;
 
-class TableBuilder extends Component
+class EmbeddedTable extends Component
 {
     /**
      * @param  array<string, mixed> | Closure  $livewireComponentData

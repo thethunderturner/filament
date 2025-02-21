@@ -10,8 +10,8 @@ use Filament\Actions\ViewAction;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Resources\Concerns\HasTabs;
+use Filament\Schemas\Components\EmbeddedTable;
 use Filament\Schemas\Components\RenderHook;
-use Filament\Schemas\Components\TableBuilder;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -236,7 +236,7 @@ class ListRecords extends Page implements Tables\Contracts\HasTable
             ->components([
                 $this->getTabsContentComponent(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE),
-                TableBuilder::make(),
+                EmbeddedTable::make(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_AFTER),
             ]);
     }

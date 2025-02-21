@@ -3,6 +3,7 @@
 namespace Filament\Resources\Pages\Concerns;
 
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Components\Wizard;
@@ -30,16 +31,19 @@ trait HasWizard /** @phpstan-ignore trait.unused */
             ->columns(null);
     }
 
-    protected function getSubmitFormAction(): Action
+    public function hasFormWrapper(): bool
     {
-        return parent::getSubmitFormAction()
-            ->submit(null)
-            ->action($this->getSubmitFormLivewireMethodName());
+        return false;
     }
 
-    public function getFormContentComponent(): Component
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getFormContentComponents(): array
     {
-        return NestedSchema::make('form');
+        return [
+            NestedSchema::make('form'),
+        ];
     }
 
     public function getSteps(): array
