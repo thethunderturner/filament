@@ -5,13 +5,9 @@
     $key = $getKey();
     $previousAction = $getAction('previous');
     $nextAction = $getAction('next');
-    $alpineSubmitHandler = $getAlpineSubmitHandler();
-    $alpineNextStepHandler = '$wire.callSchemaComponentMethod(' . \Illuminate\Support\Js::from($key) . ', \'nextStep\', {
-        currentStepIndex: getStepIndex(step),
-    })';
 @endphp
 
-<{{ filled($alpineSubmitHandler) ? 'form' : 'div' }}
+<div
     @if (FilamentView::hasSpaMode())
         {{-- format-ignore-start --}}x-load="visible || event (x-modal-opened)"{{-- format-ignore-end --}}
     @else
@@ -25,9 +21,6 @@
                 stepQueryStringKey: @js($getStepQueryStringKey()),
             })"
     x-on:next-wizard-step.window="if ($event.detail.key === @js($key)) goToNextStep()"
-    @if (filled($alpineSubmitHandler))
-        x-on:submit.prevent="isLastStep() ? {!! $alpineSubmitHandler !!} : {!! $alpineNextStepHandler !!}"
-    @endif
     wire:ignore.self
     x-cloak
     {{
@@ -174,7 +167,11 @@
         <div
             x-cloak
             @if (! $nextAction->isDisabled())
-                x-on:click="{!! $alpineNextStepHandler !!}"
+                x-on:click="
+                    $wire.callSchemaComponentMethod(@js($key), 'nextStep', {
+                        currentStepIndex: getStepIndex(step),
+                    })
+                "
             @endif
             x-bind:class="{ 'fi-hidden': isLastStep() }"
         >
@@ -185,4 +182,4 @@
             {{ $getSubmitAction() }}
         </div>
     </div>
-</{{ filled($alpineSubmitHandler) ? 'form' : 'div' }}>
+</div>
