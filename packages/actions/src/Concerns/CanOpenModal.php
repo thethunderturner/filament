@@ -444,9 +444,12 @@ trait CanOpenModal
 
     public function getModalSubmitAction(): ?Action
     {
+        $hasFormWrapper = $this->hasFormWrapper();
+
         $action = static::makeModalAction('submit')
             ->label($this->getModalSubmitActionLabel())
-            ->submit($this->getLivewireCallMountedActionName())
+            ->submit($hasFormWrapper ? $this->getLivewireCallMountedActionName() : null)
+            ->action($hasFormWrapper ? null : $this->getLivewireCallMountedActionName())
             ->color(match ($color = $this->getColor()) {
                 'gray' => 'primary',
                 default => $color,

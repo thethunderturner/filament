@@ -17,6 +17,7 @@
     x-data="wizardSchemaComponent({
                 isSkippable: @js($isSkippable()),
                 isStepPersistedInQueryString: @js($isStepPersistedInQueryString()),
+                key: @js($key),
                 startStep: @js($getStartStep()),
                 stepQueryStringKey: @js($getStepQueryStringKey()),
             })"
@@ -167,11 +168,7 @@
         <div
             x-cloak
             @if (! $nextAction->isDisabled())
-                x-on:click="
-                    $wire.callSchemaComponentMethod(@js($key), 'nextStep', {
-                        currentStepIndex: getStepIndex(step),
-                    })
-                "
+                x-on:click="requestNextStep()"
             @endif
             x-bind:class="{ 'fi-hidden': isLastStep() }"
         >

@@ -33,6 +33,13 @@ trait HasWizard /** @phpstan-ignore trait.unused */
             ->columns(null);
     }
 
+    protected function getSubmitFormAction(): Action
+    {
+        return parent::getSubmitFormAction()
+            ->submit(null)
+            ->action($this->getSubmitFormLivewireMethodName());
+    }
+
     public function getFormContentComponent(): Component
     {
         return NestedSchema::make('form');

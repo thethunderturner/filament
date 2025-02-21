@@ -16,6 +16,7 @@
     $actionIsModalFooterSticky = $action->isModalFooterSticky();
     $actionIsModalHeaderSticky = $action->isModalHeaderSticky();
     $actionModalWidth = $action->getModalWidth();
+    $actionLivewireCallMountedActionName = $action->hasFormWrapper() ? $action->getLivewireCallMountedActionName() : null;
     $actionModalWireKey = "{$this->getId()}.actions.{$action->getName()}.modal";
 @endphp
 
@@ -38,7 +39,7 @@
     :sticky-header="$actionIsModalHeaderSticky"
     :width="$actionModalWidth"
     :wire:key="$actionModalWireKey"
-    wire:submit.prevent="callMountedAction"
+    :wire:submit.prevent="$actionLivewireCallMountedActionName"
     :x-on:modal-closed="'if ($event.detail.id === ' . \Illuminate\Support\Js::from($actionModalId) . ') $wire.unmountAction(false)'"
 >
     {{ $action->getModalContent() }}

@@ -16,6 +16,8 @@ trait HasForm
 
     protected ?Closure $mutateFormDataUsing = null;
 
+    protected bool | Closure | null $hasFormWrapper = null;
+
     /**
      * @deprecated Use `disabledSchema() instead.
      */
@@ -106,5 +108,17 @@ trait HasForm
     public function isFormDisabled(): bool
     {
         return $this->isSchemaDisabled();
+    }
+
+    public function formWrapper(bool | Closure | null $condition = true): static
+    {
+        $this->hasFormWrapper = $condition;
+
+        return $this;
+    }
+
+    public function hasFormWrapper(): bool
+    {
+        return (bool) ($this->evaluate($this->hasFormWrapper) ?? (! $this->isWizard()));
     }
 }

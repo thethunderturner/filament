@@ -2,7 +2,6 @@
     $id = $getId();
     $key = $getKey();
     $wizard = $getContainer()->getParentComponent();
-    $wizardKey = $wizard->getKey();
     $isContained = $wizard->isContained();
     $alpineSubmitHandler = $hasFormWrapper() ? $wizard->getAlpineSubmitHandler() : null;
 @endphp
@@ -20,9 +19,7 @@
         step = @js($key)
     "
     @if (filled($alpineSubmitHandler))
-        x-on:submit.prevent="console.log(isLastStep()); isLastStep() ? {!! $alpineSubmitHandler !!} : $wire.callSchemaComponentMethod(@js($wizardKey), 'nextStep', {
-            currentStepIndex: getStepIndex(step),
-        })"
+        x-on:submit.prevent="isLastStep() ? {!! $alpineSubmitHandler !!} : requestNextStep()"
     @endif
     x-ref="step-{{ $key }}"
     {{

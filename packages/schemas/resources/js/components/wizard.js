@@ -1,6 +1,7 @@
 export default function wizardSchemaComponent({
     isSkippable,
     isStepPersistedInQueryString,
+    key,
     startStep,
     stepQueryStringKey,
 }) {
@@ -13,6 +14,12 @@ export default function wizardSchemaComponent({
             this.step = this.getSteps().at(startStep - 1)
 
             this.autofocusFields()
+        },
+
+        requestNextStep: async function () {
+            await this.$wire.callSchemaComponentMethod(key, 'nextStep', {
+                currentStepIndex: this.getStepIndex(this.step),
+            })
         },
 
         goToNextStep: function () {
