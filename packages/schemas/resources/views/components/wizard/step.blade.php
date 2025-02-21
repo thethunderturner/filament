@@ -1,10 +1,12 @@
 @php
     $id = $getId();
     $key = $getKey();
-    $isContained = $getContainer()->getParentComponent()->isContained();
+    $wizard = $getContainer()->getParentComponent();
+    $isContained = $wizard->isContained();
+    $alpineSubmitHandler = $hasFormWrapper() ? $wizard->getAlpineSubmitHandler() : null;
 @endphp
 
-<div
+<{{ filled($alpineSubmitHandler) ? 'form' : 'div' }}
     x-bind:tabindex="$el.querySelector('[autofocus]') ? '-1' : '0'"
     x-bind:class="{
         'fi-active': step === @js($key),
@@ -16,6 +18,9 @@
 
         step = @js($key)
     "
+    @if (filled($alpineSubmitHandler))
+        x-on:submit.prevent="isLastStep() ? {!! $alpineSubmitHandler !!} : requestNextStep()"
+    @endif
     x-ref="step-{{ $key }}"
     {{
         $attributes
@@ -29,4 +34,9 @@
     }}
 >
     {{ $getChildComponentContainer() }}
-</div>
+
+    @if (filled($alpineSubmitHandler))
+        {{-- This is a hack to allow the form to submit when the user presses the enter key, even if there is no other submit button in the form. --}}
+        <input type="submit" hidden />
+    @endif
+</{{ filled($alpineSubmitHandler) ? 'form' : 'div' }}>

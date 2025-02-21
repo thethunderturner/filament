@@ -72,6 +72,7 @@ trait HasSchema
                 ->startOnStep($this->getWizardStartStep())
                 ->cancelAction($this->getModalCancelAction())
                 ->submitAction($this->getModalSubmitAction())
+                ->alpineSubmitHandler("\$wire.{$this->getLivewireCallMountedActionName()}()")
                 ->skippable($this->isWizardSkippable())
                 ->disabled($this->isSchemaDisabled());
 

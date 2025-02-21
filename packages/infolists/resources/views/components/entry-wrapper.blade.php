@@ -57,6 +57,8 @@
             >
                 {{ $beforeLabelContainer }}
 
+                {{ $labelPrefix }}
+
                 @if ($label && (! $labelSrOnly))
                     <dt
                         {{
@@ -68,17 +70,11 @@
                                 ->class(['fi-in-entry-label'])
                         }}
                     >
-                        {{ $labelPrefix }}
-
                         {{ $label }}
-
-                        {{ $labelSuffix }}
                     </dt>
-                @elseif ($labelPrefix)
-                    {{ $labelPrefix }}
-                @elseif ($labelSuffix)
-                    {{ $labelSuffix }}
                 @endif
+
+                {{ $labelSuffix }}
 
                 {{ $afterLabelContainer }}
             </div>

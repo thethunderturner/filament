@@ -75,21 +75,19 @@
             >
                 {{ $beforeLabelContainer }}
 
+                {{ $labelPrefix }}
+
                 @if ($label && (! $labelSrOnly))
                     <label class="fi-fo-field-label">
-                        {{ $labelPrefix }}
+                        {{ $label }}
 
-                        {{-- Deliberately poor formatting to ensure that the asterisk sticks to the final word in the label. --}}
-                        {{ $label }}@if ($required && (! $isDisabled))<sup class="fi-fo-field-label-required-mark">*</sup>
+                        @if ($required && (! $isDisabled))
+                            <sup class="fi-fo-field-label-required-mark">*</sup>
                         @endif
-
-                        {{ $labelSuffix }}
                     </label>
-                @elseif ($labelPrefix)
-                    {{ $labelPrefix }}
-                @elseif ($labelSuffix)
-                    {{ $labelSuffix }}
                 @endif
+
+                {{ $labelSuffix }}
 
                 {{ $afterLabelContainer }}
             </div>

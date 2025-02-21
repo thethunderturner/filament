@@ -302,13 +302,18 @@ class EditRecord extends Page
     {
         return Action::make('save')
             ->label(__('filament-panels::resources/pages/edit-record.form.actions.save.label'))
-            ->submit('save')
+            ->submit($this->getSubmitFormLivewireMethodName())
             ->keyBindings(['mod+s']);
     }
 
     protected function getSubmitFormAction(): Action
     {
         return $this->getSaveFormAction();
+    }
+
+    protected function getSubmitFormLivewireMethodName(): string
+    {
+        return 'save';
     }
 
     protected function getCancelFormAction(): Action
@@ -383,7 +388,7 @@ class EditRecord extends Page
     {
         return Form::make([NestedSchema::make('form')])
             ->id('form')
-            ->livewireSubmitHandler('save')
+            ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
             ->footer([
                 Actions::make($this->getFormActions())
                     ->alignment($this->getFormActionsAlignment())

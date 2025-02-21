@@ -34,6 +34,8 @@ class Wizard extends Component
 
     protected int $currentStepIndex = 0;
 
+    protected string | Closure | null $alpineSubmitHandler = null;
+
     /**
      * @var view-string
      */
@@ -270,5 +272,17 @@ class Wizard extends Component
         $this->currentStepIndex = $index;
 
         return $this;
+    }
+
+    public function alpineSubmitHandler(string | Closure | null $handler): static
+    {
+        $this->alpineSubmitHandler = $handler;
+
+        return $this;
+    }
+
+    public function getAlpineSubmitHandler(): ?string
+    {
+        return $this->evaluate($this->alpineSubmitHandler);
     }
 }

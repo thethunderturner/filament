@@ -218,13 +218,18 @@ class CreateRecord extends Page
     {
         return Action::make('create')
             ->label(__('filament-panels::resources/pages/create-record.form.actions.create.label'))
-            ->submit('create')
+            ->submit($this->getSubmitFormLivewireMethodName())
             ->keyBindings(['mod+s']);
     }
 
     protected function getSubmitFormAction(): Action
     {
         return $this->getCreateFormAction();
+    }
+
+    protected function getSubmitFormLivewireMethodName(): string
+    {
+        return 'create';
     }
 
     protected function getCreateAnotherFormAction(): Action
@@ -356,7 +361,7 @@ class CreateRecord extends Page
     {
         return Form::make([NestedSchema::make('form')])
             ->id('form')
-            ->livewireSubmitHandler('create')
+            ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
             ->footer([
                 Actions::make($this->getFormActions())
                     ->alignment($this->getFormActionsAlignment())
