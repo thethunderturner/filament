@@ -54,6 +54,9 @@
     }
 
     $closeEventHandler = filled($id) ? '$dispatch(' . \Illuminate\Support\Js::from($closeEventName) . ', { id: ' . \Illuminate\Support\Js::from($id) . ' })' : 'close()';
+
+    $wireSubmitHandler = $attributes->get('wire:submit.prevent');
+    $attributes = $attributes->except(['wire:submit.prevent']);
 @endphp
 
 @if ($trigger)
@@ -125,7 +128,7 @@
             'fi-clickable' => $closeByClickingAway,
         ])
     >
-        <div
+        <{{ filled($wireSubmitHandler) ? 'form' : 'div' }}
             @if ($closeByEscaping)
                 x-on:keydown.window.escape="{{ $closeEventHandler }}"
             @endif
@@ -137,6 +140,9 @@
                 x-transition:enter-end="fi-transition-enter-end"
                 x-transition:leave-start="fi-transition-leave-start"
                 x-transition:leave-end="fi-transition-leave-end"
+            @endif
+            @if (filled($wireSubmitHandler))
+                wire:submit.prevent="{!! $wireSubmitHandler !!}"
             @endif
             {{
                 ($extraModalWindowAttributeBag ?? new \Illuminate\View\ComponentAttributeBag)->class([
@@ -233,7 +239,7 @@
                     @endif
                 </div>
             @endif
-        </div>
+        </{{ filled($wireSubmitHandler) ? 'form' : 'div' }}>
     </div>
 </div>
 
