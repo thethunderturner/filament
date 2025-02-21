@@ -329,7 +329,7 @@ class RelationManager extends Component implements Actions\Contracts\HasActions,
     {
         return $schema
             ->components([
-                $this->getTabsContentComponent(),
+                ...$this->getTabsContentComponents(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_RELATION_MANAGER_BEFORE),
                 EmbeddedTable::make(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_RELATION_MANAGER_AFTER),

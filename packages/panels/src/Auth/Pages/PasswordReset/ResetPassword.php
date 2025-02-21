@@ -194,20 +194,25 @@ class ResetPassword extends SimplePage
         return $schema
             ->components([
                 RenderHook::make(PanelsRenderHook::AUTH_PASSWORD_RESET_RESET_FORM_BEFORE),
-                $this->getFormContentComponent(),
+                ...$this->getFormContentComponents(),
                 RenderHook::make(PanelsRenderHook::AUTH_PASSWORD_RESET_RESET_FORM_AFTER),
             ]);
     }
 
-    public function getFormContentComponent(): Component
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getFormContentComponents(): array
     {
-        return Form::make([NestedSchema::make('form')])
-            ->id('form')
-            ->livewireSubmitHandler('resetPassword')
-            ->footer([
-                Actions::make($this->getFormActions())
-                    ->alignment($this->getFormActionsAlignment())
-                    ->fullWidth($this->hasFullWidthFormActions()),
-            ]);
+        return [
+            Form::make([NestedSchema::make('form')])
+                ->id('form')
+                ->livewireSubmitHandler('resetPassword')
+                ->footer([
+                    Actions::make($this->getFormActions())
+                        ->alignment($this->getFormActionsAlignment())
+                        ->fullWidth($this->hasFullWidthFormActions()),
+                ]),
+        ];
     }
 }

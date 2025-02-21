@@ -2,6 +2,8 @@
 
 namespace Filament\Resources\Concerns;
 
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -75,14 +77,19 @@ trait HasTabs
         return $tabs[$this->activeTab]->modifyQuery($query);
     }
 
-    public function getTabsContentComponent(): Component
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getTabsContentComponents(): array
     {
         $tabs = $this->getCachedTabs();
 
-        return Tabs::make()
-            ->livewireProperty('activeTab')
-            ->contained(false)
-            ->tabs($tabs)
-            ->hidden(empty($tabs));
+        return [
+            Tabs::make()
+                ->livewireProperty('activeTab')
+                ->contained(false)
+                ->tabs($tabs)
+                ->hidden(empty($tabs)),
+        ];
     }
 }

@@ -197,20 +197,25 @@ abstract class RegisterTenant extends SimplePage
     {
         return $schema
             ->components([
-                $this->getFormContentComponent(),
+                ...$this->getFormContentComponents(),
             ]);
     }
 
-    public function getFormContentComponent(): Component
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getFormContentComponents(): array
     {
-        return Form::make([NestedSchema::make('form')])
-            ->id('form')
-            ->livewireSubmitHandler('register')
-            ->footer([
-                Actions::make($this->getFormActions())
-                    ->alignment($this->getFormActionsAlignment())
-                    ->fullWidth($this->hasFullWidthFormActions())
-                    ->sticky($this->areFormActionsSticky()),
-            ]);
+        return [
+            Form::make([NestedSchema::make('form')])
+                ->id('form')
+                ->livewireSubmitHandler('register')
+                ->footer([
+                    Actions::make($this->getFormActions())
+                        ->alignment($this->getFormActionsAlignment())
+                        ->fullWidth($this->hasFullWidthFormActions())
+                        ->sticky($this->areFormActionsSticky()),
+                ]),
+        ];
     }
 }
