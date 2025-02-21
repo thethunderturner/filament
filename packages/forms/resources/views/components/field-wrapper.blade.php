@@ -83,7 +83,7 @@
 
                         @if ($required && (! $isDisabled))
                             <sup class="fi-fo-field-label-required-mark">*</sup>
-                       @endif
+                        @endif
                     </label>
                 @endif
 
