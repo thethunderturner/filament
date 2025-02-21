@@ -163,9 +163,12 @@ class SettingsPage extends Page
 
     public function getSaveFormAction(): Action
     {
+        $hasFormWrapper = $this->hasFormWrapper();
+
         return Action::make('save')
             ->label(__('filament-spatie-laravel-settings-plugin::pages/settings-page.form.actions.save.label'))
-            ->submit('save')
+            ->submit($hasFormWrapper ? $this->getSubmitFormLivewireMethodName() : null)
+            ->action($hasFormWrapper ? null : $this->getSubmitFormLivewireMethodName())
             ->keyBindings(['mod+s'])
             ->visible($this->canEdit());
     }
@@ -201,21 +204,46 @@ class SettingsPage extends Page
     {
         return $schema
             ->components([
-                $this->getFormContentComponent(),
+                ...$this->getFormContentComponents(),
             ]);
     }
 
-    public function getFormContentComponent(): Component
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getFormContentComponents(): array
     {
-        return Form::make([NestedSchema::make('form')])
-            ->id('form')
-            ->livewireSubmitHandler('save')
-            ->footer([
-                Actions::make($this->getFormActions())
-                    ->alignment($this->getFormActionsAlignment())
-                    ->fullWidth($this->hasFullWidthFormActions())
-                    ->sticky($this->areFormActionsSticky()),
-            ]);
+        $formSchema = NestedSchema::make('form');
+        $actions = Actions::make($this->getFormActions())
+            ->alignment($this->getFormActionsAlignment())
+            ->fullWidth($this->hasFullWidthFormActions())
+            ->sticky($this->areFormActionsSticky());
+
+        if ($this->hasFormWrapper()) {
+            return [
+                $formSchema,
+                $actions,
+            ];
+        }
+
+        return [
+            Form::make([$formSchema])
+                ->id('form')
+                ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
+                ->footer([
+                    $actions,
+                ]),
+        ];
+    }
+
+    protected function getSubmitFormLivewireMethodName(): string
+    {
+        return 'save';
+    }
+
+    public function hasFormWrapper(): bool
+    {
+        return true;
     }
 
     protected function hasFullWidthFormActions(): bool

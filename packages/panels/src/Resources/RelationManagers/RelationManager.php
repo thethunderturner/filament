@@ -22,8 +22,8 @@ use Filament\Infolists;
 use Filament\Pages\Page;
 use Filament\Resources\Concerns\InteractsWithRelationshipTable;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Components\EmbeddedTable;
 use Filament\Schemas\Components\RenderHook;
-use Filament\Schemas\Components\TableBuilder;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\CanBeLazy;
@@ -331,7 +331,7 @@ class RelationManager extends Component implements Actions\Contracts\HasActions,
             ->components([
                 $this->getTabsContentComponent(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_RELATION_MANAGER_BEFORE),
-                TableBuilder::make(),
+                EmbeddedTable::make(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_RELATION_MANAGER_AFTER),
             ]);
     }

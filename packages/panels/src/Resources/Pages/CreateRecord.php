@@ -216,9 +216,12 @@ class CreateRecord extends Page
 
     protected function getCreateFormAction(): Action
     {
+        $hasFormWrapper = $this->hasFormWrapper();
+
         return Action::make('create')
             ->label(__('filament-panels::resources/pages/create-record.form.actions.create.label'))
-            ->submit($this->getSubmitFormLivewireMethodName())
+            ->submit($hasFormWrapper ? $this->getSubmitFormLivewireMethodName() : null)
+            ->action($hasFormWrapper ? null : $this->getSubmitFormLivewireMethodName())
             ->keyBindings(['mod+s']);
     }
 
@@ -279,6 +282,7 @@ class CreateRecord extends Page
         return [
             'form' => $this->configureForm(
                 $this->makeSchema()
+                    ->schema($this->getFormSchema())
                     ->operation('create')
                     ->model($this->getModel())
                     ->statePath($this->getFormStatePath()),
@@ -353,21 +357,41 @@ class CreateRecord extends Page
     {
         return $schema
             ->components([
-                $this->getFormContentComponent(),
+                ...$this->getFormContentComponents(),
             ]);
     }
 
-    public function getFormContentComponent(): Component
+    /**
+     * @return array<Component | Action | ActionGroup>
+     */
+    public function getFormContentComponents(): array
     {
-        return Form::make([NestedSchema::make('form')])
-            ->id('form')
-            ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
-            ->footer([
-                Actions::make($this->getFormActions())
-                    ->alignment($this->getFormActionsAlignment())
-                    ->fullWidth($this->hasFullWidthFormActions())
-                    ->sticky($this->areFormActionsSticky()),
-            ]);
+        $formSchema = NestedSchema::make('form');
+        $actions = Actions::make($this->getFormActions())
+            ->alignment($this->getFormActionsAlignment())
+            ->fullWidth($this->hasFullWidthFormActions())
+            ->sticky($this->areFormActionsSticky());
+
+        if ($this->hasFormWrapper()) {
+            return [
+                $formSchema,
+                $actions,
+            ];
+        }
+
+        return [
+            Form::make([$formSchema])
+                ->id('form')
+                ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
+                ->footer([
+                    $actions,
+                ]),
+        ];
+    }
+
+    public function hasFormWrapper(): bool
+    {
+        return true;
     }
 
     /**
