@@ -9,9 +9,9 @@ use Filament\Pages\Concerns\CanUseDatabaseTransactions;
 use Filament\Pages\Concerns\HasUnsavedDataChangesAlert;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Schema;
 use Filament\Support\Exceptions\Halt;
 use Filament\Support\Facades\FilamentView;
@@ -205,12 +205,12 @@ class SettingsPage extends Page
     {
         if (! $this->hasFormWrapper()) {
             return Group::make([
-                NestedSchema::make('form'),
+                EmbeddedSchema::make('form'),
                 $this->getFormActionsContentComponent(),
             ]);
         }
 
-        return Form::make([NestedSchema::make('form')])
+        return Form::make([EmbeddedSchema::make('form')])
             ->id('form')
             ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
             ->footer([

@@ -17,7 +17,7 @@ test('fields can save relationships', function (): void {
         $numberOfRelationshipsSaved++;
     };
 
-    $componentContainer = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->statePath('data')
         ->components([
             (new Field(Str::random()))
@@ -28,13 +28,13 @@ test('fields can save relationships', function (): void {
         ])
         ->model(Post::factory()->create());
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 
     expect($numberOfRelationshipsSaved)
         ->toBe(1);
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 
     expect($numberOfRelationshipsSaved)
@@ -42,7 +42,7 @@ test('fields can save relationships', function (): void {
 
     $isFieldVisible = false;
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 
     expect($numberOfRelationshipsSaved)
@@ -57,7 +57,7 @@ test('hidden fields can save relationships when requested', function (): void {
         $numberOfRelationshipsSaved++;
     };
 
-    $componentContainer = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->statePath('data')
         ->components([
             (new Field(Str::random()))
@@ -69,13 +69,13 @@ test('hidden fields can save relationships when requested', function (): void {
         ])
         ->model(Post::factory()->create());
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 
     expect($numberOfRelationshipsSaved)
         ->toBe(1);
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 
     expect($numberOfRelationshipsSaved)
@@ -83,7 +83,7 @@ test('hidden fields can save relationships when requested', function (): void {
 
     $shouldSaveRelationships = false;
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 
     expect($numberOfRelationshipsSaved)

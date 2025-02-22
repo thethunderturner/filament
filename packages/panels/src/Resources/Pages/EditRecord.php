@@ -14,9 +14,9 @@ use Filament\Pages\Concerns\CanUseDatabaseTransactions;
 use Filament\Pages\Concerns\HasUnsavedDataChangesAlert;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Exceptions\Halt;
@@ -262,7 +262,7 @@ class EditRecord extends Page
     {
         return match (true) {
             $action instanceof CreateAction => fn (Schema $schema): Schema => static::getResource()::form($schema->columns(2)),
-            $action instanceof EditAction => fn (Schema $schema): Schema => $schema->components([NestedSchema::make('form')]),
+            $action instanceof EditAction => fn (Schema $schema): Schema => $schema->components([EmbeddedSchema::make('form')]),
             $action instanceof ViewAction => fn (Schema $schema): Schema => static::getResource()::infolist(static::getResource()::form($schema->columns(2))),
             default => null,
         };
@@ -378,12 +378,12 @@ class EditRecord extends Page
     {
         if (! $this->hasFormWrapper()) {
             return Group::make([
-                NestedSchema::make('form'),
+                EmbeddedSchema::make('form'),
                 $this->getFormActionsContentComponent(),
             ]);
         }
 
-        return Form::make([NestedSchema::make('form')])
+        return Form::make([EmbeddedSchema::make('form')])
             ->id('form')
             ->livewireSubmitHandler($this->getSubmitFormLivewireMethodName())
             ->footer([

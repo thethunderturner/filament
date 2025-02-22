@@ -9,7 +9,7 @@ use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Schemas\Components\Component;
-use Filament\Schemas\Components\NestedSchema;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
@@ -119,7 +119,7 @@ class ViewRecord extends Page
     {
         return match (true) {
             $action instanceof CreateAction, $action instanceof EditAction => fn (Schema $schema): Schema => static::getResource()::form($schema->columns(2)),
-            $action instanceof ViewAction => fn (Schema $schema): Schema => $this->hasInfolist() ? $schema->components([NestedSchema::make('infolist')]) : $schema->components([NestedSchema::make('form')]),
+            $action instanceof ViewAction => fn (Schema $schema): Schema => $this->hasInfolist() ? $schema->components([EmbeddedSchema::make('infolist')]) : $schema->components([EmbeddedSchema::make('form')]),
             default => null,
         };
     }
@@ -189,12 +189,12 @@ class ViewRecord extends Page
 
     public function getFormContentComponent(): Component
     {
-        return NestedSchema::make('form');
+        return EmbeddedSchema::make('form');
     }
 
     public function getInfolistContentComponent(): Component
     {
-        return NestedSchema::make('infolist');
+        return EmbeddedSchema::make('infolist');
     }
 
     public function getContentTabComponent(): Tab

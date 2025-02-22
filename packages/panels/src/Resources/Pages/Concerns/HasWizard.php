@@ -3,7 +3,7 @@
 namespace Filament\Resources\Pages\Concerns;
 
 use Filament\Schemas\Components\Component;
-use Filament\Schemas\Components\NestedSchema;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 
@@ -46,7 +46,7 @@ trait HasWizard /** @phpstan-ignore trait.unused */
 
     public function getFormContentComponent(): Component
     {
-        return NestedSchema::make('form');
+        return EmbeddedSchema::make('form');
     }
 
     public function getSteps(): array

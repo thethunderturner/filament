@@ -18,9 +18,9 @@ use Filament\Notifications\Notification;
 use Filament\Pages\SimplePage;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Components\RenderHook;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
@@ -386,7 +386,7 @@ class Login extends SimplePage
 
     public function getFormContentComponent(): Component
     {
-        return Form::make([NestedSchema::make('form')])
+        return Form::make([EmbeddedSchema::make('form')])
             ->id('form')
             ->livewireSubmitHandler('authenticate')
             ->footer([
@@ -399,7 +399,7 @@ class Login extends SimplePage
 
     public function getMultiFactorChallengeFormContentComponent(): Component
     {
-        return Form::make([NestedSchema::make('multiFactorChallengeForm')])
+        return Form::make([EmbeddedSchema::make('multiFactorChallengeForm')])
             ->id('multiFactorChallengeForm')
             ->livewireSubmitHandler('authenticate')
             ->footer([

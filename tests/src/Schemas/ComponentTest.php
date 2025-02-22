@@ -34,7 +34,7 @@ it('has child components', function (): void {
     $componentsBoundToContainer = ($parentComponent = new Component)
         ->container(Schema::make(Livewire::make()))
         ->childComponents($components)
-        ->getChildComponentContainer()
+        ->getChildSchema()
         ->getComponents();
 
     expect($componentsBoundToContainer)

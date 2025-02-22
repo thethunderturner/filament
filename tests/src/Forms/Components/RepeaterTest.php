@@ -151,7 +151,7 @@ it('loads a relationship', function (): void {
         ->has(Post::factory()->count(3))
         ->create();
 
-    $componentContainer = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->statePath('data')
         ->components([
             (new Repeater('repeater'))
@@ -159,16 +159,16 @@ it('loads a relationship', function (): void {
         ])
         ->model($user);
 
-    $componentContainer->loadStateFromRelationships();
+    $schema->loadStateFromRelationships();
 
-    $componentContainer->saveRelationships();
+    $schema->saveRelationships();
 
     expect($user->posts()->count())
         ->toBe(3);
 });
 
 it('throws an exception for a missing relationship', function (): void {
-    $componentContainer = Schema::make(Livewire::make())
+    $schema = Schema::make(Livewire::make())
         ->statePath('data')
         ->components([
             (new Repeater(Str::random()))
@@ -176,7 +176,7 @@ it('throws an exception for a missing relationship', function (): void {
         ])
         ->model(Post::factory()->create());
 
-    $componentContainer
+    $schema
         ->saveRelationships();
 })->throws(Exception::class, 'The relationship [missing] does not exist on the model [Filament\Tests\Fixtures\Models\Post].');
 

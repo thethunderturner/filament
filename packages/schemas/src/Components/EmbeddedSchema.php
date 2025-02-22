@@ -5,7 +5,7 @@ namespace Filament\Schemas\Components;
 use Closure;
 use Filament\Support\Components\Contracts\HasEmbeddedView;
 
-class NestedSchema extends Component implements HasEmbeddedView
+class EmbeddedSchema extends Component implements HasEmbeddedView
 {
     protected string | Closure $name;
 

@@ -5,8 +5,8 @@ namespace Filament\Pages;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
@@ -81,7 +81,7 @@ class Dashboard extends Page
 
     public function getFiltersFormContentComponent(): Component
     {
-        return NestedSchema::make('filtersForm');
+        return EmbeddedSchema::make('filtersForm');
     }
 
     public function getWidgetsContentComponent(): Component
