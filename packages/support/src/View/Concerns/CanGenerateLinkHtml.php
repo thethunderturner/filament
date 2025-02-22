@@ -30,7 +30,7 @@ trait CanGenerateLinkHtml
         ComponentAttributeBag $attributes,
         string | Htmlable | null $badge = null,
         ?string $badgeColor = 'primary',
-        ActionSize | string | null $badgeSize = 'xs',
+        ActionSize | string | null $badgeSize = null,
         ?string $color = null,
         ?string $form = null,
         ?string $formId = null,
@@ -60,6 +60,10 @@ trait CanGenerateLinkHtml
 
         if (! $size instanceof ActionSize) {
             $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : ActionSize::Medium;
+        }
+
+        if (! $badgeSize instanceof ActionSize) {
+            $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : ActionSize::ExtraSmall;
         }
 
         if (filled($iconSize) && (! $iconSize instanceof IconSize)) {

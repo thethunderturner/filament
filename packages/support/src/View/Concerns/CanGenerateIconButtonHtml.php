@@ -28,7 +28,7 @@ trait CanGenerateIconButtonHtml
         ComponentAttributeBag $attributes,
         string | Htmlable | null $badge = null,
         ?string $badgeColor = null,
-        ActionSize | string | null $badgeSize = 'xs',
+        ActionSize | string | null $badgeSize = null,
         ?string $color = 'primary',
         ?string $form = null,
         ?string $formId = null,
@@ -51,6 +51,10 @@ trait CanGenerateIconButtonHtml
 
         if (! $size instanceof ActionSize) {
             $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : ActionSize::Medium;
+        }
+
+        if (! $badgeSize instanceof ActionSize) {
+            $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : ActionSize::ExtraSmall;
         }
 
         if (filled($iconSize) && (! $iconSize instanceof IconSize)) {

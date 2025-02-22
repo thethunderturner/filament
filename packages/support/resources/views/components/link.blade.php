@@ -11,7 +11,7 @@
 @props([
     'badge' => null,
     'badgeColor' => 'primary',
-    'badgeSize' => 'xs',
+    'badgeSize' => ActionSize::ExtraSmall,
     'color' => 'primary',
     'disabled' => false,
     'form' => null,
@@ -36,6 +36,10 @@
 @php
     if (! $iconPosition instanceof IconPosition) {
         $iconPosition = filled($iconPosition) ? (IconPosition::tryFrom($iconPosition) ?? $iconPosition) : null;
+    }
+
+    if (! $badgeSize instanceof ActionSize) {
+        $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : null;
     }
 
     if (! $size instanceof ActionSize) {

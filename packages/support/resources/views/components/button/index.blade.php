@@ -10,7 +10,7 @@
 @props([
     'badge' => null,
     'badgeColor' => 'primary',
-    'badgeSize' => 'xs',
+    'badgeSize' => ActionSize::ExtraSmall,
     'color' => 'primary',
     'disabled' => false,
     'form' => null,
@@ -40,6 +40,10 @@
 
     if (! $size instanceof ActionSize) {
         $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : null;
+    }
+
+    if (! $badgeSize instanceof ActionSize) {
+        $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : null;
     }
 
     if (filled($iconSize) && (! $iconSize instanceof IconSize)) {
