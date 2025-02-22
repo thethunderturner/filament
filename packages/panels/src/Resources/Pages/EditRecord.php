@@ -374,7 +374,7 @@ class EditRecord extends Page
         return $schema
             ->components([
                 ...($this->hasCombinedRelationManagerTabsWithContent() ? [] : $this->getContentComponents()),
-                ...$this->getRelationManagersContentComponents(),
+                $this->getRelationManagersContentComponent(),
             ]);
     }
 

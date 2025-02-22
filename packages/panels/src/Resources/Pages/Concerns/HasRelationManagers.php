@@ -103,10 +103,7 @@ trait HasRelationManagers
         return [];
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getRelationManagersContentComponents(): array
+    public function getRelationManagersContentComponent(): Component
     {
         $managers = $this->getRelationManagers();
         $hasCombinedRelationManagerTabsWithContent = $this->hasCombinedRelationManagerTabsWithContent();
@@ -162,18 +159,14 @@ trait HasRelationManagers
                 })
                 ->all();
 
-            return [
-                Tabs::make()
-                    ->livewireProperty('activeRelationManager')
-                    ->contained(false)
-                    ->tabs($tabs),
-            ];
+            return Tabs::make()
+                ->livewireProperty('activeRelationManager')
+                ->contained(false)
+                ->tabs($tabs);
         }
 
         if (empty($managers)) {
-            return [
-                Group::make()->hidden(),
-            ];
+            return Group::make()->hidden();
         }
 
         $manager = Arr::first($managers);
@@ -182,21 +175,17 @@ trait HasRelationManagers
             $manager->ownerRecord($ownerRecord);
             $manager->pageClass(static::class);
 
-            return [
-                Group::make(collect($manager->ownerRecord($ownerRecord)->pageClass(static::class)->getManagers())
-                    ->map(fn ($groupedManager, $groupedManagerKey): Livewire => Livewire::make(
-                        $normalizedGroupedManagerClass = $this->normalizeRelationManagerClass($groupedManager),
-                        [...$managerLivewireData, ...(($groupedManager instanceof RelationManagerConfiguration) ? [...$groupedManager->relationManager::getDefaultProperties(), ...$groupedManager->getProperties()] : $groupedManager::getDefaultProperties())],
-                    )->key("{$normalizedGroupedManagerClass}-{$groupedManagerKey}"))
-                    ->all()),
-            ];
+            return Group::make(collect($manager->ownerRecord($ownerRecord)->pageClass(static::class)->getManagers())
+                ->map(fn ($groupedManager, $groupedManagerKey): Livewire => Livewire::make(
+                    $normalizedGroupedManagerClass = $this->normalizeRelationManagerClass($groupedManager),
+                    [...$managerLivewireData, ...(($groupedManager instanceof RelationManagerConfiguration) ? [...$groupedManager->relationManager::getDefaultProperties(), ...$groupedManager->getProperties()] : $groupedManager::getDefaultProperties())],
+                )->key("{$normalizedGroupedManagerClass}-{$groupedManagerKey}"))
+                ->all());
         }
 
-        return [
-            Livewire::make(
-                $normalizedManagerClass = $this->normalizeRelationManagerClass($manager),
-                [...$managerLivewireData, ...(($manager instanceof RelationManagerConfiguration) ? [...$manager->relationManager::getDefaultProperties(), ...$manager->getProperties()] : $manager::getDefaultProperties())],
-            )->key($normalizedManagerClass),
-        ];
+        return Livewire::make(
+            $normalizedManagerClass = $this->normalizeRelationManagerClass($manager),
+            [...$managerLivewireData, ...(($manager instanceof RelationManagerConfiguration) ? [...$manager->relationManager::getDefaultProperties(), ...$manager->getProperties()] : $manager::getDefaultProperties())],
+        )->key($normalizedManagerClass);
     }
 }

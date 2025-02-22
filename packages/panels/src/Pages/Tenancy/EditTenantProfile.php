@@ -238,26 +238,21 @@ abstract class EditTenantProfile extends Page
     {
         return $schema
             ->components([
-                ...$this->getFormContentComponents(),
+                $this->getFormContentComponent(),
             ]);
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getFormContentComponents(): array
+    public function getFormContentComponent(): Component
     {
-        return [
-            Form::make([NestedSchema::make('form')])
-                ->id('form')
-                ->livewireSubmitHandler('save')
-                ->footer([
-                    Actions::make($this->getFormActions())
-                        ->alignment($this->getFormActionsAlignment())
-                        ->fullWidth($this->hasFullWidthFormActions())
-                        ->sticky($this->areFormActionsSticky()),
-                ]),
-        ];
+        return Form::make([NestedSchema::make('form')])
+            ->id('form')
+            ->livewireSubmitHandler('save')
+            ->footer([
+                Actions::make($this->getFormActions())
+                    ->alignment($this->getFormActionsAlignment())
+                    ->fullWidth($this->hasFullWidthFormActions())
+                    ->sticky($this->areFormActionsSticky()),
+            ]);
     }
 
     protected function hasFullWidthFormActions(): bool

@@ -199,7 +199,7 @@ class ViewRecord extends Page
         return $schema
             ->components([
                 ...($this->hasCombinedRelationManagerTabsWithContent() ? [] : $this->getContentComponents()),
-                ...$this->getRelationManagersContentComponents(),
+                $this->getRelationManagersContentComponent(),
             ]);
     }
 
@@ -209,30 +209,20 @@ class ViewRecord extends Page
     public function getContentComponents(): array
     {
         return [
-            ...($this->hasInfolist()
-                ? $this->getInfolistContentComponents()
-                : $this->getFormContentComponents()),
+            $this->hasInfolist()
+                ? $this->getInfolistContentComponent()
+                : $this->getFormContentComponent(),
         ];
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getFormContentComponents(): array
+    public function getFormContentComponent(): Component
     {
-        return [
-            NestedSchema::make('form'),
-        ];
+        return NestedSchema::make('form');
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getInfolistContentComponents(): array
+    public function getInfolistContentComponent(): Component
     {
-        return [
-            NestedSchema::make('infolist'),
-        ];
+        return NestedSchema::make('infolist');
     }
 
     /**

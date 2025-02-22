@@ -234,7 +234,7 @@ class ListRecords extends Page implements Tables\Contracts\HasTable
     {
         return $schema
             ->components([
-                ...$this->getTabsContentComponents(),
+                $this->getTabsContentComponent(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE),
                 EmbeddedTable::make(),
                 RenderHook::make(PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_AFTER),

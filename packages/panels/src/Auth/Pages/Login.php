@@ -383,46 +383,36 @@ class Login extends SimplePage
         return $schema
             ->components([
                 RenderHook::make(PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE),
-                ...$this->getFormContentComponents(),
-                ...$this->getMultiFactorChallengeFormContentComponents(),
+                $this->getFormContentComponent(),
+                $this->getMultiFactorChallengeFormContentComponent(),
                 RenderHook::make(PanelsRenderHook::AUTH_LOGIN_FORM_AFTER),
             ]);
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getFormContentComponents(): array
+    public function getFormContentComponent(): Component
     {
-        return [
-            Form::make([NestedSchema::make('form')])
-                ->id('form')
-                ->livewireSubmitHandler('authenticate')
-                ->footer([
-                    Actions::make($this->getFormActions())
-                        ->alignment($this->getFormActionsAlignment())
-                        ->fullWidth($this->hasFullWidthFormActions()),
-                ])
-                ->visible(fn (): bool => blank($this->userUndertakingMultiFactorAuthentication)),
-        ];
+        return Form::make([NestedSchema::make('form')])
+            ->id('form')
+            ->livewireSubmitHandler('authenticate')
+            ->footer([
+                Actions::make($this->getFormActions())
+                    ->alignment($this->getFormActionsAlignment())
+                    ->fullWidth($this->hasFullWidthFormActions()),
+            ])
+            ->visible(fn (): bool => blank($this->userUndertakingMultiFactorAuthentication));
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getMultiFactorChallengeFormContentComponents(): array
+    public function getMultiFactorChallengeFormContentComponent(): Component
     {
-        return [
-            Form::make([NestedSchema::make('multiFactorChallengeForm')])
-                ->id('multiFactorChallengeForm')
-                ->livewireSubmitHandler('authenticate')
-                ->footer([
-                    Actions::make($this->getMultiFactorChallengeFormActions())
-                        ->alignment($this->getMultiFactorChallengeFormActionsAlignment())
-                        ->fullWidth($this->hasFullWidthMultiFactorChallengeFormActions()),
-                ])
-                ->visible(fn (): bool => filled($this->userUndertakingMultiFactorAuthentication)),
-        ];
+        return Form::make([NestedSchema::make('multiFactorChallengeForm')])
+            ->id('multiFactorChallengeForm')
+            ->livewireSubmitHandler('authenticate')
+            ->footer([
+                Actions::make($this->getMultiFactorChallengeFormActions())
+                    ->alignment($this->getMultiFactorChallengeFormActionsAlignment())
+                    ->fullWidth($this->hasFullWidthMultiFactorChallengeFormActions()),
+            ])
+            ->visible(fn (): bool => filled($this->userUndertakingMultiFactorAuthentication));
     }
 
     public function getMultiFactorChallengeFormActionsAlignment(): string | Alignment
