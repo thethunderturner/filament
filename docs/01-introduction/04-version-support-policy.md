@@ -1,15 +1,16 @@
 ---
 title: Version Support Policy
+contents: false
 ---
 
 ## Overview
 
-| Version | New Features | Bug Fixes          | Security Fixes |
-|---------|--------------|--------------------|----------------|
-| 1.x     | ❌            | ❌                  | ✅              |
-| 2.x     | ❌            | ✅ until Aug 1 2026 | ✅              |
-| 3.x     | ❌            | ✅                  | ✅              |
-| 4.x     | ✅            | ✅                  | ✅              |
+| Version | New features | Bug fixes | Security fixes     |
+|---------|--------------|-----------|--------------------|
+| 1.x     | ❌            | ❌         | ✅ until Jul 1 2025 |
+| 2.x     | ❌            | ❌         | ✅ until Jan 1 2026 |
+| 3.x     | ❌            | ✅         | ✅                  |
+| 4.x     | ✅            | ✅         | ✅                  |
 
 ## New features
 
