@@ -11,7 +11,7 @@ Filament requires the following to run:
 - Laravel v10.0+
 - Livewire v3.0+
 
-Installation comes in two flavors, depending on whether you want to build an app using our panel builder, or if you want to use the components within the Blade views of your app:
+Installation comes in two flavors, depending on whether you want to build an app using our panel builder or use the components within your app's Blade views:
 
 <div x-data="{ package: (window.location.hash === '#components') ? 'components' : 'panels' }">
 
@@ -20,7 +20,7 @@ Installation comes in two flavors, depending on whether you want to build an app
         Panel builder
 
         <span slot="description">
-            Most people choose this option, to build as panel (e.g., admin panel) for their app. The panel builder combines all the individual components together into a cohesive framework. You can create as many panels as you like within a Laravel installation, but you only need to install it once.
+            Most people choose this option to build a panel (e.g., admin panel) for their app. The panel builder combines all the individual components into a cohesive framework. You can create as many panels as you like within a Laravel installation, but you only need to install it once.
         </span>
     </RadioGroupOption>
 
@@ -47,9 +47,9 @@ php artisan filament:install --panels
 
 This will create and register a new [Laravel service provider](https://laravel.com/docs/providers) called `app/Providers/Filament/AdminPanelProvider.php`.
 
-> If you get an error when accessing your panel, check that the service provider was registered in `bootstrap/providers.php` (Laravel 11 and above) or `config/app.php` (Laravel 10 and below). If not, you should manually add it.
+> If you get an error when accessing your panel, check that the service provider is registered in `bootstrap/providers.php` (Laravel 11+) or `config/app.php` (Laravel 10 and below). If it's not registered, you'll need to add it manually.
 
-You can create a new user account with the following command:
+You can create a new user account using the following command:
 
 ```bash
 php artisan make:filament-user
@@ -60,14 +60,14 @@ Open `/admin` in your web browser, sign in, and start building your app!
 </div>
 
 <div
-    x-show="package === 'components'"
+    x-show="package === 'components'" 
     x-data="{ laravelProject: 'new' }"
     x-cloak
 >
 
 ## Installing the individual components
 
-To start with, you need to install the Filament components you'd like to use with Composer:
+First, install the Filament components you want to use with Composer:
 
 ```bash
 composer require
@@ -80,16 +80,16 @@ composer require
     filament/widgets
 ```
 
-You can install additional packages later in your project without needing to follow all these steps.
+You can install additional packages later in your project without having to repeat these installation steps.
 
-If you would like to only use the set of [Blade UI components](../blade-components), you need to require `filament/support` at this stage.
+If you only want to use the set of [Blade UI components](../blade-components), you'll need to require `filament/support` at this stage.
 
 <RadioGroup model="laravelProject">
     <RadioGroupOption value="new">
         New Laravel projects
 
         <span slot="description">
-            Get started with the Filament components quickly by running a simple command. However, this could overwrite modified files in your app, so is only suitable for new Laravel projects.
+            Get started with Filament components quickly by running a simple command. Note that this will overwrite any modified files in your app, so it's only suitable for new Laravel projects.
         </span>
     </RadioGroupOption>
 
@@ -97,16 +97,16 @@ If you would like to only use the set of [Blade UI components](../blade-componen
         Existing Laravel projects
 
         <span slot="description">
-            If you have an existing Laravel project, you can still install Filament, but should do so manually to avoid breaking any existing functionality.
+            If you have an existing Laravel project, you can still install Filament, but should do so manually to preserve your existing functionality.
         </span>
     </RadioGroupOption>
 </RadioGroup>
 
 <div x-show="laravelProject === 'new'" x-cloak>
 
-To quickly get started with Filament in a new Laravel project, run the following commands to install [Livewire](https://livewire.laravel.com), [Alpine.js](https://alpinejs.dev), and [Tailwind CSS](https://tailwindcss.com):
+To quickly set up Filament in a new Laravel project, run the following commands to install [Livewire](https://livewire.laravel.com), [Alpine.js](https://alpinejs.dev), and [Tailwind CSS](https://tailwindcss.com):
 
-> Since these commands will overwrite existing files in your application, only run this in a new Laravel project!
+> Warning: These commands will overwrite existing files in your application. Only run them in a new Laravel project!
 
 Run the following command to install the Filament frontend assets:
 
@@ -118,7 +118,7 @@ npm install
 npm run dev
 ```
 
-When scaffolding, if you have the [notifications](notifications) package installed, Filament will ask you if you would like to install the required Livewire component into the default layout file. This is required if you wish to send flash notifications to your users through Filament.
+During scaffolding, if you have the [notifications](notifications) package installed, Filament will ask if you want to install the required Livewire component into your default layout file. This component is required if you want to send flash notifications to users through Filament.
 
 </div>
 
@@ -132,7 +132,7 @@ php artisan filament:install
 
 ### Installing Tailwind CSS
 
-Run the following command to install Tailwind CSS for Vite, with the Tailwind Forms and Typography plugins:
+Run the following command to install Tailwind CSS and its Vite plugin, along with the Tailwind Forms and Typography plugins:
 
 ```bash
 npm install tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography --save-dev
@@ -140,7 +140,7 @@ npm install tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typogr
 
 ### Configuring styles
 
-Add Tailwind CSS to your `resources/css/app.css`:
+Add Tailwind CSS to your `resources/css/app.css` file:
 
 ```css
 @import 'tailwindcss';
@@ -156,7 +156,7 @@ Add Tailwind CSS to your `resources/css/app.css`:
 @variant dark (&:where(.dark, .dark *));
 ```
 
-Create a `postcss.config.js` file in the root of your project and install Tailwind CSS:
+Create a `postcss.config.js` file in the root of your project and configure Tailwind CSS:
 
 ```js
 export default {
@@ -166,9 +166,9 @@ export default {
 }
 ```
 
-### Automatically refreshing the browser
+### Automatic browser refreshing
 
-You may also want to update your `vite.config.js` file to refresh the page automatically when Livewire and Filament components are updated:
+Update your `vite.config.js` file to automatically refresh the browser when Livewire and Filament components are modified:
 
 ```js
 import { defineConfig } from 'vite'
@@ -190,11 +190,11 @@ export default defineConfig({
 
 ### Compiling assets
 
-Compile your new CSS and Javascript assets using `npm run dev`.
+Compile your new CSS and JavaScript assets using `npm run dev`.
 
-### Configuring your layout
+### Configuring your layout 
 
-Create a new `resources/views/components/layouts/app.blade.php` layout file for Livewire components:
+Create a new layout file at `resources/views/components/layouts/app.blade.php` for your Livewire components:
 
 ```blade
 <!DOCTYPE html>
@@ -229,7 +229,7 @@ Create a new `resources/views/components/layouts/app.blade.php` layout file for 
 </html>
 ```
 
-Please note the `@livewire('notifications')` line above - this is only required if you have the [notifications](.../notifications) package installed, and you wish to send flash notifications to your users through Filament.
+Please note the `@livewire('notifications')` line above - this is only required if you have the [Notifications](.../notifications) package installed and wish to send flash notifications to your users through Filament.
 
 </div>
 

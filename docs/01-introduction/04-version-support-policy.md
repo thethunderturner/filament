@@ -14,18 +14,18 @@ contents: false
 
 ## New features
 
-Pull requests to introduce new features are only accepted for the latest major version, except in special circumstances. Once a major version is released, the Filament team will no longer accept pull requests for new features for the previous major version, and open pull requests will be targeted to the latest major version or closed, depending on any conflicts with the new target branch.
+Pull requests for new features are only accepted for the latest major version, except in special circumstances. Once a new major version is released, the Filament team will no longer accept pull requests for new features in previous versions. Any open pull requests will either be redirected to target the latest major version or closed, depending on conflicts with the new target branch.
 
 ## Bug fixes
 
-Once a major version is released, the Filament team will merge pull requests for bug fixes for the previous major version for 2 years. After 2 years, the Filament team will no longer accept pull requests for the previous major version.
+After a major version is released, the Filament team will continue to merge pull requests for bug fixes in the previous major version for 2 years. After this period, pull requests for that version will no longer be accepted.
 
-The Filament team will handle bug reports for supported versions in the order that they are received. Sometimes, a particularly serious bug may be prioritized over other reports. The team will generally write bug fixes for the latest major version only, and contributors may backport fixes to another supported version by opening a pull request if they wish.
+The Filament team processes bug reports for supported versions in chronological order, though critical bugs may be prioritized. Bug fixes are typically developed only for the latest major version. However, contributors can backport fixes to other supported versions by submitting pull requests.
 
 ## Security fixes
 
-The Filament team does not currently intend to stop supporting any major version of Filament with security fixes. If this policy changes, the team will provide at least a year's notice before ending support for a major version.
+The Filament team currently plans to continue providing security fixes for all major versions indefinitely. If this policy changes, the team will announce the change at least one year before discontinuing support for any major version.
 
-If you discover a security vulnerability within Filament, please email Dan Harrin via [dan@danharrin.com](mailto:dan@danharrin.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability in Filament, please report it by emailing Dan Harrin at [dan@danharrin.com](mailto:dan@danharrin.com). All security vulnerabilities will be addressed promptly.
 
-Please be aware that while a Filament version may be supported with security fixes, its underlying dependencies such as PHP, Laravel and Livewire may not be. As such, apps that use these versions of Filament may be vulnerable to security issues in their dependencies.
+Please note that while a Filament version may receive security fixes, its underlying dependencies (PHP, Laravel, and Livewire) may no longer be supported. Therefore, applications using older versions of Filament could still be vulnerable to security issues in these dependencies.

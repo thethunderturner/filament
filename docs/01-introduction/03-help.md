@@ -7,7 +7,7 @@ contents: false
 
 ## Discord
 
-We are fortunate to have a growing community of Filament users that help each other out on our [Discord server](https://filamentphp.com/discord). Join now, its free!
+We are fortunate to have a growing community of Filament users that help each other out on our [Discord server](https://filamentphp.com/discord). Join now, it's free!
 We also have many dedicated channels in different languages. Currently, we have channels for the following languages:
 
 - [#ar](https://discord.com/channels/883083792112300104/961199444789973024) - Arabic 🇸🇦
@@ -26,7 +26,7 @@ If you are missing a channel for your language, please let us know and we will c
 
 ## GitHub
 
-You can also reach out to us on our [GitHub discussions forum](https://github.com/filamentphp/filament/discussions), where community members and core tea, are happy to help you out.
+You can also reach out to us on our [GitHub discussions forum](https://github.com/filamentphp/filament/discussions), where community members and core team members are happy to help you out.
 
 If you find a bug, you can open an [issue](https://github.com/filamentphp/filament/issues/new/choose), and even donate to the bug fix by using the link automatically added to the bottom of every new issue description.
 
@@ -40,7 +40,7 @@ If you're looking for dedicated help with your Filament project, we're here for 
 
 [Laracasts](https://laracasts.com) has a dedicated [Filament help section](https://laracasts.com/discuss/channels/filament) where you can ask questions and get help from their community.
 
-Additionally on Laracasts you can find two excellent courses about Filament:
+Additionally, on Laracasts you can find two excellent courses about Filament:
 
 - [Rapid Laravel Apps With Filament](https://laracasts.com/series/rapid-laravel-development-with-filament)
 - [Build Advanced Components for Filament](https://laracasts.com/series/build-advanced-components-for-filament) by one of the creators of Filament.
@@ -53,4 +53,4 @@ Since we make use of [Answer Overflow](https://www.answeroverflow.com/c/88308379
 
 ## Helping others
 
-We would like to encourage you to join any of the above platforms and help yourself and our community out. Additionally, we would like to encourage you to [contribute](contributing) to Filament itself. We are always looking for new contributors to help us improve Filament.
+We encourage you to join any of the above platforms and help yourself and our community. Additionally, we encourage you to [contribute](contributing) to Filament itself. We are always looking for new contributors to help us improve Filament.
