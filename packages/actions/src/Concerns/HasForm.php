@@ -39,6 +39,8 @@ trait HasForm
     }
 
     /**
+     * @deprecated Use `schema() instead.
+     *
      * @param  array<Component| Action> | Closure | null  $form
      */
     public function form(array | Closure | null $form): static
