@@ -8,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Schemas\Components\StateCasts\EnumArrayStateCast;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
-use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Size;
 use Filament\Support\Services\RelationshipJoiner;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Collection;
@@ -78,7 +78,7 @@ class CheckboxList extends Field implements Contracts\CanDisableOptions, Contrac
             ->label(__('filament-forms::components.checkbox_list.actions.select_all.label'))
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifySelectAllActionUsing) {
             $action = $this->evaluate($this->modifySelectAllActionUsing, [
@@ -107,7 +107,7 @@ class CheckboxList extends Field implements Contracts\CanDisableOptions, Contrac
             ->label(__('filament-forms::components.checkbox_list.actions.deselect_all.label'))
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyDeselectAllActionUsing) {
             $action = $this->evaluate($this->modifyDeselectAllActionUsing, [

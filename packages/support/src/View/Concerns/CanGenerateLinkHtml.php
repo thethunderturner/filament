@@ -3,10 +3,10 @@
 namespace Filament\Support\View\Concerns;
 
 use BackedEnum;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\Size;
 use Filament\Support\View\Components\BadgeComponent;
 use Filament\Support\View\Components\LinkComponent;
 use Illuminate\Contracts\Support\Htmlable;
@@ -30,7 +30,7 @@ trait CanGenerateLinkHtml
         ComponentAttributeBag $attributes,
         string | Htmlable | null $badge = null,
         ?string $badgeColor = 'primary',
-        ActionSize | string | null $badgeSize = null,
+        Size | string | null $badgeSize = null,
         ?string $color = null,
         ?string $form = null,
         ?string $formId = null,
@@ -45,7 +45,7 @@ trait CanGenerateLinkHtml
         bool $isLabelSrOnly = false,
         ?array $keyBindings = null,
         string | Htmlable | null $label = null,
-        ActionSize | string | null $size = null,
+        Size | string | null $size = null,
         string $tag = 'button',
         ?string $target = null,
         ?string $tooltip = null,
@@ -58,12 +58,12 @@ trait CanGenerateLinkHtml
             $iconPosition = filled($iconPosition) ? (IconPosition::tryFrom($iconPosition) ?? $iconPosition) : null;
         }
 
-        if (! $size instanceof ActionSize) {
-            $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : ActionSize::Medium;
+        if (! $size instanceof Size) {
+            $size = filled($size) ? (Size::tryFrom($size) ?? $size) : Size::Medium;
         }
 
-        if (! $badgeSize instanceof ActionSize) {
-            $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : ActionSize::ExtraSmall;
+        if (! $badgeSize instanceof Size) {
+            $badgeSize = filled($badgeSize) ? (Size::tryFrom($badgeSize) ?? $badgeSize) : Size::ExtraSmall;
         }
 
         if (filled($iconSize) && (! $iconSize instanceof IconSize)) {
@@ -71,7 +71,7 @@ trait CanGenerateLinkHtml
         }
 
         $iconSize ??= match ($size) {
-            ActionSize::ExtraSmall, ActionSize::Small => IconSize::Small,
+            Size::ExtraSmall, Size::Small => IconSize::Small,
             default => null,
         };
 
@@ -107,7 +107,7 @@ trait CanGenerateLinkHtml
             ->class([
                 'fi-link',
                 'fi-disabled' => $isDisabled,
-                ($size instanceof ActionSize) ? "fi-size-{$size->value}" : $size,
+                ($size instanceof Size) ? "fi-size-{$size->value}" : $size,
                 ($weight instanceof FontWeight) ? "fi-font-{$weight->value}" : $weight,
             ])
             ->color(LinkComponent::class, $color);
@@ -159,7 +159,7 @@ trait CanGenerateLinkHtml
                     <span class="<?= Arr::toCssClasses([
                         'fi-badge',
                         ...get_component_color_classes(BadgeComponent::class, $badgeColor),
-                        ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
+                        ($badgeSize instanceof Size) ? "fi-size-{$badgeSize->value}" : $badgeSize,
                     ]) ?>">
                         <?= e($badge) ?>
                     </span>

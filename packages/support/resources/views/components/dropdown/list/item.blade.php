@@ -1,6 +1,6 @@
 @php
-    use Filament\Support\Enums\ActionSize;
     use Filament\Support\Enums\IconSize;
+    use Filament\Support\Enums\Size;
     use Filament\Support\View\Components\BadgeComponent;
     use Filament\Support\View\Components\DropdownComponent\ItemComponent;
     use Filament\Support\View\Components\DropdownComponent\ItemComponent\IconComponent;

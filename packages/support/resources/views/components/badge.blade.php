@@ -1,7 +1,7 @@
 @php
-    use Filament\Support\Enums\ActionSize;
     use Filament\Support\Enums\IconPosition;
     use Filament\Support\Enums\IconSize;
+    use Filament\Support\Enums\Size;
     use Filament\Support\View\Components\BadgeComponent;
     use Illuminate\View\ComponentAttributeBag;
 @endphp
@@ -19,7 +19,7 @@
     'iconSize' => null,
     'keyBindings' => null,
     'loadingIndicator' => true,
-    'size' => ActionSize::Medium,
+    'size' => Size::Medium,
     'spaMode' => null,
     'tag' => 'span',
     'target' => null,
@@ -32,8 +32,8 @@
         $iconPosition = filled($iconPosition) ? (IconPosition::tryFrom($iconPosition) ?? $iconPosition) : null;
     }
 
-    if (! $size instanceof ActionSize) {
-        $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : null;
+    if (! $size instanceof Size) {
+        $size = filled($size) ? (Size::tryFrom($size) ?? $size) : null;
     }
 
     if (filled($iconSize) && (! $iconSize instanceof IconSize)) {
@@ -86,7 +86,7 @@
             ->class([
                 'fi-badge',
                 'fi-disabled' => $disabled,
-                ($size instanceof ActionSize) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
+                ($size instanceof Size) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
             ])
             ->color(BadgeComponent::class, $color)
     }}

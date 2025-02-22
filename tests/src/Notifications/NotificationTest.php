@@ -6,8 +6,8 @@ use Filament\Actions\Action;
 use Filament\Notifications\Collection;
 use Filament\Notifications\Livewire\Notifications;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconPosition;
+use Filament\Support\Enums\Size;
 use Filament\Tests\Fixtures\Notifications\CustomNotification;
 use Filament\Tests\TestCase;
 use Illuminate\Support\Arr;
@@ -56,7 +56,7 @@ it('can send notifications', function (): void {
                 ->iconPosition($actionIconPosition = Arr::random([IconPosition::After, IconPosition::Before]))
                 ->label($actionLabel = Str::random())
                 ->outlined($isActionOutlined = (bool) rand(0, 1))
-                ->size($actionSize = Arr::random([ActionSize::ExtraSmall, ActionSize::Small, ActionSize::Medium, ActionSize::Large, ActionSize::ExtraLarge]))
+                ->size($actionSize = Arr::random([Size::ExtraSmall, Size::Small, Size::Medium, Size::Large, Size::ExtraLarge]))
                 ->url(
                     $actionUrl = Str::random(),
                     shouldOpenInNewTab: $shouldActionOpenUrlInNewTab = (bool) rand(0, 1),

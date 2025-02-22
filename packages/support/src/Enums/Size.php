@@ -2,7 +2,7 @@
 
 namespace Filament\Support\Enums;
 
-enum ActionSize: string
+enum Size: string
 {
     case ExtraSmall = 'xs';
 

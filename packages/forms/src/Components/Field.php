@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
 use Filament\Schemas\Components\StateCasts\EnumStateCast;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Size;
 
 class Field extends Component implements Contracts\HasValidationRules
 {
@@ -240,9 +240,9 @@ class Field extends Component implements Contracts\HasValidationRules
                 ->inline()
                 ->embeddedInParentComponent()
                 ->configureActionsUsing(fn (Action $action) => $action
-                    ->defaultSize(ActionSize::Small)
+                    ->defaultSize(Size::Small)
                     ->defaultView(Action::LINK_VIEW))
-                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(ActionSize::Small));
+                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(Size::Small));
         }
 
         return $schema;

@@ -10,8 +10,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Wizard\Step;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconPosition;
+use Filament\Support\Enums\Size;
 use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
 
@@ -59,7 +59,7 @@ class ActionsDemo extends Component implements HasActions, HasSchemas
     {
         return Action::make('large')
             ->label('Create')
-            ->size(ActionSize::Large);
+            ->size(Size::Large);
     }
 
     public function iconAction(): Action

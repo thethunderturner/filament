@@ -14,8 +14,8 @@ use Filament\Schemas\Components\Contracts\HasExtraItemActions;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasReorderAnimationDuration;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\Size;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
@@ -197,7 +197,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->button()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isAddable());
 
         if ($this->modifyAddActionUsing) {
@@ -274,7 +274,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->button()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(false);
 
         if ($this->modifyAddBetweenActionUsing) {
@@ -336,7 +336,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isCloneable());
 
         if ($this->modifyCloneActionUsing) {
@@ -377,7 +377,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isDeletable());
 
         if ($this->modifyDeleteActionUsing) {
@@ -417,7 +417,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isReorderable());
 
         if ($this->modifyMoveDownActionUsing) {
@@ -457,7 +457,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isReorderable());
 
         if ($this->modifyMoveUpActionUsing) {
@@ -501,7 +501,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             })
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isReorderableWithDragAndDrop());
 
         if ($this->modifyReorderActionUsing) {
@@ -533,7 +533,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyCollapseActionUsing) {
             $action = $this->evaluate($this->modifyCollapseActionUsing, [
@@ -564,7 +564,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyExpandActionUsing) {
             $action = $this->evaluate($this->modifyExpandActionUsing, [
@@ -594,7 +594,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyCollapseAllActionUsing) {
             $action = $this->evaluate($this->modifyCollapseAllActionUsing, [
@@ -624,7 +624,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyExpandAllActionUsing) {
             $action = $this->evaluate($this->modifyExpandAllActionUsing, [

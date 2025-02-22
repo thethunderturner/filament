@@ -21,8 +21,8 @@ use Filament\Support\Concerns\CanBeContained;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 use Filament\Support\Concerns\HasIcon;
 use Filament\Support\Concerns\HasIconColor;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\Size;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
 
@@ -238,9 +238,9 @@ class Section extends Component implements CanConcealComponents, CanEntangleWith
         ])) {
             $schema
                 ->configureActionsUsing(fn (Action $action) => $action
-                    ->defaultSize(ActionSize::Small)
+                    ->defaultSize(Size::Small)
                     ->defaultView(Action::LINK_VIEW))
-                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(ActionSize::Small));
+                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(Size::Small));
         }
 
         return $schema;

@@ -17,12 +17,12 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\Size;
 use Filament\Support\Enums\TextSize;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\CheckboxColumn;
@@ -999,7 +999,7 @@ class TablesDemo extends Component implements HasSchemas, HasTable
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
-                ])->size(ActionSize::Small),
+                ])->size(Size::Small),
             ]);
     }
 

@@ -1,7 +1,7 @@
 @php
-    use Filament\Support\Enums\ActionSize;
     use Filament\Support\Enums\IconPosition;
     use Filament\Support\Enums\IconSize;
+    use Filament\Support\Enums\Size;
     use Filament\Support\View\Components\BadgeComponent;
     use Filament\Support\View\Components\ButtonComponent;
     use Illuminate\View\ComponentAttributeBag;
@@ -10,7 +10,7 @@
 @props([
     'badge' => null,
     'badgeColor' => 'primary',
-    'badgeSize' => ActionSize::ExtraSmall,
+    'badgeSize' => Size::ExtraSmall,
     'color' => 'primary',
     'disabled' => false,
     'form' => null,
@@ -25,7 +25,7 @@
     'labelSrOnly' => false,
     'loadingIndicator' => true,
     'outlined' => false,
-    'size' => ActionSize::Medium,
+    'size' => Size::Medium,
     'spaMode' => null,
     'tag' => 'button',
     'target' => null,
@@ -38,12 +38,12 @@
         $iconPosition = filled($iconPosition) ? (IconPosition::tryFrom($iconPosition) ?? $iconPosition) : null;
     }
 
-    if (! $size instanceof ActionSize) {
-        $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : null;
+    if (! $size instanceof Size) {
+        $size = filled($size) ? (Size::tryFrom($size) ?? $size) : null;
     }
 
-    if (! $badgeSize instanceof ActionSize) {
-        $badgeSize = filled($badgeSize) ? (ActionSize::tryFrom($badgeSize) ?? $badgeSize) : null;
+    if (! $badgeSize instanceof Size) {
+        $badgeSize = filled($badgeSize) ? (Size::tryFrom($badgeSize) ?? $badgeSize) : null;
     }
 
     if (filled($iconSize) && (! $iconSize instanceof IconSize)) {
@@ -51,7 +51,7 @@
     }
 
     $iconSize ??= match ($size) {
-        ActionSize::ExtraSmall, ActionSize::Small => IconSize::Small,
+        Size::ExtraSmall, Size::Small => IconSize::Small,
         default => null,
     };
 
@@ -134,7 +134,7 @@
                 'fi-btn',
                 'fi-disabled' => $disabled,
                 'fi-outlined' => $outlined,
-                ($size instanceof ActionSize) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
+                ($size instanceof Size) ? "fi-size-{$size->value}" : (is_string($size) ? $size : ''),
                 is_string($labeledFrom) ? "fi-labeled-from-{$labeledFrom}" : null,
             ])
             ->color(app(ButtonComponent::class, ['isOutlined' => $outlined]), $color)
@@ -225,7 +225,7 @@
                     @class([
                         'fi-badge',
                         ...\Filament\Support\get_component_color_classes(BadgeComponent::class, $badgeColor),
-                        ($badgeSize instanceof ActionSize) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
+                        ($badgeSize instanceof Size) ? "fi-size-{$badgeSize->value}" : (is_string($badgeSize) ? $badgeSize : ''),
                     ])
                 >
                     {{ $badge }}

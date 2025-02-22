@@ -11,8 +11,8 @@ use Filament\Schemas\Components\Concerns\CanOpenUrl;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasAlignment;
 use Filament\Support\Concerns\HasPlaceholder;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\Size;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\View\ComponentSlot;
@@ -214,9 +214,9 @@ class Entry extends Component
                 ->inline()
                 ->embeddedInParentComponent()
                 ->configureActionsUsing(fn (Action $action) => $action
-                    ->defaultSize(ActionSize::Small)
+                    ->defaultSize(Size::Small)
                     ->defaultView(Action::LINK_VIEW))
-                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(ActionSize::Small));
+                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(Size::Small));
         }
 
         return $schema;

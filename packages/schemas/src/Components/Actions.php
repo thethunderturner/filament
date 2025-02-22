@@ -9,7 +9,7 @@ use Filament\Schemas\Components\Concerns\HasLabel;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasAlignment;
 use Filament\Support\Concerns\HasVerticalAlignment;
-use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Size;
 
 class Actions extends Component
 {
@@ -152,9 +152,9 @@ class Actions extends Component
                 ->inline()
                 ->embeddedInParentComponent()
                 ->configureActionsUsing(fn (Action $action) => $action
-                    ->defaultSize(ActionSize::Small)
+                    ->defaultSize(Size::Small)
                     ->defaultView(Action::LINK_VIEW))
-                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(ActionSize::Small));
+                ->configureActionGroupsUsing(fn (ActionGroup $actionGroup) => $actionGroup->defaultSize(Size::Small));
         }
 
         return $schema;

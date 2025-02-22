@@ -3,9 +3,9 @@
 namespace Filament\Support\View\Concerns;
 
 use BackedEnum;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\Size;
 use Filament\Support\View\Components\BadgeComponent;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Js;
@@ -37,7 +37,7 @@ trait CanGenerateBadgeHtml
         bool $isDisabled = false,
         ?array $keyBindings = null,
         string | Htmlable | null $label = null,
-        ActionSize | string | null $size = null,
+        Size | string | null $size = null,
         string $tag = 'span',
         ?string $target = null,
         ?string $tooltip = null,
@@ -49,8 +49,8 @@ trait CanGenerateBadgeHtml
             $iconPosition = filled($iconPosition) ? (IconPosition::tryFrom($iconPosition) ?? $iconPosition) : null;
         }
 
-        if (! $size instanceof ActionSize) {
-            $size = filled($size) ? (ActionSize::tryFrom($size) ?? $size) : null;
+        if (! $size instanceof Size) {
+            $size = filled($size) ? (Size::tryFrom($size) ?? $size) : null;
         }
 
         if (filled($iconSize) && (! $iconSize instanceof IconSize)) {
@@ -85,7 +85,7 @@ trait CanGenerateBadgeHtml
             ->class([
                 'fi-badge',
                 'fi-disabled' => $isDisabled,
-                ($size instanceof ActionSize) ? "fi-size-{$size->value}" : $size,
+                ($size instanceof Size) ? "fi-size-{$size->value}" : $size,
             ])
             ->color(BadgeComponent::class, $color);
 

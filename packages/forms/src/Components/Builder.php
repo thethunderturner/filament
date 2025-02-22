@@ -10,8 +10,8 @@ use Filament\Schemas\Components\Contracts\CanConcealComponents;
 use Filament\Schemas\Components\Contracts\HasExtraItemActions;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasReorderAnimationDuration;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
@@ -178,7 +178,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             })
             ->livewireClickHandlerEnabled(false)
             ->button()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isAddable());
 
         if ($this->hasBlockPreviews()) {
@@ -273,7 +273,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             })
             ->livewireClickHandlerEnabled(false)
             ->button()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isAddable());
 
         if ($this->hasBlockPreviews()) {
@@ -334,7 +334,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isCloneable());
 
         if ($this->modifyCloneActionUsing) {
@@ -375,7 +375,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isDeletable());
 
         if ($this->modifyDeleteActionUsing) {
@@ -415,7 +415,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isReorderable());
 
         if ($this->modifyMoveDownActionUsing) {
@@ -455,7 +455,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isReorderable());
 
         if ($this->modifyMoveUpActionUsing) {
@@ -506,7 +506,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             })
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => $component->isReorderableWithDragAndDrop());
 
         if ($this->modifyReorderActionUsing) {
@@ -538,7 +538,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyCollapseActionUsing) {
             $action = $this->evaluate($this->modifyCollapseActionUsing, [
@@ -569,7 +569,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyExpandActionUsing) {
             $action = $this->evaluate($this->modifyExpandActionUsing, [
@@ -599,7 +599,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyCollapseAllActionUsing) {
             $action = $this->evaluate($this->modifyCollapseAllActionUsing, [
@@ -629,7 +629,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyExpandAllActionUsing) {
             $action = $this->evaluate($this->modifyExpandAllActionUsing, [
@@ -683,7 +683,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             })
             ->iconButton()
             ->icon(Heroicon::Cog6Tooth)
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Builder $component): bool => (! $component->isDisabled()) && $component->hasBlockPreviews());
 
         if ($this->modifyEditActionUsing) {
