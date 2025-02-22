@@ -23,7 +23,7 @@ trait CanBeValidated
                 $component->dehydrateValidationAttributes($attributes);
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -54,7 +54,7 @@ trait CanBeValidated
                 $component->dehydrateValidationMessages($messages);
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -85,7 +85,7 @@ trait CanBeValidated
                 $component->dehydrateValidationRules($rules);
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }

@@ -80,7 +80,7 @@ class Wizard extends Component
         if (! $this->isSkippable()) {
             $steps = array_values(
                 $this
-                    ->getChildComponentContainer()
+                    ->getChildSchema()
                     ->getComponents()
             );
 
@@ -93,7 +93,7 @@ class Wizard extends Component
 
             try {
                 $currentStep->callBeforeValidation();
-                $currentStep->getChildComponentContainer()->validate();
+                $currentStep->getChildSchema()->validate();
                 $currentStep->callAfterValidation();
                 $nextStep?->fillStateWithNull();
             } catch (Halt $exception) {
@@ -235,7 +235,7 @@ class Wizard extends Component
         if ($this->isStepPersistedInQueryString()) {
             $queryStringStep = request()->query($this->getStepQueryStringKey());
 
-            foreach ($this->getChildComponentContainer()->getComponents() as $index => $step) {
+            foreach ($this->getChildSchema()->getComponents() as $index => $step) {
                 if ($step->getId() !== $queryStringStep) {
                     continue;
                 }

@@ -29,14 +29,14 @@
         $statePath ??= $field->getStatePath();
     }
 
-    $beforeLabelContainer = $field?->getChildComponentContainer($field::BEFORE_LABEL_CONTAINER)?->toHtmlString();
-    $afterLabelContainer = $field?->getChildComponentContainer($field::AFTER_LABEL_CONTAINER)?->toHtmlString();
-    $aboveContentContainer = $field?->getChildComponentContainer($field::ABOVE_CONTENT_CONTAINER)?->toHtmlString();
-    $belowContentContainer = $field?->getChildComponentContainer($field::BELOW_CONTENT_CONTAINER)?->toHtmlString();
-    $beforeContentContainer = $field?->getChildComponentContainer($field::BEFORE_CONTENT_CONTAINER)?->toHtmlString();
-    $afterContentContainer = $field?->getChildComponentContainer($field::AFTER_CONTENT_CONTAINER)?->toHtmlString();
-    $aboveErrorMessageContainer = $field?->getChildComponentContainer($field::ABOVE_ERROR_MESSAGE_CONTAINER)?->toHtmlString();
-    $belowErrorMessageContainer = $field?->getChildComponentContainer($field::BELOW_ERROR_MESSAGE_CONTAINER)?->toHtmlString();
+    $beforeLabelContainer = $field?->getChildSchema($field::BEFORE_LABEL_SCHEMA_KEY)?->toHtmlString();
+    $afterLabelContainer = $field?->getChildSchema($field::AFTER_LABEL_SCHEMA_KEY)?->toHtmlString();
+    $aboveContentContainer = $field?->getChildSchema($field::ABOVE_CONTENT_SCHEMA_KEY)?->toHtmlString();
+    $belowContentContainer = $field?->getChildSchema($field::BELOW_CONTENT_SCHEMA_KEY)?->toHtmlString();
+    $beforeContentContainer = $field?->getChildSchema($field::BEFORE_CONTENT_SCHEMA_KEY)?->toHtmlString();
+    $afterContentContainer = $field?->getChildSchema($field::AFTER_CONTENT_SCHEMA_KEY)?->toHtmlString();
+    $aboveErrorMessageContainer = $field?->getChildSchema($field::ABOVE_ERROR_MESSAGE_SCHEMA_KEY)?->toHtmlString();
+    $belowErrorMessageContainer = $field?->getChildSchema($field::BELOW_ERROR_MESSAGE_SCHEMA_KEY)?->toHtmlString();
 
     $hasError = filled($statePath) && ($errors->has($statePath) || ($hasNestedRecursiveValidationRules && $errors->has("{$statePath}.*")));
 @endphp
@@ -64,7 +64,7 @@
             "fi-vertical-align-{$inlineLabelVerticalAlignment->value}" => $hasInlineLabel,
         ])
     >
-        {{ $field?->getChildComponentContainer($field::ABOVE_LABEL_CONTAINER) }}
+        {{ $field?->getChildSchema($field::ABOVE_LABEL_SCHEMA_KEY) }}
 
         @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || $beforeLabelContainer || $afterLabelContainer)
             <div
@@ -93,7 +93,7 @@
             </div>
         @endif
 
-        {{ $field?->getChildComponentContainer($field::BELOW_LABEL_CONTAINER) }}
+        {{ $field?->getChildSchema($field::BELOW_LABEL_SCHEMA_KEY) }}
 
         @if ((! \Filament\Support\is_slot_empty($slot)) || $hasError || $aboveContentContainer || $belowContentContainer || $beforeContentContainer || $afterContentContainer || $aboveErrorMessageContainer || $belowErrorMessageContainer)
             <div class="fi-fo-field-content-col">

@@ -2,7 +2,7 @@
     use Filament\Support\Enums\VerticalAlignment;
     use Filament\Support\Facades\FilamentView;
 
-    $actions = $getChildComponentContainer()->getComponents();
+    $actions = $getChildSchema()->getComponents();
     $alignment = $getAlignment();
     $isFullWidth = $isFullWidth();
     $verticalAlignment = $getVerticalAlignment();
@@ -40,17 +40,17 @@
 >
     @if (filled($label = $getLabel()))
         <div class="fi-sc-actions-label-ctn">
-            {{ $getChildComponentContainer($schemaComponent::BEFORE_LABEL_CONTAINER) }}
+            {{ $getChildSchema($schemaComponent::BEFORE_LABEL_SCHEMA_KEY) }}
 
             <div class="fi-sc-actions-label">
                 {{ $label }}
             </div>
 
-            {{ $getChildComponentContainer($schemaComponent::AFTER_LABEL_CONTAINER) }}
+            {{ $getChildSchema($schemaComponent::AFTER_LABEL_SCHEMA_KEY) }}
         </div>
     @endif
 
-    @if ($aboveContentContainer = $getChildComponentContainer($schemaComponent::ABOVE_CONTENT_CONTAINER)?->toHtmlString())
+    @if ($aboveContentContainer = $getChildSchema($schemaComponent::ABOVE_CONTENT_SCHEMA_KEY)?->toHtmlString())
         {{ $aboveContentContainer }}
     @endif
 
@@ -60,7 +60,7 @@
         :full-width="$isFullWidth"
     />
 
-    @if ($belowContentContainer = $getChildComponentContainer($schemaComponent::BELOW_CONTENT_CONTAINER)?->toHtmlString())
+    @if ($belowContentContainer = $getChildSchema($schemaComponent::BELOW_CONTENT_SCHEMA_KEY)?->toHtmlString())
         {{ $belowContentContainer }}
     @endif
 </div>

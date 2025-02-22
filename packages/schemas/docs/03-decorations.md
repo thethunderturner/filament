@@ -344,7 +344,7 @@ If your custom component is a form field or an infolist entry, it will already b
 Alternatively, you can create a custom method to accept decorations in your own slot. You should create a constant to store the name of the slot, avoiding the need to repeat the same string in multiple places when referencing these decorations. For example, you may wish to implement `footer()` decorations similar to the `Form` and `Section` layout components. The constant should be added to the component's PHP class:
 
 ```php
-const FOOTER_CONTAINER = 'footer';
+const FOOTER_SCHEMA_KEY = 'footer';
 ```
 
 Now, you need a method that consumers of the component can use to add decorations to this slot. The method should call the `$this->decorations()` method, passing the value of the slot constant as an identifier alongside the decorations that the user passes in:
@@ -355,7 +355,7 @@ Now, you need a method that consumers of the component can use to add decoration
  */
 public function footer(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
 {
-    $this->decorations(static::FOOTER_CONTAINER, $decorations);
+    $this->decorations(static::FOOTER_SCHEMA_KEY, $decorations);
 
     return $this;
 }
@@ -365,7 +365,7 @@ By default, these decorations will be aligned to the start (left) of the slot if
 
 ```php
 $this->decorations(
-    static::AFTER_HEADER_CONTAINER,
+    static::AFTER_HEADER_SCHEMA_KEY,
     $decorations,
     makeDefaultLayoutUsing: fn (array $decorations): AlignDecorations => AlignDecorations::end($decorations),
 );
@@ -374,5 +374,5 @@ $this->decorations(
 Finally, you can render the decorations from this slot in the view by calling the `$getDecorations()` function, passing in the identifier constant of the slot:
 
 ```blade
-{{ $getDecorations($schemaComponent::FOOTER_CONTAINER) }}
+{{ $getDecorations($schemaComponent::FOOTER_SCHEMA_KEY) }}
 ```

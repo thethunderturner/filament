@@ -23,10 +23,10 @@
         $alignment = filled($alignment) ? (Alignment::tryFrom($alignment) ?? $alignment) : null;
     }
 
-    $beforeLabelContainer = $entry?->getChildComponentContainer($entry::BEFORE_LABEL_CONTAINER)?->toHtmlString();
-    $afterLabelContainer = $entry?->getChildComponentContainer($entry::AFTER_LABEL_CONTAINER)?->toHtmlString();
-    $beforeContentContainer = $entry?->getChildComponentContainer($entry::BEFORE_CONTENT_CONTAINER)?->toHtmlString();
-    $afterContentContainer = $entry?->getChildComponentContainer($entry::AFTER_CONTENT_CONTAINER)?->toHtmlString();
+    $beforeLabelContainer = $entry?->getChildSchema($entry::BEFORE_LABEL_SCHEMA_KEY)?->toHtmlString();
+    $afterLabelContainer = $entry?->getChildSchema($entry::AFTER_LABEL_SCHEMA_KEY)?->toHtmlString();
+    $beforeContentContainer = $entry?->getChildSchema($entry::BEFORE_CONTENT_SCHEMA_KEY)?->toHtmlString();
+    $afterContentContainer = $entry?->getChildSchema($entry::AFTER_CONTENT_SCHEMA_KEY)?->toHtmlString();
 @endphp
 
 <div
@@ -46,7 +46,7 @@
     @endif
 
     <div class="fi-in-entry-label-col">
-        {{ $entry?->getChildComponentContainer($entry::ABOVE_LABEL_CONTAINER) }}
+        {{ $entry?->getChildSchema($entry::ABOVE_LABEL_SCHEMA_KEY) }}
 
         @if (($label && (! $labelSrOnly)) || $labelPrefix || $labelSuffix || $beforeLabelContainer || $afterLabelContainer)
             <div
@@ -80,11 +80,11 @@
             </div>
         @endif
 
-        {{ $entry?->getChildComponentContainer($entry::BELOW_LABEL_CONTAINER) }}
+        {{ $entry?->getChildSchema($entry::BELOW_LABEL_SCHEMA_KEY) }}
     </div>
 
     <div class="fi-in-entry-content-col">
-        {{ $entry?->getChildComponentContainer($entry::ABOVE_CONTENT_CONTAINER) }}
+        {{ $entry?->getChildSchema($entry::ABOVE_CONTENT_SCHEMA_KEY) }}
 
         <div class="fi-in-entry-content-ctn">
             {{ $beforeContentContainer }}
@@ -101,6 +101,6 @@
             {{ $afterContentContainer }}
         </div>
 
-        {{ $entry?->getChildComponentContainer($entry::BELOW_CONTENT_CONTAINER) }}
+        {{ $entry?->getChildSchema($entry::BELOW_CONTENT_SCHEMA_KEY) }}
     </div>
 </div>

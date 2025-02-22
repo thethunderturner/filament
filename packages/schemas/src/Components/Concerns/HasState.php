@@ -286,7 +286,7 @@ trait HasState
             // we need to dehydrate the child component containers while
             // informing them that they are not dehydrated, so that their
             // child components get removed from the state.
-            foreach ($this->getChildComponentContainers() as $container) {
+            foreach ($this->getChildSchemas() as $container) {
                 $container->dehydrateState($state, isDehydrated: false);
             }
 
@@ -303,7 +303,7 @@ trait HasState
             return;
         }
 
-        foreach ($this->getChildComponentContainers(withHidden: true) as $container) {
+        foreach ($this->getChildSchemas(withHidden: true) as $container) {
             $container->dehydrateState($state, $isDehydrated);
         }
     }
@@ -336,7 +336,7 @@ trait HasState
             }
         }
 
-        foreach ($this->getChildComponentContainers(withHidden: true) as $container) {
+        foreach ($this->getChildSchemas(withHidden: true) as $container) {
             $container->hydrateState($hydratedDefaultState, $andCallHydrationHooks);
         }
 
@@ -377,7 +377,7 @@ trait HasState
         }
 
         if (! ($isStatePathMatching ?? false)) {
-            foreach ($this->getChildComponentContainers(withHidden: true) as $container) {
+            foreach ($this->getChildSchemas(withHidden: true) as $container) {
                 $container->hydrateStatePartially($statePaths, $andCallHydrationHooks);
             }
 
@@ -396,7 +396,7 @@ trait HasState
             $this->rawState($rawState);
         }
 
-        foreach ($this->getChildComponentContainers(withHidden: true) as $container) {
+        foreach ($this->getChildSchemas(withHidden: true) as $container) {
             $container->hydrateStatePartially($statePaths, $andCallHydrationHooks);
         }
 
@@ -453,7 +453,7 @@ trait HasState
             $this->state(null);
         }
 
-        foreach ($this->getChildComponentContainers(withHidden: true) as $container) {
+        foreach ($this->getChildSchemas(withHidden: true) as $container) {
             $container->fillStateWithNull();
         }
     }

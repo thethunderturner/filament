@@ -21,7 +21,7 @@
             ])
     }}
 >
-    @foreach ($getChildComponentContainer()->getComponents() as $component)
+    @foreach ($getChildSchema()->getComponents() as $component)
         <div
             @class([
                 'fi-growable' => $component->canGrow(),

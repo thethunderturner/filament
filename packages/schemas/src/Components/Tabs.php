@@ -93,7 +93,7 @@ class Tabs extends Component
         if ($this->isTabPersistedInQueryString()) {
             $queryStringTab = request()->query($this->getTabQueryStringKey());
 
-            foreach ($this->getChildComponentContainer()->getComponents() as $index => $tab) {
+            foreach ($this->getChildSchema()->getComponents() as $index => $tab) {
                 if ($tab->getId() !== $queryStringTab) {
                     continue;
                 }

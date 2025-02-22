@@ -451,7 +451,7 @@ Select::make('type')
     ->afterStateUpdated(fn (Select $component) => $component
         ->getContainer()
         ->getComponent('dynamicTypeFields')
-        ->getChildComponentContainer()
+        ->getChildSchema()
         ->fill())
     
 Grid::make(2)

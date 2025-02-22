@@ -43,7 +43,7 @@
         <input
             type="hidden"
             value="{{
-                collect($getChildComponentContainer()->getComponents())
+                collect($getChildSchema()->getComponents())
                     ->filter(static fn (Tab $tab): bool => $tab->isVisible())
                     ->map(static fn (Tab $tab) => $tab->getKey(isAbsolute: false))
                     ->values()
@@ -57,7 +57,7 @@
                 {{ \Filament\Support\Facades\FilamentView::renderHook($startRenderHook, scopes: $renderHookScopes) }}
             @endforeach
 
-            @foreach ($getChildComponentContainer()->getComponents() as $tab)
+            @foreach ($getChildSchema()->getComponents() as $tab)
                 @php
                     $tabKey = $tab->getKey(isAbsolute: false);
                     $tabBadge = $tab->getBadge();
@@ -91,7 +91,7 @@
             @endforeach
         </x-filament::tabs>
 
-        @foreach ($getChildComponentContainer()->getComponents() as $tab)
+        @foreach ($getChildSchema()->getComponents() as $tab)
             {{ $tab }}
         @endforeach
     </div>
@@ -119,7 +119,7 @@
                 {{ \Filament\Support\Facades\FilamentView::renderHook($startRenderHook, scopes: $renderHookScopes) }}
             @endforeach
 
-            @foreach ($getChildComponentContainer()->getComponents(withOriginalKeys: true) as $tabKey => $tab)
+            @foreach ($getChildSchema()->getComponents(withOriginalKeys: true) as $tabKey => $tab)
                 @php
                     $tabBadge = $tab->getBadge();
                     $tabBadgeColor = $tab->getBadgeColor();
@@ -153,7 +153,7 @@
             @endforeach
         </x-filament::tabs>
 
-        @foreach ($getChildComponentContainer()->getComponents(withOriginalKeys: true) as $tabKey => $tab)
+        @foreach ($getChildSchema()->getComponents(withOriginalKeys: true) as $tabKey => $tab)
             {{ $tab->key($tabKey) }}
         @endforeach
     </div>

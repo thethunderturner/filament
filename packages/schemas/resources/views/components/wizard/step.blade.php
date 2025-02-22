@@ -33,7 +33,7 @@
             ->class(['fi-sc-wizard-step'])
     }}
 >
-    {{ $getChildComponentContainer() }}
+    {{ $getChildSchema() }}
 
     @if (filled($alpineSubmitHandler))
         {{-- This is a hack to allow the form to submit when the user presses the enter key, even if there is no other submit button in the form. --}}

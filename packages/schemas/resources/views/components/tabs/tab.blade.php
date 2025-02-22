@@ -5,10 +5,10 @@
     $isContained = $tabs->isContained();
     $livewireProperty = $tabs->getLivewireProperty();
 
-    $childComponentContainer = $getChildComponentContainer();
+    $childSchema = $getChildSchema();
 @endphp
 
-@if (! empty($childComponentContainer->getComponents()))
+@if (! empty($childSchema->getComponents()))
     @if (blank($livewireProperty))
         <div
             x-bind:class="{
@@ -28,7 +28,7 @@
                     ->class(['fi-sc-tabs-tab'])
             }}
         >
-            {{ $childComponentContainer }}
+            {{ $childSchema }}
         </div>
     @elseif (strval($this->{$livewireProperty}) === strval($key))
         <div
@@ -45,7 +45,7 @@
                     ->class(['fi-sc-tabs-tab fi-active'])
             }}
         >
-            {{ $childComponentContainer }}
+            {{ $childSchema }}
         </div>
     @endif
 @endif

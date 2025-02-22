@@ -1,5 +1,5 @@
 @php
-    $afterHeader = $getChildComponentContainer($schemaComponent::AFTER_HEADER_CONTAINER)?->toHtmlString();
+    $afterHeader = $getChildSchema($schemaComponent::AFTER_HEADER_SCHEMA_KEY)?->toHtmlString();
     $isAside = $isAside();
     $isCollapsed = $isCollapsed();
     $isCollapsible = $isCollapsible();
@@ -8,7 +8,7 @@
     $isDivided = $isDivided();
     $isFormBefore = $isFormBefore();
     $description = $getDescription();
-    $footer = $getChildComponentContainer($schemaComponent::FOOTER_CONTAINER)?->toHtmlString();
+    $footer = $getChildSchema($schemaComponent::FOOTER_SCHEMA_KEY)?->toHtmlString();
     $heading = $getHeading();
     $headingTag = $getHeadingTag();
     $icon = $getIcon();
@@ -31,17 +31,17 @@
 >
     @if (filled($label = $getLabel()))
         <div class="fi-sc-section-label-ctn">
-            {{ $getChildComponentContainer($schemaComponent::BEFORE_LABEL_CONTAINER) }}
+            {{ $getChildSchema($schemaComponent::BEFORE_LABEL_SCHEMA_KEY) }}
 
             <div class="fi-sc-section-label">
                 {{ $label }}
             </div>
 
-            {{ $getChildComponentContainer($schemaComponent::AFTER_LABEL_CONTAINER) }}
+            {{ $getChildSchema($schemaComponent::AFTER_LABEL_SCHEMA_KEY) }}
         </div>
     @endif
 
-    @if ($aboveContentContainer = $getChildComponentContainer($schemaComponent::ABOVE_CONTENT_CONTAINER)?->toHtmlString())
+    @if ($aboveContentContainer = $getChildSchema($schemaComponent::ABOVE_CONTENT_SCHEMA_KEY)?->toHtmlString())
         {{ $aboveContentContainer }}
     @endif
 
@@ -65,10 +65,10 @@
         :persist-collapsed="$shouldPersistCollapsed"
         :secondary="$isSecondary"
     >
-        {{ $getChildComponentContainer()->gap(! $isDivided)->extraAttributes(['class' => 'fi-section-content']) }}
+        {{ $getChildSchema()->gap(! $isDivided)->extraAttributes(['class' => 'fi-section-content']) }}
     </x-filament::section>
 
-    @if ($belowContentContainer = $getChildComponentContainer($schemaComponent::BELOW_CONTENT_CONTAINER)?->toHtmlString())
+    @if ($belowContentContainer = $getChildSchema($schemaComponent::BELOW_CONTENT_SCHEMA_KEY)?->toHtmlString())
         {{ $belowContentContainer }}
     @endif
 </div>

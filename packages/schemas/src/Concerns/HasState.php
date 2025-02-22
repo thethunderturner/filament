@@ -93,7 +93,7 @@ trait HasState
         foreach ($this->getComponents(withActions: false, withHidden: true) as $component) {
             $component->callAfterStateHydrated();
 
-            foreach ($component->getChildComponentContainers(withHidden: true) as $container) {
+            foreach ($component->getChildSchemas(withHidden: true) as $container) {
                 $container->callAfterStateHydrated();
             }
         }
@@ -113,7 +113,7 @@ trait HasState
                     $component->callAfterStateUpdated();
                 }
 
-                foreach ($component->getChildComponentContainers() as $container) {
+                foreach ($component->getChildSchemas() as $container) {
                     if ($container->callAfterStateUpdated($path)) {
                         return true;
                     }
@@ -139,7 +139,7 @@ trait HasState
 
             $component->callBeforeStateDehydrated();
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -181,7 +181,7 @@ trait HasState
                 continue;
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -220,7 +220,7 @@ trait HasState
                 continue;
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }

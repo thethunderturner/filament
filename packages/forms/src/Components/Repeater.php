@@ -188,7 +188,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
                 $component->state($items);
 
-                $component->getChildComponentContainer($newUuid ?? array_key_last($items))->fill();
+                $component->getChildSchema($newUuid ?? array_key_last($items))->fill();
 
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
@@ -265,7 +265,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
                 $component->state($items);
 
-                $component->getChildComponentContainer($newKey)->fill();
+                $component->getChildSchema($newKey)->fill();
 
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
@@ -824,7 +824,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
         foreach ($this->getState() ?? [] as $itemKey => $itemData) {
             $items[$itemKey] = $this
-                ->getChildComponentContainer()
+                ->getChildSchema()
                 ->statePath($itemKey)
                 ->model($relationship ? $records[$itemKey] ?? $this->getRelatedModel() : null)
                 ->inlineLabel(false)
@@ -837,7 +837,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
     /**
      * @return array<Schema>
      */
-    public function getDefaultChildComponentContainers(): array
+    public function getDefaultChildSchemas(): array
     {
         return $this->getItems();
     }
@@ -1159,7 +1159,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
     public function getItemLabel(string $uuid): string | Htmlable | null
     {
-        $container = $this->getChildComponentContainer($uuid);
+        $container = $this->getChildSchema($uuid);
 
         return $this->evaluate($this->itemLabel, [
             'container' => $container,
@@ -1315,7 +1315,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
      */
     public function getItemState(string $uuid): array
     {
-        return $this->getChildComponentContainer($uuid)->getState(shouldCallHooksBefore: false);
+        return $this->getChildSchema($uuid)->getState(shouldCallHooksBefore: false);
     }
 
     /**
@@ -1323,7 +1323,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
      */
     public function getRawItemState(string $uuid): array
     {
-        return $this->getChildComponentContainer($uuid)->getRawState();
+        return $this->getChildSchema($uuid)->getRawState();
     }
 
     public function getHeadingsCount(): int

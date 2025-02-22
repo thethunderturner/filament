@@ -17,5 +17,5 @@
             ->class(['fi-sc-fieldset'])
     "
 >
-    {{ $getChildComponentContainer() }}
+    {{ $getChildSchema() }}
 </x-filament::fieldset>

@@ -23,7 +23,7 @@ class RepeatableEntry extends Entry implements HasEmbeddedView
 
         foreach ($this->getState() ?? [] as $itemKey => $itemData) {
             $container = $this
-                ->getChildComponentContainer()
+                ->getChildSchema()
                 ->getClone()
                 ->statePath($itemKey)
                 ->inlineLabel(false);
@@ -41,7 +41,7 @@ class RepeatableEntry extends Entry implements HasEmbeddedView
     /**
      * @return array<Schema>
      */
-    public function getDefaultChildComponentContainers(): array
+    public function getDefaultChildSchemas(): array
     {
         return $this->getItems();
     }

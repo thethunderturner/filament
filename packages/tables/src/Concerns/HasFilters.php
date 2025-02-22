@@ -76,7 +76,7 @@ trait HasFilters
         $filterResetState = $filter->getResetState();
 
         $filterFormGroup = $this->getTableFiltersForm()->getComponent($filterName);
-        $filterFields = $filterFormGroup?->getChildComponentContainer()->getFlatFields();
+        $filterFields = $filterFormGroup?->getChildSchema()->getFlatFields();
 
         if (filled($field) && array_key_exists($field, $filterFields)) {
             $filterFields = [$field => $filterFields[$field]];

@@ -30,21 +30,21 @@ class Entry extends Component
 
     protected string $viewIdentifier = 'entry';
 
-    const ABOVE_LABEL_CONTAINER = 'above_label';
+    const ABOVE_LABEL_SCHEMA_KEY = 'above_label';
 
-    const BELOW_LABEL_CONTAINER = 'below_label';
+    const BELOW_LABEL_SCHEMA_KEY = 'below_label';
 
-    const BEFORE_LABEL_CONTAINER = 'before_label';
+    const BEFORE_LABEL_SCHEMA_KEY = 'before_label';
 
-    const AFTER_LABEL_CONTAINER = 'after_label';
+    const AFTER_LABEL_SCHEMA_KEY = 'after_label';
 
-    const ABOVE_CONTENT_CONTAINER = 'above_content';
+    const ABOVE_CONTENT_SCHEMA_KEY = 'above_content';
 
-    const BELOW_CONTENT_CONTAINER = 'below_content';
+    const BELOW_CONTENT_SCHEMA_KEY = 'below_content';
 
-    const BEFORE_CONTENT_CONTAINER = 'before_content';
+    const BEFORE_CONTENT_SCHEMA_KEY = 'before_content';
 
-    const AFTER_CONTENT_CONTAINER = 'after_content';
+    const AFTER_CONTENT_SCHEMA_KEY = 'after_content';
 
     final public function __construct(string $name)
     {
@@ -110,7 +110,7 @@ class Entry extends Component
      */
     public function aboveLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::ABOVE_LABEL_CONTAINER);
+        $this->childComponents($components, static::ABOVE_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -120,7 +120,7 @@ class Entry extends Component
      */
     public function belowLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BELOW_LABEL_CONTAINER);
+        $this->childComponents($components, static::BELOW_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -130,7 +130,7 @@ class Entry extends Component
      */
     public function beforeLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BEFORE_LABEL_CONTAINER);
+        $this->childComponents($components, static::BEFORE_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -140,7 +140,7 @@ class Entry extends Component
      */
     public function afterLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::AFTER_LABEL_CONTAINER);
+        $this->childComponents($components, static::AFTER_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -150,7 +150,7 @@ class Entry extends Component
      */
     public function aboveContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::ABOVE_CONTENT_CONTAINER);
+        $this->childComponents($components, static::ABOVE_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -160,7 +160,7 @@ class Entry extends Component
      */
     public function belowContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BELOW_CONTENT_CONTAINER);
+        $this->childComponents($components, static::BELOW_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -170,7 +170,7 @@ class Entry extends Component
      */
     public function beforeContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BEFORE_CONTENT_CONTAINER);
+        $this->childComponents($components, static::BEFORE_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -180,35 +180,35 @@ class Entry extends Component
      */
     public function afterContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::AFTER_CONTENT_CONTAINER);
+        $this->childComponents($components, static::AFTER_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
 
-    protected function makeSchemaForSlot(string $slot): Schema
+    protected function makeChildSchema(string $key): Schema
     {
-        $schema = parent::makeSchemaForSlot($slot);
+        $schema = parent::makeChildSchema($key);
 
-        if (in_array($slot, [static::AFTER_LABEL_CONTAINER, static::AFTER_CONTENT_CONTAINER])) {
+        if (in_array($key, [static::AFTER_LABEL_SCHEMA_KEY, static::AFTER_CONTENT_SCHEMA_KEY])) {
             $schema->alignEnd();
         }
 
         return $schema;
     }
 
-    protected function configureSchemaForSlot(Schema $schema, string $slot): Schema
+    protected function configureChildSchema(Schema $schema, string $key): Schema
     {
-        $schema = parent::configureSchemaForSlot($schema, $slot);
+        $schema = parent::configureChildSchema($schema, $key);
 
-        if (in_array($slot, [
-            static::ABOVE_LABEL_CONTAINER,
-            static::BELOW_LABEL_CONTAINER,
-            static::BEFORE_LABEL_CONTAINER,
-            static::AFTER_LABEL_CONTAINER,
-            static::ABOVE_CONTENT_CONTAINER,
-            static::BELOW_CONTENT_CONTAINER,
-            static::BEFORE_CONTENT_CONTAINER,
-            static::AFTER_CONTENT_CONTAINER,
+        if (in_array($key, [
+            static::ABOVE_LABEL_SCHEMA_KEY,
+            static::BELOW_LABEL_SCHEMA_KEY,
+            static::BEFORE_LABEL_SCHEMA_KEY,
+            static::AFTER_LABEL_SCHEMA_KEY,
+            static::ABOVE_CONTENT_SCHEMA_KEY,
+            static::BELOW_CONTENT_SCHEMA_KEY,
+            static::BEFORE_CONTENT_SCHEMA_KEY,
+            static::AFTER_CONTENT_SCHEMA_KEY,
         ])) {
             $schema
                 ->inline()
@@ -241,10 +241,10 @@ class Entry extends Component
             $alignment = filled($alignment) ? (Alignment::tryFrom($alignment) ?? $alignment) : null;
         }
 
-        $beforeLabelContainer = $this->getChildComponentContainer($this::BEFORE_LABEL_CONTAINER)?->toHtmlString();
-        $afterLabelContainer = $this->getChildComponentContainer($this::AFTER_LABEL_CONTAINER)?->toHtmlString();
-        $beforeContentContainer = $this->getChildComponentContainer($this::BEFORE_CONTENT_CONTAINER)?->toHtmlString();
-        $afterContentContainer = $this->getChildComponentContainer($this::AFTER_CONTENT_CONTAINER)?->toHtmlString();
+        $beforeLabelContainer = $this->getChildSchema($this::BEFORE_LABEL_SCHEMA_KEY)?->toHtmlString();
+        $afterLabelContainer = $this->getChildSchema($this::AFTER_LABEL_SCHEMA_KEY)?->toHtmlString();
+        $beforeContentContainer = $this->getChildSchema($this::BEFORE_CONTENT_SCHEMA_KEY)?->toHtmlString();
+        $afterContentContainer = $this->getChildSchema($this::AFTER_CONTENT_SCHEMA_KEY)?->toHtmlString();
 
         $attributes = $this->getExtraEntryWrapperAttributesBag()
             ->class([
@@ -262,7 +262,7 @@ class Entry extends Component
             <?php } ?>
 
             <div class="fi-in-entry-label-col">
-                <?= $this->getChildComponentContainer($this::ABOVE_LABEL_CONTAINER)?->toHtml() ?>
+                <?= $this->getChildSchema($this::ABOVE_LABEL_SCHEMA_KEY)?->toHtml() ?>
 
                 <?php if (($label && (! $labelSrOnly)) || $beforeLabelContainer || $afterLabelContainer) { ?>
                     <div class="fi-in-entry-label-ctn">
@@ -278,11 +278,11 @@ class Entry extends Component
                     </div>
                 <?php } ?>
 
-                <?= $this->getChildComponentContainer($this::BELOW_LABEL_CONTAINER)?->toHtml() ?>
+                <?= $this->getChildSchema($this::BELOW_LABEL_SCHEMA_KEY)?->toHtml() ?>
             </div>
 
             <div class="fi-in-entry-content-col">
-                <?= $this->getChildComponentContainer($this::ABOVE_CONTENT_CONTAINER)?->toHtml() ?>
+                <?= $this->getChildSchema($this::ABOVE_CONTENT_SCHEMA_KEY)?->toHtml() ?>
 
                 <div class="fi-in-entry-content-ctn">
                     <?= $beforeContentContainer?->toHtml() ?>
@@ -297,7 +297,7 @@ class Entry extends Component
                     <?= $afterContentContainer?->toHtml() ?>
                 </div>
 
-                <?= $this->getChildComponentContainer($this::BELOW_CONTENT_CONTAINER)?->toHtml() ?>
+                <?= $this->getChildSchema($this::BELOW_CONTENT_SCHEMA_KEY)?->toHtml() ?>
             </div>
         </div>
 

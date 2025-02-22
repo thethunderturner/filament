@@ -1,6 +1,7 @@
 <?php
 
 use Filament\Actions\Action;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 use Filament\Upgrade\Rector;
 use Rector\Config\RectorConfig;
@@ -106,6 +107,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Filament\\Forms\\Components\\Concerns\\CanBeCompacted' => 'Filament\\Schemas\\Components\\Concerns\\CanBeCompact',
             'Filament\\Forms\\Components\\Concerns\\HasFooterActions' => 'Filament\\Schemas\\Components\\Concerns\\HasFooterActions',
             'Filament\\Forms\\Components\\Concerns\\HasHeaderActions' => 'Filament\\Schemas\\Components\\Concerns\\HasHeaderActions',
+            'Filament\\Forms\\ComponentContainer' => 'Filament\\Schemas\\Schema',
             'Filament\\Infolists\\ComponentContainer' => 'Filament\\Schemas\\Schema',
             'Filament\\Infolists\\Concerns\\BelongsToLivewire' => 'Filament\\Schemas\\Concerns\\BelongsToLivewire',
             'Filament\\Infolists\\Concerns\\BelongsToParentComponent' => 'Filament\\Schemas\\Concerns\\BelongsToParentComponent',
@@ -268,6 +270,8 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
         new MethodCallRename(Action::class, 'infolist', 'schema'),
         new MethodCallRename(Action::class, 'form', 'schema'),
+        new MethodCallRename(Component::class, 'getChildComponentContainer', 'getChildSchema'),
+        new MethodCallRename(Component::class, 'getChildComponentContainers', 'getChildSchemas'),
         new MethodCallRename(Schema::class, 'schema', 'components'),
     ]);
 };

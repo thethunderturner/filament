@@ -12,9 +12,9 @@
             ])
     }}
 >
-    {{ $getChildComponentContainer($schemaComponent::HEADER_CONTAINER) }}
+    {{ $getChildSchema($schemaComponent::HEADER_SCHEMA_KEY) }}
 
-    {{ $getChildComponentContainer() }}
+    {{ $getChildSchema() }}
 
-    {{ $getChildComponentContainer($schemaComponent::FOOTER_CONTAINER) }}
+    {{ $getChildSchema($schemaComponent::FOOTER_SCHEMA_KEY) }}
 </form>

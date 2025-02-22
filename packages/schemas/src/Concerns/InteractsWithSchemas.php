@@ -37,7 +37,7 @@ trait InteractsWithSchemas
      * @var array<string>
      */
     #[Locked]
-    public array $discoveredSchemaNames = [];
+    public array $discoveredSchemaKeys = [];
 
     /**
      * @var array<string, ?Schema>
@@ -133,9 +133,9 @@ trait InteractsWithSchemas
             return null;
         }
 
-        $schemaName = (string) str($key)->before('.');
+        $schemaKey = (string) str($key)->before('.');
 
-        $schema = $this->getSchema($schemaName);
+        $schema = $this->getSchema($schemaKey);
 
         return $schema?->getComponent($key, withHidden: $withHidden, isAbsoluteKey: true, skipComponentChildContainersWhileSearching: $skipComponentChildContainersWhileSearching);
     }
@@ -194,8 +194,8 @@ trait InteractsWithSchemas
                     return null;
                 }
 
-                if (! in_array($name, $this->discoveredSchemaNames)) {
-                    $this->discoveredSchemaNames[] = $name;
+                if (! in_array($name, $this->discoveredSchemaKeys)) {
+                    $this->discoveredSchemaKeys[] = $name;
                 }
 
                 if (method_exists($this, 'default' . ucfirst($name))) {
@@ -233,8 +233,8 @@ trait InteractsWithSchemas
                 return null;
             }
 
-            if (! in_array($name, $this->discoveredSchemaNames)) {
-                $this->discoveredSchemaNames[] = $name;
+            if (! in_array($name, $this->discoveredSchemaKeys)) {
+                $this->discoveredSchemaKeys[] = $name;
             }
 
             $schema = $this->makeSchema();
@@ -274,12 +274,12 @@ trait InteractsWithSchemas
     public function getCachedSchemas(): array
     {
         if (! $this->isCachingSchemas) {
-            foreach ($this->discoveredSchemaNames as $schemaName) {
-                if (array_key_exists($schemaName, $this->cachedSchemas)) {
+            foreach ($this->discoveredSchemaKeys as $schemaKey) {
+                if (array_key_exists($schemaKey, $this->cachedSchemas)) {
                     continue;
                 }
 
-                $this->cacheSchema($schemaName);
+                $this->cacheSchema($schemaKey);
             }
         }
 

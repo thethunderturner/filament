@@ -26,25 +26,25 @@ class Field extends Component implements Contracts\HasValidationRules
 
     protected string $viewIdentifier = 'field';
 
-    const ABOVE_LABEL_CONTAINER = 'above_label';
+    const ABOVE_LABEL_SCHEMA_KEY = 'above_label';
 
-    const BELOW_LABEL_CONTAINER = 'below_label';
+    const BELOW_LABEL_SCHEMA_KEY = 'below_label';
 
-    const BEFORE_LABEL_CONTAINER = 'before_label';
+    const BEFORE_LABEL_SCHEMA_KEY = 'before_label';
 
-    const AFTER_LABEL_CONTAINER = 'after_label';
+    const AFTER_LABEL_SCHEMA_KEY = 'after_label';
 
-    const ABOVE_CONTENT_CONTAINER = 'above_content';
+    const ABOVE_CONTENT_SCHEMA_KEY = 'above_content';
 
-    const BELOW_CONTENT_CONTAINER = 'below_content';
+    const BELOW_CONTENT_SCHEMA_KEY = 'below_content';
 
-    const BEFORE_CONTENT_CONTAINER = 'before_content';
+    const BEFORE_CONTENT_SCHEMA_KEY = 'before_content';
 
-    const AFTER_CONTENT_CONTAINER = 'after_content';
+    const AFTER_CONTENT_SCHEMA_KEY = 'after_content';
 
-    const ABOVE_ERROR_MESSAGE_CONTAINER = 'above_error_message';
+    const ABOVE_ERROR_MESSAGE_SCHEMA_KEY = 'above_error_message';
 
-    const BELOW_ERROR_MESSAGE_CONTAINER = 'below_error_message';
+    const BELOW_ERROR_MESSAGE_SCHEMA_KEY = 'below_error_message';
 
     final public function __construct(string $name)
     {
@@ -114,7 +114,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function aboveLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::ABOVE_LABEL_CONTAINER);
+        $this->childComponents($components, static::ABOVE_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -124,7 +124,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function belowLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BELOW_LABEL_CONTAINER);
+        $this->childComponents($components, static::BELOW_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -134,7 +134,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function beforeLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BEFORE_LABEL_CONTAINER);
+        $this->childComponents($components, static::BEFORE_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -144,7 +144,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function afterLabel(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::AFTER_LABEL_CONTAINER);
+        $this->childComponents($components, static::AFTER_LABEL_SCHEMA_KEY);
 
         return $this;
     }
@@ -154,7 +154,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function aboveContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::ABOVE_CONTENT_CONTAINER);
+        $this->childComponents($components, static::ABOVE_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -164,7 +164,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function belowContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BELOW_CONTENT_CONTAINER);
+        $this->childComponents($components, static::BELOW_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -174,7 +174,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function beforeContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BEFORE_CONTENT_CONTAINER);
+        $this->childComponents($components, static::BEFORE_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -184,7 +184,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function afterContent(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::AFTER_CONTENT_CONTAINER);
+        $this->childComponents($components, static::AFTER_CONTENT_SCHEMA_KEY);
 
         return $this;
     }
@@ -194,7 +194,7 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function aboveErrorMessage(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::ABOVE_ERROR_MESSAGE_CONTAINER);
+        $this->childComponents($components, static::ABOVE_ERROR_MESSAGE_SCHEMA_KEY);
 
         return $this;
     }
@@ -204,37 +204,37 @@ class Field extends Component implements Contracts\HasValidationRules
      */
     public function belowErrorMessage(array | Schema | Component | Action | ActionGroup | string | Closure | null $components): static
     {
-        $this->childComponents($components, static::BELOW_ERROR_MESSAGE_CONTAINER);
+        $this->childComponents($components, static::BELOW_ERROR_MESSAGE_SCHEMA_KEY);
 
         return $this;
     }
 
-    protected function makeSchemaForSlot(string $slot): Schema
+    protected function makeChildSchema(string $key): Schema
     {
-        $schema = parent::makeSchemaForSlot($slot);
+        $schema = parent::makeChildSchema($key);
 
-        if (in_array($slot, [static::AFTER_LABEL_CONTAINER, static::AFTER_CONTENT_CONTAINER])) {
+        if (in_array($key, [static::AFTER_LABEL_SCHEMA_KEY, static::AFTER_CONTENT_SCHEMA_KEY])) {
             $schema->alignEnd();
         }
 
         return $schema;
     }
 
-    protected function configureSchemaForSlot(Schema $schema, string $slot): Schema
+    protected function configureChildSchema(Schema $schema, string $key): Schema
     {
-        $schema = parent::configureSchemaForSlot($schema, $slot);
+        $schema = parent::configureChildSchema($schema, $key);
 
-        if (in_array($slot, [
-            static::ABOVE_LABEL_CONTAINER,
-            static::BELOW_LABEL_CONTAINER,
-            static::BEFORE_LABEL_CONTAINER,
-            static::AFTER_LABEL_CONTAINER,
-            static::ABOVE_CONTENT_CONTAINER,
-            static::BELOW_CONTENT_CONTAINER,
-            static::BEFORE_CONTENT_CONTAINER,
-            static::AFTER_CONTENT_CONTAINER,
-            static::ABOVE_ERROR_MESSAGE_CONTAINER,
-            static::BELOW_ERROR_MESSAGE_CONTAINER,
+        if (in_array($key, [
+            static::ABOVE_LABEL_SCHEMA_KEY,
+            static::BELOW_LABEL_SCHEMA_KEY,
+            static::BEFORE_LABEL_SCHEMA_KEY,
+            static::AFTER_LABEL_SCHEMA_KEY,
+            static::ABOVE_CONTENT_SCHEMA_KEY,
+            static::BELOW_CONTENT_SCHEMA_KEY,
+            static::BEFORE_CONTENT_SCHEMA_KEY,
+            static::AFTER_CONTENT_SCHEMA_KEY,
+            static::ABOVE_ERROR_MESSAGE_SCHEMA_KEY,
+            static::BELOW_ERROR_MESSAGE_SCHEMA_KEY,
         ])) {
             $schema
                 ->inline()

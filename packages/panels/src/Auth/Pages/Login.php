@@ -267,7 +267,7 @@ class Login extends SimplePage
                         $section
                             ->getContainer()
                             ->getComponent($provider->getId())
-                            ->getChildComponentContainer()
+                            ->getChildSchema()
                             ->fill();
 
                         if (! ($provider instanceof HasBeforeChallengeHook)) {

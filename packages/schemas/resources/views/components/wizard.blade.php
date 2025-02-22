@@ -40,7 +40,7 @@
     <input
         type="hidden"
         value="{{
-            collect($getChildComponentContainer()->getComponents())
+            collect($getChildSchema()->getComponents())
                 ->filter(static fn (\Filament\Schemas\Components\Wizard\Step $step): bool => $step->isVisible())
                 ->map(static fn (\Filament\Schemas\Components\Wizard\Step $step): ?string => $step->getKey())
                 ->values()
@@ -57,7 +57,7 @@
         x-ref="header"
         class="fi-sc-wizard-header"
     >
-        @foreach ($getChildComponentContainer()->getComponents() as $step)
+        @foreach ($getChildSchema()->getComponents() as $step)
             <li
                 class="fi-sc-wizard-header-step"
                 x-bind:class="{
@@ -146,7 +146,7 @@
         @endforeach
     </ol>
 
-    @foreach ($getChildComponentContainer()->getComponents() as $step)
+    @foreach ($getChildSchema()->getComponents() as $step)
         {{ $step }}
     @endforeach
 

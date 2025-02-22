@@ -420,7 +420,7 @@ class Action extends ViewComponent implements Arrayable
             $context['recordKey'] = $this->resolveRecordKey($record);
         }
 
-        if (filled($schemaComponentKey = ($this->getSchemaComponentContainer() ?? $this->getSchemaComponent())?->getKey())) {
+        if (filled($schemaComponentKey = ($this->getSchemaContainer() ?? $this->getSchemaComponent())?->getKey())) {
             $context['schemaComponent'] = $schemaComponentKey;
         }
 
@@ -456,15 +456,15 @@ class Action extends ViewComponent implements Arrayable
         return match ($parameterName) {
             'arguments' => [$this->getArguments()],
             'component', 'schemaComponent' => [$this->getSchemaComponent()],
-            'context', 'operation' => [$this->getSchemaComponentContainer()?->getOperation() ?? $this->getSchemaComponent()?->getContainer()->getOperation()],
+            'context', 'operation' => [$this->getSchemaContainer()?->getOperation() ?? $this->getSchemaComponent()?->getContainer()->getOperation()],
             'data' => [$this->getFormData()],
             'get' => [$this->getSchemaComponent()->makeGetUtility()],
             'livewire' => [$this->getLivewire()],
-            'model' => [$this->getModel() ?? $this->getSchemaComponentContainer()?->getModel() ?? $this->getSchemaComponent()?->getModel()],
+            'model' => [$this->getModel() ?? $this->getSchemaContainer()?->getModel() ?? $this->getSchemaComponent()?->getModel()],
             'mountedActions' => [$this->getLivewire()->getMountedActions()],
-            'record' => [$this->getRecord() ?? $this->getSchemaComponentContainer()?->getRecord() ?? $this->getSchemaComponent()?->getRecord()],
+            'record' => [$this->getRecord() ?? $this->getSchemaContainer()?->getRecord() ?? $this->getSchemaComponent()?->getRecord()],
             'records', 'selectedRecords' => [$this->getSelectedRecords()],
-            'schema' => [$this->getSchemaComponentContainer()],
+            'schema' => [$this->getSchemaContainer()],
             'set' => [$this->getSchemaComponent()->makeSetUtility()],
             'state' => [$this->getSchemaComponent()->getState()],
             'table' => [$this->getTable()],
@@ -477,7 +477,7 @@ class Action extends ViewComponent implements Arrayable
      */
     protected function resolveDefaultClosureDependencyForEvaluationByType(string $parameterType): array
     {
-        $record = $this->getRecord() ?? $this->getSchemaComponentContainer()?->getRecord() ?? $this->getSchemaComponent()?->getRecord();
+        $record = $this->getRecord() ?? $this->getSchemaContainer()?->getRecord() ?? $this->getSchemaComponent()?->getRecord();
 
         return match ($parameterType) {
             EloquentCollection::class, Collection::class => [$this->getSelectedRecords()],

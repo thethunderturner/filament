@@ -170,7 +170,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
 
                 $component->state($items);
 
-                $component->getChildComponentContainer($newUuid ?? array_key_last($items))->fill(filled($data) ? $data : null);
+                $component->getChildSchema($newUuid ?? array_key_last($items))->fill(filled($data) ? $data : null);
 
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
@@ -263,7 +263,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
 
                 $component->state($items);
 
-                $component->getChildComponentContainer($newKey)->fill(filled($data) ? $data : null);
+                $component->getChildSchema($newKey)->fill(filled($data) ? $data : null);
 
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
@@ -665,7 +665,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
                 return $state[$arguments['item']]['data'];
             })
             ->schema(function (array $arguments, Builder $component) {
-                return $component->getChildComponentContainer($arguments['item'])
+                return $component->getChildSchema($arguments['item'])
                     ->getComponents();
             })
             ->action(function (array $arguments, Builder $component, $data): void {
@@ -675,7 +675,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
 
                 $component->state($state);
 
-                $component->getChildComponentContainer($arguments['item'])->fill($data);
+                $component->getChildSchema($arguments['item'])->fill($data);
 
                 $component->callAfterStateUpdated();
 
@@ -894,7 +894,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
     public function getBlocks(): array
     {
         /** @var array<Block> $blocks */
-        $blocks = $this->getChildComponentContainer()->getComponents();
+        $blocks = $this->getChildSchema()->getComponents();
 
         return $blocks;
     }
@@ -909,7 +909,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
             ->map(
                 fn (array $itemData, $itemIndex): Schema => $this
                     ->getBlock($itemData['type'])
-                    ->getChildComponentContainer()
+                    ->getChildSchema()
                     ->statePath("{$itemIndex}.data")
                     ->inlineLabel(false)
                     ->getClone(),
@@ -920,7 +920,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
     /**
      * @return array<Schema>
      */
-    public function getDefaultChildComponentContainers(): array
+    public function getDefaultChildSchemas(): array
     {
         return $this->getItems();
     }
@@ -1125,7 +1125,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
      */
     public function getItemState(string $uuid): array
     {
-        return $this->getChildComponentContainer($uuid)->getState(shouldCallHooksBefore: false);
+        return $this->getChildSchema($uuid)->getState(shouldCallHooksBefore: false);
     }
 
     /**
@@ -1133,7 +1133,7 @@ class Builder extends Field implements CanConcealComponents, HasExtraItemActions
      */
     public function getRawItemState(string $uuid): array
     {
-        return $this->getChildComponentContainer($uuid)->getRawState();
+        return $this->getChildSchema($uuid)->getRawState();
     }
 
     public function getHeadingsCount(): int

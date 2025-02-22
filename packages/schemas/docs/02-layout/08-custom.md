@@ -54,11 +54,11 @@ It will also create a view file at `resources/views/filament/schemas/components/
 
 ## Rendering the component's schema
 
-Inside your view, you may render the component's `schema()` using the `$getChildComponentContainer()` function:
+Inside your view, you may render the component's `schema()` using the `$getChildSchema()` function:
 
 ```blade
 <div>
-    {{ $getChildComponentContainer() }}
+    {{ $getChildSchema() }}
 </div>
 ```
 
