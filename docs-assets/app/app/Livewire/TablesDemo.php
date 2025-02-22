@@ -173,13 +173,13 @@ class TablesDemo extends Component implements HasSchemas, HasTable
         return $this->gettingStartedFilters($table)
             ->actions([
                 Action::make('feature')
-                    ->action(function (Post $record) {
+                    ->action(function (Post $record): void {
                         $record->is_featured = true;
                         $record->save();
                     })
                     ->hidden(fn (Post $record): bool => $record->is_featured),
                 Action::make('unfeature')
-                    ->action(function (Post $record) {
+                    ->action(function (Post $record): void {
                         $record->is_featured = false;
                         $record->save();
                     })

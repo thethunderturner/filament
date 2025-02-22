@@ -28,7 +28,7 @@ class EntriesDemo extends Component implements HasSchemas
     public function infolist(Schema $infolist): Schema
     {
         return $infolist
-            ->schema([
+            ->components([
                 Group::make()
                     ->id('simple')
                     ->extraAttributes([

@@ -45,7 +45,7 @@ class LayoutDemo extends Component implements HasActions, HasSchemas
     {
         return $form
             ->statePath('data')
-            ->schema([
+            ->components([
                 Group::make()
                     ->id('fieldset')
                     ->extraAttributes([

@@ -33,7 +33,7 @@ use Illuminate\Support\Str;
 
 uses(TestCase::class);
 
-it('generates colors from a HEX value', function (string $color) {
+it('generates colors from a HEX value', function (string $color): void {
     expect(Color::generatePalette($color))
         ->toMatchSnapshot();
 })->with([
@@ -44,7 +44,7 @@ it('generates colors from a HEX value', function (string $color) {
     '#FFFFFF',
 ]);
 
-it('generates colors from an RGB value', function (string $color) {
+it('generates colors from an RGB value', function (string $color): void {
     expect(Color::generatePalette($color))
         ->toMatchSnapshot();
 })->with([
@@ -55,7 +55,7 @@ it('generates colors from an RGB value', function (string $color) {
     'rgb(255, 255, 255)',
 ]);
 
-it('returns all colors', function () {
+it('returns all colors', function (): void {
     $colors = [];
 
     foreach ((new ReflectionClass(Color::class))->getConstants() as $name => $color) {
@@ -66,7 +66,7 @@ it('returns all colors', function () {
         ->toBe($colors);
 });
 
-it('generates component classes', function (string | HasColor $component, string $color) {
+it('generates component classes', function (string | HasColor $component, string $color): void {
     expect(FilamentColor::getComponentClasses($component, $color))
         ->toMatchSnapshot();
 })

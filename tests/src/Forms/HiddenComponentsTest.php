@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 uses(TestCase::class);
 
-test('components can be hidden', function () {
+test('components can be hidden', function (): void {
     $component = (new Component)
         ->container(Schema::make(Livewire::make()))
         ->hidden();
@@ -18,7 +18,7 @@ test('components can be hidden', function () {
         ->isHidden()->toBeTrue();
 });
 
-test('components can be hidden based on condition', function () {
+test('components can be hidden based on condition', function (): void {
     $statePath = Str::random();
 
     $schema = Schema::make(Livewire::make())
@@ -77,7 +77,7 @@ test('components can be hidden based on condition', function () {
         ->toHaveLength(1);
 });
 
-test('hidden components are not returned from container', function () {
+test('hidden components are not returned from container', function (): void {
     $components = [];
 
     foreach (range(1, $visibleCount = rand(2, 10)) as $i) {
@@ -102,7 +102,7 @@ test('hidden components are not returned from container', function () {
         );
 });
 
-test('components can be hidden based on Livewire component', function () {
+test('components can be hidden based on Livewire component', function (): void {
     $components = Schema::make(Foo::make())
         ->components([
             TextInput::make('foo')
@@ -139,7 +139,7 @@ test('components can be hidden based on Livewire component', function () {
         ->toHaveLength(0);
 });
 
-test('components can be visible based on Livewire component', function () {
+test('components can be visible based on Livewire component', function (): void {
     $components = Schema::make(Foo::make())
         ->components([
             TextInput::make('foo')

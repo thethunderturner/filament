@@ -12,14 +12,14 @@ use Illuminate\Support\Str;
 
 uses(TestCase::class);
 
-it('belongs to Livewire component', function () {
+it('belongs to Livewire component', function (): void {
     $schema = Schema::make($livewire = Livewire::make());
 
     expect($schema)
         ->getLivewire()->toBe($livewire);
 });
 
-it('has components', function () {
+it('has components', function (): void {
     $components = [];
 
     foreach (range(1, $count = rand(2, 10)) as $i) {
@@ -39,7 +39,7 @@ it('has components', function () {
         );
 });
 
-it('has dynamic components', function () {
+it('has dynamic components', function (): void {
     $components = [];
 
     foreach (range(1, $count = rand(2, 10)) as $i) {
@@ -59,7 +59,7 @@ it('has dynamic components', function () {
         );
 });
 
-it('belongs to parent component', function () {
+it('belongs to parent component', function (): void {
     $schema = Schema::make(Livewire::make())
         ->parentComponent($component = new Component);
 
@@ -67,7 +67,7 @@ it('belongs to parent component', function () {
         ->getParentComponent()->toBe($component);
 });
 
-it('can return a component by name and callback', function () {
+it('can return a component by name and callback', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             $input = Field::make($statePath = Str::random()),
@@ -78,7 +78,7 @@ it('can return a component by name and callback', function () {
         ->getComponent(fn (Component $component) => $component->getName() === $statePath)->toBe($input);
 });
 
-it('can return a flat array of components', function () {
+it('can return a flat array of components', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             $fieldset = Fieldset::make(Str::random())
@@ -98,7 +98,7 @@ it('can return a flat array of components', function () {
         ]);
 });
 
-it('can return a flat array of components with hidden components', function () {
+it('can return a flat array of components with hidden components', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             $fieldset = Fieldset::make(Str::random())
@@ -119,7 +119,7 @@ it('can return a flat array of components with hidden components', function () {
         ]);
 });
 
-it('can return a flat array of fields', function () {
+it('can return a flat array of fields', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             Fieldset::make(Str::random())
@@ -138,7 +138,7 @@ it('can return a flat array of fields', function () {
         ]);
 });
 
-it('can return a flat array of fields with hidden fields', function () {
+it('can return a flat array of fields with hidden fields', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             Fieldset::make(Str::random())
@@ -158,7 +158,7 @@ it('can return a flat array of fields with hidden fields', function () {
         ]);
 });
 
-it('can return a flat array of fields with nested path keys', function () {
+it('can return a flat array of fields with nested path keys', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             Fieldset::make(Str::random())
@@ -178,7 +178,7 @@ it('can return a flat array of fields with nested path keys', function () {
         ]);
 });
 
-it('can return a flat array of fields with absolute path keys', function () {
+it('can return a flat array of fields with absolute path keys', function (): void {
     $schema = Schema::make(Livewire::make())
         ->components([
             Fieldset::make(Str::random())

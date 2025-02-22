@@ -39,21 +39,21 @@ Route::get('/actions', ActionsDemo::class);
 Route::get('/notifications', NotificationsDemo::class);
 Route::get('/tables', TablesDemo::class);
 
-Route::group(['prefix' => 'forms'], function () {
+Route::group(['prefix' => 'forms'], function (): void {
     Route::get('fields', FieldsDemo::class);
     Route::get('getting-started', GettingStartedDemo::class);
 });
 
-Route::prefix('infolists')->group(function () {
+Route::prefix('infolists')->group(function (): void {
     Route::get('entries', EntriesDemo::class);
 });
 
-Route::prefix('schemas')->group(function () {
+Route::prefix('schemas')->group(function (): void {
     Route::get('layout', LayoutDemo::class);
 });
 
-Route::prefix('panels')->group(function () {
-    Route::prefix('navigation')->group(function () {
+Route::prefix('panels')->group(function (): void {
+    Route::prefix('navigation')->group(function (): void {
         Route::get('user-menu-customization', UserMenuCustomization::class);
         Route::get('disabled-navigation', DisabledNavigation::class);
         Route::get('active-icon', ActiveIcon::class);

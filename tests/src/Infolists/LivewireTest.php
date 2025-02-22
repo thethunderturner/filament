@@ -11,7 +11,7 @@ use function Filament\Tests\livewire;
 
 uses(TestCase::class);
 
-it('can evaluate livewire closure dependency by name', function () {
+it('can evaluate livewire closure dependency by name', function (): void {
     livewire(LivewireInfolists::class)
         ->assertOk()
         ->assertSee('First Entry Label')
@@ -45,7 +45,7 @@ class LivewireInfolists extends Component implements HasSchemas
     {
         return $schema
             ->state($this->data)
-            ->schema(function (self $livewire) {
+            ->components(function (self $livewire) {
                 expect($livewire)->toBe($this);
 
                 return [
@@ -59,7 +59,7 @@ class LivewireInfolists extends Component implements HasSchemas
     {
         return $schema
             ->state($this->data)
-            ->schema(function (self $livewire) {
+            ->components(function (self $livewire) {
                 expect($livewire)->toBe($this);
 
                 return [

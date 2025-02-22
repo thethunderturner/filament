@@ -137,7 +137,7 @@ class ActionsDemo extends Component implements HasActions, HasSchemas
     {
         return Action::make('modalForm')
             ->label('Update author')
-            ->form([
+            ->schema([
                 Select::make('authorId')
                     ->label('Author')
                     ->required(),
@@ -174,7 +174,7 @@ class ActionsDemo extends Component implements HasActions, HasSchemas
     {
         return Action::make('slideOver')
             ->label('Update author')
-            ->form([
+            ->schema([
                 Select::make('authorId')
                     ->label('Author')
                     ->required(),

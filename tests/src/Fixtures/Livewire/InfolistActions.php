@@ -23,26 +23,26 @@ class InfolistActions extends Component implements HasActions, HasSchemas
     {
         return $infolist
             ->constantState([])
-            ->schema([
+            ->components([
                 TextEntry::make('textEntry')
                     ->registerActions([
                         Action::make('setValue')
-                            ->form([
+                            ->schema([
                                 TextInput::make('value')
                                     ->default('foo')
                                     ->required(),
                             ])
-                            ->action(function (array $data) {
+                            ->action(function (array $data): void {
                                 $this->dispatch('foo', $data['value']);
                             }),
                         Action::make('setValueFromArguments')
                             ->requiresConfirmation()
-                            ->action(function (array $arguments) {
+                            ->action(function (array $arguments): void {
                                 $this->dispatch('foo', $arguments['value']);
                             }),
                         Action::make('halt')
                             ->requiresConfirmation()
-                            ->action(function (Action $action) {
+                            ->action(function (Action $action): void {
                                 $action->halt();
                             }),
                         Action::make('hidden')

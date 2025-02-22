@@ -9,11 +9,11 @@ use Illuminate\Support\Str;
 
 uses(TestCase::class);
 
-test('fields can save relationships', function () {
+test('fields can save relationships', function (): void {
     $numberOfRelationshipsSaved = 0;
     $isFieldVisible = true;
 
-    $saveRelationshipsUsing = function () use (&$numberOfRelationshipsSaved) {
+    $saveRelationshipsUsing = function () use (&$numberOfRelationshipsSaved): void {
         $numberOfRelationshipsSaved++;
     };
 
@@ -49,11 +49,11 @@ test('fields can save relationships', function () {
         ->toBe(2);
 });
 
-test('hidden fields can save relationships when requested', function () {
+test('hidden fields can save relationships when requested', function (): void {
     $numberOfRelationshipsSaved = 0;
     $shouldSaveRelationships = true;
 
-    $saveRelationshipsUsing = function () use (&$numberOfRelationshipsSaved) {
+    $saveRelationshipsUsing = function () use (&$numberOfRelationshipsSaved): void {
         $numberOfRelationshipsSaved++;
     };
 
