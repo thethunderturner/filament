@@ -151,18 +151,18 @@ class Register extends SimplePage
     public function defaultForm(Schema $schema): Schema
     {
         return $schema
-            ->schema([
-                $this->getNameFormComponent(),
-                $this->getEmailFormComponent(),
-                $this->getPasswordFormComponent(),
-                $this->getPasswordConfirmationFormComponent(),
-            ])
             ->statePath('data');
     }
 
     public function form(Schema $schema): Schema
     {
-        return $schema;
+        return $schema
+            ->components([
+                $this->getNameFormComponent(),
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getPasswordConfirmationFormComponent(),
+            ]);
     }
 
     protected function getNameFormComponent(): Component

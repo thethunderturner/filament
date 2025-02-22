@@ -33,7 +33,7 @@ class AttachFilesAction
                 TextInput::make('alt')
                     ->label(filled($arguments['src'] ?? null) ? 'Change alt text' : 'Alt text'),
             ])
-            ->action(function (array $arguments, array $data, RichEditor $component, Component $livewire) {
+            ->action(function (array $arguments, array $data, RichEditor $component, Component $livewire): void {
                 if ($data['file'] ?? null) {
                     $id = (string) Str::orderedUuid();
 

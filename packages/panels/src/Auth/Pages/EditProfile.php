@@ -342,19 +342,19 @@ class EditProfile extends Page
             ->inlineLabel(! static::isSimple())
             ->model($this->getUser())
             ->operation('edit')
-            ->schema([
-                $this->getNameFormComponent(),
-                $this->getEmailFormComponent(),
-                $this->getPasswordFormComponent(),
-                $this->getPasswordConfirmationFormComponent(),
-                $this->getCurrentPasswordFormComponent(),
-            ])
             ->statePath('data');
     }
 
     public function form(Schema $schema): Schema
     {
-        return $schema;
+        return $schema
+            ->components([
+                $this->getNameFormComponent(),
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getPasswordConfirmationFormComponent(),
+                $this->getCurrentPasswordFormComponent(),
+            ]);
     }
 
     /**

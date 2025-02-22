@@ -29,7 +29,7 @@ class LinkAction
                 Checkbox::make('shouldOpenInNewTab')
                     ->label('Open in new tab'),
             ])
-            ->action(function (array $arguments, array $data, RichEditor $component) {
+            ->action(function (array $arguments, array $data, RichEditor $component): void {
                 $isSingleCharacterSelection = ($arguments['editorSelection']['head'] ?? null) === ($arguments['editorSelection']['anchor'] ?? null);
 
                 if (blank($data['url'])) {

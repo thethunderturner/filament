@@ -11,10 +11,10 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 
-trait InteractsWithForms
+trait InteractsWithForms /** @phpstan-ignore trait.unused */
 {
     use InteractsWithSchemas {
-        getCachedSchemas as baseGetCachedSchemas;
+        getCachedSchemas as getBaseCachedSchemas;
     }
 
     protected bool $hasCachedForms = false;
@@ -28,7 +28,7 @@ trait InteractsWithForms
             $this->cacheForms();
         }
 
-        return $this->baseGetCachedSchemas();
+        return $this->getBaseCachedSchemas();
     }
 
     /**

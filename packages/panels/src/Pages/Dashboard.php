@@ -4,6 +4,7 @@ namespace Filament\Pages;
 
 use BackedEnum;
 use Filament\Facades\Filament;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Schema;
@@ -73,9 +74,19 @@ class Dashboard extends Page
     {
         return $schema
             ->components([
-                ...(method_exists($this, 'getFiltersForm') ? [NestedSchema::make('filtersForm')] : []),
-                Grid::make($this->getColumns())
-                    ->schema($this->getWidgetsSchemaComponents($this->getWidgets())),
+                ...(method_exists($this, 'getFiltersForm') ? [$this->getFiltersFormContentComponent()] : []),
+                $this->getWidgetsContentComponent(),
             ]);
+    }
+
+    public function getFiltersFormContentComponent(): Component
+    {
+        return NestedSchema::make('filtersForm');
+    }
+
+    public function getWidgetsContentComponent(): Component
+    {
+        return Grid::make($this->getColumns())
+            ->schema($this->getWidgetsSchemaComponents($this->getWidgets()));
     }
 }

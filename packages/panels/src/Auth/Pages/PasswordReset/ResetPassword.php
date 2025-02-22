@@ -117,19 +117,14 @@ class ResetPassword extends SimplePage
             ->danger();
     }
 
-    public function defaultForm(Schema $schema): Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
-            ->schema([
+            ->components([
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
             ]);
-    }
-
-    public function form(Schema $schema): Schema
-    {
-        return $schema;
     }
 
     protected function getEmailFormComponent(): Component

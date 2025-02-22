@@ -69,8 +69,11 @@ trait InteractsWithRelationshipTable
 
     public function defaultForm(Schema $schema): Schema
     {
-        $schema->columns(2);
+        return $schema->columns(2);
+    }
 
+    public function form(Schema $schema): Schema
+    {
         if (static::getRelatedResource()) {
             static::getRelatedResource()::form($schema);
         }
@@ -80,8 +83,11 @@ trait InteractsWithRelationshipTable
 
     public function defaultInfolist(Schema $schema): Schema
     {
-        $schema->columns(2);
+        return $schema->columns(2);
+    }
 
+    public function infolist(Schema $schema): Schema
+    {
         if (static::getRelatedResource()) {
             static::getRelatedResource()::infolist($schema);
         }

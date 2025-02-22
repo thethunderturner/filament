@@ -5,12 +5,12 @@ namespace Filament\Resources\Pages;
 use BackedEnum;
 use Closure;
 use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\NestedSchema;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
@@ -22,7 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ViewRecord extends Page
 {
-    use Concerns\HasRelationManagers;
+    use Concerns\HasRelationManagers {
+        getContentTabComponent as getBaseContentTabComponent;
+    }
     use Concerns\InteractsWithRecord;
 
     /**
@@ -117,7 +119,7 @@ class ViewRecord extends Page
     {
         return match (true) {
             $action instanceof CreateAction, $action instanceof EditAction => fn (Schema $schema): Schema => static::getResource()::form($schema->columns(2)),
-            $action instanceof ViewAction => fn (Schema $schema): Schema => $this->hasInfolist() ? $this->configureInfolist($schema) : $this->configureForm($schema),
+            $action instanceof ViewAction => fn (Schema $schema): Schema => $this->hasInfolist() ? $schema->components([NestedSchema::make('infolist')]) : $schema->components([NestedSchema::make('form')]),
             default => null,
         };
     }
@@ -135,35 +137,31 @@ class ViewRecord extends Page
 
     public function defaultForm(Schema $schema): Schema
     {
-        return static::getResource()::form(
-            $schema
-                ->columns($this->hasInlineLabels() ? 1 : 2)
-                ->disabled()
-                ->inlineLabel($this->hasInlineLabels())
-                ->model($this->getRecord())
-                ->operation('view')
-                ->statePath('data'),
-        );
+        return $schema
+            ->columns($this->hasInlineLabels() ? 1 : 2)
+            ->disabled()
+            ->inlineLabel($this->hasInlineLabels())
+            ->model($this->getRecord())
+            ->operation('view')
+            ->statePath('data');
     }
 
     public function form(Schema $schema): Schema
     {
-        return $schema;
+        return static::getResource()::form($schema);
     }
 
     public function defaultInfolist(Schema $schema): Schema
     {
-        return static::getResource()::infolist(
-            $schema
-                ->columns($this->hasInlineLabels() ? 1 : 2)
-                ->inlineLabel($this->hasInlineLabels())
-                ->record($this->getRecord()),
-        );
+        return $schema
+            ->columns($this->hasInlineLabels() ? 1 : 2)
+            ->inlineLabel($this->hasInlineLabels())
+            ->record($this->getRecord());
     }
 
     public function infolist(Schema $schema): Schema
     {
-        return $schema;
+        return static::getResource()::infolist($schema);
     }
 
     public static function shouldRegisterNavigation(array $parameters = []): bool
@@ -173,23 +171,20 @@ class ViewRecord extends Page
 
     public function content(Schema $schema): Schema
     {
+        if ($this->hasCombinedRelationManagerTabsWithContent()) {
+            return $schema
+                ->components([
+                    $this->getRelationManagersContentComponent(),
+                ]);
+        }
+
         return $schema
             ->components([
-                ...($this->hasCombinedRelationManagerTabsWithContent() ? [] : $this->getContentComponents()),
+                $this->hasInfolist()
+                    ? $this->getInfolistContentComponent()
+                    : $this->getFormContentComponent(),
                 $this->getRelationManagersContentComponent(),
             ]);
-    }
-
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getContentComponents(): array
-    {
-        return [
-            $this->hasInfolist()
-                ? $this->getInfolistContentComponent()
-                : $this->getFormContentComponent(),
-        ];
     }
 
     public function getFormContentComponent(): Component
@@ -200,6 +195,16 @@ class ViewRecord extends Page
     public function getInfolistContentComponent(): Component
     {
         return NestedSchema::make('infolist');
+    }
+
+    public function getContentTabComponent(): Tab
+    {
+        return $this->getBaseContentTabComponent()
+            ->schema([
+                $this->hasInfolist()
+                    ? $this->getInfolistContentComponent()
+                    : $this->getFormContentComponent(),
+            ]);
     }
 
     /**

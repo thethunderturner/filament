@@ -75,10 +75,12 @@
     },
     "scripts": {
         "cs": [
+            "rector",
             "pint",
             "npm run prettier"
         ],
         "pint": "pint --config pint-strict-imports.json",
+        "rector": "rector",
         "test:pest": "pest --parallel",
         "test:phpstan": "phpstan analyse",
         "test": [

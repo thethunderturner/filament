@@ -193,16 +193,6 @@ class RelationManager extends Component implements HasActions, HasSchemas, HasTa
         return $this->ownerRecord;
     }
 
-    public function form(Schema $schema): Schema
-    {
-        return $schema;
-    }
-
-    public function infolist(Schema $schema): Schema
-    {
-        return $schema;
-    }
-
     public function isReadOnly(): bool
     {
         if (blank($this->getPageClass())) {

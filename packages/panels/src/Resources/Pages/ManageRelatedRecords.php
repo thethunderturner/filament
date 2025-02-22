@@ -155,16 +155,6 @@ class ManageRelatedRecords extends Page implements Tables\Contracts\HasTable
         return $this->getRecord();
     }
 
-    public function form(Schema $schema): Schema
-    {
-        return $schema;
-    }
-
-    public function infolist(Schema $schema): Schema
-    {
-        return $schema;
-    }
-
     /**
      * @return array<class-string<RelationManager> | RelationGroup | RelationManagerConfiguration>
      */
@@ -182,7 +172,7 @@ class ManageRelatedRecords extends Page implements Tables\Contracts\HasTable
                     RenderHook::make(PanelsRenderHook::RESOURCE_PAGES_MANAGE_RELATED_RECORDS_TABLE_BEFORE),
                     EmbeddedTable::make(),
                     RenderHook::make(PanelsRenderHook::RESOURCE_PAGES_MANAGE_RELATED_RECORDS_TABLE_AFTER),
-                ])->visible(! empty($this->table->getColumns())),
+                ])->visible(! empty($this->getTable()->getColumns())),
                 $this->getRelationManagersContentComponent(),
             ]);
     }

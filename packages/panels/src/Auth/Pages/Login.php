@@ -154,17 +154,17 @@ class Login extends SimplePage
     public function defaultForm(Schema $schema): Schema
     {
         return $schema
-            ->schema([
-                $this->getEmailFormComponent(),
-                $this->getPasswordFormComponent(),
-                $this->getRememberFormComponent(),
-            ])
             ->statePath('data');
     }
 
     public function form(Schema $schema): Schema
     {
-        return $schema;
+        return $schema
+            ->components([
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getRememberFormComponent(),
+            ]);
     }
 
     public function defaultMultiFactorChallengeForm(Schema $schema): Schema

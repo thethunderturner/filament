@@ -2,8 +2,6 @@
 
 namespace Filament\Resources\Pages\Concerns;
 
-use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\NestedSchema;
 use Filament\Schemas\Components\Wizard;
@@ -19,10 +17,15 @@ trait HasWizard /** @phpstan-ignore trait.unused */
     public function defaultForm(Schema $schema): Schema
     {
         return parent::defaultForm($schema)
-            ->schema([
-                $this->getWizardComponent(),
-            ])
             ->columns(null);
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return parent::form($schema)
+            ->components([
+                $this->getWizardComponent(),
+            ]);
     }
 
     public function getWizardComponent(): Component
@@ -41,14 +44,9 @@ trait HasWizard /** @phpstan-ignore trait.unused */
         return false;
     }
 
-    /**
-     * @return array<Component | Action | ActionGroup>
-     */
-    public function getFormContentComponents(): array
+    public function getFormContentComponent(): Component
     {
-        return [
-            NestedSchema::make('form'),
-        ];
+        return NestedSchema::make('form');
     }
 
     public function getSteps(): array
