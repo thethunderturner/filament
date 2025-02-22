@@ -15,12 +15,12 @@ Installation comes in two flavors, depending on whether you want to build an app
 
 <div x-data="{ package: (window.location.hash === '#components') ? 'components' : 'panels' }">
 
-<RadioGroup model="package" value="panels">
+<RadioGroup model="package">
     <RadioGroupOption value="panels">
         Panel builder
 
         <span slot="description">
-            Most people choose this option, to build an admin panel for their app. The panel builder combines all the individual components together into a cohesive framework. You can create as many panels as you like within a Laravel installation, but you only need to install it once.
+            Most people choose this option, to build as panel (e.g., admin panel) for their app. The panel builder combines all the individual components together into a cohesive framework. You can create as many panels as you like within a Laravel installation, but you only need to install it once.
         </span>
     </RadioGroupOption>
 
@@ -71,17 +71,18 @@ To start with, you need to install the Filament components you'd like to use wit
 
 ```bash
 composer require
-    filament/forms # A variety of field types and layouts, complete with integrated frontend and backend validation.
-    filament/infolists # The easiest way to create read-only views of data, using a combination of different data types and layouts.
-    filament/tables # Integrative tables and grids, complete with advanced filtering, sorting and grouping options.
-    filament/actions # Buttons that open complex modals that can be used to confirm actions, collect data, or display information.
-    filament/notifications # Send flash messages to the user after an interaction, through a live websocket connection, or via Laravel's database notifications.
-    filament/widgets # Dashboard components like charts and stats overviews, which can be integrated with static or live data.
+    filament/tables
+    filament/schemas
+    filament/forms
+    filament/infolists
+    filament/actions
+    filament/notifications
+    filament/widgets
 ```
 
 You can install additional packages later in your project without needing to follow all these steps.
 
-If you would like to only use the set of [Blade UI components](ui), you need to require `filament/support` at this stage.
+If you would like to only use the set of [Blade UI components](../ui), you need to require `filament/support` at this stage.
 
 <RadioGroup model="laravelProject">
     <RadioGroupOption value="new">
@@ -131,46 +132,36 @@ php artisan filament:install
 
 ### Installing Tailwind CSS
 
-Run the following command to install Tailwind CSS with the Tailwind Forms and Typography plugins:
+Run the following command to install Tailwind CSS for Vite, with the Tailwind Forms and Typography plugins:
 
 ```bash
-npm install tailwindcss @tailwindcss/forms @tailwindcss/typography postcss postcss-nesting autoprefixer --save-dev
-```
-
-Create a new `tailwind.config.js` file and add the Filament `preset` *(includes the Filament color scheme and the required Tailwind plugins)*:
-
-```js
-import preset from './vendor/filament/support/tailwind.config.preset'
-
-export default {
-    presets: [preset],
-    content: [
-        './app/Filament/**/*.php',
-        './resources/views/filament/**/*.blade.php',
-        './vendor/filament/**/*.blade.php',
-    ],
-}
+npm install tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography --save-dev
 ```
 
 ### Configuring styles
 
-Add Tailwind's CSS layers to your `resources/css/app.css`:
+Add Tailwind CSS to your `resources/css/app.css`:
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
+@import 'tailwindcss';
+@import '/vendor/filament/support/resources/css/index.css'; /* Required by all Filament components */
+@import '/vendor/filament/actions/resources/css/index.css'; /* Required by `filament/actions` and `filament/tables` */
+@import '/vendor/filament/forms/resources/css/index.css'; /* Required by `filament/forms`, `filament/tables` and `filament/actions` */
+@import '/vendor/filament/infolists/resources/css/index.css'; /* Required by `filament/infolists` and `filament/actions` */
+@import '/vendor/filament/notifications/resources/css/index.css'; /* Required by `filament/notifications` */
+@import '/vendor/filament/schemas/resources/css/index.css'; /* Required by `filament/schemas`, `filament/forms`, `filament/infolists`, `filament/tables` and `filament/actions` */
+@import '/vendor/filament/tables/resources/css/index.css'; /* Required by `filament/tables` */
+@import '/vendor/filament/widgets/resources/css/index.css'; /* Required by `filament/widgets` */
+
+@variant dark (&:where(.dark, .dark *));
 ```
 
-Create a `postcss.config.js` file in the root of your project and register Tailwind CSS, PostCSS Nesting and Autoprefixer as plugins:
+Create a `postcss.config.js` file in the root of your project and install Tailwind CSS:
 
 ```js
 export default {
     plugins: {
-        'tailwindcss/nesting': 'postcss-nesting',
-        tailwindcss: {},
-        autoprefixer: {},
+        '@tailwindcss/postcss': {},
     },
 }
 ```
@@ -238,7 +229,7 @@ Create a new `resources/views/components/layouts/app.blade.php` layout file for 
 </html>
 ```
 
-Please note the `@livewire('notifications')` line above - this is only required if you have the [notifications](notifications) package installed, and you wish to send flash notifications to your users through Filament.
+Please note the `@livewire('notifications')` line above - this is only required if you have the [notifications](.../notifications) package installed, and you wish to send flash notifications to your users through Filament.
 
 </div>
 
