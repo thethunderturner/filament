@@ -106,25 +106,18 @@ class RequestPasswordReset extends SimplePage
             ->danger();
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->schema([
+                $this->getEmailFormComponent(),
+            ])
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->schema([
-                        $this->getEmailFormComponent(),
-                    ])
-                    ->statePath('data'),
-            ),
-        ];
     }
 
     protected function getEmailFormComponent(): Component

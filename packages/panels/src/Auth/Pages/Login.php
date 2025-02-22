@@ -151,61 +151,56 @@ class Login extends SimplePage
         ]);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->schema([
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getRememberFormComponent(),
+            ])
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
     }
 
+    public function defaultMultiFactorChallengeForm(Schema $schema): Schema
+    {
+        return $schema
+            ->schema(function (): array {
+                if (blank($this->userUndertakingMultiFactorAuthentication)) {
+                    return [];
+                }
+
+                $authProvider = Filament::auth()->getProvider(); /** @phpstan-ignore-line */
+                $user = $authProvider->retrieveById(decrypt($this->userUndertakingMultiFactorAuthentication));
+
+                $enabledMultiFactorAuthenticationProviders = array_filter(
+                    Filament::getMultiFactorAuthenticationProviders(),
+                    fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): bool => $multiFactorAuthenticationProvider->isEnabled($user)
+                );
+
+                return [
+                    ...Arr::wrap($this->getMultiFactorProviderFormComponent()),
+                    ...collect($enabledMultiFactorAuthenticationProviders)
+                        ->map(fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): Component => Group::make($multiFactorAuthenticationProvider->getChallengeFormComponents($user))
+                            ->statePath($multiFactorAuthenticationProvider->getId())
+                            ->when(
+                                count($enabledMultiFactorAuthenticationProviders) > 1,
+                                fn (Group $group) => $group->visible(fn (Get $get): bool => $get('provider') === $multiFactorAuthenticationProvider->getId())
+                            ))
+                        ->all(),
+                ];
+            })
+            ->statePath('data.multiFactor');
+    }
+
     public function multiFactorChallengeForm(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->schema([
-                        $this->getEmailFormComponent(),
-                        $this->getPasswordFormComponent(),
-                        $this->getRememberFormComponent(),
-                    ])
-                    ->statePath('data'),
-            ),
-            'multiFactorChallengeForm' => $this->multiFactorChallengeForm(
-                $this->makeSchema()
-                    ->schema(function (): array {
-                        if (blank($this->userUndertakingMultiFactorAuthentication)) {
-                            return [];
-                        }
-
-                        $authProvider = Filament::auth()->getProvider(); /** @phpstan-ignore-line */
-                        $user = $authProvider->retrieveById(decrypt($this->userUndertakingMultiFactorAuthentication));
-
-                        $enabledMultiFactorAuthenticationProviders = array_filter(
-                            Filament::getMultiFactorAuthenticationProviders(),
-                            fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): bool => $multiFactorAuthenticationProvider->isEnabled($user)
-                        );
-
-                        return [
-                            ...Arr::wrap($this->getMultiFactorProviderFormComponent()),
-                            ...collect($enabledMultiFactorAuthenticationProviders)
-                                ->map(fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): Component => Group::make($multiFactorAuthenticationProvider->getChallengeFormComponents($user))
-                                    ->statePath($multiFactorAuthenticationProvider->getId())
-                                    ->when(
-                                        count($enabledMultiFactorAuthenticationProviders) > 1,
-                                        fn (Group $group) => $group->visible(fn (Get $get): bool => $get('provider') === $multiFactorAuthenticationProvider->getId())
-                                    ))
-                                ->all(),
-                        ];
-                    })
-                    ->statePath('data.multiFactor'),
-            ),
-        ];
     }
 
     protected function getEmailFormComponent(): Component

@@ -148,28 +148,21 @@ class Register extends SimplePage
         $user->notify($notification);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->schema([
+                $this->getNameFormComponent(),
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getPasswordConfirmationFormComponent(),
+            ])
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->schema([
-                        $this->getNameFormComponent(),
-                        $this->getEmailFormComponent(),
-                        $this->getPasswordFormComponent(),
-                        $this->getPasswordConfirmationFormComponent(),
-                    ])
-                    ->statePath('data'),
-            ),
-        ];
     }
 
     protected function getNameFormComponent(): Component

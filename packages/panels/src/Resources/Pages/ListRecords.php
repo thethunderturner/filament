@@ -211,14 +211,6 @@ class ListRecords extends Page implements Tables\Contracts\HasTable
     }
 
     /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [];
-    }
-
-    /**
      * @return array<NavigationItem | NavigationGroup>
      */
     public function getSubNavigation(): array

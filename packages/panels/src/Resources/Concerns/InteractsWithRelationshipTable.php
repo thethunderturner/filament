@@ -67,7 +67,7 @@ trait InteractsWithRelationshipTable
         return static::getRelatedResource()::getParentResourceRegistration()->getRelationshipName();
     }
 
-    public function configureForm(Schema $schema): Schema
+    public function defaultForm(Schema $schema): Schema
     {
         $schema->columns(2);
 
@@ -75,20 +75,16 @@ trait InteractsWithRelationshipTable
             static::getRelatedResource()::form($schema);
         }
 
-        $this->form($schema);
-
         return $schema;
     }
 
-    public function configureInfolist(Schema $schema): Schema
+    public function defaultInfolist(Schema $schema): Schema
     {
         $schema->columns(2);
 
         if (static::getRelatedResource()) {
             static::getRelatedResource()::infolist($schema);
         }
-
-        $this->infolist($schema);
 
         return $schema;
     }

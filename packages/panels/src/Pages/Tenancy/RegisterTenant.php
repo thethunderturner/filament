@@ -120,23 +120,16 @@ abstract class RegisterTenant extends SimplePage
         return Filament::getUrl($this->tenant);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->model($this->getModel())
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->model($this->getModel())
-                    ->statePath('data'),
-            ),
-        ];
     }
 
     /**

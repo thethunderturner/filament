@@ -269,36 +269,20 @@ class CreateRecord extends Page
         ]);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return static::getResource()::form(
+            $schema
+                ->columns($this->hasInlineLabels() ? 1 : 2)
+                ->inlineLabel($this->hasInlineLabels())
+                ->model($this->getModel())
+                ->operation('create')
+                ->statePath('data'),
+        );
+    }
+
     public function form(Schema $schema): Schema
     {
-        return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->configureForm(
-                $this->makeSchema()
-                    ->schema($this->getFormSchema())
-                    ->operation('create')
-                    ->model($this->getModel())
-                    ->statePath($this->getFormStatePath()),
-            ),
-        ];
-    }
-
-    public function configureForm(Schema $schema): Schema
-    {
-        $schema->columns($this->hasInlineLabels() ? 1 : 2);
-        $schema->inlineLabel($this->hasInlineLabels());
-
-        static::getResource()::form($schema);
-
-        $this->form($schema);
-
         return $schema;
     }
 
@@ -343,11 +327,6 @@ class CreateRecord extends Page
         static::$canCreateAnother = false;
     }
 
-    public function getFormStatePath(): ?string
-    {
-        return 'data';
-    }
-
     public function getRecord(): ?Model
     {
         return $this->record;
@@ -372,7 +351,7 @@ class CreateRecord extends Page
             ->fullWidth($this->hasFullWidthFormActions())
             ->sticky($this->areFormActionsSticky());
 
-        if ($this->hasFormWrapper()) {
+        if (! $this->hasFormWrapper()) {
             return [
                 $formSchema,
                 $actions,

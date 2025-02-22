@@ -133,60 +133,37 @@ class ViewRecord extends Page
         ]);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return static::getResource()::form(
+            $schema
+                ->columns($this->hasInlineLabels() ? 1 : 2)
+                ->disabled()
+                ->inlineLabel($this->hasInlineLabels())
+                ->model($this->getRecord())
+                ->operation('view')
+                ->statePath('data'),
+        );
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
     }
 
-    public function configureForm(Schema $schema): Schema
+    public function defaultInfolist(Schema $schema): Schema
     {
-        $schema->columns($this->hasInlineLabels() ? 1 : 2);
-        $schema->inlineLabel($this->hasInlineLabels());
-
-        static::getResource()::form($schema);
-
-        $this->form($schema);
-
-        return $schema;
-    }
-
-    public function configureInfolist(Schema $schema): Schema
-    {
-        $schema->columns($this->hasInlineLabels() ? 1 : 2);
-        $schema->inlineLabel($this->hasInlineLabels());
-
-        static::getResource()::infolist($schema);
-
-        return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->configureForm(
-                $this->makeSchema()
-                    ->operation('view')
-                    ->disabled()
-                    ->model($this->getRecord())
-                    ->statePath($this->getFormStatePath()),
-            ),
-        ];
-    }
-
-    public function getFormStatePath(): ?string
-    {
-        return 'data';
-    }
-
-    public function infolist(): Schema
-    {
-        return $this->configureInfolist(
-            $this->makeSchema()
+        return static::getResource()::infolist(
+            $schema
+                ->columns($this->hasInlineLabels() ? 1 : 2)
+                ->inlineLabel($this->hasInlineLabels())
                 ->record($this->getRecord()),
         );
+    }
+
+    public function infolist(Schema $schema): Schema
+    {
+        return $schema;
     }
 
     public static function shouldRegisterNavigation(array $parameters = []): bool

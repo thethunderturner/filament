@@ -336,32 +336,25 @@ class EditProfile extends Page
             ->dehydrated(false);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->inlineLabel(! static::isSimple())
+            ->model($this->getUser())
+            ->operation('edit')
+            ->schema([
+                $this->getNameFormComponent(),
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getPasswordConfirmationFormComponent(),
+                $this->getCurrentPasswordFormComponent(),
+            ])
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->schema([
-                        $this->getNameFormComponent(),
-                        $this->getEmailFormComponent(),
-                        $this->getPasswordFormComponent(),
-                        $this->getPasswordConfirmationFormComponent(),
-                        $this->getCurrentPasswordFormComponent(),
-                    ])
-                    ->operation('edit')
-                    ->model($this->getUser())
-                    ->statePath('data')
-                    ->inlineLabel(! static::isSimple()),
-            ),
-        ];
     }
 
     /**

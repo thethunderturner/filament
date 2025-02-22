@@ -31,9 +31,9 @@ trait HasFilters
         $table = $this->getTable();
 
         return $this->makeSchema()
-            ->schema($table->getFiltersFormSchema())
             ->columns($table->getFiltersFormColumns())
             ->model($table->getModel())
+            ->schema($table->getFiltersFormSchema())
             ->when(
                 $table->hasDeferredFilters(),
                 fn (Schema $schema) => $schema

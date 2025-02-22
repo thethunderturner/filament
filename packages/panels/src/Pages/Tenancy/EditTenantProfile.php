@@ -177,24 +177,17 @@ abstract class EditTenantProfile extends Page
         return null;
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->operation('edit')
+            ->model($this->tenant)
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->operation('edit')
-                    ->model($this->tenant)
-                    ->statePath('data'),
-            ),
-        ];
     }
 
     /**

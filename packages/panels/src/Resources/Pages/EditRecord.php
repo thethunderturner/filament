@@ -180,7 +180,7 @@ class EditRecord extends Page
             $data = Schema::make($component->getLivewire())
                 ->schema([$component])
                 ->model($component->getRecord())
-                ->statePath($this->getFormStatePath())
+                ->statePath('data')
                 ->getState();
 
             $this->callHook('afterValidate');
@@ -254,18 +254,6 @@ class EditRecord extends Page
         return $data;
     }
 
-    public function configureForm(Schema $schema): Schema
-    {
-        $schema->columns($this->hasInlineLabels() ? 1 : 2);
-        $schema->inlineLabel($this->hasInlineLabels());
-
-        static::getResource()::form($schema);
-
-        $this->form($schema);
-
-        return $schema;
-    }
-
     public function getDefaultActionSchemaResolver(Action $action): ?Closure
     {
         return match (true) {
@@ -333,30 +321,21 @@ class EditRecord extends Page
             ->color('gray');
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return static::getResource()::form(
+            $schema
+                ->columns($this->hasInlineLabels() ? 1 : 2)
+                ->inlineLabel($this->hasInlineLabels())
+                ->model($this->getRecord())
+                ->operation('edit')
+                ->statePath('data'),
+        );
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->configureForm(
-                $this->makeSchema()
-                    ->schema($this->getFormSchema())
-                    ->operation('edit')
-                    ->model($this->getRecord())
-                    ->statePath($this->getFormStatePath()),
-            ),
-        ];
-    }
-
-    public function getFormStatePath(): ?string
-    {
-        return 'data';
     }
 
     protected function getRedirectUrl(): ?string
@@ -399,7 +378,7 @@ class EditRecord extends Page
             ->fullWidth($this->hasFullWidthFormActions())
             ->sticky($this->areFormActionsSticky());
 
-        if ($this->hasFormWrapper()) {
+        if (! $this->hasFormWrapper()) {
             return [
                 $formSchema,
                 $actions,

@@ -178,26 +178,18 @@ class SettingsPage extends Page
         return $this->getSaveFormAction();
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->columns(2)
+            ->disabled(! $this->canEdit())
+            ->inlineLabel($this->hasInlineLabels())
+            ->statePath('data');
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema;
-    }
-
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeSchema()
-                    ->schema($this->getFormSchema())
-                    ->statePath('data')
-                    ->columns(2)
-                    ->inlineLabel($this->hasInlineLabels())
-                    ->disabled(! $this->canEdit()),
-            ),
-        ];
     }
 
     public function content(Schema $schema): Schema
@@ -219,7 +211,7 @@ class SettingsPage extends Page
             ->fullWidth($this->hasFullWidthFormActions())
             ->sticky($this->areFormActionsSticky());
 
-        if ($this->hasFormWrapper()) {
+        if (! $this->hasFormWrapper()) {
             return [
                 $formSchema,
                 $actions,

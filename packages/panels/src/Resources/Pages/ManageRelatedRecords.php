@@ -173,14 +173,6 @@ class ManageRelatedRecords extends Page implements Tables\Contracts\HasTable
         return [];
     }
 
-    /**
-     * @return array<int | string, string | Schema>
-     */
-    protected function getForms(): array
-    {
-        return [];
-    }
-
     public function content(Schema $schema): Schema
     {
         return $schema
@@ -271,8 +263,8 @@ class ManageRelatedRecords extends Page implements Tables\Contracts\HasTable
     public function getDefaultActionSchemaResolver(Action $action): ?Closure
     {
         return match (true) {
-            $action instanceof CreateAction, $action instanceof EditAction => fn (Schema $schema): Schema => $this->configureForm($schema),
-            $action instanceof ViewAction => fn (Schema $schema): Schema => $this->configureInfolist($this->configureForm($schema)),
+            $action instanceof CreateAction, $action instanceof EditAction => fn (Schema $schema): Schema => $this->form($this->defaultForm($schema)),
+            $action instanceof ViewAction => fn (Schema $schema): Schema => $this->infolist($this->defaultInfolist($this->form($this->defaultForm($schema)))),
             default => null,
         };
     }

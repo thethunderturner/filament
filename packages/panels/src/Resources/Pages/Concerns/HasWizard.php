@@ -16,19 +16,24 @@ trait HasWizard /** @phpstan-ignore trait.unused */
         return 1;
     }
 
-    public function form(Schema $schema): Schema
+    public function defaultForm(Schema $schema): Schema
     {
-        return parent::form($schema)
+        return parent::defaultForm($schema)
             ->schema([
-                Wizard::make($this->getSteps())
-                    ->startOnStep($this->getStartStep())
-                    ->cancelAction($this->getCancelFormAction())
-                    ->submitAction($this->getSubmitFormAction())
-                    ->alpineSubmitHandler("\$wire.{$this->getSubmitFormLivewireMethodName()}()")
-                    ->skippable($this->hasSkippableSteps())
-                    ->contained(false),
+                $this->getWizardComponent(),
             ])
             ->columns(null);
+    }
+
+    public function getWizardComponent(): Component
+    {
+        return Wizard::make($this->getSteps())
+            ->startOnStep($this->getStartStep())
+            ->cancelAction($this->getCancelFormAction())
+            ->submitAction($this->getSubmitFormAction())
+            ->alpineSubmitHandler("\$wire.{$this->getSubmitFormLivewireMethodName()}()")
+            ->skippable($this->hasSkippableSteps())
+            ->contained(false);
     }
 
     public function hasFormWrapper(): bool

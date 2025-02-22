@@ -198,6 +198,10 @@ trait InteractsWithSchemas
                     $this->discoveredSchemaNames[] = $name;
                 }
 
+                if (method_exists($this, 'default' . ucfirst($name))) {
+                    $schema = $this->{'default' . ucfirst($name)}($schema);
+                }
+
                 return $this->cachedSchemas[$name] = ($this->{$methodName}())->key($name);
             }
 
@@ -235,7 +239,11 @@ trait InteractsWithSchemas
 
             $schema = $this->makeSchema();
 
-            return $this->cachedSchemas[$name] = $this->{$name}($schema)->key($name);
+            if (method_exists($this, 'default' . ucfirst($name))) {
+                $schema = $this->{'default' . ucfirst($name)}($schema);
+            }
+
+            return $this->cachedSchemas[$name] = $this->{$methodName}($schema)->key($name);
         } finally {
             $this->isCachingSchemas = false;
         }

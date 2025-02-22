@@ -15,8 +15,8 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontFamily;
@@ -53,9 +53,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use stdClass;
 
-class TablesDemo extends Component implements HasForms, HasTable
+class TablesDemo extends Component implements HasSchemas, HasTable
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public string $tableConfiguration;
