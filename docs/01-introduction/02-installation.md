@@ -82,7 +82,7 @@ composer require
 
 You can install additional packages later in your project without needing to follow all these steps.
 
-If you would like to only use the set of [Blade UI components](../ui), you need to require `filament/support` at this stage.
+If you would like to only use the set of [Blade UI components](../blade-components), you need to require `filament/support` at this stage.
 
 <RadioGroup model="laravelProject">
     <RadioGroupOption value="new">
