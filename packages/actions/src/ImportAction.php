@@ -85,7 +85,7 @@ class ImportAction extends Action
 
         $this->groupedIcon(FilamentIcon::resolve('actions::import-action.grouped') ?? Heroicon::ArrowUpTray);
 
-        $this->form(fn (ImportAction $action): array => array_merge([
+        $this->schema(fn (ImportAction $action): array => array_merge([
             FileUpload::make('file')
                 ->label(__('filament-actions::import.modal.form.file.label'))
                 ->placeholder(__('filament-actions::import.modal.form.file.placeholder'))

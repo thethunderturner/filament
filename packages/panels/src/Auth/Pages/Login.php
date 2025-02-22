@@ -170,7 +170,7 @@ class Login extends SimplePage
     public function defaultMultiFactorChallengeForm(Schema $schema): Schema
     {
         return $schema
-            ->schema(function (): array {
+            ->components(function (): array {
                 if (blank($this->userUndertakingMultiFactorAuthentication)) {
                     return [];
                 }

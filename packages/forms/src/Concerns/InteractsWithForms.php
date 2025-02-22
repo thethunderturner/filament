@@ -142,7 +142,7 @@ trait InteractsWithForms /** @phpstan-ignore trait.unused */
     public function form(Schema $schema): Schema
     {
         return $schema
-            ->schema($this->getFormSchema())
+            ->components($this->getFormSchema())
             ->model($this->getFormModel())
             ->statePath($this->getFormStatePath())
             ->operation($this->getFormContext());

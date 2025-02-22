@@ -86,7 +86,7 @@ trait HasSchema
         }
 
         if (is_array($modifiedSchema)) {
-            $modifiedSchema = $schema->schema($modifiedSchema);
+            $modifiedSchema = $schema->components($modifiedSchema);
         }
 
         if ($this->isSchemaDisabled()) {

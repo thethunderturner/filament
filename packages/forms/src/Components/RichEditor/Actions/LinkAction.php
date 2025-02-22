@@ -22,7 +22,7 @@ class LinkAction
                 'url' => $arguments['url'] ?? null,
                 'shouldOpenInNewTab' => $arguments['shouldOpenInNewTab'] ?? false,
             ])
-            ->form([
+            ->schema([
                 TextInput::make('url')
                     ->label('URL')
                     ->url(),

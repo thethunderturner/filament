@@ -1,5 +1,6 @@
 <?php
 
+use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Upgrade\Rector;
 use Rector\Config\RectorConfig;
@@ -265,6 +266,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename(Action::class, 'infolist', 'schema'),
+        new MethodCallRename(Action::class, 'form', 'schema'),
         new MethodCallRename(Schema::class, 'schema', 'components'),
     ]);
 };

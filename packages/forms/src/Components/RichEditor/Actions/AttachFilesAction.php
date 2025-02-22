@@ -23,7 +23,7 @@ class AttachFilesAction
             ->fillForm(fn (array $arguments): array => [
                 'alt' => $arguments['alt'] ?? null,
             ])
-            ->form(fn (array $arguments): array => [
+            ->schema(fn (array $arguments): array => [
                 FileUpload::make('file')
                     ->label(filled($arguments['src'] ?? null) ? 'Replace file' : 'File')
                     ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/gif', 'image/webp'])
