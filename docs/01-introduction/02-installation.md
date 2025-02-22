@@ -55,7 +55,7 @@ You can create a new user account using the following command:
 php artisan make:filament-user
 ```
 
-Open `/admin` in your web browser, sign in, and start building your app!
+Open `/admin` in your web browser, sign in, and [start building your app](../getting-started)!
 
 </div>
 
@@ -82,7 +82,7 @@ composer require
 
 You can install additional packages later in your project without having to repeat these installation steps.
 
-If you only want to use the set of [Blade UI components](../blade-components), you'll need to require `filament/support` at this stage.
+If you only want to use the set of [Blade UI components](../components/blade), you'll need to require `filament/support` at this stage.
 
 <RadioGroup model="laravelProject">
     <RadioGroupOption value="new">

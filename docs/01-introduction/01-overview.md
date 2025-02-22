@@ -55,10 +55,10 @@ To decrease the [border radius in Tailwind CSS](https://tailwindcss.com/docs/bor
 
 This overrides the default `rounded-lg` class with `rounded-sm` for all buttons in Filament while preserving the other styling properties of the button. This system provides a high level of flexibility to customize the appearance of Filament components without needing to write a complete custom stylesheet or maintain copies of HTML for each component.
 
-For more information about customizing the appearance of Filament, visit the [Customizing Styling](../styling) section.
+For more information about customizing the appearance of Filament, visit the [Customizing styling documentation](../styling).
 
 ## Testing
 
 The core packages in Filament undergo unit testing to ensure stability across releases. As a Filament user, you can write tests for applications built with the framework. Filament provides utilities for testing both functionality and UI components, compatible with either Pest or PHPUnit test suites. Testing is particularly crucial when customizing the framework or implementing custom functionality, though it's also valuable for verifying basic functionality works as intended.
 
-For more information about testing Filament applications, visit the [Testing](../testing) section.
+For more information about testing Filament applications, visit the [Testing documentation](../testing).
