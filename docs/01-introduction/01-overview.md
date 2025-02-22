@@ -55,7 +55,7 @@ To decrease the [border radius in Tailwind CSS](https://tailwindcss.com/docs/bor
 
 This would override the default `rounded-lg` class with `rounded-sm` for all buttons in Filament, while preserving the other styling properties of the button. This system provides a high level of flexibility to customize the appearance of Filament components without needing to write a full custom stylesheet or maintain a copy of the HTML for each component.
 
-For more information about customizing the appearance of Filament, visit the [Styling](../styling) section.
+For more information about customizing the appearance of Filament, visit the [Customizing Styling](../styling) section.
 
 ## Testing
 
