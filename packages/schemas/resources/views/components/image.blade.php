@@ -18,13 +18,8 @@
         x-tooltip="{ content: @js($tooltip), theme: $store.theme }"
     @endif
     @class([
-        'fi-sc-icon rounded-lg border border-gray-300 dark:border-transparent',
-        match ($alignment) {
-            Alignment::Center => 'mx-auto',
-            Alignment::End, Alignment::Right => 'ms-auto',
-            Alignment::Start, Alignment::Left, Alignment::Between, Alignment::Justify => '',
-            default => $alignment,
-        },
+        'fi-sc-icon',
+        ($alignment instanceof Alignment) ? "fi-align-{$alignment->value}" : $alignment,
     ])
     @style([
         "height: {$height}" => $height,

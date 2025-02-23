@@ -6,16 +6,16 @@ use Closure;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Concerns\CanBeCollapsed;
 use Filament\Schemas\Components\Concerns\HasContainerGridLayout;
 use Filament\Schemas\Components\Contracts\CanConcealComponents;
 use Filament\Schemas\Components\Contracts\HasExtraItemActions;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Concerns\HasReorderAnimationDuration;
-use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\Size;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
@@ -188,7 +188,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
                 $component->state($items);
 
-                $component->getChildComponentContainer($newUuid ?? array_key_last($items))->fill();
+                $component->getChildSchema($newUuid ?? array_key_last($items))->fill();
 
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
@@ -197,7 +197,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->button()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isAddable());
 
         if ($this->modifyAddActionUsing) {
@@ -265,7 +265,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
                 $component->state($items);
 
-                $component->getChildComponentContainer($newKey)->fill();
+                $component->getChildSchema($newKey)->fill();
 
                 $component->collapsed(false, shouldMakeComponentCollapsible: false);
 
@@ -274,7 +274,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->button()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(false);
 
         if ($this->modifyAddBetweenActionUsing) {
@@ -336,7 +336,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isCloneable());
 
         if ($this->modifyCloneActionUsing) {
@@ -377,7 +377,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isDeletable());
 
         if ($this->modifyDeleteActionUsing) {
@@ -417,7 +417,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isReorderable());
 
         if ($this->modifyMoveDownActionUsing) {
@@ -457,7 +457,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
                 $component->partiallyRender();
             })
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isReorderable());
 
         if ($this->modifyMoveUpActionUsing) {
@@ -501,7 +501,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             })
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->visible(fn (Repeater $component): bool => $component->isReorderableWithDragAndDrop());
 
         if ($this->modifyReorderActionUsing) {
@@ -533,7 +533,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyCollapseActionUsing) {
             $action = $this->evaluate($this->modifyCollapseActionUsing, [
@@ -564,7 +564,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->iconButton()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyExpandActionUsing) {
             $action = $this->evaluate($this->modifyExpandActionUsing, [
@@ -594,7 +594,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyCollapseAllActionUsing) {
             $action = $this->evaluate($this->modifyCollapseAllActionUsing, [
@@ -624,7 +624,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             ->color('gray')
             ->livewireClickHandlerEnabled(false)
             ->link()
-            ->size(ActionSize::Small);
+            ->size(Size::Small);
 
         if ($this->modifyExpandAllActionUsing) {
             $action = $this->evaluate($this->modifyExpandAllActionUsing, [
@@ -824,7 +824,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
         foreach ($this->getState() ?? [] as $itemKey => $itemData) {
             $items[$itemKey] = $this
-                ->getChildComponentContainer()
+                ->getChildSchema()
                 ->statePath($itemKey)
                 ->model($relationship ? $records[$itemKey] ?? $this->getRelatedModel() : null)
                 ->inlineLabel(false)
@@ -837,7 +837,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
     /**
      * @return array<Schema>
      */
-    public function getDefaultChildComponentContainers(): array
+    public function getDefaultChildSchemas(): array
     {
         return $this->getItems();
     }
@@ -927,7 +927,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
             $component->fillFromRelationship();
         });
 
-        $this->saveRelationshipsUsing(static function (Repeater $component, HasForms $livewire, ?array $state): void {
+        $this->saveRelationshipsUsing(static function (Repeater $component, HasSchemas $livewire, ?array $state): void {
             if (! is_array($state)) {
                 $state = [];
             }
@@ -1159,7 +1159,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
 
     public function getItemLabel(string $uuid): string | Htmlable | null
     {
-        $container = $this->getChildComponentContainer($uuid);
+        $container = $this->getChildSchema($uuid);
 
         return $this->evaluate($this->itemLabel, [
             'container' => $container,
@@ -1315,7 +1315,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
      */
     public function getItemState(string $uuid): array
     {
-        return $this->getChildComponentContainer($uuid)->getState(shouldCallHooksBefore: false);
+        return $this->getChildSchema($uuid)->getState(shouldCallHooksBefore: false);
     }
 
     /**
@@ -1323,7 +1323,7 @@ class Repeater extends Field implements CanConcealComponents, HasExtraItemAction
      */
     public function getRawItemState(string $uuid): array
     {
-        return $this->getChildComponentContainer($uuid)->getRawState();
+        return $this->getChildSchema($uuid)->getRawState();
     }
 
     public function getHeadingsCount(): int

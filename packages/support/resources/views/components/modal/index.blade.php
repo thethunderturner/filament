@@ -2,16 +2,16 @@
     use Filament\Support\Enums\Alignment;
     use Filament\Support\Enums\Width;
     use Filament\Support\Facades\FilamentView;
-    use Filament\Support\View\Components\Modal\Icon;
+    use Filament\Support\View\Components\ModalComponent\IconComponent;
 @endphp
 
 @props([
     'alignment' => Alignment::Start,
     'ariaLabelledby' => null,
-    'autofocus' => \Filament\Support\View\Components\Modal::$isAutofocused,
-    'closeButton' => \Filament\Support\View\Components\Modal::$hasCloseButton,
-    'closeByClickingAway' => \Filament\Support\View\Components\Modal::$isClosedByClickingAway,
-    'closeByEscaping' => \Filament\Support\View\Components\Modal::$isClosedByEscaping,
+    'autofocus' => \Filament\Support\View\Components\ModalComponent::$isAutofocused,
+    'closeButton' => \Filament\Support\View\Components\ModalComponent::$hasCloseButton,
+    'closeByClickingAway' => \Filament\Support\View\Components\ModalComponent::$isClosedByClickingAway,
+    'closeByEscaping' => \Filament\Support\View\Components\ModalComponent::$isClosedByEscaping,
     'closeEventName' => 'close-modal',
     'closeQuietlyEventName' => 'close-modal-quietly',
     'description' => null,
@@ -54,14 +54,20 @@
     }
 
     $closeEventHandler = filled($id) ? '$dispatch(' . \Illuminate\Support\Js::from($closeEventName) . ', { id: ' . \Illuminate\Support\Js::from($id) . ' })' : 'close()';
+
+    $wireSubmitHandler = $attributes->get('wire:submit.prevent');
+    $attributes = $attributes->except(['wire:submit.prevent']);
 @endphp
 
 @if ($trigger)
     {!! '<div>' !!}
+    {{-- Avoid formatting issues with unclosed elements --}}
 
     <div
-        x-on:click="$el.nextElementSibling.dispatchEvent(new CustomEvent(@js($openEventName)))"
-        {{ $trigger->attributes->class(['fi-modal-trigger']) }}
+        @if (! $trigger->attributes->get('disabled'))
+            x-on:click="$el.nextElementSibling.dispatchEvent(new CustomEvent(@js($openEventName)))"
+        @endif
+        {{ $trigger->attributes->except(['disabled'])->class(['fi-modal-trigger']) }}
     >
         {{ $trigger }}
     </div>
@@ -122,7 +128,7 @@
             'fi-clickable' => $closeByClickingAway,
         ])
     >
-        <div
+        <{{ filled($wireSubmitHandler) ? 'form' : 'div' }}
             @if ($closeByEscaping)
                 x-on:keydown.window.escape="{{ $closeEventHandler }}"
             @endif
@@ -134,6 +140,9 @@
                 x-transition:enter-end="fi-transition-enter-end"
                 x-transition:leave-start="fi-transition-leave-start"
                 x-transition:leave-end="fi-transition-leave-end"
+            @endif
+            @if (filled($wireSubmitHandler))
+                wire:submit.prevent="{!! $wireSubmitHandler !!}"
             @endif
             {{
                 ($extraModalWindowAttributeBag ?? new \Illuminate\View\ComponentAttributeBag)->class([
@@ -174,11 +183,11 @@
                         {{ $header }}
                     @else
                         @if ($hasIcon)
-                            <div class="fi-modal-icon-wrp-ctn">
+                            <div class="fi-modal-icon-ctn">
                                 <div
                                     @class([
-                                        'fi-modal-icon-wrp',
-                                        ...\Filament\Support\get_component_color_classes(Icon::class, $iconColor),
+                                        'fi-modal-icon-bg',
+                                        ...\Filament\Support\get_component_color_classes(IconComponent::class, $iconColor),
                                     ])
                                 >
                                     {{ \Filament\Support\generate_icon_html($icon, $iconAlias, size: \Filament\Support\Enums\IconSize::Large) }}
@@ -230,10 +239,11 @@
                     @endif
                 </div>
             @endif
-        </div>
+        </{{ filled($wireSubmitHandler) ? 'form' : 'div' }}>
     </div>
 </div>
 
 @if ($trigger)
     {!! '</div>' !!}
+    {{-- Avoid formatting issues with unclosed elements --}}
 @endif

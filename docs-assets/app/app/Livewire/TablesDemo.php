@@ -15,13 +15,15 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Support\Enums\ActionSize;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontFamily;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
+use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\Size;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ColorColumn;
@@ -51,9 +53,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use stdClass;
 
-class TablesDemo extends Component implements HasForms, HasTable
+class TablesDemo extends Component implements HasSchemas, HasTable
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public string $tableConfiguration;
@@ -171,13 +173,13 @@ class TablesDemo extends Component implements HasForms, HasTable
         return $this->gettingStartedFilters($table)
             ->actions([
                 Action::make('feature')
-                    ->action(function (Post $record) {
+                    ->action(function (Post $record): void {
                         $record->is_featured = true;
                         $record->save();
                     })
                     ->hidden(fn (Post $record): bool => $record->is_featured),
                 Action::make('unfeature')
-                    ->action(function (Post $record) {
+                    ->action(function (Post $record): void {
                         $record->is_featured = false;
                         $record->save();
                     })
@@ -430,7 +432,7 @@ class TablesDemo extends Component implements HasForms, HasTable
         return $this->postsTable($table)
             ->columns([
                 TextColumn::make('title')
-                    ->size(TextColumn\Enums\TextColumnSize::Large),
+                    ->size(TextSize::Large),
             ]);
     }
 
@@ -510,7 +512,7 @@ class TablesDemo extends Component implements HasForms, HasTable
                         'reviewing' => Heroicon::OutlinedClock,
                         'published' => Heroicon::OutlinedCheckCircle,
                     })
-                    ->size(IconColumn\Enums\IconColumnSize::Medium),
+                    ->size(IconSize::Medium),
             ]);
     }
 
@@ -997,7 +999,7 @@ class TablesDemo extends Component implements HasForms, HasTable
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
-                ])->size(ActionSize::Small),
+                ])->size(Size::Small),
             ]);
     }
 

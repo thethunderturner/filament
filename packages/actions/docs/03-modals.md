@@ -612,9 +612,9 @@ Action::make('updateAuthor')
 If you'd like to change the behavior for all modals in the application, you can do so by calling `Modal::closedByClickingAway()` inside a service provider or middleware:
 
 ```php
-use Filament\Support\View\Components\Modal;
+use Filament\Support\View\Components\ModalComponent;
 
-Modal::closedByClickingAway(false);
+ModalComponent::closedByClickingAway(false);
 ```
 
 ## Closing the modal by escaping
@@ -637,9 +637,9 @@ Action::make('updateAuthor')
 If you'd like to change the behavior for all modals in the application, you can do so by calling `Modal::closedByEscaping()` inside a service provider or middleware:
 
 ```php
-use Filament\Support\View\Components\Modal;
+use Filament\Support\View\Components\ModalComponent;
 
-Modal::closedByEscaping(false);
+ModalComponent::closedByEscaping(false);
 ```
 
 ## Hiding the modal close button
@@ -662,9 +662,9 @@ Action::make('updateAuthor')
 If you'd like to hide the close button for all modals in the application, you can do so by calling `Modal::closeButton(false)` inside a service provider or middleware:
 
 ```php
-use Filament\Support\View\Components\Modal;
+use Filament\Support\View\Components\ModalComponent;
 
-Modal::closeButton(false);
+ModalComponent::closeButton(false);
 ```
 
 ## Preventing the modal from autofocusing
@@ -687,9 +687,9 @@ Action::make('updateAuthor')
 If you'd like to disable autofocus for all modals in the application, you can do so by calling `Modal::autofocus(false)` inside a service provider or middleware:
 
 ```php
-use Filament\Support\View\Components\Modal;
+use Filament\Support\View\Components\ModalComponent;
 
-Modal::autofocus(false);
+ModalComponent::autofocus(false);
 ```
 
 ## Optimizing modal configuration methods

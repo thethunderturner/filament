@@ -426,10 +426,10 @@ Text columns have small font size by default, but you may change this to `TextCo
 For instance, you may make the text larger using `size(TextColumnSize::Large)`:
 
 ```php
-use Filament\Tables\Columns\TextColumn;
+use Filament\Support\Enums\TextSize;
 
 TextColumn::make('title')
-    ->size(TextColumn\Enums\TextColumnSize::Large)
+    ->size(TextSize::Large)
 ```
 
 <AutoScreenshot name="tables/columns/text/large" alt="Text column in a large font size" version="4.x" />

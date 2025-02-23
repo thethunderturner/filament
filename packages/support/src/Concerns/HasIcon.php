@@ -55,9 +55,15 @@ trait HasIcon
         return $icon ?? $default;
     }
 
-    public function getIconPosition(): IconPosition | string
+    public function getIconPosition(): IconPosition
     {
-        return $this->evaluate($this->iconPosition) ?? IconPosition::Before;
+        $position = $this->evaluate($this->iconPosition);
+
+        if ($position instanceof IconPosition) {
+            return $position;
+        }
+
+        return IconPosition::tryFrom($position) ?? IconPosition::Before;
     }
 
     public function getIconSize(): IconSize | string | null

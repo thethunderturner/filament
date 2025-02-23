@@ -24,18 +24,18 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
-class FieldsDemo extends Component implements HasActions, HasForms
+class FieldsDemo extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public $data = [];
 
@@ -48,7 +48,7 @@ class FieldsDemo extends Component implements HasActions, HasForms
     {
         return $form
             ->statePath('data')
-            ->schema([
+            ->components([
                 Group::make()
                     ->id('simple')
                     ->extraAttributes([

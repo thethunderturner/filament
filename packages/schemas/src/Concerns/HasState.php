@@ -52,6 +52,26 @@ trait HasState
     }
 
     /**
+     * @param  array<string, mixed>  $state
+     */
+    public function partialRawState(array $state): static
+    {
+        $livewire = $this->getLivewire();
+
+        if ($statePath = $this->getStatePath()) {
+            foreach ($state as $key => $value) {
+                data_set($livewire, "{$statePath}.{$key}", $value);
+            }
+        } else {
+            foreach ($state as $key => $value) {
+                data_set($livewire, $key, $value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @param  array<string, mixed> | null  $state
      */
     public function constantState(?array $state): static
@@ -73,7 +93,7 @@ trait HasState
         foreach ($this->getComponents(withActions: false, withHidden: true) as $component) {
             $component->callAfterStateHydrated();
 
-            foreach ($component->getChildComponentContainers(withHidden: true) as $container) {
+            foreach ($component->getChildSchemas(withHidden: true) as $container) {
                 $container->callAfterStateHydrated();
             }
         }
@@ -93,7 +113,7 @@ trait HasState
                     $component->callAfterStateUpdated();
                 }
 
-                foreach ($component->getChildComponentContainers() as $container) {
+                foreach ($component->getChildSchemas() as $container) {
                     if ($container->callAfterStateUpdated($path)) {
                         return true;
                     }
@@ -119,7 +139,7 @@ trait HasState
 
             $component->callBeforeStateDehydrated();
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -161,7 +181,7 @@ trait HasState
                 continue;
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -200,7 +220,7 @@ trait HasState
                 continue;
             }
 
-            foreach ($component->getChildComponentContainers() as $container) {
+            foreach ($component->getChildSchemas() as $container) {
                 if ($container->isHidden()) {
                     continue;
                 }
@@ -251,6 +271,33 @@ trait HasState
     }
 
     /**
+     * @param  array<string, mixed>  $state
+     * @param  array<string>  $statePaths
+     */
+    public function fillPartially(array $state, array $statePaths, bool $andCallHydrationHooks = true, bool $andFillStateWithNull = true): static
+    {
+        $this->partialRawState(collect($state)->dot()->only($statePaths)->all());
+
+        if ($schemaStatePath = $this->getStatePath()) {
+            $statePaths = array_map(
+                fn (string $statePath): string => "{$schemaStatePath}.{$statePath}",
+                $statePaths,
+            );
+        }
+
+        $this->hydrateStatePartially(
+            $statePaths,
+            $andCallHydrationHooks,
+        );
+
+        if ($andFillStateWithNull) {
+            $this->fillStateWithNull();
+        }
+
+        return $this;
+    }
+
+    /**
      * @param  array<string, mixed> | null  $hydratedDefaultState
      */
     public function hydrateState(?array &$hydratedDefaultState, bool $andCallHydrationHooks = true): void
@@ -261,6 +308,20 @@ trait HasState
             }
 
             $component->hydrateState($hydratedDefaultState, $andCallHydrationHooks);
+        }
+    }
+
+    /**
+     * @param  array<string>  $statePaths
+     */
+    public function hydrateStatePartially(array $statePaths, bool $andCallHydrationHooks = true): void
+    {
+        foreach ($this->getComponents(withActions: false, withHidden: true) as $component) {
+            if ($component instanceof Entry) {
+                continue;
+            }
+
+            $component->hydrateStatePartially($statePaths, $andCallHydrationHooks);
         }
     }
 

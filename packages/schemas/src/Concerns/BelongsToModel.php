@@ -38,7 +38,7 @@ trait BelongsToModel
 
             $shouldSaveRelationshipsWhenDisabled = $component->shouldSaveRelationshipsWhenDisabled();
 
-            foreach ($component->getChildComponentContainers(withHidden: $component->shouldSaveRelationshipsWhenHidden()) as $container) {
+            foreach ($component->getChildSchemas(withHidden: $component->shouldSaveRelationshipsWhenHidden()) as $container) {
                 if ((! $shouldSaveRelationshipsWhenDisabled) && $container->isDisabled()) {
                     continue;
                 }
@@ -55,7 +55,7 @@ trait BelongsToModel
         foreach ($this->getComponents(withActions: false, withHidden: true) as $component) {
             $component->loadStateFromRelationships($andHydrate);
 
-            foreach ($component->getChildComponentContainers(withHidden: true) as $container) {
+            foreach ($component->getChildSchemas(withHidden: true) as $container) {
                 $container->loadStateFromRelationships($andHydrate);
             }
         }

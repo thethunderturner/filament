@@ -28,14 +28,14 @@ The button which opens the dropdown may be customized in the same way as a norma
 
 ```php
 use Filament\Actions\ActionGroup;
-use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Size;
 
 ActionGroup::make([
     // Array of actions
 ])
     ->label('More actions')
     ->icon('heroicon-m-ellipsis-vertical')
-    ->size(ActionSize::Small)
+    ->size(Size::Small)
     ->color('primary')
     ->button()
 ```

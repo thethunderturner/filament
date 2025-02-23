@@ -16,12 +16,9 @@
     &.fi-active {
         @apply bg-gray-50 dark:bg-white/5;
 
-        & .fi-tabs-item-label {
-            @apply text-primary-600 dark:text-primary-400;
-        }
-
+        & .fi-tabs-item-label,
         & .fi-icon {
-            @apply text-primary-600 dark:text-primary-400;
+            @apply text-primary-700 dark:text-primary-400;
         }
     }
 

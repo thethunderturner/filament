@@ -104,8 +104,8 @@ trait InteractsWithActions
         }
 
         if (($actionComponent = $action->getSchemaComponent()) instanceof ExposesStateToActionData) {
-            foreach ($actionComponent->getChildComponentContainers() as $actionComponentChildComponentContainer) {
-                $actionComponentChildComponentContainer->validate();
+            foreach ($actionComponent->getChildSchemas() as $actionComponentChildSchema) {
+                $actionComponentChildSchema->validate();
             }
         }
 
@@ -200,10 +200,10 @@ trait InteractsWithActions
             $schemaState = [];
 
             if (($actionComponent = $action->getSchemaComponent()) instanceof ExposesStateToActionData) {
-                foreach ($actionComponent->getChildComponentContainers() as $actionComponentChildComponentContainer) {
+                foreach ($actionComponent->getChildSchemas() as $actionComponentChildSchema) {
                     $schemaState = [
                         ...$schemaState,
-                        ...$actionComponentChildComponentContainer->getState(),
+                        ...$actionComponentChildSchema->getState(),
                     ];
                 }
             }
@@ -510,12 +510,12 @@ trait InteractsWithActions
 
         $key = $action['context']['schemaComponent'];
 
-        $schemaName = (string) str($key)->before('.');
+        $schemaKey = (string) str($key)->before('.');
 
-        $schema = $this->getSchema($schemaName);
+        $schema = $this->getSchema($schemaKey);
 
         if (! $schema) {
-            throw new ActionNotResolvableException("Schema [{$schemaName}] not found.");
+            throw new ActionNotResolvableException("Schema [{$schemaKey}] not found.");
         }
 
         $resolvedAction = $schema->getAction(

@@ -104,6 +104,8 @@ class InstallCommand extends Command
         $filesystem->delete(resource_path('js/bootstrap.js'));
         $filesystem->copyDirectory(__DIR__ . '/../../stubs/scaffolding', base_path());
 
+        $hasNotifications = false;
+
         if (
             InstalledVersions::isInstalled('filament/notifications') &&
             ($this->option('notifications') || confirm(
@@ -115,7 +117,28 @@ class InstallCommand extends Command
             $layout = (string) str($layout)
                 ->replace('{{ $slot }}', '{{ $slot }}' . PHP_EOL . PHP_EOL . '        @livewire(\'notifications\')');
             $filesystem->put(resource_path('views/components/layouts/app.blade.php'), $layout);
+
+            $hasNotifications = true;
         }
+
+        $packagesCssImports = collect([
+            'actions',
+            'forms',
+            'infolists',
+            ...($hasNotifications ? ['notifications'] : []),
+            'schemas',
+            'tables',
+            'widgets',
+        ])
+            ->filter(fn (string $package): bool => InstalledVersions::isInstalled("filament/{$package}"))
+            ->implode('/resources/css/index.css\';' . PHP_EOL . '@import \'/vendor/filament/');
+
+        $css = $filesystem->get(resource_path('css/app.css'));
+        $css = (string) str($css)->replace(
+            '@import \'/vendor/filament/support/resources/css/index.css\';',
+            '@import \'/vendor/filament/support/resources/css/index.css\';' . PHP_EOL . "@import '/vendor/filament/{$packagesCssImports}/resources/css/index.css';",
+        );
+        $filesystem->put(resource_path('css/app.css'), $css);
 
         $this->components->info('Scaffolding installed successfully.');
 
