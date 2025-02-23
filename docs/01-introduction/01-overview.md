@@ -62,3 +62,25 @@ For more information about customizing the appearance of Filament, visit the [Cu
 The core packages in Filament undergo unit testing to ensure stability across releases. As a Filament user, you can write tests for applications built with the framework. Filament provides utilities for testing both functionality and UI components, compatible with either Pest or PHPUnit test suites. Testing is particularly crucial when customizing the framework or implementing custom functionality, though it's also valuable for verifying basic functionality works as intended.
 
 For more information about testing Filament applications, visit the [Testing documentation](../testing).
+
+## Alternatives to Filament
+
+If you're reading this and concluding that Filament might not be the right choice for your project, that's okay! There are many other excellent projects in the Laravel ecosystem that might be a better fit for your needs. Here are a few we really like:
+
+### Filament sounds too complicated
+
+[Laravel Nova](https://nova.laravel.com) is an easy way to build an admin panel for your Laravel application. It's an official project maintained by the Laravel team, and purchasing it helps support the development of the Laravel framework.
+
+### I do not want to use Livewire to customize anything
+
+Many parts of Filament do not require you to touch Livewire at all, but building custom components might.
+
+[Laravel Nova](https://nova.laravel.com) is built with Vue.js and Inertia.js, which might be a better fit for your project if it requires extensive customization and you have experience with these tools.
+
+### I need an out-of-the-box CMS
+
+[Statamic](https://statamic.com) is a CMS built on Laravel. It's a great choice if you need a CMS that's easy to set up and use, and you don't need to build a custom admin panel.
+
+### I just want to write Blade views and handle the backend myself
+
+[Flux](https://fluxui.dev) is the official Livewire UI kit and ships as a set of pre-built and pre-styled Blade components. It is maintained by the same team that maintains Livewire and Alpine.js, and purchasing it helps support the development of these projects.
