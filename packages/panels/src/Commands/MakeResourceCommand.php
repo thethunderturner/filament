@@ -23,6 +23,7 @@ use Filament\Support\Commands\FileGenerators\FileGenerationFlag;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use ReflectionClass;
@@ -287,6 +288,7 @@ class MakeResourceCommand extends Command
 
             $this->modelFqn = "{$modelNamespace}\\{$this->modelFqnEnd}";
         } else {
+            $this->discoverModels();
             $modelFqns = collect(get_declared_classes())
                 ->filter(fn (string $class): bool => is_subclass_of($class, Model::class) &&
                     (! str((new ReflectionClass($class))->getFileName())->startsWith(base_path('vendor'))))
@@ -742,5 +744,19 @@ class MakeResourceCommand extends Command
         }
 
         return $this->hasFileGenerationFlag(FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_TABLES);
+    }
+
+    protected function discoverModels(): array
+    {
+        $filesystem = app(Filesystem::class);
+
+        $path = app_path();
+        foreach ($filesystem->allFiles($path) as $file) {
+            if ($file->getExtension() !== 'php') {
+                continue;
+            }
+        }
+
+        return [];
     }
 }
